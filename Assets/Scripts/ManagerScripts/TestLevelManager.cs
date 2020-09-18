@@ -9,6 +9,7 @@ public class TestLevelManager : MonoBehaviour
 
     //Listan som håller alla bools för om dörrar ska vara stängda eller öppna.
     public List<bool> channelList;
+    private List<GameObject> doorList;
 
     public void Awake()
     {
@@ -21,6 +22,7 @@ public class TestLevelManager : MonoBehaviour
     private void Start()
     {
         channelList = new List<bool>();
+        doorList = new List<GameObject>();
     }
 
     private void Update()
@@ -31,7 +33,15 @@ public class TestLevelManager : MonoBehaviour
     //Metoden som knapparnas interaktion ska kalla på. Den gör så att kanalens bool värde ändras för den specifika knappen, och säger åt alla dörrar att titta på sina kanaler.
     public void UpdateChannels()
     {
+        NotifyDoors();
+    }
 
+    public void NotifyDoors()
+    {
+        foreach (GameObject door in doorList)
+        {
+            door.GetComponent<DoorScript>().ListenToChannel();
+        }
     }
 
 }
