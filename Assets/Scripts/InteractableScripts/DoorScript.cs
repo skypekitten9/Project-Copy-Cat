@@ -48,6 +48,7 @@ public class DoorScript : MonoBehaviour
         TestDoor();
     }
 
+    //Manuel testning av att öppna och stänga dörrar.
     void TestDoor()
     {
         if (Input.GetKeyDown(KeyCode.T))
@@ -61,9 +62,10 @@ public class DoorScript : MonoBehaviour
         }
     }
 
+    //Dörren tittar ifall dens channel har uppdaterats.
     public void ListenToChannel()
     {
-        if (TestLevelManager.Instance.channelList[doorID] == true)
+        if (TestLevelManager.Instance.interactablesArray[doorID] == true)
         {
             isOpen = true;
         }
