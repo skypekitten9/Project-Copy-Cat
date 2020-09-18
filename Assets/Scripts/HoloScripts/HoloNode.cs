@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public enum Action { None, Jump, Interact}
+public enum Action { None, Interact}
 
 public class HoloNode
 {
