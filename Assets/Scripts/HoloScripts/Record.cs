@@ -6,7 +6,7 @@ public class Record : MonoBehaviour
 {
     private Stopwatch stopwatch;
     private List<HoloNode> holoNodes;
-    private float nodeSpawnRate = 7; //times per second
+    private float nodeSpawnRate = 10; //times per second
 
     private bool recording = false;
 
@@ -28,7 +28,7 @@ public class Record : MonoBehaviour
         {
             if (stopwatch.ElapsedMilliseconds >= (1 / nodeSpawnRate * 1000) * holoNodes.Count)
             {
-                holoNodes.Add(new HoloNode(PlayerManager.Instance.transform.position, stopwatch.ElapsedMilliseconds, Action.None));
+                holoNodes.Add(new HoloNode(PlayerManager.Instance.transform.position, PlayerManager.Instance.transform.rotation, stopwatch.ElapsedMilliseconds, Action.None));
             }
         }
 
@@ -75,7 +75,7 @@ public class Record : MonoBehaviour
                 Gizmos.DrawSphere(holoNodes[i].Position, 0.25f);
 
                 if (i < holoNodes.Count - 1)
-                    Gizmos.DrawLine(holoNodes[i].Position, holoNodes[i + 1].Position);
+                    Gizmos.DrawLine(holoNodes[i].Position, holoNodes[i].Position + holoNodes[i].Rotation * Vector3.forward);
             }
         }
     }
