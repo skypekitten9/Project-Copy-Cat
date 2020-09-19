@@ -108,7 +108,14 @@ public class RecordPlayback : MonoBehaviour
         holoInstance = Instantiate(holoPrefab);
         holoInstance.transform.position = holoPositionNodes[0].Position;
 
-        yield return new WaitForSeconds(1.0f);
+        float fadeValue = 0;
+        holoInstance.GetComponent<MeshRenderer>().material.SetFloat("Vector1_DCDBC5A6", 0);
+        while (fadeValue < 1)
+        {
+            fadeValue += Time.deltaTime;
+            holoInstance.GetComponent<MeshRenderer>().material.SetFloat("Vector1_DCDBC5A6", fadeValue);
+            yield return new WaitForFixedUpdate();
+        }
 
         StartCoroutine(Playback());
     }
@@ -119,6 +126,7 @@ public class RecordPlayback : MonoBehaviour
         recordPhase = RecordPhase.PlayingBack;
 
 
+        float timeCorrection = 0.0f;
         Stopwatch stopwatch = new Stopwatch();
         stopwatch.Start();
 
@@ -136,7 +144,7 @@ public class RecordPlayback : MonoBehaviour
                 }
             }
 
-            while (stopwatch.ElapsedMilliseconds < holoPositionNodes[i].Time)
+            while (stopwatch.ElapsedMilliseconds + timeCorrection < holoPositionNodes[i].Time)
             {
                 Vector3 distance = holoPositionNodes[i + 1].Position - holoPositionNodes[i].Position;
 
@@ -145,6 +153,7 @@ public class RecordPlayback : MonoBehaviour
                     Time.time / holoPositionNodes[i].Time);
                 yield return new WaitForFixedUpdate();
             }
+            timeCorrection += (stopwatch.ElapsedMilliseconds - holoPositionNodes[i].Time);
         }
         stopwatch.Stop();
 
@@ -157,7 +166,15 @@ public class RecordPlayback : MonoBehaviour
         recordPhase = RecordPhase.KillingHolo;
 
 
-        yield return new WaitForSeconds(1.0f);
+        float fadeValue = 1;
+        holoInstance.GetComponent<MeshRenderer>().material.SetFloat("Vector1_DCDBC5A6", 1);
+        while (fadeValue > 0)
+        {
+            fadeValue -= Time.deltaTime;
+            holoInstance.GetComponent<MeshRenderer>().material.SetFloat("Vector1_DCDBC5A6", fadeValue);
+            yield return new WaitForFixedUpdate();
+        }
+
         Destroy(holoInstance);
 
         recordPhase = RecordPhase.None;
