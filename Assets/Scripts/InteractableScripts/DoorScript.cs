@@ -14,7 +14,7 @@ public class DoorScript : MonoBehaviour
 
     bool isOpen;
 
-    public int doorID;
+    [SerializeField] private int doorID;
 
     void Start()
     {

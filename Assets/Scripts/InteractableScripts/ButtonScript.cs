@@ -8,7 +8,7 @@ public class ButtonScript : MonoBehaviour
     [SerializeField]
     private GameObject rayOrigin;
     private Ray ray;
-    private int id = 1;
+    [SerializeField] private int id;
 
     void Start()
     {
@@ -19,7 +19,7 @@ public class ButtonScript : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            float range = 5f;
+            float range = 1f;
             ray = new Ray(transform.position, transform.up);
 
             RaycastHit hit;
@@ -32,8 +32,6 @@ public class ButtonScript : MonoBehaviour
             }
     }
 }
-
-    //Denna metoden är tänkt man ska kalla på när spelaren klickar på knappen. Den meddelar senare vidare till LevelManagern att kanalen ska uppdateras så dörren öppnas.
     private void SignalChannel()
     {
         TestLevelManager.Instance.interactablesArray[id] = !TestLevelManager.Instance.interactablesArray[id];
