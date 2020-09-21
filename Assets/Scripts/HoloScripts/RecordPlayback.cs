@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEditor.UIElements;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public enum RecordPhase { None, Recording, Rewinding, SpawningHolo, PlayingBack, KillingHolo }
+public enum ControlStates { Player, Holo, None }
 
 public class RecordPlayback : MonoBehaviour
 {
@@ -21,12 +23,21 @@ public class RecordPlayback : MonoBehaviour
 
     private RecordPhase recordPhase = RecordPhase.None;
 
+
+
+    private void Start()
+    {
+        ChangeControlState(ControlStates.Player);
+    }
+
+
+
     private void Update()
     {
         /*Stub - let InputManager call this*/
         if (recordPhase == RecordPhase.Recording && Input.GetKeyDown(KeyCode.E))
         {
-            holoInteractNodes.Add(new HoloNode(PlayerManager.Instance.transform.position, PlayerManager.Instance.transform.rotation, stopwatch.ElapsedMilliseconds, Action.Interact));
+            holoInteractNodes.Add(new HoloNode(holoInstance.transform.position, holoInstance.transform.rotation, stopwatch.ElapsedMilliseconds, Action.Interact));
         }
 
         /*Stub - let InputManager call this*/
@@ -34,11 +45,54 @@ public class RecordPlayback : MonoBehaviour
         {
             if (recordPhase == RecordPhase.None)
             {
-                StartCoroutine(Record());
+                StartCoroutine(SpawnHolo());
             }
         }
     }
 
+
+    /// <summary>
+    /// Changes which character can be controlled
+    /// </summary>
+    /// <param name="controlState">None = no character can be controlled</param>
+    private void ChangeControlState(ControlStates controlState)
+    {
+        bool changeToPlayer = controlState == ControlStates.Player ? true : false;
+        bool changeToHolo = controlState == ControlStates.Holo ? true : false;
+
+        PlayerManager.Instance.GetComponent<PlayerMovement>().enabled = changeToPlayer;
+        PlayerManager.Instance.GetComponent<CharacterController>().enabled = changeToPlayer;
+        PlayerManager.Instance.GetComponent<Collider>().enabled = changeToPlayer;
+        if (controlState != ControlStates.None)
+            PlayerManager.Instance.transform.GetChild(0).gameObject.SetActive(changeToPlayer);
+
+        if (holoInstance != null)
+        {
+            holoInstance.GetComponent<PlayerMovement>().enabled = changeToHolo;
+            holoInstance.GetComponent<CharacterController>().enabled = changeToHolo;
+            holoInstance.GetComponent<Collider>().enabled = changeToHolo;
+            if (controlState != ControlStates.None)
+                holoInstance.transform.GetChild(0).gameObject.SetActive(changeToHolo);
+        }
+    }
+
+
+    private System.Collections.IEnumerator SpawnHolo()
+    {
+        UnityEngine.Debug.Log("Spawning Holo");
+        recordPhase = RecordPhase.SpawningHolo;
+
+        holoInstance = Instantiate(holoPrefab);
+        ChangeControlState(ControlStates.None);
+        holoInstance.transform.position = PlayerManager.Instance.transform.position;
+        holoInstance.GetComponent<MeshRenderer>().material.SetFloat("Vector1_DCDBC5A6", 1);
+
+        yield return new WaitForSeconds(0.1f);
+        ChangeControlState(ControlStates.Holo);
+
+
+        StartCoroutine(Record());
+    }
 
     System.Collections.IEnumerator Record()
     {
@@ -54,13 +108,14 @@ public class RecordPlayback : MonoBehaviour
         {
             if (stopwatch.ElapsedMilliseconds >= (1 / nodeSpawnRate * 1000) * holoPositionNodes.Count)
             {
-                holoPositionNodes.Add(new HoloNode(PlayerManager.Instance.transform.position, PlayerManager.Instance.transform.rotation, stopwatch.ElapsedMilliseconds, Action.None));
+                holoPositionNodes.Add(new HoloNode(holoInstance.transform.position, holoInstance.transform.rotation, stopwatch.ElapsedMilliseconds, Action.None));
             }
 
             yield return new WaitForFixedUpdate();
         }
 
         stopwatch.Stop();
+
 
         StartCoroutine(Rewind());
     }
@@ -70,52 +125,28 @@ public class RecordPlayback : MonoBehaviour
         UnityEngine.Debug.Log("Rewinding");
         recordPhase = RecordPhase.Rewinding;
 
-
-        PlayerManager.Instance.GetComponent<PlayerMovement>().enabled = false;
-        PlayerManager.Instance.GetComponentInChildren<PlayerCamera>().enabled = false;
-        PlayerManager.Instance.GetComponent<CharacterController>().enabled = false;
+        ChangeControlState(ControlStates.None);
 
         float tolerance = rewindSpeed;
         int nodeCounter = holoPositionNodes.Count - 1;
 
         while (nodeCounter > 0)
         {
-            while (Vector3.Distance(PlayerManager.Instance.transform.position, holoPositionNodes[nodeCounter - 1].Position) >= tolerance)
+            while (Vector3.Distance(holoInstance.transform.position, holoPositionNodes[nodeCounter - 1].Position) >= tolerance)
             {
-                Vector3 direction = Vector3.Normalize(holoPositionNodes[nodeCounter - 1].Position - PlayerManager.Instance.transform.position);
-                float t = -(Vector3.Distance(PlayerManager.Instance.transform.position, holoPositionNodes[0].Position) / Vector3.Distance(holoPositionNodes[holoPositionNodes.Count - 1].Position, holoPositionNodes[0].Position)) + 1;
+                Vector3 direction = Vector3.Normalize(holoPositionNodes[nodeCounter - 1].Position - holoInstance.transform.position);
+                float t = -(Vector3.Distance(holoInstance.transform.position, holoPositionNodes[0].Position) / Vector3.Distance(holoPositionNodes[holoPositionNodes.Count - 1].Position, holoPositionNodes[0].Position)) + 1;
 
-                PlayerManager.Instance.transform.position = PlayerManager.Instance.transform.position + direction * rewindSpeed;
-                PlayerManager.Instance.transform.rotation = Quaternion.Lerp(holoPositionNodes[holoPositionNodes.Count - 1].Rotation, holoPositionNodes[0].Rotation, t);
+                holoInstance.transform.position = holoInstance.transform.position + direction * rewindSpeed;
+                holoInstance.transform.rotation = Quaternion.Lerp(holoPositionNodes[holoPositionNodes.Count - 1].Rotation, holoPositionNodes[0].Rotation, t);
                 yield return new WaitForSeconds(Time.deltaTime);
             }
             nodeCounter--;
         }
-
-        PlayerManager.Instance.GetComponent<CharacterController>().enabled = true;
-        PlayerManager.Instance.GetComponentInChildren<PlayerCamera>().enabled = true;
-        PlayerManager.Instance.GetComponent<PlayerMovement>().enabled = true;
-
-        StartCoroutine(SpawnHolo());
-    }
-
-    System.Collections.IEnumerator SpawnHolo()
-    {
-        UnityEngine.Debug.Log("Spawning Holo");
-        recordPhase = RecordPhase.SpawningHolo;
-
-
-        holoInstance = Instantiate(holoPrefab);
         holoInstance.transform.position = holoPositionNodes[0].Position;
 
-        float fadeValue = 0;
-        holoInstance.GetComponent<MeshRenderer>().material.SetFloat("Vector1_DCDBC5A6", 0);
-        while (fadeValue < 1)
-        {
-            fadeValue += Time.deltaTime;
-            holoInstance.GetComponent<MeshRenderer>().material.SetFloat("Vector1_DCDBC5A6", fadeValue);
-            yield return new WaitForFixedUpdate();
-        }
+        ChangeControlState(ControlStates.Player);
+
 
         StartCoroutine(Playback());
     }
@@ -125,6 +156,7 @@ public class RecordPlayback : MonoBehaviour
         UnityEngine.Debug.Log("Playing back");
         recordPhase = RecordPhase.PlayingBack;
 
+        yield return new WaitForSeconds(1.0f);
 
         float timeCorrection = 0.0f;
         Stopwatch stopwatch = new Stopwatch();
@@ -153,16 +185,17 @@ public class RecordPlayback : MonoBehaviour
                     Time.time / holoPositionNodes[i].Time);
                 yield return new WaitForFixedUpdate();
             }
-            timeCorrection += (stopwatch.ElapsedMilliseconds - holoPositionNodes[i].Time);
+            timeCorrection += (stopwatch.ElapsedMilliseconds - holoPositionNodes[i + 1].Time);
         }
         stopwatch.Stop();
 
-        StartCoroutine(KillHolo());
+
+        StartCoroutine(DestroyHolo());
     }
 
-    System.Collections.IEnumerator KillHolo()
+    System.Collections.IEnumerator DestroyHolo()
     {
-        UnityEngine.Debug.Log("Killing Holo");
+        UnityEngine.Debug.Log("Destroying Holo");
         recordPhase = RecordPhase.KillingHolo;
 
 
