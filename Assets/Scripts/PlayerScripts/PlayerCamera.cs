@@ -6,9 +6,8 @@ public class PlayerCamera : MonoBehaviour
 {
     [SerializeField] private float mouseSensitivity = 100f;
 
-    public Transform playerBody;
+    private Transform playerBody;
 
-    float xRotation = 0f;
 
     void Start()
     {
@@ -22,10 +21,8 @@ public class PlayerCamera : MonoBehaviour
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
-        xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
-
-        transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+        transform.localEulerAngles -= new Vector3(Mathf.Clamp(mouseY, -90.0f, 90.0f), 0.0f, 0.0f);
         playerBody.Rotate(Vector3.up * mouseX);
     }
+
 }

@@ -16,6 +16,7 @@ public class RecordPlayback : MonoBehaviour
     private Stopwatch stopwatch;
     private List<HoloNode> holoPositionNodes;
     private List<HoloNode> holoInteractNodes;
+    private Quaternion startCameraRotation;
 
     [SerializeField] private float nodeSpawnRate = 10;      //How often to spawn a node (times per second)
     [SerializeField] private float recordTime = 5000;       //The timeframe for recording (milliseconds)
@@ -84,12 +85,16 @@ public class RecordPlayback : MonoBehaviour
 
         holoInstance = Instantiate(holoPrefab);
         ChangeControlState(ControlStates.None);
+
         holoInstance.transform.position = PlayerManager.Instance.transform.position;
+        holoInstance.transform.rotation = PlayerManager.Instance.transform.rotation;
+        holoInstance.transform.GetChild(0).localRotation = PlayerManager.Instance.transform.GetChild(0).localRotation;
+        startCameraRotation = holoInstance.transform.GetChild(0).localRotation;
+
         holoInstance.GetComponent<MeshRenderer>().material.SetFloat("Vector1_DCDBC5A6", 1);
 
         yield return new WaitForSeconds(0.1f);
         ChangeControlState(ControlStates.Holo);
-
 
         StartCoroutine(Record());
     }
@@ -127,6 +132,8 @@ public class RecordPlayback : MonoBehaviour
 
         ChangeControlState(ControlStates.None);
 
+        Quaternion endCameraRotation = holoInstance.transform.GetChild(0).localRotation;
+
         float tolerance = rewindSpeed;
         int nodeCounter = holoPositionNodes.Count - 1;
 
@@ -139,6 +146,7 @@ public class RecordPlayback : MonoBehaviour
 
                 holoInstance.transform.position = holoInstance.transform.position + direction * rewindSpeed;
                 holoInstance.transform.rotation = Quaternion.Lerp(holoPositionNodes[holoPositionNodes.Count - 1].Rotation, holoPositionNodes[0].Rotation, t);
+                holoInstance.transform.GetChild(0).localRotation = Quaternion.Lerp(endCameraRotation, startCameraRotation, t);
                 yield return new WaitForSeconds(Time.deltaTime);
             }
             nodeCounter--;
