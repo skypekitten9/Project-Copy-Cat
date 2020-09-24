@@ -30,8 +30,8 @@ public class ButtonScript : MonoBehaviour
                     SignalChannel();
                 }
             }
+        }
     }
-}
     private void SignalChannel()
     {
         TestLevelManager.Instance.interactablesArray[id] = !TestLevelManager.Instance.interactablesArray[id];
