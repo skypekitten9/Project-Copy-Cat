@@ -18,7 +18,7 @@ public class RecordPlayback : MonoBehaviour
     private List<HoloNode> holoInteractNodes;
     private Quaternion startCameraRotation;
 
-    [SerializeField] private float nodeSpawnRate = 10;      //How often to spawn a node (times per second)
+    [SerializeField] private float nodeSpawnRate = 7;      //How often to spawn a node (times per second)
     [SerializeField] private float recordTime = 5000;       //The timeframe for recording (milliseconds)
     [SerializeField] private float rewindSpeed = 0.75f;     //The player's speed duing the rewind-phase
 
