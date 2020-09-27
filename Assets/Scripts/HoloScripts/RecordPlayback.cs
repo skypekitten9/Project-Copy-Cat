@@ -62,14 +62,12 @@ public class RecordPlayback : MonoBehaviour
         bool changeToHolo = controlState == ControlStates.Holo ? true : false;
 
         PlayerManager.Instance.GetComponent<PlayerMovement>().enabled = changeToPlayer;
-        PlayerManager.Instance.GetComponent<CharacterController>().enabled = changeToPlayer;
         if (controlState != ControlStates.None)
             PlayerManager.Instance.transform.GetChild(0).gameObject.SetActive(changeToPlayer);
 
         if (HoloInstance != null)
         {
             HoloInstance.GetComponent<PlayerMovement>().enabled = changeToHolo;
-            HoloInstance.GetComponent<CharacterController>().enabled = changeToHolo;
             if (controlState != ControlStates.None)
                 HoloInstance.transform.GetChild(0).gameObject.SetActive(changeToHolo);
         }

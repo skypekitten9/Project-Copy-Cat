@@ -4,66 +4,53 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public CharacterController controller;
-
-    public Transform groundCheck;
-
     public LayerMask groundMask;
 
+    private Rigidbody rb;
     private Vector3 velocity;
 
-    [SerializeField] private bool isGrounded;
+    private bool isGrounded;
+    private float groundDistance;
 
-    [SerializeField] private float speed;
-    [SerializeField] private float gravity;
-    [SerializeField] private float groundDistance;
-    [SerializeField] private float jumpHeight;
+    [SerializeField] private float speed = 7.0f;
+    [SerializeField] private float jumpSpeed = 10.0f;
 
-    void Start()
+    private void Start()
     {
-        controller = gameObject.GetComponent<CharacterController>();
-        groundCheck = transform.Find("GroundCheck").transform;
-
-        speed = 12f;
-        gravity = -19.64f;
-        groundDistance = 0.4f;
-        jumpHeight = 3f;
-
+        rb = GetComponent<Rigidbody>();
+        groundDistance = GetComponent<Collider>().bounds.extents.y;
     }
 
-    void Update()
+    private void FixedUpdate()
     {
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        Move();
+    }
 
-        if (isGrounded && velocity.y < 0)
-        {
-            velocity.y = -3f;
-        }
-
-        Movement();
-
+    private void Update()
+    {
+        isGrounded = Physics.Raycast(transform.position, -Vector3.up, groundDistance + 0.2f);
+        //if (Input.GetAxis("Mouse ScrollWheel") > 0 && isGrounded)
         if (Input.GetButtonDown("Jump") && isGrounded)
-        {
             Jump();
-        }
     }
 
-    void Movement()
+    private void Move()
     {
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
+        float x = Input.GetAxisRaw("Horizontal");
+        float z = Input.GetAxisRaw("Vertical");
 
-        Vector3 move = transform.right * x + transform.forward * z;
+        velocity = (transform.right * x + transform.forward * z).normalized * speed;
 
-        controller.Move(move * speed * Time.deltaTime);
-
-        velocity.y += gravity * Time.deltaTime;
-
-        controller.Move(velocity * Time.deltaTime);
+        //rb.MovePosition(transform.position + velocity * Time.deltaTime);
+        rb.velocity = new Vector3(velocity.x, rb.velocity.y, velocity.z);
     }
 
     void Jump()
     {
-        velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+        Debug.Log("Jump!");
+        rb.velocity = jumpSpeed * Vector3.up;
+        //rb.AddForce(new Vector3(0, jumpForce, 0), ForceMode.Impulse);
+        //jumpTimer = 0;
+        //velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
     }
 }
