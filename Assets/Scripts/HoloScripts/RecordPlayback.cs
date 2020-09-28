@@ -18,7 +18,7 @@ public class RecordPlayback : MonoBehaviour
     private List<HoloNode> holoInteractNodes;
     private Quaternion startCameraRotation;
 
-    [SerializeField] private float nodeSpawnRate = 10;      //How often to spawn a node (times per second)
+    [SerializeField] private float nodeSpawnRate = 7;      //How often to spawn a node (times per second)
     [SerializeField] private float recordTime = 5000;       //The timeframe for recording (milliseconds)
     [SerializeField] private float rewindSpeed = 0.75f;     //The player's speed duing the rewind-phase
 
@@ -62,14 +62,12 @@ public class RecordPlayback : MonoBehaviour
         bool changeToHolo = controlState == ControlStates.Holo ? true : false;
 
         PlayerManager.Instance.GetComponent<PlayerMovement>().enabled = changeToPlayer;
-        PlayerManager.Instance.GetComponent<CharacterController>().enabled = changeToPlayer;
         if (controlState != ControlStates.None)
             PlayerManager.Instance.transform.GetChild(0).gameObject.SetActive(changeToPlayer);
 
         if (HoloInstance != null)
         {
             HoloInstance.GetComponent<PlayerMovement>().enabled = changeToHolo;
-            HoloInstance.GetComponent<CharacterController>().enabled = changeToHolo;
             if (controlState != ControlStates.None)
                 HoloInstance.transform.GetChild(0).gameObject.SetActive(changeToHolo);
         }
