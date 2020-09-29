@@ -65,10 +65,10 @@ public class RecordPlayback : MonoBehaviour
             PlayerManager.Instance.GetComponent<PlayerMovement>().enabled = changeToPlayer;
             PlayerManager.Instance.GetComponent<Rigidbody>().useGravity = changeToPlayer;
             PlayerManager.Instance.GetComponent<Rigidbody>().velocity = Vector3.zero;
-        }
 
-        if (controlState != ControlStates.None)
-            PlayerManager.Instance.transform.GetChild(0).gameObject.SetActive(changeToPlayer);
+            if (controlState != ControlStates.None)
+                PlayerManager.Instance.transform.GetChild(0).gameObject.SetActive(changeToPlayer);
+        }
 
         if (HoloInstance != null)
         {
