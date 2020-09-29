@@ -1,4 +1,4 @@
 Grey: #C3C3CA
 Yellow: #FFEFA0
-Red: FF847C
-Blue: 74F9FF
+Red: #FF847C
+Blue: #74F9FF
