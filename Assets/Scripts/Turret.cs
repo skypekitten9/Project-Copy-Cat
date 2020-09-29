@@ -16,6 +16,9 @@ public class Turret : MonoBehaviour
 
     void Update()
     {
+        if (PlayerManager.Instance == null)
+            return;
+
         Vector3 targetDirection;
 
         Vector3 playerDirection = PlayerManager.Instance.transform.position - eye.position;
@@ -33,35 +36,25 @@ public class Turret : MonoBehaviour
 
         Physics.Raycast(eye.position, targetDirection, out hit, Mathf.Infinity, layerMask);
 
-
-        switch (hit.transform.gameObject.layer)
+        if (hit.transform != null)
         {
-            case 9:     //Player
-                debugColor = Color.blue;
-                break;
+            switch (hit.transform.gameObject.layer)
+            {
+                case 9:     //Player
+                    debugColor = Color.blue;
+                    break;
 
-            case 10:    //Hologram
-                debugColor = new Color(0, 0.2f, 0.7f);
-                break;
+                case 10:    //Hologram
+                    debugColor = new Color(0, 0.2f, 0.7f);
+                    break;
 
-            default:
-                debugColor = Color.white;
-                break;
+                default:
+                    debugColor = Color.white;
+                    break;
+            }
+
+            Debug.DrawLine(eye.position, hit.point, debugColor);
         }
-
-        Debug.DrawLine(eye.position, hit.point, debugColor);
-
-
-
-        //if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Hologram"))
-        //{
-        //    Debug.DrawRay(eye.position, targetDirection, Color.blue);
-        //}
-        //else if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Player"))
-        //{
-        //    Debug.DrawRay(eye.position, targetDirection, Color.white);
-        //}
-        //else
-        //    Debug.DrawRay(eye.position, targetDirection, Color.black);
     }
+
 }

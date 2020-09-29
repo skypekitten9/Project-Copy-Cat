@@ -26,11 +26,10 @@ public class RecordPlayback : MonoBehaviour
 
 
 
-    private void Start()
+    private void OnLevelWasLoaded(int buildIndex)
     {
         ChangeControlState(ControlStates.Player);
     }
-
 
 
     private void Update()
@@ -61,7 +60,13 @@ public class RecordPlayback : MonoBehaviour
         bool changeToPlayer = controlState == ControlStates.Player ? true : false;
         bool changeToHolo = controlState == ControlStates.Holo ? true : false;
 
-        PlayerManager.Instance.GetComponent<PlayerMovement>().enabled = changeToPlayer;
+        if (PlayerManager.Instance != null)
+        {
+            PlayerManager.Instance.GetComponent<PlayerMovement>().enabled = changeToPlayer;
+            PlayerManager.Instance.GetComponent<Rigidbody>().useGravity = changeToPlayer;
+            PlayerManager.Instance.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        }
+
         if (controlState != ControlStates.None)
             PlayerManager.Instance.transform.GetChild(0).gameObject.SetActive(changeToPlayer);
 
@@ -89,10 +94,11 @@ public class RecordPlayback : MonoBehaviour
 
         HoloInstance.GetComponent<MeshRenderer>().material.SetFloat("Vector1_DCDBC5A6", 1);
 
-        yield return new WaitForSeconds(0.1f);
+        //yield return new WaitForSeconds(0.1f);
         ChangeControlState(ControlStates.Holo);
 
         StartCoroutine(Record());
+        yield break;
     }
 
     System.Collections.IEnumerator Record()
@@ -148,6 +154,8 @@ public class RecordPlayback : MonoBehaviour
             nodeCounter--;
         }
         HoloInstance.transform.position = holoPositionNodes[0].Position;
+        HoloInstance.GetComponent<Rigidbody>().useGravity = false;
+        HoloInstance.GetComponent<Rigidbody>().velocity = Vector3.zero;
 
         ChangeControlState(ControlStates.Player);
 
@@ -168,6 +176,7 @@ public class RecordPlayback : MonoBehaviour
 
         int interactNodesCounter = 0;
 
+
         for (int i = 0; i < holoPositionNodes.Count - 1; i++)
         {
             if (interactNodesCounter < holoInteractNodes.Count)
@@ -183,6 +192,12 @@ public class RecordPlayback : MonoBehaviour
             while (stopwatch.ElapsedMilliseconds + timeCorrection < holoPositionNodes[i].Time)
             {
                 Vector3 distance = holoPositionNodes[i + 1].Position - holoPositionNodes[i].Position;
+
+                if (HoloInstance == null)
+                {
+                    recordPhase = RecordPhase.None;
+                    yield break;
+                }
 
                 HoloInstance.transform.position += distance * Time.deltaTime * nodeSpawnRate;
                 HoloInstance.transform.rotation = Quaternion.Lerp(holoPositionNodes[i + 1].Rotation, holoPositionNodes[i].Rotation,

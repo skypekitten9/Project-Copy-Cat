@@ -11,6 +11,11 @@ public class TestLevelManager : MonoBehaviour
     public bool[] interactablesArray;
     [SerializeField] private List<GameObject> doorList;
 
+
+    [SerializeField] private Level[] levels;
+    public Level[] Levels { get { return levels; } }
+
+
     public int testInt;
 
     public void Awake()
@@ -19,6 +24,8 @@ public class TestLevelManager : MonoBehaviour
             Destroy(this.gameObject);
         else
             instance = this;
+
+        DontDestroyOnLoad(this);
     }
 
     private void Start()
@@ -28,6 +35,8 @@ public class TestLevelManager : MonoBehaviour
 
         ListAllDoors();
         SetTestValues();
+
+        GetComponent<SceneTransition>().ChangeToScene(0);
     }
 
     private void Update()
@@ -73,5 +82,4 @@ public class TestLevelManager : MonoBehaviour
             UpdateChannels();
         }
     }
-
 }

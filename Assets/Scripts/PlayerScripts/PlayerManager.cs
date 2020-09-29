@@ -10,7 +10,9 @@ public class PlayerManager : MonoBehaviour
         if (instance != null && instance != this)
             Destroy(this.gameObject);
         else
-            instance = this;
+            instance = this; 
+
+        DontDestroyOnLoad(this);
     }
 
 }
