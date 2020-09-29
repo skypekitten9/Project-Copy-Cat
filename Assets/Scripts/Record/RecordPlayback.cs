@@ -5,7 +5,7 @@ using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public enum RecordPhase { None, Recording, Rewinding, SpawningHolo, PlayingBack, KillingHolo }
+
 public enum ControlStates { Player, Holo, None }
 
 public class RecordPlayback : MonoBehaviour
@@ -14,16 +14,13 @@ public class RecordPlayback : MonoBehaviour
     public GameObject HoloInstance { get; private set; }
 
     private Stopwatch stopwatch;
-    private List<HoloNode> holoPositionNodes;
-    private List<HoloNode> holoInteractNodes;
+    private List<TranslationData> translationData;
+    private List<InteractionData> interactionData;
     private Quaternion startCameraRotation;
 
     [SerializeField] private float nodeSpawnRate = 7;      //How often to spawn a node (times per second)
     [SerializeField] private float recordTime = 5000;       //The timeframe for recording (milliseconds)
     [SerializeField] private float rewindSpeed = 0.75f;     //The player's speed duing the rewind-phase
-
-    private RecordPhase recordPhase = RecordPhase.None;
-
 
 
     private void OnLevelWasLoaded(int buildIndex)
@@ -35,19 +32,11 @@ public class RecordPlayback : MonoBehaviour
     private void Update()
     {
         /*Stub - let InputManager call this*/
-        if (recordPhase == RecordPhase.Recording && Input.GetKeyDown(KeyCode.E))
+        if (GetComponent<RecordManager>().recordPhase == RecordPhase.Recording && Input.GetKeyDown(KeyCode.E))
         {
-            holoInteractNodes.Add(new HoloNode(HoloInstance.transform.position, HoloInstance.transform.rotation, stopwatch.ElapsedMilliseconds, Action.Interact));
+            interactionData.Add(new InteractionData(stopwatch.ElapsedMilliseconds, 0));
         }
-
-        /*Stub - let InputManager call this*/
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            if (recordPhase == RecordPhase.None)
-            {
-                StartCoroutine(SpawnHolo());
-            }
-        }
+       
     }
 
 
@@ -79,10 +68,9 @@ public class RecordPlayback : MonoBehaviour
     }
 
 
-    private System.Collections.IEnumerator SpawnHolo()
+    public System.Collections.IEnumerator SpawnHolo()
     {
         UnityEngine.Debug.Log("Spawning Holo");
-        recordPhase = RecordPhase.SpawningHolo;
 
         HoloInstance = Instantiate(holoPrefab);
         ChangeControlState(ControlStates.None);
@@ -104,18 +92,18 @@ public class RecordPlayback : MonoBehaviour
     System.Collections.IEnumerator Record()
     {
         UnityEngine.Debug.Log("Recording");
-        recordPhase = RecordPhase.Recording;
+        GetComponent<RecordManager>().recordPhase = RecordPhase.Recording;
 
-        holoPositionNodes = new List<HoloNode>();
-        holoInteractNodes = new List<HoloNode>();
+        translationData = new List<TranslationData>();
+        interactionData = new List<InteractionData>();
         stopwatch = new Stopwatch();
         stopwatch.Start();
 
         while (stopwatch.ElapsedMilliseconds < recordTime)
         {
-            if (stopwatch.ElapsedMilliseconds >= (1 / nodeSpawnRate * 1000) * holoPositionNodes.Count)
+            if (stopwatch.ElapsedMilliseconds >= (1 / nodeSpawnRate * 1000) * translationData.Count)
             {
-                holoPositionNodes.Add(new HoloNode(HoloInstance.transform.position, HoloInstance.transform.rotation, stopwatch.ElapsedMilliseconds, Action.None));
+                translationData.Add(new TranslationData(stopwatch.ElapsedMilliseconds, HoloInstance.transform.position, HoloInstance.transform.rotation));
             }
 
             yield return new WaitForFixedUpdate();
@@ -123,37 +111,36 @@ public class RecordPlayback : MonoBehaviour
 
         stopwatch.Stop();
 
-
         StartCoroutine(Rewind());
     }
 
     System.Collections.IEnumerator Rewind()
     {
         UnityEngine.Debug.Log("Rewinding");
-        recordPhase = RecordPhase.Rewinding;
+        GetComponent<RecordManager>().recordPhase = RecordPhase.Rewinding;
 
         ChangeControlState(ControlStates.None);
 
         Quaternion endCameraRotation = HoloInstance.transform.GetChild(0).localRotation;
 
         float tolerance = rewindSpeed;
-        int nodeCounter = holoPositionNodes.Count - 1;
+        int nodeCounter = translationData.Count - 1;
 
         while (nodeCounter > 0)
         {
-            while (Vector3.Distance(HoloInstance.transform.position, holoPositionNodes[nodeCounter - 1].Position) >= tolerance)
+            while (Vector3.Distance(HoloInstance.transform.position, translationData[nodeCounter - 1].Position) >= tolerance)
             {
-                Vector3 direction = Vector3.Normalize(holoPositionNodes[nodeCounter - 1].Position - HoloInstance.transform.position);
-                float t = -(Vector3.Distance(HoloInstance.transform.position, holoPositionNodes[0].Position) / Vector3.Distance(holoPositionNodes[holoPositionNodes.Count - 1].Position, holoPositionNodes[0].Position)) + 1;
+                Vector3 direction = Vector3.Normalize(translationData[nodeCounter - 1].Position - HoloInstance.transform.position);
+                float t = -(Vector3.Distance(HoloInstance.transform.position, translationData[0].Position) / Vector3.Distance(translationData[translationData.Count - 1].Position, translationData[0].Position)) + 1;
 
                 HoloInstance.transform.position = HoloInstance.transform.position + direction * rewindSpeed;
-                HoloInstance.transform.rotation = Quaternion.Lerp(holoPositionNodes[holoPositionNodes.Count - 1].Rotation, holoPositionNodes[0].Rotation, t);
+                HoloInstance.transform.rotation = Quaternion.Lerp(translationData[translationData.Count - 1].Rotation, translationData[0].Rotation, t);
                 HoloInstance.transform.GetChild(0).localRotation = Quaternion.Lerp(endCameraRotation, startCameraRotation, t);
                 yield return new WaitForSeconds(Time.deltaTime);
             }
             nodeCounter--;
         }
-        HoloInstance.transform.position = holoPositionNodes[0].Position;
+        HoloInstance.transform.position = translationData[0].Position;
         HoloInstance.GetComponent<Rigidbody>().useGravity = false;
         HoloInstance.GetComponent<Rigidbody>().velocity = Vector3.zero;
 
@@ -166,7 +153,7 @@ public class RecordPlayback : MonoBehaviour
     System.Collections.IEnumerator Playback()
     {
         UnityEngine.Debug.Log("Playing back");
-        recordPhase = RecordPhase.PlayingBack;
+        GetComponent<RecordManager>().recordPhase = RecordPhase.PlayingBack;
 
         yield return new WaitForSeconds(1.0f);
 
@@ -177,11 +164,11 @@ public class RecordPlayback : MonoBehaviour
         int interactNodesCounter = 0;
 
 
-        for (int i = 0; i < holoPositionNodes.Count - 1; i++)
+        for (int i = 0; i < translationData.Count - 1; i++)
         {
-            if (interactNodesCounter < holoInteractNodes.Count)
+            if (interactNodesCounter < interactionData.Count)
             {
-                if (stopwatch.ElapsedMilliseconds >= holoInteractNodes[interactNodesCounter].Time)
+                if (stopwatch.ElapsedMilliseconds >= interactionData[interactNodesCounter].Time)
                 {
                     //Interaction happened
                     UnityEngine.Debug.Log($"Interact_{interactNodesCounter}");
@@ -189,22 +176,22 @@ public class RecordPlayback : MonoBehaviour
                 }
             }
 
-            while (stopwatch.ElapsedMilliseconds + timeCorrection < holoPositionNodes[i].Time)
+            while (stopwatch.ElapsedMilliseconds + timeCorrection < translationData[i].Time)
             {
-                Vector3 distance = holoPositionNodes[i + 1].Position - holoPositionNodes[i].Position;
+                Vector3 distance = translationData[i + 1].Position - translationData[i].Position;
 
                 if (HoloInstance == null)
                 {
-                    recordPhase = RecordPhase.None;
+                    GetComponent<RecordManager>().recordPhase = RecordPhase.None;
                     yield break;
                 }
 
                 HoloInstance.transform.position += distance * Time.deltaTime * nodeSpawnRate;
-                HoloInstance.transform.rotation = Quaternion.Lerp(holoPositionNodes[i + 1].Rotation, holoPositionNodes[i].Rotation,
-                    Time.time / holoPositionNodes[i].Time);
+                HoloInstance.transform.rotation = Quaternion.Lerp(translationData[i + 1].Rotation, translationData[i].Rotation,
+                    Time.time / translationData[i].Time);
                 yield return new WaitForFixedUpdate();
             }
-            timeCorrection += (stopwatch.ElapsedMilliseconds - holoPositionNodes[i + 1].Time);
+            timeCorrection += (stopwatch.ElapsedMilliseconds - translationData[i + 1].Time);
         }
         stopwatch.Stop();
 
@@ -215,8 +202,6 @@ public class RecordPlayback : MonoBehaviour
     System.Collections.IEnumerator DestroyHolo()
     {
         UnityEngine.Debug.Log("Destroying Holo");
-        recordPhase = RecordPhase.KillingHolo;
-
 
         float fadeValue = 1;
         HoloInstance.GetComponent<MeshRenderer>().material.SetFloat("Vector1_DCDBC5A6", 1);
@@ -229,9 +214,8 @@ public class RecordPlayback : MonoBehaviour
 
         Destroy(HoloInstance);
 
-        recordPhase = RecordPhase.None;
+        GetComponent<RecordManager>().recordPhase = RecordPhase.None;
     }
-
 
 
     /// <summary>
@@ -239,21 +223,15 @@ public class RecordPlayback : MonoBehaviour
     /// </summary>
     private void OnDrawGizmos()
     {
-        if (holoPositionNodes != null)
+        if (translationData != null)
         {
-            for (int i = 0; i < holoPositionNodes.Count; i++)
+            for (int i = 0; i < translationData.Count; i++)
             {
                 Gizmos.color = Color.red;
-                Gizmos.DrawSphere(holoPositionNodes[i].Position, 0.25f);
+                Gizmos.DrawSphere(translationData[i].Position, 0.25f);
 
-                if (i < holoPositionNodes.Count - 1)
-                    Gizmos.DrawLine(holoPositionNodes[i].Position, holoPositionNodes[i].Position + holoPositionNodes[i].Rotation * Vector3.forward);
-            }
-
-            for (int i = 0; i < holoInteractNodes.Count; i++)
-            {
-                Gizmos.color = Color.green;
-                Gizmos.DrawSphere(holoInteractNodes[i].Position, 0.20f);
+                if (i < translationData.Count - 1)
+                    Gizmos.DrawLine(translationData[i].Position, translationData[i].Position + translationData[i].Rotation * Vector3.forward);
             }
 
         }

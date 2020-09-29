@@ -32,6 +32,12 @@ public class PlatformMove : MonoBehaviour
         {
             while (t <= 1)
             {
+                if (GameManager.Instance.GetComponent<RecordManager>().recordPhase == RecordPhase.Rewinding || GameManager.Instance.GetComponent<RecordManager>().recordPhase == RecordPhase.PlayingBack)
+                {
+                    yield return new WaitForFixedUpdate();
+                    continue;
+                }
+
                 t += Time.deltaTime * speed / Vector3.Distance(keyPoints[i], keyPoints[(i + 1) % keyPoints.Length]);
 
                 oldPos = moveable.position;
