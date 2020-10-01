@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,22 +10,28 @@ public class SyncBar : MonoBehaviour
     private Slider slider;
     public GameObject interact;
     private Transform transformForPosition, transformForHierarchy;
-    private List<GameObject> interactionsList;
+    private List<GameObject> actionsList;
 
     private void Awake()
     {
         slider = gameObject.GetComponent<Slider>();
+        actionsList = new List<GameObject>();
         transformForPosition = GameObject.Find("TransformForPosition").GetComponent<Transform>();
         transformForHierarchy = GameObject.Find("TransformForHierarchy").GetComponent<Transform>();
     }
 
     public void Update()
     {
-        slider.value += Time.deltaTime;
+        slider.value += Time.deltaTime / 5;
         if (Input.GetKeyDown("space"))
         {
             Debug.Log("Space pressed in syncbar");
             SpawnAction(Action.Interact);
+        }
+        if (Input.GetKeyDown("r"))
+        {
+            Debug.Log("Space R in syncbar");
+            Reset();
         }
     }
 
@@ -43,8 +50,9 @@ public class SyncBar : MonoBehaviour
         switch (action)
         {
             case Action.Interact:
-                GameObject interaction = Instantiate(interact, transformForHierarchy);
-                interaction.transform.position = transformForPosition.position;
+                GameObject actionGameObj = Instantiate(interact, transformForHierarchy);
+                actionGameObj.transform.position = transformForPosition.position;
+                actionsList.Add(actionGameObj);
                 break;
 
             case Action.None:
@@ -58,8 +66,13 @@ public class SyncBar : MonoBehaviour
         
     }
 
-    public void DeleteActions()
+    public void Reset()
     {
+        SetValue(0);
+        foreach(GameObject action in actionsList)
+        {
+            Destroy(action);
+        }
 
     }
 
