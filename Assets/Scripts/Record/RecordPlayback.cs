@@ -70,6 +70,9 @@ public class RecordPlayback : MonoBehaviour
 
     public System.Collections.IEnumerator SpawnHolo()
     {
+        //Sync Bar logic start
+        GameObject.Find("SyncBar").GetComponent<SyncBar>().StartBar();
+        //Sync Bar logic stop
         UnityEngine.Debug.Log("Spawning Holo");
 
         HoloInstance = Instantiate(holoPrefab);
@@ -110,7 +113,9 @@ public class RecordPlayback : MonoBehaviour
         }
 
         stopwatch.Stop();
-
+        //Sync Bar logic start
+        GameObject.Find("SyncBar").GetComponent<SyncBar>().StopBar();
+        //Sync Bar logic stop
         StartCoroutine(Rewind());
     }
 
@@ -152,6 +157,9 @@ public class RecordPlayback : MonoBehaviour
 
     System.Collections.IEnumerator Playback()
     {
+        //Sync Bar logic start
+        GameObject.Find("SyncBar").GetComponent<SyncBar>().Replay();
+        //Sync Bar logic stop
         UnityEngine.Debug.Log("Playing back");
         GetComponent<RecordManager>().recordPhase = RecordPhase.PlayingBack;
 
@@ -192,9 +200,13 @@ public class RecordPlayback : MonoBehaviour
                 yield return new WaitForFixedUpdate();
             }
             timeCorrection += (stopwatch.ElapsedMilliseconds - translationData[i + 1].Time);
+            
         }
         stopwatch.Stop();
 
+        //Sync Bar logic start
+        GameObject.Find("SyncBar").GetComponent<SyncBar>().Reset();
+        //Sync Bar logic stop
 
         StartCoroutine(DestroyHolo());
     }

@@ -31,7 +31,6 @@ public class RecordManager : MonoBehaviour
             if (recordPhase == RecordPhase.None)
             {
                 StartCoroutine(GetComponent<RecordPlayback>().SpawnHolo());
-
                 foreach (var recObj in Object.FindObjectsOfType<ObjectRecRewPlay>())
                     StartCoroutine(recObj.Record());
 
