@@ -110,7 +110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bcfe6f048cdb8a4c90b9e9f0e3b11c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rayOrigin: {fileID: 2008414011869472252}
+  rayOrigin: {fileID: 0}
   id: 0
 --- !u!1001 &2294754319768848032
 PrefabInstance:
