@@ -26,7 +26,7 @@ public class SyncBar : MonoBehaviour
         if (Input.GetKeyDown("space"))
         {
             Debug.Log("Space pressed in syncbar");
-            SpawnAction(Action.Interact);
+            SpawnInteraction();
         }
         if (Input.GetKeyDown("r"))
         {
@@ -45,25 +45,11 @@ public class SyncBar : MonoBehaviour
         slider.maxValue = value;
     }
 
-    public void SpawnAction(Action action)
+    public void SpawnInteraction()
     {
-        switch (action)
-        {
-            case Action.Interact:
-                GameObject actionGameObj = Instantiate(interact, transformForHierarchy);
-                actionGameObj.transform.position = transformForPosition.position;
-                actionsList.Add(actionGameObj);
-                break;
-
-            case Action.None:
-                Debug.Log("Spawn syncbar NONE");
-                break;
-
-            default:
-                Debug.Log("Spawn syncbar DEFAULT");
-                break;
-        }
-        
+        GameObject actionGameObj = Instantiate(interact, transformForHierarchy);
+        actionGameObj.transform.position = transformForPosition.position;
+        actionsList.Add(actionGameObj);
     }
 
     public void Reset()
