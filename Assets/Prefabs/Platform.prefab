@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5934695933196216464}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: KeyPoints
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5934695933214104219}
   - component: {fileID: 1076465167}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Moveable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -87,7 +87,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5934695934099384853}
   - component: {fileID: 5934695934099384852}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -119,7 +119,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 3, z: 1}
+  m_Size: {x: 0.9, y: 3, z: 0.9}
   m_Center: {x: 0, y: 2, z: 0}
 --- !u!1 &5934695934247360244
 GameObject:
@@ -130,7 +130,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5934695934247360251}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Point (1)
   m_TagString: Untagged
   m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
@@ -163,7 +163,7 @@ GameObject:
   - component: {fileID: 5934695934279170282}
   - component: {fileID: 5934695934279170283}
   - component: {fileID: 5934695934279170276}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -255,7 +255,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5934695934581719882}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Point
   m_TagString: Untagged
   m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
@@ -288,7 +288,7 @@ GameObject:
   - component: {fileID: 5934695934936043609}
   - component: {fileID: 5934695934936043615}
   - component: {fileID: 5934695934936043608}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Platform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -340,7 +340,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  loop: 1
+  loop: 0
 --- !u!114 &5934695934936043608
 MonoBehaviour:
   m_ObjectHideFlags: 0
