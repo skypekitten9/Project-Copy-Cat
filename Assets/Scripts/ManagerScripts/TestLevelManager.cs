@@ -7,6 +7,8 @@ public class TestLevelManager : MonoBehaviour
     private static TestLevelManager instance = null;
     public static TestLevelManager Instance { get { return instance; } }
 
+    [SerializeField] private bool changeSceneOnStart = true;
+
     //Listan som håller alla bools för om dörrar ska vara stängda eller öppna.
     public bool[] interactablesArray;
     [SerializeField] private List<GameObject> doorList;
@@ -36,7 +38,8 @@ public class TestLevelManager : MonoBehaviour
         ListAllDoors();
         SetTestValues();
 
-        GetComponent<SceneTransition>().ChangeToScene(0);
+        if (changeSceneOnStart)
+            GetComponent<SceneTransition>().ChangeToScene(0);
     }
 
     private void Update()
