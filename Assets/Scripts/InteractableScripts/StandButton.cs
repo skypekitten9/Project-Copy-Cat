@@ -41,11 +41,16 @@ public class StandButton : MonoBehaviour
             {
                 SignalChannel();
                 cooldown = 3f;
-                timer = 3f;
             }
             
         }
     }
+
+    private void OnTriggerExit(Collider other)
+    {
+        timer = 3f;
+    }
+    
     private void SignalChannel()
     {
         TestLevelManager.Instance.interactablesArray[id] = !TestLevelManager.Instance.interactablesArray[id];
