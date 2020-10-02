@@ -9,7 +9,7 @@ public class PlayerCamera : MonoBehaviour
 
     private Transform playerBody;
 
-    float mouseY = 0;
+    public float MouseY { get; set; } = 0;
 
     void Start()
     {
@@ -21,10 +21,10 @@ public class PlayerCamera : MonoBehaviour
     void Update()
     {
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-        mouseY += Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+        MouseY += Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
-        mouseY = Mathf.Clamp(mouseY, -90f, 90f);
-        transform.localRotation = Quaternion.Euler(-mouseY, 0f, 0f);
+        MouseY = Mathf.Clamp(MouseY, -90f, 90f);
+        transform.localRotation = Quaternion.Euler(-MouseY, 0f, 0f);
 
         playerBody.Rotate(Vector3.up * mouseX);
     }
