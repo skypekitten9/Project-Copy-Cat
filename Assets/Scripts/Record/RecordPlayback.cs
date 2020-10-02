@@ -74,7 +74,10 @@ public class RecordPlayback : MonoBehaviour
 
         HoloInstance.transform.position = PlayerManager.Instance.transform.position;
         HoloInstance.transform.rotation = PlayerManager.Instance.transform.rotation;
+
+        HoloInstance.transform.GetChild(0).GetComponent<PlayerCamera>().MouseY = PlayerManager.Instance.transform.GetChild(0).GetComponent<PlayerCamera>().MouseY;
         HoloInstance.transform.GetChild(0).localRotation = PlayerManager.Instance.transform.GetChild(0).localRotation;
+
         startCameraRotation = HoloInstance.transform.GetChild(0).localRotation;
 
         HoloInstance.GetComponent<MeshRenderer>().material.SetFloat("Vector1_DCDBC5A6", 1);
