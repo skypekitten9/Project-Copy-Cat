@@ -162,9 +162,6 @@ public class RecordPlayback : MonoBehaviour
         //Sync Bar logic stop
         UnityEngine.Debug.Log("Playing back");
         GetComponent<RecordManager>().recordPhase = RecordPhase.PlayingBack;
-
-        yield return new WaitForSeconds(1.0f);
-
         float timeCorrection = 0.0f;
         Stopwatch stopwatch = new Stopwatch();
         stopwatch.Start();
