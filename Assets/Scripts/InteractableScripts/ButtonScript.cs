@@ -8,7 +8,7 @@ public class ButtonScript : MonoBehaviour
     [SerializeField]
     private GameObject rayOrigin;
     private Ray ray;
-    [SerializeField] private int id;
+    [SerializeField] public int id;
 
     void Start()
     {
@@ -17,22 +17,22 @@ public class ButtonScript : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            float range = 1f;
-            ray = new Ray(transform.position, transform.up);
+        //if (Input.GetKeyDown(KeyCode.E))
+        //{
+        //    float range = 1f;
+        //    ray = new Ray(transform.position, transform.up);
 
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit))
-            {
-                if (hit.distance < range)
-                {
-                    SignalChannel();
-                }
-            }
-        }
+        //    RaycastHit hit;
+        //    if (Physics.Raycast(ray, out hit))
+        //    {
+        //        if (hit.distance < range)
+        //        {
+        //            SignalChannel();
+        //        }
+        //    }
+        //}
     }
-    private void SignalChannel()
+    public void SignalChannel()
     {
         TestLevelManager.Instance.interactablesArray[id] = !TestLevelManager.Instance.interactablesArray[id];
         TestLevelManager.Instance.UpdateChannels();
