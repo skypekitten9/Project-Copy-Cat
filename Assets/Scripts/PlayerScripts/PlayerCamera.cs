@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public class PlayerCamera : MonoBehaviour
@@ -8,6 +9,7 @@ public class PlayerCamera : MonoBehaviour
 
     private Transform playerBody;
 
+    float mouseY = 0;
 
     void Start()
     {
@@ -19,9 +21,11 @@ public class PlayerCamera : MonoBehaviour
     void Update()
     {
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+        mouseY += Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
-        transform.localEulerAngles -= new Vector3(Mathf.Clamp(mouseY, -90.0f, 90.0f), 0.0f, 0.0f);
+        mouseY = Mathf.Clamp(mouseY, -90f, 90f);
+        transform.localRotation = Quaternion.Euler(-mouseY, 0f, 0f);
+
         playerBody.Rotate(Vector3.up * mouseX);
     }
 

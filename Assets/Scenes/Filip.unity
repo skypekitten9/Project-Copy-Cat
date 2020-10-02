@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.274
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.23746154, g: 0.26651895, b: 0.3122352, a: 0.274}
+  m_IndirectSpecularColor: {r: 0.23746133, g: 0.2665186, b: 0.3122348, a: 0.274}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2327,6 +2327,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2011431039, guid: 1f2709a2e9da4b44b92e6d6e2019b984, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7530807761338956305, guid: 1f2709a2e9da4b44b92e6d6e2019b984, type: 3}
       propertyPath: m_Name
       value: Game Manager
