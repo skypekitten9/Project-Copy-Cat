@@ -46,19 +46,22 @@ public class ObjectRecRewPlay : MonoBehaviour
         float tolerance = recordManger.RewindSpeed;
         int nodeCounter = translationData.Count - 1;
 
-        while (nodeCounter > 0)
+        if (translationData.Count > 0)
         {
-            while (Vector3.Distance(gameObject.transform.position, translationData[nodeCounter - 1].Position) >= tolerance)
+            while (nodeCounter > 0)
             {
-                Vector3 direction = Vector3.Normalize(translationData[nodeCounter - 1].Position - gameObject.transform.position);
-                float t = -(Vector3.Distance(gameObject.transform.position, translationData[0].Position) / Vector3.Distance(translationData[translationData.Count - 1].Position, translationData[0].Position)) + 1;
+                while (Vector3.Distance(gameObject.transform.position, translationData[nodeCounter - 1].Position) >= tolerance)
+                {
+                    Vector3 direction = Vector3.Normalize(translationData[nodeCounter - 1].Position - gameObject.transform.position);
+                    float t = -(Vector3.Distance(gameObject.transform.position, translationData[0].Position) / Vector3.Distance(translationData[translationData.Count - 1].Position, translationData[0].Position)) + 1;
 
-                gameObject.transform.position += direction * recordManger.RewindSpeed;
-                gameObject.transform.rotation = Quaternion.Lerp(translationData[translationData.Count - 1].Rotation, translationData[0].Rotation, t);
+                    gameObject.transform.position += direction * recordManger.RewindSpeed;
+                    gameObject.transform.rotation = Quaternion.Lerp(translationData[translationData.Count - 1].Rotation, translationData[0].Rotation, t);
 
-                yield return new WaitForSeconds(Time.deltaTime);
+                    yield return new WaitForSeconds(Time.deltaTime);
+                }
+                nodeCounter--;
             }
-            nodeCounter--;
         }
 
         StartCoroutine(Playback());
