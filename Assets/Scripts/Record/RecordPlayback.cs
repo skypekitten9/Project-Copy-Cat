@@ -28,15 +28,9 @@ public class RecordPlayback : MonoBehaviour
         ChangeControlState(ControlStates.Player);
     }
 
-
-    private void Update()
+    public void AddInteractionNode(params int [] id)
     {
-        /*Stub - let InputManager call this*/
-        if (GetComponent<RecordManager>().recordPhase == RecordPhase.Recording && Input.GetKeyDown(KeyCode.E))
-        {
-            interactionData.Add(new InteractionData(stopwatch.ElapsedMilliseconds, 0));
-        }
-       
+        interactionData.Add(new InteractionData(stopwatch.ElapsedMilliseconds, id));
     }
 
 
@@ -178,6 +172,13 @@ public class RecordPlayback : MonoBehaviour
             {
                 if (stopwatch.ElapsedMilliseconds >= interactionData[interactNodesCounter].Time)
                 {
+                    for (int j = 0; j < interactionData[interactNodesCounter].InteractionChannels.Length; j++)
+                    {
+                        TestLevelManager.Instance.interactablesArray[interactionData[interactNodesCounter].InteractionChannels[j]] = 
+                            !TestLevelManager.Instance.interactablesArray[interactionData[interactNodesCounter].InteractionChannels[j]];
+                    }
+
+                    TestLevelManager.Instance.NotifyDoors();
                     //Interaction happened
                     UnityEngine.Debug.Log($"Interact_{interactNodesCounter}");
                     interactNodesCounter++;

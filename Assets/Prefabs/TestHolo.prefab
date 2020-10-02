@@ -115,6 +115,7 @@ GameObject:
   - component: {fileID: 1909412745}
   - component: {fileID: 1309840677878657507}
   - component: {fileID: -6536858194939864861}
+  - component: {fileID: -3120450570939440746}
   m_Layer: 10
   m_Name: TestHolo
   m_TagString: Untagged
@@ -309,6 +310,18 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &-3120450570939440746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7080639609443014647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 826f97606894a314a9431e12347fe21c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7080639610281196977
 GameObject:
   m_ObjectHideFlags: 0
