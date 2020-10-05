@@ -1,9 +1,22 @@
 fileFormatVersion: 2
-guid: 32c9d330e75f00e4b8fe4e7271385812
+guid: f393e98c9d32ec94790b26728e3f80ae
 ModelImporter:
   serializedVersion: 20101
-  internalIDToNameTable: []
-  externalObjects: {}
+  internalIDToNameTable:
+  - first:
+      74: 2574819863384206992
+    second: Platform_Armature|Platform_ArmatureAction
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Floating_platform_color1
+    second: {fileID: 2100000, guid: 48e04f0b80f67164cbffcfcce850b8ae, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Floating_platform_light
+    second: {fileID: 2100000, guid: ca43401bfaed1134983d096d10717bd6, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

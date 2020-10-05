@@ -1,38 +1,87 @@
 fileFormatVersion: 2
-guid: abc4f7be747eaab46994687b49b3b8b3
+guid: 252404935a949d14d93da753456d3c8e
 ModelImporter:
   serializedVersion: 20101
   internalIDToNameTable:
   - first:
-      74: -5573110798570087305
-    second: Door_Armature|Door_Close
-  - first:
-      74: 1753849385567431708
-    second: Door_Armature|Door_Open
-  - first:
-      74: -5326317540858007038
-    second: Door_Armature|Door_Open (1)
+      74: 8552077564620529398
+    second: Cube.146|Cube.134Action
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Blue_light
-    second: {fileID: 2100000, guid: 8c6e8d24743a4bb4284189b379c0934d, type: 2}
+      name: Demo_Level_End
+    second: {fileID: 2100000, guid: cdcac3a081bba6d4e8a4e917c46e3e4f, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Button_support
-    second: {fileID: 2100000, guid: d94ea6f23a1c01141ae5a797d8a00eef, type: 2}
+      name: Demo_Level_End_Light
+    second: {fileID: 2100000, guid: e30f10ee4cc1ced47945350fb2f89010, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Door_color1
-    second: {fileID: 2100000, guid: 3a98d4f7cdcdd284a86b1552b0abb07c, type: 2}
+      name: Demo_Level_Enterance
+    second: {fileID: 2100000, guid: 53994df22412ffa4ba866154abcb203d, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Door_color2
-    second: {fileID: 2100000, guid: 780155019ee724841ad97d1a6283a22f, type: 2}
+      name: Demo_Level_Enterance_Light
+    second: {fileID: 2100000, guid: 673445e6fcbb87d4e899904170cececa, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Demo_Level_Pillars
+    second: {fileID: 2100000, guid: 3f38fe64ccbb3044ab4d374a23f68634, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Demo_Level_Pillars_Light
+    second: {fileID: 2100000, guid: ea55ad455da90574c89c5d0348e07692, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Demo_Level_Pillars_Light2
+    second: {fileID: 2100000, guid: cb30258a50cd44846836353246f4b13d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Demo_Level_Wall
+    second: {fileID: 2100000, guid: 742980116eba5fc47a481a92211e61fd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Demo_Level_Wire_Color
+    second: {fileID: 2100000, guid: 62f0f8ff7e2501d409021ddc88fbca14, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Floor
+    second: {fileID: 2100000, guid: a15c23d1c61f06b43a5936303ab88813, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Floor_Light
+    second: {fileID: 2100000, guid: 2bf391d1a4f3ab749a2abdc0e590f60f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: No Name
+    second: {fileID: 2100000, guid: bd403dfd606dbd945accd1ca48778be6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: UpArrow_Color
+    second: {fileID: 2100000, guid: b42d1c626dffed542a6565642003d9bd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: UpArrow_Light
+    second: {fileID: 2100000, guid: bcecb76d1a6448a4896b52da060274b1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Void
+    second: {fileID: 2100000, guid: 5a464a12b57cdc44d889ffd908ca3055, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
@@ -59,65 +108,7 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations:
-    - serializedVersion: 16
-      name: Door_Armature|Door_Open (1)
-      takeName: Door_Armature|Door_Open
-      internalID: 0
-      firstFrame: 0
-      lastFrame: 41
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: Door_Armature|Door_Close
-      takeName: Door_Armature|Door_Close
-      internalID: 0
-      firstFrame: 0
-      lastFrame: 41
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
+    clipAnimations: []
     isReadable: 0
   meshes:
     lODScreenPercentages: []

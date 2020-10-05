@@ -1,38 +1,36 @@
 fileFormatVersion: 2
-guid: abc4f7be747eaab46994687b49b3b8b3
+guid: b420f25bf97f63947b9120ad6264a14e
 ModelImporter:
   serializedVersion: 20101
   internalIDToNameTable:
   - first:
-      74: -5573110798570087305
-    second: Door_Armature|Door_Close
+      74: -8169130396994861445
+    second: Armature|Cube.134Action
   - first:
-      74: 1753849385567431708
-    second: Door_Armature|Door_Open
+      74: -6284119842423112431
+    second: Armature|Turret_Activate
   - first:
-      74: -5326317540858007038
-    second: Door_Armature|Door_Open (1)
+      74: -1819817702846661889
+    second: Armature|Turret_Idle
+  - first:
+      74: 6558778077076684143
+    second: Armature|Turret_Idle (1)
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Blue_light
-    second: {fileID: 2100000, guid: 8c6e8d24743a4bb4284189b379c0934d, type: 2}
+      name: Turret_color1
+    second: {fileID: 2100000, guid: 397ee0912d342674f894d44020ecc0ca, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Button_support
-    second: {fileID: 2100000, guid: d94ea6f23a1c01141ae5a797d8a00eef, type: 2}
+      name: Turret_color2
+    second: {fileID: 2100000, guid: 0008315d348e3704ab0abb262befd66d, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Door_color1
-    second: {fileID: 2100000, guid: 3a98d4f7cdcdd284a86b1552b0abb07c, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Door_color2
-    second: {fileID: 2100000, guid: 780155019ee724841ad97d1a6283a22f, type: 2}
+      name: Turret_light
+    second: {fileID: 2100000, guid: 1d3253ed6b4f6be46885f3b1389a2acf, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
@@ -61,8 +59,8 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Door_Armature|Door_Open (1)
-      takeName: Door_Armature|Door_Open
+      name: Armature|Turret_Activate
+      takeName: Armature|Turret_Activate
       internalID: 0
       firstFrame: 0
       lastFrame: 41
@@ -90,8 +88,8 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Door_Armature|Door_Close
-      takeName: Door_Armature|Door_Close
+      name: Armature|Turret_Idle
+      takeName: Armature|Turret_Idle
       internalID: 0
       firstFrame: 0
       lastFrame: 41
