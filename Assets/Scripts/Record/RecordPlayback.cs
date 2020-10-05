@@ -154,15 +154,15 @@ public class RecordPlayback : MonoBehaviour
 
     System.Collections.IEnumerator Playback()
     {
-        //Sync Bar logic start
-        GameObject.Find("SyncBar").GetComponent<SyncBar>().Replay();
-        //Sync Bar logic stop
+        
         UnityEngine.Debug.Log("Playing back");
         GetComponent<RecordManager>().recordPhase = RecordPhase.PlayingBack;
         float timeCorrection = 0.0f;
         Stopwatch stopwatch = new Stopwatch();
         stopwatch.Start();
-
+        //Sync Bar logic start
+        GameObject.Find("SyncBar").GetComponent<SyncBar>().Replay();
+        //Sync Bar logic stop
         int interactNodesCounter = 0;
 
 
@@ -201,7 +201,6 @@ public class RecordPlayback : MonoBehaviour
                 yield return new WaitForFixedUpdate();
             }
             timeCorrection += (stopwatch.ElapsedMilliseconds - translationData[i + 1].Time);
-            
         }
         stopwatch.Stop();
 

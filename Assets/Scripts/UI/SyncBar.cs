@@ -80,7 +80,7 @@ public class SyncBar : MonoBehaviour
         {
             Destroy(action);
         }
-
+        StopBar();
     }
 
     private void Hide()
