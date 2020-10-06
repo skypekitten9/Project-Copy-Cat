@@ -17,10 +17,10 @@ public class ButtonScript : MonoBehaviour
         
 
     }
-    public void SignalChannel(bool status)
+    public void SignalChannel()
     {
 
-        TestLevelManager.Instance.interactablesArray[id] = status;
+        TestLevelManager.Instance.interactablesArray[id] = !TestLevelManager.Instance.interactablesArray[id];
         TestLevelManager.Instance.UpdateChannels();
     }
 
