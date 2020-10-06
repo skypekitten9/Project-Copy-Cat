@@ -93,7 +93,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3599382170308285367}
   - component: {fileID: 3925215270914276343}
-  - component: {fileID: 3925215270914276337}
+  - component: {fileID: 5829284473418602320}
   m_Layer: 0
   m_Name: PressButton
   m_TagString: Interactable
@@ -131,7 +131,7 @@ CapsuleCollider:
   m_Height: 8.082221
   m_Direction: 1
   m_Center: {x: 0, y: 3.5411105, z: 0}
---- !u!114 &3925215270914276337
+--- !u!114 &5829284473418602320
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
