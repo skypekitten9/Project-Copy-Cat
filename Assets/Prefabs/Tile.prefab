@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2984507545212575061}
   - component: {fileID: 1049319494671837599}
   - component: {fileID: 919132148097199016}
-  - component: {fileID: 1458000170892990614}
+  - component: {fileID: 7008911081674136157}
   m_Layer: 0
   m_Name: Tile
   m_TagString: Untagged
@@ -96,8 +96,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deselected: {fileID: 2100000, guid: c7211992a0efa434dbc88b0923db970d, type: 2}
-  selected: {fileID: 2100000, guid: 56386f3a0acdfb446b480b061ef52699, type: 2}
---- !u!64 &1458000170892990614
+  selected: {fileID: 2100000, guid: 68c36687caa9e794b9eb9a9d8a1701df, type: 2}
+--- !u!64 &7008911081674136157
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
