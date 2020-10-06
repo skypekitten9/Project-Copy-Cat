@@ -6,7 +6,7 @@ public class ButtonScript : MonoBehaviour
 {
     private Ray ray;
     [SerializeField] public int id;
-
+    
     void Start()
     {
         
@@ -14,24 +14,13 @@ public class ButtonScript : MonoBehaviour
 
     void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.E))
-        //{
-        //    float range = 1f;
-        //    ray = new Ray(transform.position, transform.up);
+        
 
-        //    RaycastHit hit;
-        //    if (Physics.Raycast(ray, out hit))
-        //    {
-        //        if (hit.distance < range)
-        //        {
-        //            SignalChannel();
-        //        }
-        //    }
-        //}
     }
-    public void SignalChannel()
+    public void SignalChannel(bool status)
     {
-        TestLevelManager.Instance.interactablesArray[id] = !TestLevelManager.Instance.interactablesArray[id];
+
+        TestLevelManager.Instance.interactablesArray[id] = status;
         TestLevelManager.Instance.UpdateChannels();
     }
 
