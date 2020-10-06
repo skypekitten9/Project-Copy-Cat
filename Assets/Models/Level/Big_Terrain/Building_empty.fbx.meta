@@ -3,7 +3,32 @@ guid: 923f3c035748dd94893daf56b1674aa0
 ModelImporter:
   serializedVersion: 20101
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Building_Color1
+    second: {fileID: 2100000, guid: f6977a880afe59a4da1486b865ddbc5c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Building_Color2
+    second: {fileID: 2100000, guid: 3f2ef7a9265e96d409e53331655ea559, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Building_glass
+    second: {fileID: 2100000, guid: 3069c4160675e42409c980d20473e04a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: No Name
+    second: {fileID: 2100000, guid: 73f9e05d041944044bc263bfe5ac67ca, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Pipe
+    second: {fileID: 2100000, guid: 78eb3312d95027d44945aceb0ec80394, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

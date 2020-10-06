@@ -3,7 +3,42 @@ guid: 747c040ef42a8f74db97abf138a2773a
 ModelImporter:
   serializedVersion: 20101
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Big_building_color2
+    second: {fileID: 2100000, guid: b0e1ef9bf9d411840a0ddf5821f9bc73, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Big_buildnig_color3
+    second: {fileID: 2100000, guid: e9fcc87c5a9c9064b826b465824e1874, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Big_buildning_color1
+    second: {fileID: 2100000, guid: 0a12016cefa97774f83230cf4c8e7974, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Big_city_Light
+    second: {fileID: 2100000, guid: 3ccb247dc2437a649b033dfb07094b0a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Big_city_Spotlights
+    second: {fileID: 2100000, guid: 25cca3bd3a0146b408ea1d6ee9b688c6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Big_pipe
+    second: {fileID: 2100000, guid: 01e0dc7eeeaccbd4f84dde8cbe758e94, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Pipe
+    second: {fileID: 2100000, guid: e174de61741cbd14bbb09890580adb3a, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
