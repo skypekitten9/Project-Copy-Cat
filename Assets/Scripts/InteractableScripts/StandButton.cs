@@ -6,54 +6,30 @@ public class StandButton : MonoBehaviour
 {
 
     [SerializeField] private int id;
-    [SerializeField] private float timer;
-    [SerializeField] private float cooldown;
     // Start is called before the first frame update
     void Start()
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if(timer > 0)
-        {
-            timer -= Time.deltaTime;
-            if (timer <= 0)
-            {
-                SignalChannel();
-                
-            }
-        }
-        if (cooldown > 0)
-        {
-            cooldown -= Time.deltaTime;
-        }
-
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         if(other.GetComponent<PlayerMovement>() != null)
         {
-            if(cooldown <= 0)
-            {
-                SignalChannel();
-                cooldown = 3f;
-            }
-            
+            SignalChannel(true);
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        timer = 3f;
+        SignalChannel(false);
     }
     
-    private void SignalChannel()
+    private void SignalChannel(bool status)
     {
-        TestLevelManager.Instance.interactablesArray[id] = !TestLevelManager.Instance.interactablesArray[id];
+        TestLevelManager.Instance.interactablesArray[id] = status;
         TestLevelManager.Instance.UpdateChannels();
     }
+
+
 }
