@@ -38,7 +38,7 @@ public class PlayerInteraction : MonoBehaviour
             {
                 if (hit.collider.tag == "Interactable")
                 {
-                    hit.collider.gameObject.GetComponent<ButtonScript>().SignalChannel(true);
+                    hit.collider.gameObject.GetComponent<ButtonScript>().SignalChannel();
 
                     if (GameManager.Instance.GetComponent<RecordManager>().recordPhase == RecordPhase.Recording)
                     {
