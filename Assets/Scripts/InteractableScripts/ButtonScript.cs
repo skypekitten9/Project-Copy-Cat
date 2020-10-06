@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class ButtonScript : MonoBehaviour
 {
-   
-    [SerializeField]
-    private GameObject rayOrigin;
     private Ray ray;
     [SerializeField] public int id;
 
