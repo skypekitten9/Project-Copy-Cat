@@ -53,4 +53,9 @@ public class PlayerInteraction : MonoBehaviour
     {
 
     }
+
+    public void RecieveDamage(int damage)
+    {
+        PlayerManager.Instance.playerHealth -= damage;
+    }
 }

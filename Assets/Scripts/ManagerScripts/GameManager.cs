@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
@@ -18,5 +19,10 @@ public class GameManager : MonoBehaviour
             instance = this;
 
         DontDestroyOnLoad(this.gameObject);
+    }
+
+    public void DamagePlayer(int damage)
+    {
+        player.GetComponent<PlayerInteraction>().RecieveDamage(damage);
     }
 }

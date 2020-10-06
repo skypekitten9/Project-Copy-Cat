@@ -7,12 +7,32 @@ public class Turret : MonoBehaviour
 {
     [SerializeField] private Transform eye;
     private float turningSpeed = 1.0f;
+    private float firingRate = 0.2f;
+    private float reloadFire;
+    private float firingRange = 5f;
+    private int damage = 2;
 
     private RaycastHit hit;
+    LineRenderer lineRenderer;
+
+    Vector3 distanceToTarget;
+    Vector3 destination;
+
     [SerializeField] private LayerMask layerMask;
 
     private Color debugColor = Color.white;
 
+    private void Start()
+    {
+        reloadFire = firingRate;
+
+        lineRenderer = gameObject.GetComponent<LineRenderer>();
+        lineRenderer.SetPosition(0, transform.position);
+        lineRenderer.startWidth = 0.2f; 
+        lineRenderer.endWidth = 0.2f;
+        lineRenderer.enabled = false;
+
+    }
 
     void Update()
     {
@@ -33,27 +53,43 @@ public class Turret : MonoBehaviour
         Vector3 rotationDir = Vector3.RotateTowards(transform.forward, new Vector3(targetDirection.x, 0, targetDirection.z), step, 0);
         transform.eulerAngles = Quaternion.LookRotation(rotationDir).eulerAngles;
 
+        firingRate -= Time.deltaTime;
 
-        Physics.Raycast(eye.position, targetDirection, out hit, Mathf.Infinity, layerMask);
+        Physics.Raycast(eye.position, targetDirection, out hit, firingRange, layerMask);
 
         if (hit.transform != null)
         {
             switch (hit.transform.gameObject.layer)
             {
                 case 9:     //Player
-                    debugColor = Color.blue;
+                    lineRenderer.enabled = true;
+                    lineRenderer.SetPosition(1, hit.transform.position);
+                    if (firingRate <= 0)
+                    {
+                        GameManager.Instance.DamagePlayer(damage);
+
+                        firingRate = reloadFire;
+                    }
+                    
                     break;
 
                 case 10:    //Hologram
-                    debugColor = new Color(0, 0.2f, 0.7f);
+                    lineRenderer.enabled = true;
+                    lineRenderer.SetPosition(1, hit.transform.position);
+                    //debugColor = new Color(0, 0.2f, 0.7f);
                     break;
 
                 default:
-                    debugColor = Color.white;
+                    lineRenderer.enabled = false;
+                    //debugColor = Color.white;
                     break;
             }
 
-            Debug.DrawLine(eye.position, hit.point, debugColor);
+            //Debug.DrawLine(eye.position, hit.point, debugColor);
+        }
+        else
+        {
+            lineRenderer.enabled = false;
         }
     }
 
