@@ -20,9 +20,19 @@ public class ButtonScript : MonoBehaviour
     }
     public void SignalChannel()
     {
+        if(TestLevelManager.Instance.interactablesArray[id] == false)
+        {
+            TestLevelManager.Instance.interactablesArray[id] = true;
+            animator.SetTrigger("pressed");
+            TestLevelManager.Instance.UpdateChannels();
+            StartCoroutine(RevertSignal());
+        }
+    }
 
-        TestLevelManager.Instance.interactablesArray[id] = !TestLevelManager.Instance.interactablesArray[id];
-        animator.SetTrigger("pressed");
+    IEnumerator RevertSignal()
+    {
+        yield return new WaitForSeconds(1f);
+        TestLevelManager.Instance.interactablesArray[id] = false;
         TestLevelManager.Instance.UpdateChannels();
     }
 

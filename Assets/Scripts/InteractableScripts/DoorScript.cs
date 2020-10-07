@@ -12,8 +12,13 @@ public class DoorScript : MonoBehaviour
     [SerializeField] private int doorID;
     [SerializeField] private int doorID2;
 
+    //If true the door can open more than once
+    public bool dynamicDoor;
+    int doorOpenedCount;
+
     void Start()
     {
+        doorOpenedCount = 0;
         animator = gameObject.GetComponentInChildren<Animator>();
         collider = gameObject.GetComponent<BoxCollider>();
         collider.enabled = true;
@@ -36,16 +41,20 @@ public class DoorScript : MonoBehaviour
     //Dörren tittar ifall dens channel har uppdaterats.
     public void ListenToChannel()
     {
-        Debug.Log("Listening!");
-        if (TestLevelManager.Instance.interactablesArray[doorID] == true && TestLevelManager.Instance.interactablesArray[doorID2] == true)
+        if(doorOpenedCount == 0 || dynamicDoor)
         {
-            animator.SetBool("isOpened", true);
-            collider.enabled = false;
-        }
-        else
-        {
-            animator.SetBool("isOpened", false);
-            collider.enabled = true;
+            Debug.Log("Listening!");
+            if (TestLevelManager.Instance.interactablesArray[doorID] == true && TestLevelManager.Instance.interactablesArray[doorID2] == true)
+            {
+                animator.SetBool("isOpened", true);
+                collider.enabled = false;
+                doorOpenedCount++;
+            }
+            else
+            {
+                animator.SetBool("isOpened", false);
+                collider.enabled = true;
+            }
         }
     }
 }
