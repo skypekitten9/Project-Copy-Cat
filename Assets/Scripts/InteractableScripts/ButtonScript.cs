@@ -31,7 +31,7 @@ public class ButtonScript : MonoBehaviour
 
     IEnumerator RevertSignal()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.4f);
         TestLevelManager.Instance.interactablesArray[id] = false;
         TestLevelManager.Instance.UpdateChannels();
     }
