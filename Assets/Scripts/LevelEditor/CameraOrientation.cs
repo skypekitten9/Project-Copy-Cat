@@ -10,7 +10,7 @@ public class CameraOrientation : MonoBehaviour
 
     private float zoom;
     private float zoomSpeed = 1000.0f;
-    private Vector2 zoomClamp = new Vector2(5.0f, 20.0f);
+    private Vector2 zoomClamp = new Vector2(5.0f, 50.0f);
 
 
     private void Start()
