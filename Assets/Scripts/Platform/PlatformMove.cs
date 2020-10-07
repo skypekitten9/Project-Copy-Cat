@@ -49,5 +49,7 @@ public class PlatformMove : MonoBehaviour
             t = 0;
             moveable.position = keyPoints[(i + 1) % keyPoints.Length];
         }
+
+        if (loop) StartCoroutine(Move());
     }
 }
