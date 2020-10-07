@@ -1,29 +1,15 @@
 fileFormatVersion: 2
-guid: a1e6141723540cc4c93b4354eaa611f4
+guid: 0b2065b4204342a418bdfcdd683de8e0
 ModelImporter:
   serializedVersion: 20101
-  internalIDToNameTable: []
-  externalObjects:
+  internalIDToNameTable:
   - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Blue_light
-    second: {fileID: 2100000, guid: e23f28ac953a4204daef2801f00778ef, type: 2}
+      74: 8724945379651854735
+    second: Armature.001|StandButton_Click
   - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Button
-    second: {fileID: 2100000, guid: 56386f3a0acdfb446b480b061ef52699, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Button_chassi_main_color
-    second: {fileID: 2100000, guid: dd6cfe4166d03e44aabe018d2895d89a, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Button_support
-    second: {fileID: 2100000, guid: 6b9f469c434d43e458cbf685598bb80f, type: 2}
+      74: -8418426116486278650
+    second: Armature.001|StandButton_Push
+  externalObjects: {}
   materials:
     materialImportMode: 1
     materialName: 0
