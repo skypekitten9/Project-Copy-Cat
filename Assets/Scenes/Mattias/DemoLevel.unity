@@ -2962,6 +2962,14 @@ PrefabInstance:
       propertyPath: changeSceneOnStart
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8141489727255726762, guid: 8aa23f03f65e43344bb10e42a4685873, type: 3}
+      propertyPath: levels.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: c9f53fb7f0ecdb0458e1982a8acbab35, type: 2}
+    - target: {fileID: 8141489727255726762, guid: 8aa23f03f65e43344bb10e42a4685873, type: 3}
+      propertyPath: levels.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: d3dfa471534dd924a926ce2ef25863ef, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8aa23f03f65e43344bb10e42a4685873, type: 3}
 --- !u!1 &2124617471

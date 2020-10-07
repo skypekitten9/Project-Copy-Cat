@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d2c1c787c0190a4da6da8002a2a45fd, type: 3}
   m_Name: Level_1
   m_EditorClassIdentifier: 
-  startPosition: {x: 0, y: 10, z: 0}
-  goalPosition: {x: 11, y: 0, z: 11}
-  nextLevelIndex: 0
+  startPosition: {x: 0, y: 3, z: -15}
+  goalPosition: {x: 0, y: 0, z: 17}
+  nextLevelIndex: -1
