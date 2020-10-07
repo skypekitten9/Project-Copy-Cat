@@ -15,6 +15,7 @@ public class DoorScript : MonoBehaviour
     bool isOpen;
 
     [SerializeField] private int doorID;
+    [SerializeField] private int doorID2;
 
     void Start()
     {
@@ -65,7 +66,7 @@ public class DoorScript : MonoBehaviour
     //Dörren tittar ifall dens channel har uppdaterats.
     public void ListenToChannel()
     {
-        if (TestLevelManager.Instance.interactablesArray[doorID] == true)
+        if (TestLevelManager.Instance.interactablesArray[doorID] == true && TestLevelManager.Instance.interactablesArray[doorID2] == true)
         {
             isOpen = true;
         }
