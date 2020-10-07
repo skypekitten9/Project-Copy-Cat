@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPosition: {x: 0, y: 3, z: -15}
   goalPosition: {x: 0, y: 0, z: 17}
-  nextLevelIndex: -1
+  nextLevelIndex: 0
