@@ -46,22 +46,22 @@ public class DoorScript : MonoBehaviour
             }
         }
 
-        TestDoor();
+        //TestDoor();
     }
 
     //Manuel testning av att öppna och stänga dörrar.
-    void TestDoor()
-    {
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            isOpen = true;
-        }
+    //void TestDoor()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.T))
+    //    {
+    //        isOpen = true;
+    //    }
 
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            isOpen = false;
-        }
-    }
+    //    if (Input.GetKeyDown(KeyCode.Y))
+    //    {
+    //        isOpen = false;
+    //    }
+    //}
 
     //Dörren tittar ifall dens channel har uppdaterats.
     public void ListenToChannel()
