@@ -42,6 +42,7 @@ public class PlayerInteraction : MonoBehaviour
 
                     if (GameManager.Instance.GetComponent<RecordManager>().recordPhase == RecordPhase.Recording)
                     {
+                        GameObject.Find("SyncBar").GetComponent<SyncBar>().SpawnInteraction();
                         GameManager.Instance.GetComponent<RecordPlayback>().AddInteractionNode(hit.collider.gameObject.GetComponent<ButtonScript>().id);
                     }
                 }
