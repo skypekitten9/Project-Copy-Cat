@@ -5,11 +5,12 @@ using UnityEngine;
 public class ButtonScript : MonoBehaviour
 {
     private Ray ray;
+    Animator animator;
     [SerializeField] public int id;
 
     void Start()
     {
-        
+        animator = gameObject.GetComponentInChildren<Animator>();
     }
 
     void Update()
@@ -32,6 +33,7 @@ public class ButtonScript : MonoBehaviour
     public void SignalChannel()
     {
         TestLevelManager.Instance.interactablesArray[id] = !TestLevelManager.Instance.interactablesArray[id];
+        animator.SetBool("isPressed", TestLevelManager.Instance.interactablesArray[id]);
         TestLevelManager.Instance.UpdateChannels();
     }
 
