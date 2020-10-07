@@ -233,7 +233,9 @@ public class RecordPlayback : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
 
-        Destroy(HoloInstance);
+        HoloInstance.transform.position = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
+        yield return new WaitForSeconds(0.25f);
+       Destroy(HoloInstance);
 
         GetComponent<RecordManager>().recordPhase = RecordPhase.None;
     }
