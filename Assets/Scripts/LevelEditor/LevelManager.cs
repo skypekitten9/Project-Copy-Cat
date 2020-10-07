@@ -9,7 +9,7 @@ public class LevelManager : MonoBehaviour
 
     private Transform tilesParent;
 
-    private readonly Vector3Int maxTiles = new Vector3Int(21, 5, 21);
+    private readonly Vector3Int maxTiles = new Vector3Int(21, 7, 21);
     Tile_Selectable[,,,] tiles;
 
 
@@ -32,25 +32,25 @@ public class LevelManager : MonoBehaviour
 
     private void CreateStartRoom()
     {
-        for (int i = 0; i < maxTiles.x; i++)
-        {
-            for (int j = 0; j < maxTiles.y; j++)
-            {
-                for (int k = 0; k < maxTiles.z; k++)
-                {
+        //for (int i = 0; i < maxTiles.x; i++)
+        //{
+        //    for (int j = 0; j < maxTiles.y; j++)
+        //    {
+        //        for (int k = 0; k < maxTiles.z; k++)
+        //        {
 
-                    PlaceTile(i, j, k, 0);
-                }
+        //            PlaceTile(i, j, k, 0);
+        //        }
+        //    }
+        //}
+
+        for (int x = 0; x < 5; x++)
+        {
+            for (int z = 0; z < 4; z++)
+            {
+                PlaceTile(x + 9, 2, z + 11, 0);
             }
         }
-        //for (int i = 0; i < maxTiles.y; i++)
-        //{
-        //    PlaceTile(11, i, 11, 0);
-        //}
-        //for (int i = 0; i < maxTiles.z; i++)
-        //{
-        //    PlaceTile(11, 2, i, 0);
-        //}
     }
 
 
