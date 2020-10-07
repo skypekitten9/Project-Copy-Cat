@@ -30,6 +30,19 @@ public class TestLevelManager : MonoBehaviour
         DontDestroyOnLoad(this);
     }
 
+    private void OnLevelWasLoaded(int level)
+    {
+        interactablesArray = new bool[30];
+        doorList = new List<GameObject>();
+
+        ListAllDoors();
+        SetTestValues();
+
+        if (changeSceneOnStart)
+            GetComponent<SceneTransition>().ChangeToScene(0);
+    }
+
+
     private void Start()
     {
         interactablesArray = new bool[30];
