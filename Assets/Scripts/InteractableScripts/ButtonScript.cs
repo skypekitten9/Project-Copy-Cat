@@ -22,7 +22,7 @@ public class ButtonScript : MonoBehaviour
     {
 
         TestLevelManager.Instance.interactablesArray[id] = !TestLevelManager.Instance.interactablesArray[id];
-        animator.SetBool("isPressed", TestLevelManager.Instance.interactablesArray[id]);
+        animator.SetTrigger("pressed");
         TestLevelManager.Instance.UpdateChannels();
     }
 
