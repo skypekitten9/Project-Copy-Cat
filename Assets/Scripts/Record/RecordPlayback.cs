@@ -28,7 +28,7 @@ public class RecordPlayback : MonoBehaviour
         ChangeControlState(ControlStates.Player);
     }
 
-    public void AddInteractionNode(params int [] id)
+    public void AddInteractionNode(params int[] id)
     {
         interactionData.Add(new InteractionData(stopwatch.ElapsedMilliseconds, id));
     }
@@ -89,7 +89,7 @@ public class RecordPlayback : MonoBehaviour
         yield break;
     }
 
-    System.Collections.IEnumerator Record()
+    private System.Collections.IEnumerator Record()
     {
         UnityEngine.Debug.Log("Recording");
         GetComponent<RecordManager>().recordPhase = RecordPhase.Recording;
@@ -109,6 +109,15 @@ public class RecordPlayback : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
 
+
+        if (GetComponent<RecordManager>().recordPhase == RecordPhase.Recording)
+        {
+            StopRecord();
+        }
+    }
+
+    public void StopRecord()
+    {
         stopwatch.Stop();
         //Sync Bar logic start
         GameObject.Find("SyncBar").GetComponent<SyncBar>().StopBar();
@@ -116,7 +125,7 @@ public class RecordPlayback : MonoBehaviour
         StartCoroutine(Rewind());
     }
 
-    System.Collections.IEnumerator Rewind()
+    public System.Collections.IEnumerator Rewind()
     {
         UnityEngine.Debug.Log("Rewinding");
         GetComponent<RecordManager>().recordPhase = RecordPhase.Rewinding;
@@ -152,9 +161,9 @@ public class RecordPlayback : MonoBehaviour
         StartCoroutine(Playback());
     }
 
-    System.Collections.IEnumerator Playback()
+    private System.Collections.IEnumerator Playback()
     {
-        
+
         UnityEngine.Debug.Log("Playing back");
         GetComponent<RecordManager>().recordPhase = RecordPhase.PlayingBack;
         float timeCorrection = 0.0f;
@@ -174,7 +183,7 @@ public class RecordPlayback : MonoBehaviour
                 {
                     for (int j = 0; j < interactionData[interactNodesCounter].InteractionChannels.Length; j++)
                     {
-                        TestLevelManager.Instance.interactablesArray[interactionData[interactNodesCounter].InteractionChannels[j]] = 
+                        TestLevelManager.Instance.interactablesArray[interactionData[interactNodesCounter].InteractionChannels[j]] =
                             !TestLevelManager.Instance.interactablesArray[interactionData[interactNodesCounter].InteractionChannels[j]];
                     }
 
@@ -211,7 +220,7 @@ public class RecordPlayback : MonoBehaviour
         StartCoroutine(DestroyHolo());
     }
 
-    System.Collections.IEnumerator DestroyHolo()
+    private System.Collections.IEnumerator DestroyHolo()
     {
         UnityEngine.Debug.Log("Destroying Holo");
 

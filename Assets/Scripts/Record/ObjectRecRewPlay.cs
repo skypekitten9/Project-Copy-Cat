@@ -27,6 +27,12 @@ public class ObjectRecRewPlay : MonoBehaviour
 
         while (stopwatch.ElapsedMilliseconds < recordManger.RecordTime)
         {
+            if (recordManger.recordPhase != RecordPhase.Recording)
+            {
+                StopRecord();
+                yield break;
+            }
+
             if (stopwatch.ElapsedMilliseconds >= (1 / recordManger.NodeSpawnRate * 1000) * translationData.Count)
             {
                 translationData.Add(new TranslationData(stopwatch.ElapsedMilliseconds, gameObject.transform.position, gameObject.transform.rotation));
@@ -35,6 +41,14 @@ public class ObjectRecRewPlay : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
 
+        if (recordManger.recordPhase == RecordPhase.Recording)
+        {
+            StopRecord();
+        }
+    }
+
+    private void StopRecord()
+    {
         stopwatch.Stop();
         StartCoroutine(Rewind());
     }
