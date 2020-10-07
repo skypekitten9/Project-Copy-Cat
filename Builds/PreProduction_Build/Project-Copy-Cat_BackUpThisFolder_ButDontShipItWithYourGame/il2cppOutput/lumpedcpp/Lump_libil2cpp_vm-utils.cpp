@@ -1,0 +1,6 @@
+#include "il2cpp-config.h"
+#include "D:\UnityHub\Editors\2020.1.5f1\Editor\Data\il2cpp\libil2cpp\vm-utils\BlobReader.cpp"
+#include "D:\UnityHub\Editors\2020.1.5f1\Editor\Data\il2cpp\libil2cpp\vm-utils\Debugger.cpp"
+#include "D:\UnityHub\Editors\2020.1.5f1\Editor\Data\il2cpp\libil2cpp\vm-utils\NativeDelegateMethodCache.cpp"
+#include "D:\UnityHub\Editors\2020.1.5f1\Editor\Data\il2cpp\libil2cpp\vm-utils\NativeSymbol.cpp"
+#include "D:\UnityHub\Editors\2020.1.5f1\Editor\Data\il2cpp\libil2cpp\vm-utils\VmStringUtils.cpp"
