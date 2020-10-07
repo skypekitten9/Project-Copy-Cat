@@ -6,7 +6,7 @@ using UnityEngine;
 public class Turret : MonoBehaviour
 {
     [SerializeField] private Transform eye;
-    private float turningSpeed = 1.0f;
+    private float turningSpeed = 6.0f;
     private float firingRate = 0.2f;
     private float reloadFire;
     private float firingRange = 5f;
@@ -27,7 +27,7 @@ public class Turret : MonoBehaviour
         reloadFire = firingRate;
 
         lineRenderer = gameObject.GetComponent<LineRenderer>();
-        lineRenderer.SetPosition(0, transform.position);
+        lineRenderer.SetPosition(0, new Vector3(transform.position.x, transform.position.y + 0.1f, transform.position.z));
         lineRenderer.startWidth = 0.2f; 
         lineRenderer.endWidth = 0.2f;
         lineRenderer.enabled = false;
@@ -50,7 +50,7 @@ public class Turret : MonoBehaviour
         targetDirection = Vector3.Magnitude(holoDirection) <= Vector3.Magnitude(playerDirection) ? holoDirection : playerDirection;
 
         float step = Time.deltaTime * turningSpeed;
-        Vector3 rotationDir = Vector3.RotateTowards(transform.forward, new Vector3(targetDirection.x, 0, targetDirection.z), step, 0);
+        Vector3 rotationDir = Vector3.RotateTowards(transform.forward, new Vector3(targetDirection.x, targetDirection.y, targetDirection.z), step, 0);
         transform.eulerAngles = Quaternion.LookRotation(rotationDir).eulerAngles;
 
         firingRate -= Time.deltaTime;
