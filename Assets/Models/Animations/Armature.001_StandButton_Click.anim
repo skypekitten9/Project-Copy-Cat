@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Armature.002_StandButton_Click
+  m_Name: Armature
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -20,7 +20,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: {x: -0, y: 0.018648705, z: 0}
+        value: {x: -0, y: 0.016123949, z: 0}
         inSlope: {x: -0, y: -0.0023804284, z: -0}
         outSlope: {x: -0, y: -0.0023804284, z: -0}
         tangentMode: 0
@@ -29,7 +29,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 0.25
-        value: {x: -0, y: 0.01730971, z: 0}
+        value: {x: -0, y: 0.014784954, z: 0}
         inSlope: {x: -0, y: -0.002380428, z: -0}
         outSlope: {x: -0, y: 0.0003141404, z: -0}
         tangentMode: 0
@@ -38,18 +38,18 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 0.9166667
-        value: {x: -0, y: 0.01835394, z: 0}
-        inSlope: {x: -0, y: 0.0011151118, z: -0}
-        outSlope: {x: -0, y: 0.0010089693, z: -0}
+        value: {x: -0, y: 0.015829183, z: 0}
+        inSlope: {x: -0, y: 0.0011150831, z: -0}
+        outSlope: {x: -0, y: 0.0010089979, z: -0}
         tangentMode: 0
         weightedMode: 0
         inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
-        time: 1.4166666
-        value: {x: -0, y: 0.01862984, z: 0}
-        inSlope: {x: -0, y: 0.00026882198, z: -0}
-        outSlope: {x: -0, y: 0.00026882198, z: -0}
+        time: 1.5416666
+        value: {x: -0, y: 0.016119342, z: 0}
+        inSlope: {x: -0, y: 0.00015475288, z: -0}
+        outSlope: {x: -0, y: 0.00015475288, z: -0}
         tangentMode: 0
         weightedMode: 0
         inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
@@ -57,7 +57,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature.002/Button_Master/Button
+    path: Armature.001/Button_Master/Button
   m_ScaleCurves: []
   m_FloatCurves: []
   m_PPtrCurves: []
@@ -69,7 +69,7 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 1835390352
+      path: 1411217616
       attribute: 1
       script: {fileID: 0}
       typeID: 4
@@ -81,7 +81,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 1.4166666
+    m_StopTime: 1.5416666
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
