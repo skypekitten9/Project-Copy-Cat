@@ -7,6 +7,10 @@ enum TileDirection { X_positive, X_negative, Y_positive, Y_negative, Z_positive,
 
 public class LevelEditor : MonoBehaviour
 {
+    private static LevelEditor instance = null;
+    public static LevelEditor Instance { get { return instance; } }
+
+
     [SerializeField] private GameObject tilePrefab;
     [SerializeField] private GameObject boundingBox;
 
@@ -16,8 +20,18 @@ public class LevelEditor : MonoBehaviour
     Tile_Selectable[,,,] tiles;
 
 
+    public List<Tile_Selectable> selectedTiles { get; set; } = new List<Tile_Selectable>();
+    
+
+
     private void Awake()
     {
+        if (instance != null && instance != this)
+            Destroy(this.gameObject);
+        else
+            instance = this;
+
+
         SetBoundingBox();
 
         tilesParent = new GameObject("Tiles").transform;
