@@ -22,17 +22,17 @@ public class Tile_Selectable : Selectable
         }
     }
 
-    protected override void DrawGUI()
-    {
-        //Handles.color = new Color(0.678f, 0.847f, 0.902f);
+    //protected override void DrawGUI()
+    //{
+    //    //Handles.color = new Color(0.678f, 0.847f, 0.902f);
 
-        float handlesScaleFactor = 0.1f;
-        Vector3 handleOffset = transform.up * 1.5f;
+    //    //float handlesScaleFactor = 0.1f;
+    //    //Vector3 handleOffset = transform.up * 1.5f;
 
-        //Handles.ArrowHandleCap(0, transform.position + handleOffset, Quaternion.LookRotation(-transform.up, transform.right), HandleUtility.GetHandleSize(transform.position + handleOffset) * handlesScaleFactor, EventType.Repaint | EventType.MouseDown);
-        //Handles.ArrowHandleCap(0, transform.position - handleOffset, Quaternion.LookRotation(transform.up, transform.right), HandleUtility.GetHandleSize(transform.position - handleOffset) * handlesScaleFactor, EventType.Repaint | EventType.MouseDown);
+    //    //Handles.ArrowHandleCap(0, transform.position + handleOffset, Quaternion.LookRotation(-transform.up, transform.right), HandleUtility.GetHandleSize(transform.position + handleOffset) * handlesScaleFactor, EventType.Repaint | EventType.MouseDown);
+    //    //Handles.ArrowHandleCap(0, transform.position - handleOffset, Quaternion.LookRotation(transform.up, transform.right), HandleUtility.GetHandleSize(transform.position - handleOffset) * handlesScaleFactor, EventType.Repaint | EventType.MouseDown);
 
-        base.DrawGUI();
-    }
+    //    base.DrawGUI();
+    //}
 }
 

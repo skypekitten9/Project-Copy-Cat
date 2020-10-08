@@ -23,7 +23,7 @@ public class RecordPlayback : MonoBehaviour
     [SerializeField] private float rewindSpeed = 0.75f;     //The player's speed duing the rewind-phase
 
 
-    private void OnLevelWasLoaded(int buildIndex)
+    private void Start()
     {
         ChangeControlState(ControlStates.Player);
     }
@@ -235,7 +235,7 @@ public class RecordPlayback : MonoBehaviour
 
         HoloInstance.transform.position = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
         yield return new WaitForSeconds(0.25f);
-       Destroy(HoloInstance);
+        Destroy(HoloInstance);
 
         GetComponent<RecordManager>().recordPhase = RecordPhase.None;
     }
