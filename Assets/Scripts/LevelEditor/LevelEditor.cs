@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-enum TileDirection { X_positive, X_negative, Y_positive, Y_negative, Z_positive, Z_negative };
+public enum TileDirection { X_positive, X_negative, Y_positive, Y_negative, Z_positive, Z_negative };
 
 public class LevelEditor : MonoBehaviour
 {
@@ -16,12 +16,12 @@ public class LevelEditor : MonoBehaviour
 
     private Transform tilesParent;
 
-    private readonly Vector3Int maxTiles = new Vector3Int(21, 7, 21);
-    Tile_Selectable[,,,] tiles;
+    public readonly Vector3Int maxTiles = new Vector3Int(21, 7, 21);
+    public Tile_Selectable[,,,] Tiles { get; private set; }
 
 
     public List<Tile_Selectable> selectedTiles { get; set; } = new List<Tile_Selectable>();
-    
+
 
 
     private void Awake()
@@ -35,7 +35,7 @@ public class LevelEditor : MonoBehaviour
         SetBoundingBox();
 
         tilesParent = new GameObject("Tiles").transform;
-        tiles = new Tile_Selectable[maxTiles.x, maxTiles.y, maxTiles.z, 6];
+        Tiles = new Tile_Selectable[maxTiles.x, maxTiles.y, maxTiles.z, 6];
 
         CreateStartRoom();
     }
@@ -78,7 +78,8 @@ public class LevelEditor : MonoBehaviour
 
     private void PlaceTile(int x, int y, int z, TileDirection i)
     {
-        tiles[x, y, z, (int)i] = Instantiate(tilePrefab, IndexToWorldPos(x, y, z, i), IndexToRotation(i), tilesParent).GetComponent<Tile_Selectable>();
+        Tiles[x, y, z, (int)i] = Instantiate(tilePrefab, IndexToWorldPos(x, y, z, i), IndexToRotation(i), tilesParent).GetComponent<Tile_Selectable>();
+        Tiles[x, y, z, (int)i].SetTileData(x, y, z, i);
     }
 
     private Vector3 IndexToWorldPos(int x, int y, int z, TileDirection i)

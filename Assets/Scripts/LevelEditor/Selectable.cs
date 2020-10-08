@@ -9,29 +9,19 @@ public abstract class Selectable : MonoBehaviour
     [SerializeField] private Material selected;
 
 
-    public virtual void SelectOne()
+    public virtual void Select(bool multiple = false)
     {
-        Debug.Log("Selected: " + gameObject.name);
+        //Debug.Log("Selected: " + gameObject.name);
         GetComponent<MeshRenderer>().material = selected;
         isSelected = true;
     }
 
-    public virtual void DeselectOne()
+    public virtual void Deselect()
     {
-        Debug.Log("Deselected: " + gameObject.name);
+        //Debug.Log("Deselected: " + gameObject.name);
         GetComponent<MeshRenderer>().material = deselected;
         isSelected = false;
     }
 
-
-    private void OnGUI()
-    {
-        if (isSelected)
-        {
-            DrawGUI();
-        }
-    }
-
-    protected virtual void DrawGUI() { }
 }
 
