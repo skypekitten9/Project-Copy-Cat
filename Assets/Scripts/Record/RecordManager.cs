@@ -35,6 +35,10 @@ public class RecordManager : MonoBehaviour
                     StartCoroutine(recObj.Record());
 
             }
+            else if (recordPhase == RecordPhase.Recording)
+            {
+                GetComponent<RecordPlayback>().StopRecord();
+            }
         }
     }
 }

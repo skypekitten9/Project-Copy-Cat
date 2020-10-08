@@ -1,77 +1,56 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEditorInternal;
-using UnityEngine;
-using UnityEngine.UIElements;
+﻿using UnityEngine;
 
 public class DoorScript : MonoBehaviour
 {
-    Transform doorTransform;
-
-    Vector3 startPos;
-    Vector3 openPos;
-    Vector3 openingSpeed;
-
-    bool isOpen;
+    Animator animator;
+    BoxCollider collider;
 
     [SerializeField] private int doorID;
+    [SerializeField] private int doorID2;
+
+    //If true the door can open more than once
+    public bool dynamicDoor;
+    int doorOpenedCount;
 
     void Start()
     {
-        doorTransform = gameObject.transform;
-
-        startPos = doorTransform.position;
-        openPos = startPos + new Vector3(0, doorTransform.localScale.y, 0);
-        openingSpeed = new Vector3(0, 0.10f, 0);
-
-        isOpen = false;
-    }
-
-    void Update()
-    {
-        if (isOpen)
-        {
-            if (doorTransform.position.y < openPos.y)
-            {
-                doorTransform.position += openingSpeed;
-            }
-        }
-
-        if (!isOpen)
-        {
-            if (doorTransform.position.y > startPos.y)
-            {
-                doorTransform.position -= openingSpeed;
-            }
-        }
-
-        TestDoor();
+        doorOpenedCount = 0;
+        animator = gameObject.GetComponentInChildren<Animator>();
+        collider = gameObject.GetComponent<BoxCollider>();
+        collider.enabled = true;
     }
 
     //Manuel testning av att öppna och stänga dörrar.
-    void TestDoor()
-    {
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            isOpen = true;
-        }
+    //void TestDoor()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.T))
+    //    {
+    //        isOpen = true;
+    //    }
 
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            isOpen = false;
-        }
-    }
+    //    if (Input.GetKeyDown(KeyCode.Y))
+    //    {
+    //        isOpen = false;
+    //    }
+    //}
 
     //Dörren tittar ifall dens channel har uppdaterats.
     public void ListenToChannel()
     {
-        if (TestLevelManager.Instance.interactablesArray[doorID] == true)
+        if(doorOpenedCount == 0 || dynamicDoor)
         {
-            isOpen = true;
-        }
-        else
-        {
-            isOpen = false;
+            Debug.Log("Listening!");
+            if (TestLevelManager.Instance.interactablesArray[doorID] == true && TestLevelManager.Instance.interactablesArray[doorID2] == true)
+            {
+                animator.SetBool("isOpened", true);
+                collider.enabled = false;
+                doorOpenedCount++;
+            }
+            else
+            {
+                animator.SetBool("isOpened", false);
+                collider.enabled = true;
+            }
         }
     }
 }

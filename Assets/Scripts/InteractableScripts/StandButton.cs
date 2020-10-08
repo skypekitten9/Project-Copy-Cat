@@ -6,29 +6,48 @@ public class StandButton : MonoBehaviour
 {
 
     [SerializeField] private int id;
-    // Start is called before the first frame update
+
+    Animator animator;
+
+    int triggerCount;
+
+    SphereCollider collider;
+
     void Start()
     {
-        
+        animator = gameObject.GetComponentInChildren<Animator>();
+        collider = gameObject.GetComponent<SphereCollider>();
+
+        triggerCount = 0;
+    }
+
+    private void Update()
+    {
+        if (triggerCount > 0)
+        {
+            SignalChannel(true);
+        }
+        else
+        {
+            SignalChannel(false);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.GetComponent<PlayerMovement>() != null)
-        {
-            SignalChannel(true);
-        }
+        triggerCount++;
     }
 
     private void OnTriggerExit(Collider other)
     {
-        SignalChannel(false);
+        triggerCount--;
     }
-    
+
     private void SignalChannel(bool status)
     {
         TestLevelManager.Instance.interactablesArray[id] = status;
         TestLevelManager.Instance.UpdateChannels();
+        animator.SetBool("isPressed", status);
     }
 
 

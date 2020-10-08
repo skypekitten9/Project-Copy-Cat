@@ -38,10 +38,13 @@ public class PlayerInteraction : MonoBehaviour
             {
                 if (hit.collider.tag == "Interactable")
                 {
-                    hit.collider.gameObject.GetComponent<ButtonScript>().SignalChannel();
+                    if(hit.collider.gameObject.GetComponent<ButtonScript>() != null) hit.collider.gameObject.GetComponent<ButtonScript>().SignalChannel();
+                    if(hit.collider.gameObject.GetComponent<LeverScript>() != null) hit.collider.gameObject.GetComponent<LeverScript>().SignalChannel();
+
 
                     if (GameManager.Instance.GetComponent<RecordManager>().recordPhase == RecordPhase.Recording)
                     {
+                        GameObject.Find("SyncBar").GetComponent<SyncBar>().SpawnInteraction();
                         GameManager.Instance.GetComponent<RecordPlayback>().AddInteractionNode(hit.collider.gameObject.GetComponent<ButtonScript>().id);
                     }
                 }
