@@ -2,6 +2,7 @@
 using UnityEngine;
 
 
+public enum LevelEditorMode { Select, Extrude }
 public enum TileDirection { X_positive, X_negative, Y_positive, Y_negative, Z_positive, Z_negative };
 
 public class LevelEditor : MonoBehaviour
@@ -9,6 +10,8 @@ public class LevelEditor : MonoBehaviour
     private static LevelEditor instance = null;
     public static LevelEditor Instance { get { return instance; } }
 
+
+    public LevelEditorMode EditorMode { get; private set; } = LevelEditorMode.Select;
 
     [SerializeField] private GameObject tilePrefab;
     [SerializeField] private GameObject boundingBox;
@@ -37,6 +40,19 @@ public class LevelEditor : MonoBehaviour
         Tiles = new Tile_Selectable[maxTiles.x, maxTiles.y, maxTiles.z, 6];
 
         CreateStartRoom();
+    }
+
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            EditorMode = LevelEditorMode.Select;
+        }
+        else if (Input.GetKeyDown(KeyCode.W))
+        {
+            EditorMode = LevelEditorMode.Extrude;
+        }
     }
 
 

@@ -2,13 +2,13 @@
 
 public class Selector : MonoBehaviour
 {
-    private LevelEditor levelEditor;
+    //private LevelEditor levelEditor;
     private Camera cam;
 
 
     void Start()
     {
-        levelEditor = LevelEditor.Instance;
+        //levelEditor = LevelEditor.Instance;
         cam = Camera.main;
     }
 
@@ -23,11 +23,19 @@ public class Selector : MonoBehaviour
             {
                 Selectable target = hit.transform.GetComponent<Selectable>();
 
-                if (target)
+                if (target is Tile_Selectable)
                 {
-                    //DetectDoubleClick(target);
-                    if (target is Tile_Selectable)
-                        StartCoroutine(ToggleSelect(target as Tile_Selectable));
+                    switch (LevelEditor.Instance.EditorMode)
+                    {
+                        case LevelEditorMode.Select:
+                            StartCoroutine(ToggleSelect(target as Tile_Selectable));
+                            break;
+
+                        case LevelEditorMode.Extrude:
+                            StartCoroutine(GetComponent<TileExtruder>().Extrude(target as Tile_Selectable));
+                            break;
+                    }
+
                 }
             }
         }
