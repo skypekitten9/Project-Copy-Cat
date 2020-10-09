@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Microsoft.Win32.SafeHandles;
+using UnityEngine;
 
 
 public class CameraOrientation : MonoBehaviour
@@ -62,6 +63,9 @@ public class CameraOrientation : MonoBehaviour
             mouseX_pan = Input.GetAxis("Mouse X") * pan_sensitivity * Time.deltaTime;
             mouseY_pan = Input.GetAxis("Mouse Y") * pan_sensitivity * Time.deltaTime;
             transform.position += transform.right * -mouseX_pan + transform.up * -mouseY_pan;
+            transform.position = new Vector3(Mathf.Clamp(transform.position.x, -LevelEditor.Instance.maxTiles.x, LevelEditor.Instance.maxTiles.x),
+                                             Mathf.Clamp(transform.position.y, -LevelEditor.Instance.maxTiles.y, LevelEditor.Instance.maxTiles.y),
+                                             Mathf.Clamp(transform.position.z, -LevelEditor.Instance.maxTiles.z, LevelEditor.Instance.maxTiles.z));
         }
     }
 
