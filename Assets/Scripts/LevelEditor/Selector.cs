@@ -5,9 +5,6 @@ public class Selector : MonoBehaviour
     private LevelEditor levelEditor;
     private Camera cam;
 
-    //private bool clicked = false;
-    //private float clickTimer = 0;
-    //private float clickDelay = 0.5f;
 
     void Start()
     {
@@ -17,11 +14,6 @@ public class Selector : MonoBehaviour
 
     private void Update()
     {
-        //if (clicked == true/* && clickTimer < clickDelay*/)
-        //{
-        //    clickTimer += Time.deltaTime;
-        //}
-
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
@@ -89,36 +81,9 @@ public class Selector : MonoBehaviour
                     }
                 }
                 yield return new WaitForFixedUpdate();
-                //else
-                //{
-                //    yield break;
-                //}
             }
         }
     }
-
-    //private void DetectDoubleClick(Selectable target)
-    //{
-    //    if (clicked)
-    //    {
-    //        if (clickTimer < clickDelay)
-    //        {
-    //            Debug.Log("double clicked");
-
-    //            if (target is Tile_Selectable)
-    //            {
-    //                SelectWholePlane(target as Tile_Selectable);
-    //            }
-    //        }
-    //        clicked = false;
-    //    }
-    //    else
-    //    {
-    //        clicked = true;
-    //    }
-    //    clickTimer = 0;
-    //}
-
 
     //private void SelectWholePlane(Tile_Selectable target)
     //{
