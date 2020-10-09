@@ -2,13 +2,11 @@
 
 public class Selector : MonoBehaviour
 {
-    //private LevelEditor levelEditor;
     private Camera cam;
 
 
     void Start()
     {
-        //levelEditor = LevelEditor.Instance;
         cam = Camera.main;
     }
 
@@ -25,19 +23,17 @@ public class Selector : MonoBehaviour
 
                 if (target is Tile_Selectable)
                 {
-                    switch (LevelEditor.Instance.EditorMode)
+                    if (LevelEditor.Instance.EditorMode == LevelEditorMode.Select)
                     {
-                        case LevelEditorMode.Select:
-                            StartCoroutine(ToggleSelect(target as Tile_Selectable));
-                            break;
-
-                        case LevelEditorMode.Extrude:
-                            StartCoroutine(GetComponent<TileExtruder>().Extrude(target as Tile_Selectable));
-                            break;
+                        StartCoroutine(ToggleSelect(target as Tile_Selectable));
                     }
-
                 }
             }
+        }
+
+        if (LevelEditor.Instance.EditorMode == LevelEditorMode.Extrude)
+        {
+            GetComponent<TileExtruder>().Extrude();
         }
     }
 
@@ -55,7 +51,7 @@ public class Selector : MonoBehaviour
         }
         else
         {
-            DeselectAllTiles(target);
+            DeselectAllTiles();
 
             while (Input.GetMouseButton(0) == true)
             {
@@ -66,7 +62,7 @@ public class Selector : MonoBehaviour
                 {
                     Tile_Selectable newTarget = hit.transform.GetComponent<Tile_Selectable>();
 
-                    if (newTarget && newTarget.TileDir == target.TileDir)
+                    if (newTarget != null && LevelEditor.Instance.selectedTiles.Contains(newTarget) == false && newTarget.TileDir == target.TileDir)
                     {
                         switch ((target as Tile_Selectable).TileDir)
                         {
@@ -133,14 +129,11 @@ public class Selector : MonoBehaviour
     //    }
     //}
 
-    public void DeselectAllTiles(Tile_Selectable target)
+    public void DeselectAllTiles()
     {
-        foreach (Tile_Selectable tile in LevelEditor.Instance.selectedTiles)
+        for (int i = LevelEditor.Instance.selectedTiles.Count - 1; i >= 0; i--)
         {
-            if (tile != target)
-            {
-                tile.Deselect();
-            }
+            LevelEditor.Instance.selectedTiles[i].Deselect();
         }
 
         LevelEditor.Instance.selectedTiles.Clear();
