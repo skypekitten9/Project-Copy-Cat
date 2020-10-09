@@ -8,11 +8,11 @@ public class TileExtruder : MonoBehaviour
         int direction = 0;
         if (Input.GetAxis("Mouse ScrollWheel") > 0f)
         {
-            direction = 1;
+            direction = -1;
         }
         else if (Input.GetAxis("Mouse ScrollWheel") < 0f)
         {
-            direction = -1;
+            direction = 1;
         }
 
         if (direction != 0)
