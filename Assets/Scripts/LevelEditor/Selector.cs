@@ -4,6 +4,9 @@ public class Selector : MonoBehaviour
 {
     private Camera cam;
 
+    private Selectable target = null;
+    private bool allSelected = false;
+
 
     void Start()
     {
@@ -12,28 +15,44 @@ public class Selector : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        switch (LevelEditor.Instance.EditorMode)
         {
-            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit))
-            {
-                Selectable target = hit.transform.GetComponent<Selectable>();
-
-                if (target is Tile_Selectable)
+            case LevelEditorMode.Select:
+                if (Input.GetMouseButtonDown(0))
                 {
-                    if (LevelEditor.Instance.EditorMode == LevelEditorMode.Select)
+                    Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+                    RaycastHit hit;
+
+                    if (Physics.Raycast(ray, out hit))
                     {
-                        StartCoroutine(ToggleSelect(target as Tile_Selectable));
+                        target = hit.transform.GetComponent<Selectable>();
+
+                        if (target is Tile_Selectable)
+                        {
+                            StartCoroutine(ToggleSelect(target as Tile_Selectable));
+                        }
                     }
                 }
-            }
-        }
+                if (Input.GetKeyDown(KeyCode.A))
+                {
+                    if (target != null && target is Tile_Selectable)
+                    {
+                        if (allSelected == false)
+                        {
+                            SelectWholePlane(target as Tile_Selectable);
+                        }
+                        else
+                        {
+                            DeselectAllTiles();
+                        }
+                    }
+                }
 
-        if (LevelEditor.Instance.EditorMode == LevelEditorMode.Extrude)
-        {
-            GetComponent<TileExtruder>().Extrude();
+                break;
+
+            case LevelEditorMode.Extrude:
+                GetComponent<TileExtruder>().Extrude();
+                break;
         }
     }
 
@@ -89,45 +108,44 @@ public class Selector : MonoBehaviour
         }
     }
 
-    //private void SelectWholePlane(Tile_Selectable target)
-    //{
-    //    switch (target.TileDir)
-    //    {
-    //        case TileDirection.X_positive:
-    //            break;
-    //        case TileDirection.X_negative:
-    //            break;
-    //        case TileDirection.Y_positive:
-    //            SelectTiles(0, levelEditor.maxTiles.x, target.Y, target.Y + 1, 0, levelEditor.maxTiles.z, target.TileDir);
-    //            break;
-    //        case TileDirection.Y_negative:
-    //            break;
-    //        case TileDirection.Z_positive:
-    //            break;
-    //        case TileDirection.Z_negative:
-    //            break;
-    //    }
-    //}
 
-    //private void SelectTiles(int startX, int endX, int startY, int endY, int startZ, int endZ, TileDirection tileDir)
-    //{
-    //    for (int x = startX; x < endX; x++)
-    //    {
-    //        for (int y = startY; y < endY; y++)
-    //        {
-    //            for (int z = startZ; z < endZ; z++)
-    //            {
-    //                for (int i = 0; i < 6; i++)
-    //                {
-    //                    if (levelEditor.Tiles[x, y, z, i] != null)
-    //                    {
-    //                        levelEditor.Tiles[x, y, z, i].Select(true);
-    //                    }
-    //                }
-    //            }
-    //        }
-    //    }
-    //}
+    private void SelectWholePlane(Tile_Selectable target)
+    {
+        allSelected = true;
+        switch (target.TileDir)
+        {
+            case TileDirection.X_positive:
+            case TileDirection.X_negative:
+                SelectTiles(target.X, target.X + 1, 0, LevelEditor.Instance.maxTiles.y, 0, LevelEditor.Instance.maxTiles.z, target.TileDir);
+                break;
+            case TileDirection.Y_positive:
+            case TileDirection.Y_negative:
+                SelectTiles(0, LevelEditor.Instance.maxTiles.x, target.Y, target.Y + 1, 0, LevelEditor.Instance.maxTiles.z, target.TileDir);
+                break;
+            case TileDirection.Z_positive:
+            case TileDirection.Z_negative:
+                SelectTiles(0, LevelEditor.Instance.maxTiles.x, 0, LevelEditor.Instance.maxTiles.y, target.Z, target.Z + 1, target.TileDir);
+                break;
+        }
+    }
+
+    private void SelectTiles(int startX, int endX, int startY, int endY, int startZ, int endZ, TileDirection tileDir)
+    {
+        for (int x = startX; x < endX; x++)
+        {
+            for (int y = startY; y < endY; y++)
+            {
+                for (int z = startZ; z < endZ; z++)
+                {
+                    if (LevelEditor.Instance.Tiles[x, y, z, (int)tileDir] != null && LevelEditor.Instance.Tiles[x, y, z, (int)tileDir] != target)
+                    {
+                        LevelEditor.Instance.Tiles[x, y, z, (int)tileDir].Select(true);
+                    }
+                }
+            }
+        }
+    }
+
 
     public void DeselectAllTiles()
     {
@@ -137,5 +155,6 @@ public class Selector : MonoBehaviour
         }
 
         LevelEditor.Instance.selectedTiles.Clear();
+        allSelected = false;
     }
 }
