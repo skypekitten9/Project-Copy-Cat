@@ -53,6 +53,7 @@ public class Tile_Selectable : Selectable
                 TileExists(newTileIndex, NormalToTileDirection(extrudeTangent)) == true)
             {
                 LevelEditor.Instance.DestroyTile(X, Y, Z, NormalToTileDirection(-extrudeTangent));
+                LevelEditor.Instance.DestroyTile(newTileIndex, NormalToTileDirection(extrudeTangent));
             }
             else
             {
@@ -63,9 +64,10 @@ public class Tile_Selectable : Selectable
         {
             Debug.Log("<0");
             if (TileExists(new Vector3Int(X, Y, Z) - extrudeTangent, NormalToTileDirection(-extrudeTangent)) == true ||
-                TileExists(new Vector3Int(X, Y, Z) + 2 * extrudeTangent, NormalToTileDirection(extrudeTangent)) == true)
+                TileExists(newTileIndex + extrudeTangent, NormalToTileDirection(extrudeTangent)) == true)
             {
                 LevelEditor.Instance.DestroyTile(new Vector3Int(X, Y, Z) - extrudeTangent, NormalToTileDirection(-extrudeTangent));
+                LevelEditor.Instance.DestroyTile(newTileIndex + extrudeTangent, NormalToTileDirection(extrudeTangent));
             }
             else
             {
@@ -73,7 +75,6 @@ public class Tile_Selectable : Selectable
             }
 
         }
-
 
         CreateConnection(new Vector3Int(tileDir.z, tileDir.x, tileDir.y), extrudeDir, extrudeTangent);
         CreateConnection(new Vector3Int(-tileDir.z, -tileDir.x, -tileDir.y), extrudeDir, extrudeTangent);
@@ -89,15 +90,26 @@ public class Tile_Selectable : Selectable
 
         if (extrudeDir > 0)
         {
-            newTileIndex = new Vector3Int(X, Y, Z) + tileIndexOffset;
+            //newTileIndex = new Vector3Int(X, Y, Z) + tileIndexOffset;
+            //LevelEditor.Instance.PlaceTile(newTileIndex, NormalToTileDirection(tileIndexOffset));
         }
         else
         {
             newTileIndex = new Vector3Int(X, Y, Z) + extrudeTangent;
             tileIndexOffset *= -1;
+
+
+            if (TileExists(newTileIndex - tileIndexOffset, NormalToTileDirection(-tileIndexOffset)) == true)
+            {
+                LevelEditor.Instance.DestroyTile(newTileIndex - tileIndexOffset, NormalToTileDirection(-tileIndexOffset));
+            }
+            else
+            {
+                LevelEditor.Instance.PlaceTile(newTileIndex, NormalToTileDirection(tileIndexOffset));
+            }
+
         }
 
-        LevelEditor.Instance.PlaceTile(newTileIndex, NormalToTileDirection(tileIndexOffset));
     }
 
     private Vector3Int GetDirectionVector()
@@ -152,6 +164,18 @@ public class Tile_Selectable : Selectable
         catch (System.Exception)
         {
             return false;
+        }
+    }
+
+
+
+
+    private void OnDrawGizmos()
+    {
+        if (LevelEditor.Instance.Debug)
+        {
+            Vector3 pos = LevelEditor.Instance.IndexToWorldPos(X, Y, Z, TileDir);
+            Gizmos.DrawLine(pos, pos + (Vector3)GetDirectionVector() / 2);
         }
     }
 }

@@ -11,6 +11,10 @@ public class LevelEditor : MonoBehaviour
     public static LevelEditor Instance { get { return instance; } }
 
 
+    [SerializeField] private bool debug = false;
+    public bool Debug { get { return debug; } }
+
+
     public LevelEditorMode EditorMode { get; private set; } = LevelEditorMode.Select;
 
     [SerializeField] private GameObject tilePrefab;
@@ -118,7 +122,7 @@ public class LevelEditor : MonoBehaviour
         DestroyTile(xyz.x, xyz.y, xyz.z, i);
     }
 
-    private Vector3 IndexToWorldPos(int x, int y, int z, TileDirection i)
+    public Vector3 IndexToWorldPos(int x, int y, int z, TileDirection i)
     {
         Vector3 worldPos = new Vector3(2 * (x - maxTiles.x / 2), 2 * (y - maxTiles.y / 2), 2 * (z - maxTiles.z / 2));
 
@@ -173,4 +177,5 @@ public class LevelEditor : MonoBehaviour
                 return Quaternion.identity;
         }
     }
+
 }
