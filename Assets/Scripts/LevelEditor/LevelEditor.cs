@@ -95,12 +95,27 @@ public class LevelEditor : MonoBehaviour
     {
         Tiles[x, y, z, (int)i] = Instantiate(tilePrefab, IndexToWorldPos(x, y, z, i), IndexToRotation(i), tilesParent).GetComponent<Tile_Selectable>();
         Tiles[x, y, z, (int)i].SetTileData(x, y, z, i);
-
         return Tiles[x, y, z, (int)i];
     }
-    public Tile_Selectable PlaceTile(Vector3Int tileIndex, TileDirection i)
+
+    public Tile_Selectable PlaceTile(Vector3Int xyz, TileDirection i)
     {
-        return PlaceTile(tileIndex.x, tileIndex.y, tileIndex.z, i);
+        return PlaceTile(xyz.x, xyz.y, xyz.z, i);
+    }
+
+    public void DestroyTile(int x, int y, int z, TileDirection i)
+    {
+        try
+        {
+            Tiles[x, y, z, (int)i].Deselect();
+            Destroy(Tiles[x, y, z, (int)i].gameObject);
+            Tiles[x, y, z, (int)i] = null;
+        }
+        catch (System.Exception) { }
+    }
+    public void DestroyTile(Vector3Int xyz, TileDirection i)
+    {
+        DestroyTile(xyz.x, xyz.y, xyz.z, i);
     }
 
     private Vector3 IndexToWorldPos(int x, int y, int z, TileDirection i)

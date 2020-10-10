@@ -44,20 +44,43 @@ public class Tile_Selectable : Selectable
         if (newTileIndex.x >= maxTiles.x || newTileIndex.y >= maxTiles.y || newTileIndex.z >= maxTiles.z || newTileIndex.x < 0 || newTileIndex.y < 0 || newTileIndex.z < 0)
             return;
 
-        LevelEditor.Instance.PlaceTile(newTileIndex, TileDir).Select(true);
 
 
-        //CreateConnection();
+        if (extrudeDir > 0)
+        {
+            Debug.Log(">0");
+            if (TileExists(X, Y, Z, NormalToTileDirection(-extrudeTangent)) == true ||
+                TileExists(newTileIndex, NormalToTileDirection(extrudeTangent)) == true)
+            {
+                LevelEditor.Instance.DestroyTile(X, Y, Z, NormalToTileDirection(-extrudeTangent));
+            }
+            else
+            {
+                LevelEditor.Instance.PlaceTile(newTileIndex, TileDir).Select(true);
+            }
+        }
+        else
+        {
+            Debug.Log("<0");
+            if (TileExists(new Vector3Int(X, Y, Z) - extrudeTangent, NormalToTileDirection(-extrudeTangent)) == true ||
+                TileExists(new Vector3Int(X, Y, Z) + 2 * extrudeTangent, NormalToTileDirection(extrudeTangent)) == true)
+            {
+                LevelEditor.Instance.DestroyTile(new Vector3Int(X, Y, Z) - extrudeTangent, NormalToTileDirection(-extrudeTangent));
+            }
+            else
+            {
+                LevelEditor.Instance.PlaceTile(newTileIndex, TileDir).Select(true);
+            }
+
+        }
+
 
         CreateConnection(new Vector3Int(tileDir.z, tileDir.x, tileDir.y), extrudeDir, extrudeTangent);
         CreateConnection(new Vector3Int(-tileDir.z, -tileDir.x, -tileDir.y), extrudeDir, extrudeTangent);
         CreateConnection(new Vector3Int(tileDir.y, tileDir.z, tileDir.x), extrudeDir, extrudeTangent);
         CreateConnection(new Vector3Int(-tileDir.y, -tileDir.z, -tileDir.x), extrudeDir, extrudeTangent);
 
-        Deselect();
-        LevelEditor.Instance.Tiles[X, Y, Z, (int)TileDir] = null;
-        Destroy(this.gameObject);
-
+        LevelEditor.Instance.DestroyTile(X, Y, Z, TileDir);
     }
 
     private void CreateConnection(Vector3Int tileIndexOffset, int extrudeDir, Vector3Int extrudeTangent)
@@ -65,7 +88,9 @@ public class Tile_Selectable : Selectable
         Vector3Int newTileIndex;
 
         if (extrudeDir > 0)
+        {
             newTileIndex = new Vector3Int(X, Y, Z) + tileIndexOffset;
+        }
         else
         {
             newTileIndex = new Vector3Int(X, Y, Z) + extrudeTangent;
@@ -73,12 +98,6 @@ public class Tile_Selectable : Selectable
         }
 
         LevelEditor.Instance.PlaceTile(newTileIndex, NormalToTileDirection(tileIndexOffset));
-
-
-        ////Vector3Int maxTiles = LevelEditor.Instance.maxTiles;
-        ////if (newTileIndex.x >= maxTiles.x || newTileIndex.y >= maxTiles.y || newTileIndex.z >= maxTiles.z || newTileIndex.x < 0 || newTileIndex.y < 0 || newTileIndex.z < 0)
-        ////    return;
-
     }
 
     private Vector3Int GetDirectionVector()
@@ -102,6 +121,7 @@ public class Tile_Selectable : Selectable
                 return Vector3Int.zero;
         }
     }
+
     private TileDirection NormalToTileDirection(Vector3Int normal)
     {
         if (normal.x == 1)
@@ -116,5 +136,22 @@ public class Tile_Selectable : Selectable
             return TileDirection.Z_positive;
         else
             return TileDirection.Z_negative;
+    }
+
+
+    private bool TileExists(int x, int y, int z, TileDirection tileDir)
+    {
+        return LevelEditor.Instance.Tiles[x, y, z, (int)tileDir] != null;
+    }
+    private bool TileExists(Vector3Int positionIndex, TileDirection tileDir)
+    {
+        try
+        {
+            return LevelEditor.Instance.Tiles[positionIndex.x, positionIndex.y, positionIndex.z, (int)tileDir] != null;
+        }
+        catch (System.Exception)
+        {
+            return false;
+        }
     }
 }
