@@ -45,7 +45,6 @@ public class Tile_Selectable : Selectable
             return;
 
 
-
         if (extrudeDir > 0)
         {
             Debug.Log(">0");
@@ -90,8 +89,16 @@ public class Tile_Selectable : Selectable
 
         if (extrudeDir > 0)
         {
-            //newTileIndex = new Vector3Int(X, Y, Z) + tileIndexOffset;
-            //LevelEditor.Instance.PlaceTile(newTileIndex, NormalToTileDirection(tileIndexOffset));
+            newTileIndex = new Vector3Int(X, Y, Z);
+
+            if (TileExists(newTileIndex, NormalToTileDirection(tileIndexOffset)) == true)
+            {
+                LevelEditor.Instance.DestroyTile(newTileIndex, NormalToTileDirection(tileIndexOffset));
+            }
+            else
+            {
+                LevelEditor.Instance.PlaceTile(newTileIndex - tileIndexOffset, NormalToTileDirection(-tileIndexOffset));
+            }
         }
         else
         {
