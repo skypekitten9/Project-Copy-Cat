@@ -47,7 +47,7 @@ public class Tile_Selectable : Selectable
 
         if (extrudeDir > 0)
         {
-            Debug.Log(">0");
+            //Debug.Log(">0");
             if (TileExists(X, Y, Z, NormalToTileDirection(-extrudeTangent)) == true ||
                 TileExists(newTileIndex, NormalToTileDirection(extrudeTangent)) == true)
             {
@@ -61,7 +61,7 @@ public class Tile_Selectable : Selectable
         }
         else
         {
-            Debug.Log("<0");
+            //Debug.Log("<0");
             if (TileExists(new Vector3Int(X, Y, Z) - extrudeTangent, NormalToTileDirection(-extrudeTangent)) == true ||
                 TileExists(newTileIndex + extrudeTangent, NormalToTileDirection(extrudeTangent)) == true)
             {
