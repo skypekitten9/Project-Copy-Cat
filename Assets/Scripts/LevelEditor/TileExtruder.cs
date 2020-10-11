@@ -5,7 +5,7 @@ public class TileExtruder : MonoBehaviour
     private float mouseX_extrude = 0;
     private float mouseY_extrude = 0;
 
-    private float extrude_sensitivity = 15f;
+    private float extrude_sensitivity = 10f;
 
 
     public System.Collections.IEnumerator Extrude(Tile_Selectable target)
@@ -24,21 +24,20 @@ public class TileExtruder : MonoBehaviour
             Debug.Log("extrude dir: " + extudeDir);
 
             int direction = 0;
-            if (extudeDir > 1)
+            if (extudeDir > 0.5f)
             {
                 direction = 1;
-                mouseX_extrude = 0;
-                mouseY_extrude = 0;
             }
-            else if (extudeDir < -1)
+            else if (extudeDir < -0.5f)
             {
                 direction = -1;
-                mouseX_extrude = 0;
-                mouseY_extrude = 0;
             }
 
             if (direction != 0)
             {
+                mouseX_extrude = 0;
+                mouseY_extrude = 0;
+
                 for (int i = LevelEditor.Instance.selectedTiles.Count - 1; i >= 0; i--)
                 {
                     LevelEditor.Instance.selectedTiles[i].ExtrudeTile(direction);
