@@ -111,7 +111,8 @@ public class Selector : MonoBehaviour
 
     private void SelectWholePlane(Tile_Selectable target)
     {
-        allSelected = true;
+        DeselectAllTiles();
+        
         switch (target.TileDir)
         {
             case TileDirection.X_positive:
@@ -127,6 +128,8 @@ public class Selector : MonoBehaviour
                 SelectTiles(0, LevelEditor.Instance.maxTiles.x, 0, LevelEditor.Instance.maxTiles.y, target.Z, target.Z + 1, target.TileDir);
                 break;
         }
+
+        allSelected = true;
     }
 
     private void SelectTiles(int startX, int endX, int startY, int endY, int startZ, int endZ, TileDirection tileDir)
@@ -137,7 +140,7 @@ public class Selector : MonoBehaviour
             {
                 for (int z = startZ; z < endZ; z++)
                 {
-                    if (LevelEditor.Instance.Tiles[x, y, z, (int)tileDir] != null && LevelEditor.Instance.Tiles[x, y, z, (int)tileDir] != target)
+                    if (LevelEditor.Instance.Tiles[x, y, z, (int)tileDir] != null)
                     {
                         LevelEditor.Instance.Tiles[x, y, z, (int)tileDir].Select(true);
                     }
@@ -151,7 +154,10 @@ public class Selector : MonoBehaviour
     {
         for (int i = LevelEditor.Instance.selectedTiles.Count - 1; i >= 0; i--)
         {
-            LevelEditor.Instance.selectedTiles[i].Deselect();
+            if (LevelEditor.Instance.selectedTiles[i] != null)
+            {
+                LevelEditor.Instance.selectedTiles[i].Deselect();
+            }
         }
 
         LevelEditor.Instance.selectedTiles.Clear();
