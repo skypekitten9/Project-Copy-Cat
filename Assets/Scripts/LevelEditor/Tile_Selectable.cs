@@ -119,7 +119,7 @@ public class Tile_Selectable : Selectable
 
     }
 
-    private Vector3Int GetDirectionVector()
+    public Vector3Int GetDirectionVector()
     {
         switch (TileDir)
         {

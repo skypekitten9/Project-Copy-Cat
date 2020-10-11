@@ -2,25 +2,50 @@
 
 public class TileExtruder : MonoBehaviour
 {
+    private float mouseX_extrude = 0;
+    private float mouseY_extrude = 0;
 
-    public void Extrude()
-    {      
-        int direction = 0;
-        if (Input.GetAxis("Mouse ScrollWheel") > 0f)
-        {
-            direction = -1;
-        }
-        else if (Input.GetAxis("Mouse ScrollWheel") < 0f)
-        {
-            direction = 1;
-        }
+    private float extrude_sensitivity = 15f;
 
-        if (direction != 0)
+
+    public System.Collections.IEnumerator Extrude(Tile_Selectable target)
+    {
+        yield return new WaitForSeconds(0.1f);
+
+        while (Input.GetMouseButton(0))
         {
-            for (int i = LevelEditor.Instance.selectedTiles.Count - 1; i >= 0; i--)
+            mouseX_extrude += Input.GetAxis("Mouse X") * extrude_sensitivity * Time.deltaTime;
+            mouseY_extrude += Input.GetAxis("Mouse Y") * extrude_sensitivity * Time.deltaTime;
+
+            Transform cam = Camera.main.transform;
+            Vector3 normal = (Vector3)target.GetDirectionVector();
+            float extudeDir = Vector3.Dot(cam.right * mouseX_extrude, normal) +
+                              Vector3.Dot(cam.up * mouseY_extrude, normal);
+            Debug.Log("extrude dir: " + extudeDir);
+
+            int direction = 0;
+            if (extudeDir > 1)
             {
-                LevelEditor.Instance.selectedTiles[i].ExtrudeTile(direction);
+                direction = 1;
+                mouseX_extrude = 0;
+                mouseY_extrude = 0;
             }
+            else if (extudeDir < -1)
+            {
+                direction = -1;
+                mouseX_extrude = 0;
+                mouseY_extrude = 0;
+            }
+
+            if (direction != 0)
+            {
+                for (int i = LevelEditor.Instance.selectedTiles.Count - 1; i >= 0; i--)
+                {
+                    LevelEditor.Instance.selectedTiles[i].ExtrudeTile(direction);
+                }
+            }
+
+            yield return new WaitForFixedUpdate();
         }
     }
 

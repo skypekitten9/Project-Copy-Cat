@@ -45,10 +45,7 @@ public class CameraOrientation : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
         }
 
-        if (LevelEditor.Instance.EditorMode != LevelEditorMode.Extrude)
-        {
-            Zoom();
-        }
+        Zoom();
     }
 
 

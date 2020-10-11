@@ -51,7 +51,10 @@ public class Selector : MonoBehaviour
                 break;
 
             case LevelEditorMode.Extrude:
-                GetComponent<TileExtruder>().Extrude();
+                if (Input.GetMouseButtonDown(0) && LevelEditor.Instance.selectedTiles.Count > 0)
+                {
+                    StartCoroutine(GetComponent<TileExtruder>().Extrude(LevelEditor.Instance.selectedTiles[0]));
+                }
                 break;
         }
     }
@@ -112,7 +115,7 @@ public class Selector : MonoBehaviour
     private void SelectWholePlane(Tile_Selectable target)
     {
         DeselectAllTiles();
-        
+
         switch (target.TileDir)
         {
             case TileDirection.X_positive:
