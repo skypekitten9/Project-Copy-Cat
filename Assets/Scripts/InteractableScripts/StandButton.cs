@@ -13,10 +13,13 @@ public class StandButton : MonoBehaviour
 
     SphereCollider collider;
 
+    AudioSource audio;
+
     void Start()
     {
         animator = gameObject.GetComponentInChildren<Animator>();
         collider = gameObject.GetComponent<SphereCollider>();
+        audio = gameObject.GetComponent<AudioSource>();
 
         triggerCount = 0;
     }
@@ -36,11 +39,14 @@ public class StandButton : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         triggerCount++;
+        SFXManager.Instance.PlayButtonClick(audio);
+
     }
 
     private void OnTriggerExit(Collider other)
     {
         triggerCount--;
+        SFXManager.Instance.PlayButtonClick(audio);
     }
 
     private void SignalChannel(bool status)

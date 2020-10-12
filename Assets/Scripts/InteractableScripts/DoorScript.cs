@@ -8,8 +8,19 @@ public class DoorScript : MonoBehaviour
     [SerializeField] private int doorID;
     [SerializeField] private int doorID2;
 
+    AudioSource audio;
+
+    enum SoundState
+    {
+        OPEN,
+        CLOSED
+    }
+
+    SoundState soundState;
+
     //If true the door can open more than once
     public bool dynamicDoor;
+    bool lastOpenState;
     int doorOpenedCount;
 
     void Start()
@@ -18,6 +29,44 @@ public class DoorScript : MonoBehaviour
         animator = gameObject.GetComponentInChildren<Animator>();
         collider = gameObject.GetComponent<BoxCollider>();
         collider.enabled = true;
+
+        audio = gameObject.GetComponent<AudioSource>();
+
+        soundState = SoundState.CLOSED;
+    }
+
+    private void Update()
+    {
+        //Detta är endast till för att lösa ett problem där dörrens logik inte funkade bra ihop med ljuduppsleningen. Eftersom stand-buttons alltid skickar iväg en signal dörren ska lyssna efter stängs den tekniskt sett hela tiden
+        //som någon står på den. Denna lösningen fixade det, men är annars ganska överflödig.
+        switch (soundState)
+        {
+            case SoundState.CLOSED:
+
+                if (doorOpenedCount == 0 || dynamicDoor)
+                {
+                    if (TestLevelManager.Instance.interactablesArray[doorID] == true && TestLevelManager.Instance.interactablesArray[doorID2] == true)
+                    {
+                        SFXManager.Instance.PlayDoorOpen(audio);
+                        soundState = SoundState.OPEN;
+                    }
+                }
+
+                break;
+
+            case SoundState.OPEN:
+
+                if (doorOpenedCount == 0 || dynamicDoor)
+                {
+                    if (TestLevelManager.Instance.interactablesArray[doorID] == false || TestLevelManager.Instance.interactablesArray[doorID2] == false)
+                    {
+                        SFXManager.Instance.PlayDoorClose(audio);
+                        soundState = SoundState.CLOSED;
+                    }
+                }
+
+                break;
+        }
     }
 
     //Manuel testning av att öppna och stänga dörrar.
@@ -39,7 +88,6 @@ public class DoorScript : MonoBehaviour
     {
         if(doorOpenedCount == 0 || dynamicDoor)
         {
-            Debug.Log("Listening!");
             if (TestLevelManager.Instance.interactablesArray[doorID] == true && TestLevelManager.Instance.interactablesArray[doorID2] == true)
             {
                 animator.SetBool("isOpened", true);
