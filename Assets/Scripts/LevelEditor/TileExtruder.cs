@@ -12,7 +12,7 @@ public class TileExtruder : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);
 
-        Cursor.visible = false;
+        //Cursor.visible = false;
         while (Input.GetMouseButton(0))
         {
             mouseX_extrude += Input.GetAxis("Mouse X") * extrude_sensitivity * Time.deltaTime;
@@ -48,7 +48,7 @@ public class TileExtruder : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
 
-        Cursor.visible = true;
+        //Cursor.visible = true;
     }
 
 }

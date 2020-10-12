@@ -46,7 +46,7 @@ public class EditorUI : MonoBehaviour
     private IEnumerator AnimateObjectsPanel(int direction)
     {
         canShowHideObjectsPanel = false;
-        int frames = 20;
+        int frames = 10;
         float distance = (float)objectsRectTransform.rect.width / frames;
         for (int i = 0; i < frames; i++)
         {
