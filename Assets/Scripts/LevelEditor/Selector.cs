@@ -4,6 +4,7 @@ public class Selector : MonoBehaviour
 {
     private Camera cam;
 
+
     private Selectable target = null;
     private bool allSelected = false;
 
@@ -18,7 +19,7 @@ public class Selector : MonoBehaviour
         switch (LevelEditor.Instance.EditorMode)
         {
             case LevelEditorMode.Select:
-                if (Input.GetMouseButtonDown(0))
+                if (Input.GetMouseButtonDown(0) && EditorUI.hoveringUI == false)
                 {
                     Ray ray = cam.ScreenPointToRay(Input.mousePosition);
                     RaycastHit hit;
@@ -51,7 +52,7 @@ public class Selector : MonoBehaviour
                 break;
 
             case LevelEditorMode.Extrude:
-                if (Input.GetMouseButtonDown(0) && LevelEditor.Instance.selectedTiles.Count > 0)
+                if (Input.GetMouseButtonDown(0) && LevelEditor.Instance.selectedTiles.Count > 0 && EditorUI.hoveringUI == false)
                 {
                     StartCoroutine(GetComponent<TileExtruder>().Extrude(LevelEditor.Instance.selectedTiles[0]));
                 }
@@ -111,7 +112,6 @@ public class Selector : MonoBehaviour
         }
     }
 
-
     private void SelectWholePlane(Tile_Selectable target)
     {
         DeselectAllTiles();
@@ -152,8 +152,7 @@ public class Selector : MonoBehaviour
         }
     }
 
-
-    public void DeselectAllTiles()
+    public void DeselectAllTiles()  
     {
         for (int i = LevelEditor.Instance.selectedTiles.Count - 1; i >= 0; i--)
         {

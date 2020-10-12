@@ -1,6 +1,4 @@
-﻿using Microsoft.Win32.SafeHandles;
-using UnityEngine;
-
+﻿using UnityEngine;
 
 public class CameraOrientation : MonoBehaviour
 {
@@ -16,6 +14,7 @@ public class CameraOrientation : MonoBehaviour
     private float zoom;
     private float zoomSpeed = 2000.0f;
     private Vector2 zoomClamp = new Vector2(5.0f, 50.0f);
+
 
 
     private void Start()
@@ -45,12 +44,18 @@ public class CameraOrientation : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
         }
 
-        Zoom();
+        if (Input.GetAxis("Mouse ScrollWheel") != 0)
+        {
+            Zoom();
+        }
     }
 
 
     private System.Collections.IEnumerator Pan()
     {
+        if (EditorUI.hoveringUI)
+            yield break;
+
         mouseX_pan = 0;
         mouseY_pan = 0;
 
@@ -71,6 +76,9 @@ public class CameraOrientation : MonoBehaviour
 
     private void Rotate()
     {
+        if (EditorUI.hoveringUI)
+            return;
+
         Cursor.lockState = CursorLockMode.Locked;
 
         mouseX_rot += Input.GetAxis("Mouse X") * rot_sensitivity * Time.deltaTime;
@@ -81,6 +89,9 @@ public class CameraOrientation : MonoBehaviour
 
     private void Zoom()
     {
+        if (EditorUI.hoveringUI)
+            return;
+        
         zoom -= Input.GetAxis("Mouse ScrollWheel") * zoomSpeed * Time.deltaTime;
         zoom = Mathf.Clamp(zoom, zoomClamp.x, zoomClamp.y);
         camTransform.localPosition = new Vector3(camTransform.localPosition.x, camTransform.localPosition.y, -zoom);
