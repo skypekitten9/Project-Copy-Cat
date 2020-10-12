@@ -6,11 +6,13 @@ public class ButtonScript : MonoBehaviour
 {
     private Ray ray;
     Animator animator;
+    AudioSource audio;
     [SerializeField] public int id;
     
     void Start()
     {
         animator = gameObject.GetComponentInChildren<Animator>();
+        audio = gameObject.GetComponent<AudioSource>();
     }
 
     void Update()
@@ -24,6 +26,7 @@ public class ButtonScript : MonoBehaviour
         {
             TestLevelManager.Instance.interactablesArray[id] = true;
             animator.SetTrigger("pressed");
+            SFXManager.Instance.PlayButtonClick(audio);
             TestLevelManager.Instance.UpdateChannels();
             StartCoroutine(RevertSignal());
         }

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -7,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask groundMask;
 
     private Rigidbody rb;
+    private AudioSource audio;
     private Vector3 velocity;
 
     private bool isGrounded;
@@ -19,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         groundDistance = GetComponent<Collider>().bounds.extents.y;
+        audio = gameObject.GetComponent<AudioSource>();
     }
 
     private void FixedUpdate()
