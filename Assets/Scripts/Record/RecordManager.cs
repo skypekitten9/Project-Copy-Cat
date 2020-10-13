@@ -5,14 +5,14 @@ using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public enum RecordPhase { None, Recording, PlayingBack }
+public enum RecordPhase { None, Recording, Rewinding, PlayingBack }
 public enum ControlStates { Player, Holo }
 
 public class RecordManager : MonoBehaviour
 {
     public int RecordTime { get; } = 5000;    //ms
     public float RewindSpeed { get; } = 3.0f;  //multiplier (x times faster than normal speed)
-    public float AfterImageFadeTime { get; } = 3000;    //ms
+
 
     public RecordPhase recordPhase { get; set; } = RecordPhase.None;
 
@@ -33,6 +33,7 @@ public class RecordManager : MonoBehaviour
     private void Start()
     {
         playerInstance = PlayerManager.Instance.gameObject;
+        
         syncBar = GameManager.Instance.GetComponentInChildren<SyncBar>();
 
         objectRecorders = UnityEngine.Object.FindObjectsOfType<RecordTransformHierarchy>();
@@ -46,6 +47,7 @@ public class RecordManager : MonoBehaviour
     {
         ChangeControlState(ControlStates.Player);
         recordPhase = RecordPhase.None;
+
         syncBar.Reset();
     }
 
@@ -98,8 +100,9 @@ public class RecordManager : MonoBehaviour
     private void StopRecording()
     {
         stopwatch.Stop();   //SyncBar logic stop
-
         syncBar.StopBar();
+
+        recordPhase = RecordPhase.Rewinding;
 
         holoRecorder.StopRecording();
         Array.ForEach(objectRecorders, element => element.StopRecording());
@@ -135,7 +138,7 @@ public class RecordManager : MonoBehaviour
         stopwatch.Stop();
     }
 
-    public IEnumerator EndPlayback()
+    public IEnumerator StopPlayback()
     {
         syncBar.Reset();
 

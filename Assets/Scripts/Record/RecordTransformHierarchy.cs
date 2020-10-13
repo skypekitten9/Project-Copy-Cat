@@ -84,7 +84,7 @@ public class RecordTransformHierarchy : MonoBehaviour
             while (animation.isPlaying)
                 yield return new WaitForFixedUpdate();
 
-            StartCoroutine(GameManager.Instance.GetComponent<RecordManager>().EndPlayback());
+            StartCoroutine(GameManager.Instance.GetComponent<RecordManager>().StopPlayback());
         }
     }
 }
