@@ -550,7 +550,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7530807761338956306}
   - component: {fileID: 7530807761338956300}
-  - component: {fileID: 7530807761338956307}
   - component: {fileID: 1625242734}
   - component: {fileID: 7530807760804628094}
   m_Layer: 0
@@ -588,22 +587,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1230549040795000247, guid: de5a4499198ff9142b89e37bcf810a77, type: 3}
---- !u!114 &7530807761338956307
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7530807761338956305}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4acefaeaa0f529469ceb9a538901375, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  holoPrefab: {fileID: 7080639609443014647, guid: fa4ba85d71aa27441942443a00e7772a, type: 3}
-  nodeSpawnRate: 10
-  recordTime: 5000
-  rewindSpeed: 0.75
 --- !u!114 &1625242734
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -633,3 +616,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c9231b11734c3741873e6c684ae0117, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  holoPrefab: {fileID: 7080639609443014647, guid: fa4ba85d71aa27441942443a00e7772a, type: 3}

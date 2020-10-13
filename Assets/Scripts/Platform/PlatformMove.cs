@@ -17,10 +17,10 @@ public class PlatformMove : MonoBehaviour
         for (int i = 0; i < keyPoints.Length; i++)
             keyPoints[i] = keyPointsParent.GetChild(i).position;
 
-        StartCoroutine(Move());
+        //StartCoroutine(Move());
     }
 
-
+    /*
     public System.Collections.IEnumerator Move()
     {
         Transform moveable = transform.GetChild(0);
@@ -52,4 +52,5 @@ public class PlatformMove : MonoBehaviour
 
         if (loop) StartCoroutine(Move());
     }
+    */
 }

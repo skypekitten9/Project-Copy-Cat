@@ -151,6 +151,8 @@ GameObject:
   - component: {fileID: 1309840677878657507}
   - component: {fileID: -6536858194939864861}
   - component: {fileID: -3120450570939440746}
+  - component: {fileID: 7042960678306204741}
+  - component: {fileID: 471697834322190919}
   m_Layer: 10
   m_Name: TestHolo
   m_TagString: Untagged
@@ -166,7 +168,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7080639609443014647}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.35, y: 1.358, z: -15.4}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7080639610281196978}
@@ -357,6 +359,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 0}
+--- !u!114 &7042960678306204741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7080639609443014647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35d0a994a20118244953e71d7ed419ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isHolo: 1
+--- !u!111 &471697834322190919
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7080639609443014647}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations: []
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &7080639610281196977
 GameObject:
   m_ObjectHideFlags: 0
@@ -377,7 +407,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7080639610281196978
 Transform:
   m_ObjectHideFlags: 0

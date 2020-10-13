@@ -41,8 +41,8 @@ public class Turret : MonoBehaviour
         Vector3 playerDirection = PlayerManager.Instance.transform.position - eye.position;
         Vector3 holoDirection = Vector3.positiveInfinity;
 
-        if (GameManager.Instance.GetComponent<RecordPlayback>().HoloInstance != null)
-            holoDirection = GameManager.Instance.GetComponent<RecordPlayback>().HoloInstance.transform.position - eye.position;
+        if (GameManager.Instance.GetComponent<RecordManager>().HoloInstance != null)
+            holoDirection = GameManager.Instance.GetComponent<RecordManager>().HoloInstance.transform.position - eye.position;
 
         targetDirection = Vector3.Magnitude(holoDirection) <= Vector3.Magnitude(playerDirection) ? holoDirection : playerDirection;
 
