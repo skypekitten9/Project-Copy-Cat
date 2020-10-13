@@ -29,11 +29,6 @@ public class RecordManager : MonoBehaviour
     private List<InteractionData> interactionData;
     private SyncBar syncBar;
 
-    private void OnEnable()
-    {
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
-
 
     private void Start()
     {
@@ -44,7 +39,7 @@ public class RecordManager : MonoBehaviour
 
         stopwatch = new Stopwatch();
 
-        ChangeControlState(ControlStates.Player);
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -148,7 +143,7 @@ public class RecordManager : MonoBehaviour
         while (fadeValue > 0)
         {
             fadeValue -= Time.deltaTime;
-            HoloInstance.GetComponent<MeshRenderer>().material.SetFloat("Vector1_DCDBC5A6", fadeValue);
+            HoloInstance.GetComponent<SkinnedMeshRenderer>().material.SetFloat("Vector1_DCDBC5A6", fadeValue);
             yield return new WaitForFixedUpdate();
         }
 

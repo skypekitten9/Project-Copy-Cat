@@ -24,15 +24,19 @@ public class RecordTransformHierarchy : MonoBehaviour
 
     public void StartRecording()
     {
-        UnityEngine.Debug.Log("Start Recording");
+        try
+        {
+            //UnityEngine.Debug.Log("Start Recording");
 
-        recorder = new GameObjectRecorder(gameObject);
-        recorder.BindComponentsOfType<Transform>(gameObject, true);
+            recorder = new GameObjectRecorder(gameObject);
+            recorder.BindComponentsOfType<Transform>(gameObject, true);
 
-        Clip = new AnimationClip();
-        Clip.legacy = true;
+            Clip = new AnimationClip();
+            Clip.legacy = true;
 
-        recording = true;
+            recording = true;
+        }
+        catch (System.Exception) { }
     }
 
     private void LateUpdate()
@@ -49,7 +53,7 @@ public class RecordTransformHierarchy : MonoBehaviour
 
         if (recorder.isRecording)
         {
-            UnityEngine.Debug.Log("Stop Recording");
+            //UnityEngine.Debug.Log("Stop Recording");
 
             recorder.SaveToClip(Clip);
             recorder.ResetRecording();
