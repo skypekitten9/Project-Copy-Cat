@@ -19,14 +19,15 @@ public class RecordTransformHierarchy : MonoBehaviour
     void Awake()
     {
         animation = GetComponent<Animation>();
-        recorder = new GameObjectRecorder(gameObject);
-        recorder.BindComponentsOfType<Transform>(gameObject, true);
     }
 
 
     public void StartRecording()
     {
         UnityEngine.Debug.Log("Start Recording");
+
+        recorder = new GameObjectRecorder(gameObject);
+        recorder.BindComponentsOfType<Transform>(gameObject, true);
 
         Clip = new AnimationClip();
         Clip.legacy = true;
@@ -79,7 +80,7 @@ public class RecordTransformHierarchy : MonoBehaviour
             while (animation.isPlaying)
                 yield return new WaitForFixedUpdate();
 
-            GameManager.Instance.GetComponent<RecordManager>().EndPlayback();
+            StartCoroutine(GameManager.Instance.GetComponent<RecordManager>().EndPlayback());
         }
     }
 }
