@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
@@ -49,7 +50,7 @@ public class RecordManager : MonoBehaviour
             switch (recordPhase)
             {
                 case RecordPhase.None:
-                    StartRecording();
+                    StartCoroutine(StartRecording());
                     break;
 
                 case RecordPhase.Recording:
@@ -65,7 +66,7 @@ public class RecordManager : MonoBehaviour
     }
 
 
-    private void StartRecording()
+    private IEnumerator StartRecording()
     {
         recordPhase = RecordPhase.Recording;
 
@@ -77,6 +78,11 @@ public class RecordManager : MonoBehaviour
         holoRecorder.StartRecording();
         Array.ForEach(objectRecorders, element => element.StartRecording());
 
+        while (stopwatch.ElapsedMilliseconds < RecordTime)
+            yield return new WaitForFixedUpdate();
+
+        if (recordPhase == RecordPhase.Recording)
+            StopRecording();
     }
 
     private void StopRecording()
