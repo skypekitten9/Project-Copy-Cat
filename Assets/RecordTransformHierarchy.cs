@@ -62,7 +62,7 @@ public class RecordTransformHierarchy : MonoBehaviour
 
     private IEnumerator RewindPlayback()
     {
-        animation["recording_rew"].speed = -3;
+        animation["recording_rew"].speed = -GameManager.Instance.GetComponent<RecordManager>().RewindSpeed;
         animation["recording_rew"].time = animation["recording_rew"].length;
         animation.Play("recording_rew");
 

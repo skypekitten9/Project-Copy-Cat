@@ -11,8 +11,7 @@ public enum ControlStates { Player, Holo }
 public class RecordManager : MonoBehaviour
 {
     public int RecordTime { get; } = 5000;    //ms
-    public float NodeSpawnRate { get; } = 7.0f;    //s^-1
-    public float RewindSpeed { get; } = 0.75f;
+    public float RewindSpeed { get; } = 3.0f;  //multiplier (x times faster than normal speed)
 
     public RecordPhase recordPhase { get; set; } = RecordPhase.None;
 
@@ -25,12 +24,15 @@ public class RecordManager : MonoBehaviour
     private RecordTransformHierarchy[] objectRecorders;
 
     private Stopwatch stopwatch;
-    private List<InteractionData> interactionData = new List<InteractionData>();
+
+    private List<InteractionData> interactionData;
+    private SyncBar syncBar;
 
 
     private void Start()
     {
         playerInstance = PlayerManager.Instance.gameObject;
+        syncBar = GameManager.Instance.GetComponentInChildren<SyncBar>();   //SyncBar logic start
 
         objectRecorders = UnityEngine.Object.FindObjectsOfType<RecordTransformHierarchy>();
 
@@ -65,7 +67,11 @@ public class RecordManager : MonoBehaviour
 
     private IEnumerator StartRecording()
     {
+        interactionData = new List<InteractionData>();
+
         recordPhase = RecordPhase.Recording;
+
+        syncBar.StartBar();
 
         stopwatch.Restart();
         ChangeControlState(ControlStates.Holo);
@@ -84,7 +90,9 @@ public class RecordManager : MonoBehaviour
 
     private void StopRecording()
     {
-        stopwatch.Stop();
+        stopwatch.Stop();   //SyncBar logic stop
+
+        syncBar.StopBar();
 
         holoRecorder.StopRecording();
         Array.ForEach(objectRecorders, element => element.StopRecording());
@@ -92,12 +100,38 @@ public class RecordManager : MonoBehaviour
 
     public void StartPlayback()
     {
+        syncBar.Replay();
+
         recordPhase = RecordPhase.PlayingBack;
         ChangeControlState(ControlStates.Player);
+
+        StartCoroutine(CallInteractions());
+    }
+
+    private IEnumerator CallInteractions()
+    {
+        stopwatch.Restart();
+
+        for (int i = 0; i < interactionData.Count; i++)
+        {
+            yield return new WaitForSeconds((float)(interactionData[i].Time - stopwatch.ElapsedMilliseconds) / 1000);
+            for (int j = 0; j < interactionData[i].InteractionChannels.Length; j++)
+            {
+                TestLevelManager.Instance.interactablesArray[interactionData[i].InteractionChannels[j]] =
+                    !TestLevelManager.Instance.interactablesArray[interactionData[i].InteractionChannels[j]];
+            }
+
+            TestLevelManager.Instance.NotifyDoors();
+            //UnityEngine.Debug.Log($"Interact_{i}");
+        }
+
+        stopwatch.Stop();
     }
 
     public IEnumerator EndPlayback()
     {
+        syncBar.Reset();
+
         float fadeValue = 1;
         while (fadeValue > 0)
         {
