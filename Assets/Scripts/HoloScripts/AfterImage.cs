@@ -10,7 +10,7 @@ public class AfterImage : MonoBehaviour
     {
         material = GetComponent<MeshRenderer>().material;
         material.SetFloat("Vector1_DCDBC5A6", 1.0f);
-        fadeTime = GameManager.Instance.GetComponent<RecordPlayback>().AfterImageFadeTime;
+        fadeTime = GameManager.Instance.GetComponent<RecordManager>().AfterImageFadeTime;
 
         StartCoroutine(Fade());
     }

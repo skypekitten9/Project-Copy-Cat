@@ -12,6 +12,7 @@ public class RecordManager : MonoBehaviour
 {
     public int RecordTime { get; } = 5000;    //ms
     public float RewindSpeed { get; } = 3.0f;  //multiplier (x times faster than normal speed)
+    public float AfterImageFadeTime { get; } = 3000;    //ms
 
     public RecordPhase recordPhase { get; set; } = RecordPhase.None;
 
@@ -27,6 +28,7 @@ public class RecordManager : MonoBehaviour
 
     private List<InteractionData> interactionData;
     private SyncBar syncBar;
+
 
 
     private void Start()
