@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 
 public enum RecordPhase { None, Recording, PlayingBack }
 public enum ControlStates { Player, Holo }
@@ -29,12 +29,16 @@ public class RecordManager : MonoBehaviour
     private List<InteractionData> interactionData;
     private SyncBar syncBar;
 
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
 
 
     private void Start()
     {
         playerInstance = PlayerManager.Instance.gameObject;
-        syncBar = GameManager.Instance.GetComponentInChildren<SyncBar>();   //SyncBar logic start
+        syncBar = GameManager.Instance.GetComponentInChildren<SyncBar>();
 
         objectRecorders = UnityEngine.Object.FindObjectsOfType<RecordTransformHierarchy>();
 
@@ -43,6 +47,12 @@ public class RecordManager : MonoBehaviour
         ChangeControlState(ControlStates.Player);
     }
 
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        ChangeControlState(ControlStates.Player);
+        recordPhase = RecordPhase.None;
+        syncBar.Reset();
+    }
 
     private void Update()
     {
