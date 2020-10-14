@@ -2,14 +2,16 @@
 
 class AfterImagePool : MonoBehaviour
 {
-    public float AfterImageFadeTime { get; } = 1000;    //ms
-    private float afterImageSpawnRate = 10.0f;    // times per second
+    public float AfterImageFadeTime { get; } = 1000.0f;    //ms
+    private float afterImageSpawnRate = 30.0f;    // times per second
+
     private float afterImagesTimer = 0;
     private int afterImagesIndex = 0;
 
     private Transform afterImagesParent;
     private GameObject[] afterImagesPool;
     [SerializeField] private Material afterImageMaterial;
+    public Material AfterImageMaterial { get { return afterImageMaterial; } }
 
 
     private void Start()
@@ -23,6 +25,8 @@ class AfterImagePool : MonoBehaviour
             afterImagesPool[i].transform.parent = afterImagesParent;
             afterImagesPool[i].GetComponent<MeshRenderer>().material = afterImageMaterial;
         }
+
+        DontDestroyOnLoad(afterImagesParent);
     }
 
 

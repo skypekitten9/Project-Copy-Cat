@@ -14,7 +14,7 @@ public class AfterImage : MonoBehaviour
     }
 
     public void Enable()
-    {  
+    {
         StartCoroutine(Fade());
     }
 
@@ -28,5 +28,6 @@ public class AfterImage : MonoBehaviour
             material.SetFloat("Vector1_DCDBC5A6", 1.0f - i / (fps * (fadeTime / 1000)));
             yield return new WaitForSeconds(frameTime);
         }
+        material.SetFloat("Vector1_DCDBC5A6", 0);
     }
 }

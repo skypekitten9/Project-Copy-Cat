@@ -630,4 +630,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76c40e8fec9f0e1478fdf1bcb23e8d0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  afterImageMaterial: {fileID: 2100000, guid: 6c64a83b1dc25ab4ea8ea5d88f34c6af, type: 2}
+  afterImageMaterial: {fileID: 2100000, guid: 43e5c31b58e5f714f8a2b7988c40bd25, type: 2}
