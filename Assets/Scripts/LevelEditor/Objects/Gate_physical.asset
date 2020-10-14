@@ -10,7 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 957c7f606cbc0934ca22c6c92e69fd52, type: 3}
-  m_Name: Fence
+  m_Name: Gate_physical
   m_EditorClassIdentifier: 
-  icon: {fileID: 0}
-  prefab: {fileID: 0}
+  name: Gate_physical
+  icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  prefab: {fileID: 919132149155446097, guid: b2a2f21759a32cf49b259f33fbd3a37d, type: 3}
+  canPlaceOnGround: 1
+  canPlaceOnCeiling: 0
+  canPlaceOnWall: 0
+  canBeRotated: 1

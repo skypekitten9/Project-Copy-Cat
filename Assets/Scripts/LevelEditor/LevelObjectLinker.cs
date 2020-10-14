@@ -1,7 +1,8 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
 
-class LevelObjectLinker : MonoBehaviour
+public class LevelObjectLinker : MonoBehaviour
 {
     [SerializeField] private LevelObject levelObject;
 
@@ -24,4 +25,11 @@ class LevelObjectLinker : MonoBehaviour
             Debug.LogError($"Level object \"{levelObject.Name}\" - missing prefab");
     }
 
+
+
+    public void SelectUIObject()
+    {
+        //Debug.Log("InitiateDrag");
+        StartCoroutine(LevelEditor.Instance.GetComponent<LevelObjectManager>().SelectUIObject(levelObject));
+    }
 }
