@@ -4,21 +4,21 @@ using UnityEngine.UI;
 
 public class LevelObjectManager : MonoBehaviour
 {
+    private Transform levelObjectsParent;
+
     private LevelObject selectedUIObject;
     private GameObject levelObjectInstance;
 
     private Camera cam;
 
     private bool dragging = false;
-
-    //[SerializeField] private GameObject cursorIcon;
-    //public Vector3 cursorIconOffset = new Vector3(20.0f, -20.0f, 0);
+    private bool objectPlaced = false;
 
 
     private void Awake()
     {
+        levelObjectsParent = new GameObject("LevelObjects").transform;
         cam = Camera.main;
-        //cursorIcon.GetComponent<Image>().enabled = false;
     }
 
 
@@ -29,7 +29,10 @@ public class LevelObjectManager : MonoBehaviour
             if (Input.GetMouseButton(0) == true)
                 MoveSelectedObject();
             else
-                DeselectUIObject();
+                DropLevelObject(!objectPlaced);
+
+            if (Input.GetKey(KeyCode.Escape))
+                DropLevelObject(true);
         }
     }
 
@@ -44,7 +47,7 @@ public class LevelObjectManager : MonoBehaviour
             dragging = true;
 
             selectedUIObject = levelObject;
-            levelObjectInstance = Instantiate(levelObject.Prefab, Input.mousePosition, Quaternion.identity, null);
+            levelObjectInstance = Instantiate(levelObject.Prefab, Input.mousePosition, Quaternion.identity, levelObjectsParent);
         }
     }
 
@@ -64,6 +67,8 @@ public class LevelObjectManager : MonoBehaviour
                         levelObjectInstance.transform.localRotation = Quaternion.LookRotation(/*Vector3.forward,*/ hit.transform.GetComponent<Tile_Selectable>().GetDirectionVector());
                         levelObjectInstance.transform.localEulerAngles += new Vector3(90.0f, 0, 0);
                         levelObjectInstance.transform.position = hit.transform.position;
+
+                        objectPlaced = true;
                     }
                     break;
                 case TileDirection.Y_negative:
@@ -72,6 +77,8 @@ public class LevelObjectManager : MonoBehaviour
                         levelObjectInstance.transform.localRotation = Quaternion.LookRotation(/*Vector3.forward,*/ hit.transform.GetComponent<Tile_Selectable>().GetDirectionVector());
                         levelObjectInstance.transform.localEulerAngles += new Vector3(90.0f, 0, 0);
                         levelObjectInstance.transform.position = hit.transform.position;
+
+                        objectPlaced = true;
                     }
                     break;
 
@@ -84,16 +91,23 @@ public class LevelObjectManager : MonoBehaviour
                         levelObjectInstance.transform.localRotation = Quaternion.LookRotation(/*Vector3.forward,*/ hit.transform.GetComponent<Tile_Selectable>().GetDirectionVector());
                         levelObjectInstance.transform.localEulerAngles += new Vector3(90.0f, 0, 0);
                         levelObjectInstance.transform.position = hit.transform.position;
+
+                        objectPlaced = true;
                     }
                     break;
-
             }
         }
     }
 
-    private void DeselectUIObject()
+    private void DropLevelObject(bool destroy)
     {
+        objectPlaced = false;
         dragging = false;
+
+        if (destroy)
+        {
+            GameObject.Destroy(levelObjectInstance);
+        }
         selectedUIObject = null;
     }
 }

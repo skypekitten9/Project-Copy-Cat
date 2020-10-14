@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class LevelObjectLinker : MonoBehaviour
+public class LevelObjectLinker : MonoBehaviour, IPointerDownHandler
 {
     [SerializeField] private LevelObject levelObject;
 
@@ -26,8 +27,7 @@ public class LevelObjectLinker : MonoBehaviour
     }
 
 
-
-    public void SelectUIObject()
+    public void OnPointerDown(PointerEventData eventData)
     {
         //Debug.Log("InitiateDrag");
         StartCoroutine(LevelEditor.Instance.GetComponent<LevelObjectManager>().SelectUIObject(levelObject));
