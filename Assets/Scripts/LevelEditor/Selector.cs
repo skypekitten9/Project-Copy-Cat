@@ -1,9 +1,16 @@
 ﻿using UnityEngine;
 
+enum CursorModes { None, Select, Extrude, Move, Rotate }
+
 public class Selector : MonoBehaviour
 {
-    private Camera cam;
+    [SerializeField] private Texture2D selectCursor;
+    [SerializeField] private Texture2D extrudeCursor;
 
+    private CursorModes cursorMode;
+    public bool CanChangeCursor { get; set; } = true;
+
+    private Camera cam;
 
     private Selectable target = null;
     private bool allSelected = false;
@@ -16,28 +23,37 @@ public class Selector : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0) && EditorUI.hoveringUI == false)
+        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit))
         {
-            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
+            target = hit.transform.parent.GetComponent<Selectable>();
 
-            if (Physics.Raycast(ray, out hit))
+            if (target is Tile_Selectable)
             {
-                target = hit.transform.parent.GetComponent<Selectable>();
-
-                if (target is Tile_Selectable)
+                if (hit.transform.tag == "Tile_SelectCollider")
                 {
-                    if (hit.transform.tag == "Tile_SelectCollider")
+                    SetCursor(CursorModes.Select);
+                    if (Input.GetMouseButtonDown(0) && EditorUI.hoveringUI == false)
                     {
                         StartCoroutine(ToggleSelect(target as Tile_Selectable));    //Start tile selection
                     }
-                    else if (hit.transform.tag == "Tile_ExtrudeCollider")
+                }
+                else if (hit.transform.tag == "Tile_ExtrudeCollider")
+                {
+                    if (LevelEditor.Instance.selectedTiles.Contains(target as Tile_Selectable) == false)   //If the selected tile isn't selected - the extrude-collider is used as a select-collider
                     {
-                        if (LevelEditor.Instance.selectedTiles.Contains(target as Tile_Selectable) == false)   //If the selected tile isn't selected - the extrude-collider is used as a select-collider
+                        SetCursor(CursorModes.Select);
+                        if (Input.GetMouseButtonDown(0) && EditorUI.hoveringUI == false)
                         {
                             StartCoroutine(ToggleSelect(target as Tile_Selectable));    //Start tile selection
                         }
-                        else if (LevelEditor.Instance.selectedTiles.Count > 0)
+                    }
+                    else if (LevelEditor.Instance.selectedTiles.Contains(target as Tile_Selectable))
+                    {
+                        SetCursor(CursorModes.Extrude);
+                        if (Input.GetMouseButtonDown(0) && EditorUI.hoveringUI == false)
                         {
                             StartCoroutine(GetComponent<TileExtruder>().Extrude(LevelEditor.Instance.selectedTiles[0]));    //Start extrusion
                         }
@@ -45,6 +61,7 @@ public class Selector : MonoBehaviour
                 }
             }
         }
+
         if (Input.GetKeyDown(KeyCode.A))
         {
             if (target != null && target is Tile_Selectable)
@@ -75,6 +92,7 @@ public class Selector : MonoBehaviour
         }
         else
         {
+            CanChangeCursor = false;
             DeselectAllTiles();
 
             while (Input.GetMouseButton(0) == true)
@@ -110,6 +128,7 @@ public class Selector : MonoBehaviour
                 }
                 yield return new WaitForFixedUpdate();
             }
+            CanChangeCursor = true;
         }
     }
 
@@ -165,5 +184,28 @@ public class Selector : MonoBehaviour
 
         LevelEditor.Instance.selectedTiles.Clear();
         allSelected = false;
+    }
+
+
+
+    private void SetCursor(CursorModes newMode)
+    {
+        if (cursorMode != newMode && CanChangeCursor)
+        {
+            switch (newMode)
+            {
+                case CursorModes.Select:
+                    Cursor.SetCursor(selectCursor, Vector3.zero, CursorMode.Auto);
+                    break;
+                case CursorModes.Extrude:
+                    Cursor.SetCursor(extrudeCursor, new Vector3(32, 32), CursorMode.Auto);
+                    break;
+                case CursorModes.Move:
+                    break;
+                case CursorModes.Rotate:
+                    break;
+            }
+            cursorMode = newMode;
+        }
     }
 }

@@ -12,6 +12,7 @@ public class TileExtruder : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);
 
+        LevelEditor.Instance.GetComponent<Selector>().CanChangeCursor = false;
         while (Input.GetMouseButton(0))
         {
             mouseX_extrude += Input.GetAxis("Mouse X") * extrude_sensitivity * Time.deltaTime;
@@ -45,6 +46,7 @@ public class TileExtruder : MonoBehaviour
 
             yield return new WaitForFixedUpdate();
         }
+        LevelEditor.Instance.GetComponent<Selector>().CanChangeCursor = true;
     }
 
 }
