@@ -12,7 +12,6 @@ public class TileExtruder : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);
 
-        //Cursor.visible = false;
         while (Input.GetMouseButton(0))
         {
             mouseX_extrude += Input.GetAxis("Mouse X") * extrude_sensitivity * Time.deltaTime;
@@ -22,7 +21,6 @@ public class TileExtruder : MonoBehaviour
             Vector3 normal = (Vector3)target.GetDirectionVector();
             float extudeDir = Vector3.Dot(cam.right * mouseX_extrude, normal) +
                               Vector3.Dot(cam.up * mouseY_extrude, normal);
-            //Debug.Log("extrude dir: " + extudeDir);
 
             int direction = 0;
             if (extudeDir > 1.0f)
@@ -47,8 +45,6 @@ public class TileExtruder : MonoBehaviour
 
             yield return new WaitForFixedUpdate();
         }
-
-        //Cursor.visible = true;
     }
 
 }

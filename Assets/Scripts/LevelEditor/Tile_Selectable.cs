@@ -179,7 +179,7 @@ public class Tile_Selectable : Selectable
 
     private void OnDrawGizmos()
     {
-        if (LevelEditor.Instance.Debug)
+        if (LevelEditor.Instance && LevelEditor.Instance.Debug)
         {
             Vector3 pos = LevelEditor.Instance.IndexToWorldPos(X, Y, Z, TileDir);
             Gizmos.DrawLine(pos, pos + (Vector3)GetDirectionVector() / 2);

@@ -2,7 +2,6 @@
 using UnityEngine;
 
 
-public enum LevelEditorMode { Select, Extrude }
 public enum TileDirection { X_positive, X_negative, Y_positive, Y_negative, Z_positive, Z_negative };
 
 public class LevelEditor : MonoBehaviour
@@ -15,14 +14,12 @@ public class LevelEditor : MonoBehaviour
     public bool Debug { get { return debug; } }
 
 
-    public LevelEditorMode EditorMode { get; private set; } = LevelEditorMode.Select;
-
     [SerializeField] private GameObject tilePrefab;
     [SerializeField] private GameObject boundingBox;
 
     private Transform tilesParent;
 
-    public readonly Vector3Int maxTiles = new Vector3Int(21, 7, 21);
+    public readonly Vector3Int maxTiles = new Vector3Int(21, 15, 21);
     public Tile_Selectable[,,,] Tiles { get; private set; }
 
 
@@ -47,19 +44,6 @@ public class LevelEditor : MonoBehaviour
     }
 
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            EditorMode = LevelEditorMode.Select;
-        }
-        else if (Input.GetKeyDown(KeyCode.W))
-        {
-            EditorMode = LevelEditorMode.Extrude;
-        }
-    }
-
-
     private void SetBoundingBox()
     {
         boundingBox.transform.position = new Vector3(0, 0, 0);
@@ -68,7 +52,7 @@ public class LevelEditor : MonoBehaviour
 
     private void CreateStartRoom()
     {
-        for (int y = 1; y < 6; y++)
+        for (int y = 4; y < 9; y++)
         {
             for (int z = 6; z < 15; z++)
             {
@@ -80,13 +64,13 @@ public class LevelEditor : MonoBehaviour
         {
             for (int z = 6; z < 15; z++)
             {
-                PlaceTile(x, 1, z, TileDirection.Y_positive);
-                PlaceTile(x, 5, z, TileDirection.Y_negative);
+                PlaceTile(x, 4, z, TileDirection.Y_positive);
+                PlaceTile(x, 8, z, TileDirection.Y_negative);
             }
         }
         for (int x = 5; x < 16; x++)
         {
-            for (int y = 1; y < 6; y++)
+            for (int y = 4; y < 9; y++)
             {
                 PlaceTile(x, y, 6, TileDirection.Z_positive);
                 PlaceTile(x, y, 14, TileDirection.Z_negative);

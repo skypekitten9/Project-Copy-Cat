@@ -45,6 +45,7 @@ public class LevelObjectManager : MonoBehaviour
 
     public void SelectUIObject(LevelObject levelObject)
     {
+        LevelEditor.Instance.GetComponent<Selector>().DeselectAllTiles();
         objectPlaced = false;
 
         cursorIcon.GetComponent<Image>().sprite = levelObject.Icon;
@@ -60,17 +61,20 @@ public class LevelObjectManager : MonoBehaviour
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit) && hit.transform.GetComponent<Tile_Selectable>())
+
+        if (Physics.Raycast(ray, out hit) && hit.transform.parent.GetComponent<Tile_Selectable>())
         {
-            TileDirection tileDir = hit.transform.GetComponent<Tile_Selectable>().TileDir;
+            Tile_Selectable target = hit.transform.parent.GetComponent<Tile_Selectable>();
+
+            TileDirection tileDir = target.TileDir;
             switch (tileDir)
             {
                 case TileDirection.Y_positive:
                     if (selectedUIObject.CanPlaceOnGround == true)
                     {
-                        levelObjectInstance.transform.localRotation = Quaternion.LookRotation(hit.transform.GetComponent<Tile_Selectable>().GetDirectionVector());
+                        levelObjectInstance.transform.localRotation = Quaternion.LookRotation(target.GetDirectionVector());
                         levelObjectInstance.transform.localEulerAngles += new Vector3(90.0f, 0, 0);
-                        levelObjectInstance.transform.position = hit.transform.position;
+                        levelObjectInstance.transform.position = target.transform.position;
 
                         objectPlaced = true;
                     }
@@ -78,9 +82,9 @@ public class LevelObjectManager : MonoBehaviour
                 case TileDirection.Y_negative:
                     if (selectedUIObject.CanPlaceOnCeiling == true)
                     {
-                        levelObjectInstance.transform.localRotation = Quaternion.LookRotation(hit.transform.GetComponent<Tile_Selectable>().GetDirectionVector());
+                        levelObjectInstance.transform.localRotation = Quaternion.LookRotation(target.GetDirectionVector());
                         levelObjectInstance.transform.localEulerAngles += new Vector3(90.0f, 0, 0);
-                        levelObjectInstance.transform.position = hit.transform.position;
+                        levelObjectInstance.transform.position = target.transform.position;
 
                         objectPlaced = true;
                     }
@@ -92,9 +96,9 @@ public class LevelObjectManager : MonoBehaviour
                 case TileDirection.Z_negative:
                     if (selectedUIObject.CanPlaceOnWall == true)
                     {
-                        levelObjectInstance.transform.localRotation = Quaternion.LookRotation(hit.transform.GetComponent<Tile_Selectable>().GetDirectionVector());
+                        levelObjectInstance.transform.localRotation = Quaternion.LookRotation(target.GetDirectionVector());
                         levelObjectInstance.transform.localEulerAngles += new Vector3(90.0f, 0, 0);
-                        levelObjectInstance.transform.position = hit.transform.position;
+                        levelObjectInstance.transform.position = target.transform.position;
 
                         objectPlaced = true;
                     }

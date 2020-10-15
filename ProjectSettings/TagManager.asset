@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Door
   - Interactable
+  - Tile_SelectCollider
+  - Tile_ExtrudeCollider
   layers:
   - Default
   - TransparentFX

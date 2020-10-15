@@ -16,52 +16,53 @@ public class Selector : MonoBehaviour
 
     private void Update()
     {
-        switch (LevelEditor.Instance.EditorMode)
+        if (Input.GetMouseButtonDown(0) && EditorUI.hoveringUI == false)
         {
-            case LevelEditorMode.Select:
-                if (Input.GetMouseButtonDown(0) && EditorUI.hoveringUI == false)
+            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                target = hit.transform.parent.GetComponent<Selectable>();
+
+                if (target is Tile_Selectable)
                 {
-                    Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-                    RaycastHit hit;
-
-                    if (Physics.Raycast(ray, out hit))
+                    if (hit.transform.tag == "Tile_SelectCollider")
                     {
-                        target = hit.transform.GetComponent<Selectable>();
-
-                        if (target is Tile_Selectable)
+                        StartCoroutine(ToggleSelect(target as Tile_Selectable));    //Start tile selection
+                    }
+                    else if (hit.transform.tag == "Tile_ExtrudeCollider")
+                    {
+                        if (LevelEditor.Instance.selectedTiles.Contains(target as Tile_Selectable) == false)   //If the selected tile isn't selected - the extrude-collider is used as a select-collider
                         {
-                            StartCoroutine(ToggleSelect(target as Tile_Selectable));
+                            StartCoroutine(ToggleSelect(target as Tile_Selectable));    //Start tile selection
+                        }
+                        else if (LevelEditor.Instance.selectedTiles.Count > 0)
+                        {
+                            StartCoroutine(GetComponent<TileExtruder>().Extrude(LevelEditor.Instance.selectedTiles[0]));    //Start extrusion
                         }
                     }
                 }
-                if (Input.GetKeyDown(KeyCode.A))
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            if (target != null && target is Tile_Selectable)
+            {
+                if (allSelected == false)
                 {
-                    if (target != null && target is Tile_Selectable)
-                    {
-                        if (allSelected == false)
-                        {
-                            SelectWholePlane(target as Tile_Selectable);
-                        }
-                        else
-                        {
-                            DeselectAllTiles();
-                        }
-                    }
+                    SelectWholePlane(target as Tile_Selectable);
                 }
-
-                break;
-
-            case LevelEditorMode.Extrude:
-                if (Input.GetMouseButtonDown(0) && LevelEditor.Instance.selectedTiles.Count > 0 && EditorUI.hoveringUI == false)
+                else
                 {
-                    StartCoroutine(GetComponent<TileExtruder>().Extrude(LevelEditor.Instance.selectedTiles[0]));
+                    DeselectAllTiles();
                 }
-                break;
+            }
         }
     }
 
 
-    private System.Collections.IEnumerator ToggleSelect(Tile_Selectable target)
+    public System.Collections.IEnumerator ToggleSelect(Tile_Selectable target)
     {
         yield return new WaitForSeconds(0.1f);
 
@@ -83,7 +84,7 @@ public class Selector : MonoBehaviour
 
                 if (Physics.Raycast(ray, out hit))
                 {
-                    Tile_Selectable newTarget = hit.transform.GetComponent<Tile_Selectable>();
+                    Tile_Selectable newTarget = hit.transform.parent.transform.GetComponent<Tile_Selectable>();
 
                     if (newTarget != null && LevelEditor.Instance.selectedTiles.Contains(newTarget) == false && newTarget.TileDir == target.TileDir)
                     {
@@ -152,7 +153,7 @@ public class Selector : MonoBehaviour
         }
     }
 
-    public void DeselectAllTiles()  
+    public void DeselectAllTiles()
     {
         for (int i = LevelEditor.Instance.selectedTiles.Count - 1; i >= 0; i--)
         {

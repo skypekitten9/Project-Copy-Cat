@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 2984507545212575061}
   - component: {fileID: 1049319494671837599}
   - component: {fileID: 919132148097199016}
-  - component: {fileID: 7008911081674136157}
   m_Layer: 0
   m_Name: Tile
   m_TagString: Untagged
@@ -30,7 +29,9 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 2753268637220383114}
+  - {fileID: 8048554946947572307}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -97,13 +98,89 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deselected: {fileID: 2100000, guid: c7211992a0efa434dbc88b0923db970d, type: 2}
   selected: {fileID: 2100000, guid: 68c36687caa9e794b9eb9a9d8a1701df, type: 2}
---- !u!64 &7008911081674136157
+--- !u!1 &4543792304212101206
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8048554946947572307}
+  - component: {fileID: 565858251459695421}
+  m_Layer: 0
+  m_Name: ExtrudeCollider
+  m_TagString: Tile_ExtrudeCollider
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8048554946947572307
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4543792304212101206}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2217110608305804016}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!64 &565858251459695421
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1553481241576147018}
+  m_GameObject: {fileID: 4543792304212101206}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -3781860745874542921, guid: fc0f415baf15dcc4194d4564d6f6ebc4, type: 3}
+--- !u!1 &8496002408071624673
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2753268637220383114}
+  - component: {fileID: 4470735480828045736}
+  m_Layer: 0
+  m_Name: SelectCollider
+  m_TagString: Tile_SelectCollider
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2753268637220383114
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8496002408071624673}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.01, z: 0}
+  m_LocalScale: {x: 0.75, y: 1, z: 0.75}
+  m_Children: []
+  m_Father: {fileID: 2217110608305804016}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!64 &4470735480828045736
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8496002408071624673}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
