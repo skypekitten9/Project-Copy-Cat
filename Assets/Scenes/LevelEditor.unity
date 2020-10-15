@@ -335,6 +335,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShowMaskGraphic: 1
+--- !u!1 &163482449 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8976160821073333665, guid: 76696158edaa2f54591f6d2346a5d179, type: 3}
+  m_PrefabInstance: {fileID: 864700107}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &448426755
 GameObject:
   m_ObjectHideFlags: 0
@@ -746,6 +751,22 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 8976160821073333671, guid: 76696158edaa2f54591f6d2346a5d179, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976160821073333671, guid: 76696158edaa2f54591f6d2346a5d179, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976160821073333671, guid: 76696158edaa2f54591f6d2346a5d179, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976160821073333671, guid: 76696158edaa2f54591f6d2346a5d179, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 163482449}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 76696158edaa2f54591f6d2346a5d179, type: 3}
 --- !u!224 &864700108 stripped
@@ -770,7 +791,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &921028953
 RectTransform:
   m_ObjectHideFlags: 0
@@ -797,7 +818,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 921028952}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -1017,6 +1038,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 747743c4e3fea9644a49202a4a0f2884, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cursorIcon: {fileID: 921028952}
 --- !u!1 &1487667252
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,12 +11,13 @@ public class LevelObjectManager : MonoBehaviour
 
     private Camera cam;
 
-    private bool dragging = false;
+    [SerializeField] private GameObject cursorIcon;
     private bool objectPlaced = false;
 
 
     private void Awake()
     {
+        cursorIcon.SetActive(false);
         levelObjectsParent = new GameObject("LevelObjects").transform;
         cam = Camera.main;
     }
@@ -24,32 +25,35 @@ public class LevelObjectManager : MonoBehaviour
 
     private void Update()
     {
-        if (dragging)
+        if (selectedUIObject != null)
         {
-            if (Input.GetMouseButton(0) == true)
-                MoveSelectedObject();
+            MoveSelectedObject();
+
+            if (objectPlaced)
+                cursorIcon.SetActive(false);
             else
-                DropLevelObject(!objectPlaced);
+                cursorIcon.transform.position = Input.mousePosition;
 
-            if (Input.GetKey(KeyCode.Escape))
-                DropLevelObject(true);
+            if (Input.GetMouseButtonDown(0))
+                PlaceLevelObject(!objectPlaced);
         }
+
+        if (Input.GetKey(KeyCode.Escape))
+            PlaceLevelObject(true);
     }
 
 
-
-    public IEnumerator SelectUIObject(LevelObject levelObject)
+    public void SelectUIObject(LevelObject levelObject)
     {
-        yield return new WaitForSeconds(0.1f);
+        objectPlaced = false;
 
-        if (Input.GetMouseButton(0))
-        {
-            dragging = true;
+        cursorIcon.GetComponent<Image>().sprite = levelObject.Icon;
+        cursorIcon.SetActive(true);
 
-            selectedUIObject = levelObject;
-            levelObjectInstance = Instantiate(levelObject.Prefab, Input.mousePosition, Quaternion.identity, levelObjectsParent);
-        }
+        selectedUIObject = levelObject;
+        levelObjectInstance = Instantiate(levelObject.Prefab, Input.mousePosition, Quaternion.identity, levelObjectsParent);
     }
+
 
     private void MoveSelectedObject()
     {
@@ -64,7 +68,7 @@ public class LevelObjectManager : MonoBehaviour
                 case TileDirection.Y_positive:
                     if (selectedUIObject.CanPlaceOnGround == true)
                     {
-                        levelObjectInstance.transform.localRotation = Quaternion.LookRotation(/*Vector3.forward,*/ hit.transform.GetComponent<Tile_Selectable>().GetDirectionVector());
+                        levelObjectInstance.transform.localRotation = Quaternion.LookRotation(hit.transform.GetComponent<Tile_Selectable>().GetDirectionVector());
                         levelObjectInstance.transform.localEulerAngles += new Vector3(90.0f, 0, 0);
                         levelObjectInstance.transform.position = hit.transform.position;
 
@@ -74,7 +78,7 @@ public class LevelObjectManager : MonoBehaviour
                 case TileDirection.Y_negative:
                     if (selectedUIObject.CanPlaceOnCeiling == true)
                     {
-                        levelObjectInstance.transform.localRotation = Quaternion.LookRotation(/*Vector3.forward,*/ hit.transform.GetComponent<Tile_Selectable>().GetDirectionVector());
+                        levelObjectInstance.transform.localRotation = Quaternion.LookRotation(hit.transform.GetComponent<Tile_Selectable>().GetDirectionVector());
                         levelObjectInstance.transform.localEulerAngles += new Vector3(90.0f, 0, 0);
                         levelObjectInstance.transform.position = hit.transform.position;
 
@@ -88,7 +92,7 @@ public class LevelObjectManager : MonoBehaviour
                 case TileDirection.Z_negative:
                     if (selectedUIObject.CanPlaceOnWall == true)
                     {
-                        levelObjectInstance.transform.localRotation = Quaternion.LookRotation(/*Vector3.forward,*/ hit.transform.GetComponent<Tile_Selectable>().GetDirectionVector());
+                        levelObjectInstance.transform.localRotation = Quaternion.LookRotation(hit.transform.GetComponent<Tile_Selectable>().GetDirectionVector());
                         levelObjectInstance.transform.localEulerAngles += new Vector3(90.0f, 0, 0);
                         levelObjectInstance.transform.position = hit.transform.position;
 
@@ -99,15 +103,14 @@ public class LevelObjectManager : MonoBehaviour
         }
     }
 
-    private void DropLevelObject(bool destroy)
+    private void PlaceLevelObject(bool destroy)
     {
-        objectPlaced = false;
-        dragging = false;
+        cursorIcon.SetActive(false);
 
         if (destroy)
-        {
             GameObject.Destroy(levelObjectInstance);
-        }
+
+        objectPlaced = false;
         selectedUIObject = null;
     }
 }
