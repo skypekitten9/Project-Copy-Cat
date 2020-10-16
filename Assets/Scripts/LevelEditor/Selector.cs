@@ -15,6 +15,8 @@ public class Selector : MonoBehaviour
     private Selectable target = null;
     private bool allSelected = false;
 
+    private GameObject lastSelected;
+
 
     void Start()
     {
@@ -25,10 +27,18 @@ public class Selector : MonoBehaviour
     {
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
+        RaycastHit[] hits;
 
         if (Physics.Raycast(ray, out hit))
         {
+            if (lastSelected != null && hit.transform.gameObject == lastSelected)
+            {
+                hits = Physics.RaycastAll(ray);
+                hit = hits[hits.Length - 2];
+            }
+
             target = hit.transform.parent.GetComponent<Selectable>();
+
 
             if (target is Tile_Selectable)
             {
@@ -37,7 +47,8 @@ public class Selector : MonoBehaviour
                     SetCursor(CursorModes.Select);
                     if (Input.GetMouseButtonDown(0) && EditorUI.hoveringUI == false)
                     {
-                        StartCoroutine(ToggleSelect(target as Tile_Selectable));    //Start tile selection
+                        Debug.Log("Select tile");
+                        StartCoroutine(ToggleSelectTile(target as Tile_Selectable));    //Start tile selection
                     }
                 }
                 else if (hit.transform.tag == "Tile_ExtrudeCollider")
@@ -47,7 +58,8 @@ public class Selector : MonoBehaviour
                         SetCursor(CursorModes.Select);
                         if (Input.GetMouseButtonDown(0) && EditorUI.hoveringUI == false)
                         {
-                            StartCoroutine(ToggleSelect(target as Tile_Selectable));    //Start tile selection
+                            Debug.Log("Select tile");
+                            StartCoroutine(ToggleSelectTile(target as Tile_Selectable));    //Start tile selection
                         }
                     }
                     else if (LevelEditor.Instance.selectedTiles.Contains(target as Tile_Selectable))
@@ -60,6 +72,17 @@ public class Selector : MonoBehaviour
                     }
                 }
             }
+            else if (hit.transform.name == "Box(Clone)")
+            {
+                SetCursor(CursorModes.Select);
+                if (Input.GetMouseButtonDown(0) && EditorUI.hoveringUI == false)
+                {
+                    DeselectAllTiles();
+                    lastSelected = hit.transform.gameObject;
+
+                    Debug.Log("Select Box");
+                }
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.A))
@@ -69,31 +92,40 @@ public class Selector : MonoBehaviour
                 if (allSelected == false)
                 {
                     SelectWholePlane(target as Tile_Selectable);
+                    lastSelected = target.gameObject;
                 }
                 else
                 {
                     DeselectAllTiles();
+                    lastSelected = null;
                 }
             }
         }
     }
 
 
-    public System.Collections.IEnumerator ToggleSelect(Tile_Selectable target)
+    public System.Collections.IEnumerator ToggleSelectTile(Tile_Selectable target)
     {
         yield return new WaitForSeconds(0.1f);
 
         if (Input.GetMouseButton(0) == false)
         {
             if (target.isSelected)
+            {
                 target.Deselect();
+                lastSelected = null;
+            }
             else
+            {
                 target.Select();
+                lastSelected = target.gameObject;
+            }
         }
         else
         {
             CanChangeCursor = false;
             DeselectAllTiles();
+            lastSelected = target.gameObject;
 
             while (Input.GetMouseButton(0) == true)
             {
