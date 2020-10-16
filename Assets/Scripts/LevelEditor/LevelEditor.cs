@@ -10,6 +10,7 @@ public class LevelEditor : MonoBehaviour
     public static LevelEditor Instance { get { return instance; } }
 
 
+    [SerializeField] private bool generateRoof = true;
     [SerializeField] private bool debug = false;
     public bool Debug { get { return debug; } }
 
@@ -65,7 +66,8 @@ public class LevelEditor : MonoBehaviour
             for (int z = 6; z < 15; z++)
             {
                 PlaceTile(x, 4, z, TileDirection.Y_positive);
-                PlaceTile(x, 8, z, TileDirection.Y_negative);
+                if (generateRoof)
+                    PlaceTile(x, 8, z, TileDirection.Y_negative);
             }
         }
         for (int x = 5; x < 16; x++)
