@@ -1,8 +1,12 @@
-﻿using UnityEditor.Experimental.GraphView;
-using UnityEngine;
+﻿using UnityEngine;
 
+
+[RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 public class Tile_Selectable : Selectable
 {
+    [SerializeField] private Material deselected;
+    [SerializeField] private Material selected;
+
     public int X { get; private set; }
     public int Y { get; private set; }
     public int Z { get; private set; }
@@ -21,6 +25,8 @@ public class Tile_Selectable : Selectable
     {
         base.Select();
 
+        GetComponent<MeshRenderer>().material = selected;
+
         if (!multiple)
             LevelEditor.Instance.GetComponent<Selector>().DeselectAllTiles();
         LevelEditor.Instance.selectedTiles.Add(this);
@@ -29,6 +35,8 @@ public class Tile_Selectable : Selectable
     public override void Deselect()
     {
         base.Deselect();
+
+        GetComponent<MeshRenderer>().material = deselected;
 
         LevelEditor.Instance.selectedTiles.Remove(this);
     }

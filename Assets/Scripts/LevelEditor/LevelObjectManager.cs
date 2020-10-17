@@ -9,6 +9,9 @@ public class LevelObjectManager : MonoBehaviour
     private LevelObject selectedUIObject;
     private GameObject levelObjectInstance;
 
+    [SerializeField] private GameObject levelObjectBoundingBox;
+    public GameObject LevelObjectBoundingBox { get { return levelObjectBoundingBox; } }
+
     private Camera cam;
 
     [SerializeField] private GameObject cursorIcon;
