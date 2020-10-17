@@ -51,8 +51,11 @@ public class StandButton : MonoBehaviour
 
     private void SignalChannel(bool status)
     {
-        TestLevelManager.Instance.interactablesArray[id] = status;
-        TestLevelManager.Instance.UpdateChannels();
+        if (TestLevelManager.Instance != null)
+        {
+            TestLevelManager.Instance.interactablesArray[id] = status;
+            TestLevelManager.Instance.UpdateChannels();
+        }
         animator.SetBool("isPressed", status);
     }
 

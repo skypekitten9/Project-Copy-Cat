@@ -25,7 +25,7 @@ public class LevelEditor : MonoBehaviour
 
 
     public List<Tile_Selectable> selectedTiles { get; set; } = new List<Tile_Selectable>();
-
+    public LevelObject_Selectable selectedLevelObject { get; set; } = null;
 
 
     private void Awake()

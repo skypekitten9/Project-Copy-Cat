@@ -948,11 +948,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1208712546}
-  - component: {fileID: 1208712547}
   - component: {fileID: 1208712548}
   - component: {fileID: 1208712549}
   - component: {fileID: 1208712550}
   - component: {fileID: 1208712551}
+  - component: {fileID: 1208712547}
   m_Layer: 0
   m_Name: LevelEditorManager
   m_TagString: Untagged
@@ -983,7 +983,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1208712545}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aef12bb8162c5ee41ae6efa8d171ef74, type: 3}
+  m_Script: {fileID: 11500000, guid: 55861ec45f6395240b3dbbd2b751c5e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   selectCursor: {fileID: 2800000, guid: 7ee8c35b04d3a7b4cbe44a2574eea20f, type: 3}
@@ -1041,6 +1041,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 747743c4e3fea9644a49202a4a0f2884, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelObjectBoundingBox: {fileID: 280457135363014236, guid: 7b63f06da3e0cc444ad87c72db0233b6, type: 3}
   cursorIcon: {fileID: 921028952}
 --- !u!1 &1487667252
 GameObject:
@@ -1470,7 +1471,7 @@ PrefabInstance:
     - target: {fileID: 8976160821073333674, guid: 76696158edaa2f54591f6d2346a5d179, type: 3}
       propertyPath: levelObject
       value: 
-      objectReference: {fileID: 11400000, guid: 7ce03282bfbe45c42a0e8219226ec1a7, type: 2}
+      objectReference: {fileID: 11400000, guid: 74eb21fd3e47f4b4ab52ee1c352cbf45, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 76696158edaa2f54591f6d2346a5d179, type: 3}
 --- !u!224 &1871308241 stripped

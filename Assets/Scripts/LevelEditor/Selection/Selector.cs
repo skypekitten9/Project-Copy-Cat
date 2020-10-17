@@ -12,10 +12,11 @@ public class Selector : MonoBehaviour
 
     private Camera cam;
 
-    private Selectable target = null;
+    private Selectable tileTarget = null;
+    private Selectable levelObjectTarget = null;
     private bool allSelected = false;
 
-    private GameObject lastSelected;
+    //private GameObject lastSelected;
 
 
     void Start()
@@ -27,20 +28,20 @@ public class Selector : MonoBehaviour
     {
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-        RaycastHit[] hits;
+        //RaycastHit[] hits;
 
         if (Physics.Raycast(ray, out hit))
         {
-            if (lastSelected != null && hit.transform.gameObject == lastSelected)
-            {
-                hits = Physics.RaycastAll(ray);
-                hit = hits[hits.Length - 2];
-            }
+            //if (lastSelected != null && hit.transform.gameObject == lastSelected)
+            //{
+            //    hits = Physics.RaycastAll(ray);
+            //    hit = hits[hits.Length - 2];
+            //}
 
-            target = hit.transform.parent.GetComponent<Selectable>();
+            tileTarget = hit.transform.parent.GetComponentInChildren<Selectable>();
+            levelObjectTarget = hit.transform.GetComponentInChildren<Selectable>();
 
-
-            if (target is Tile_Selectable)
+            if (tileTarget is Tile_Selectable)
             {
                 if (hit.transform.tag == "Tile_SelectCollider")
                 {
@@ -48,21 +49,21 @@ public class Selector : MonoBehaviour
                     if (Input.GetMouseButtonDown(0) && EditorUI.hoveringUI == false)
                     {
                         Debug.Log("Select tile");
-                        StartCoroutine(ToggleSelectTile(target as Tile_Selectable));    //Start tile selection
+                        StartCoroutine(ToggleSelectTile(tileTarget as Tile_Selectable));    //Start tile selection
                     }
                 }
                 else if (hit.transform.tag == "Tile_ExtrudeCollider")
                 {
-                    if (LevelEditor.Instance.selectedTiles.Contains(target as Tile_Selectable) == false)   //If the selected tile isn't selected - the extrude-collider is used as a select-collider
+                    if (LevelEditor.Instance.selectedTiles.Contains(tileTarget as Tile_Selectable) == false)   //If the hovered tile isn't selected - the extrude-collider is used as a select-collider
                     {
                         SetCursor(CursorModes.Select);
                         if (Input.GetMouseButtonDown(0) && EditorUI.hoveringUI == false)
                         {
                             Debug.Log("Select tile");
-                            StartCoroutine(ToggleSelectTile(target as Tile_Selectable));    //Start tile selection
+                            StartCoroutine(ToggleSelectTile(tileTarget as Tile_Selectable));    //Start tile selection
                         }
                     }
-                    else if (LevelEditor.Instance.selectedTiles.Contains(target as Tile_Selectable))
+                    else if (LevelEditor.Instance.selectedTiles.Contains(tileTarget as Tile_Selectable))
                     {
                         SetCursor(CursorModes.Extrude);
                         if (Input.GetMouseButtonDown(0) && EditorUI.hoveringUI == false)
@@ -72,32 +73,52 @@ public class Selector : MonoBehaviour
                     }
                 }
             }
-            else if (hit.transform.name == "Box(Clone)")
+
+            if (levelObjectTarget is LevelObject_Selectable)
             {
                 SetCursor(CursorModes.Select);
                 if (Input.GetMouseButtonDown(0) && EditorUI.hoveringUI == false)
                 {
-                    DeselectAllTiles();
-                    lastSelected = hit.transform.gameObject;
+                    if (levelObjectTarget.isSelected)
+                    {
+                        levelObjectTarget.Deselect();
+                        //lastSelected = null;
+                    }
+                    else
+                    {
+                        if (LevelEditor.Instance.selectedLevelObject)
+                            LevelEditor.Instance.selectedLevelObject.Deselect();
 
-                    Debug.Log("Select Box");
+                        DeselectAllTiles();
+                        //lastSelected = levelObjectTarget.gameObject;
+
+                        levelObjectTarget.Select();
+
+                        //Debug.Log("Selected pos: " + levelObjectTarget.transform.position);
+                    }
                 }
             }
         }
 
         if (Input.GetKeyDown(KeyCode.A))
         {
-            if (target != null && target is Tile_Selectable)
+            if (tileTarget != null && tileTarget is Tile_Selectable)
             {
+                if (LevelEditor.Instance.selectedLevelObject)
+                {
+                    LevelEditor.Instance.selectedLevelObject.Deselect();
+                    LevelEditor.Instance.selectedLevelObject = null;
+                }
+
                 if (allSelected == false)
                 {
-                    SelectWholePlane(target as Tile_Selectable);
-                    lastSelected = target.gameObject;
+                    SelectWholePlane(tileTarget as Tile_Selectable);
+                    //lastSelected = tileTarget.gameObject;
                 }
                 else
                 {
                     DeselectAllTiles();
-                    lastSelected = null;
+                    //lastSelected = null;
                 }
             }
         }
@@ -106,6 +127,12 @@ public class Selector : MonoBehaviour
 
     public System.Collections.IEnumerator ToggleSelectTile(Tile_Selectable target)
     {
+        if (LevelEditor.Instance.selectedLevelObject)
+        {
+            LevelEditor.Instance.selectedLevelObject.Deselect();
+            LevelEditor.Instance.selectedLevelObject = null;
+        }
+
         yield return new WaitForSeconds(0.1f);
 
         if (Input.GetMouseButton(0) == false)
@@ -113,19 +140,19 @@ public class Selector : MonoBehaviour
             if (target.isSelected)
             {
                 target.Deselect();
-                lastSelected = null;
+                //lastSelected = null;
             }
             else
             {
                 target.Select();
-                lastSelected = target.gameObject;
+                //lastSelected = target.gameObject;
             }
         }
         else
         {
             CanChangeCursor = false;
             DeselectAllTiles();
-            lastSelected = target.gameObject;
+            //lastSelected = target.gameObject;
 
             while (Input.GetMouseButton(0) == true)
             {
