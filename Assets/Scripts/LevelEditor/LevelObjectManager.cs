@@ -43,6 +43,8 @@ public class LevelObjectManager : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Escape))
             PlaceLevelObject(true);
+        else if (Input.GetKey(KeyCode.Delete))
+            DestroyLevelObject();
     }
 
 
@@ -115,9 +117,18 @@ public class LevelObjectManager : MonoBehaviour
         cursorIcon.SetActive(false);
 
         if (destroy)
-            GameObject.Destroy(levelObjectInstance);
+            DestroyLevelObject();
 
         objectPlaced = false;
         selectedUIObject = null;
+    }
+
+    private void DestroyLevelObject()
+    {
+        if (LevelEditor.Instance.selectedLevelObject != null)
+        {
+            LevelEditor.Instance.selectedLevelObject = null;
+            GameObject.Destroy(levelObjectInstance);
+        }
     }
 }
