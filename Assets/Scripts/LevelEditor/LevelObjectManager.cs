@@ -58,6 +58,7 @@ public class LevelObjectManager : MonoBehaviour
 
         selectedUIObject = levelObject;
         levelObjectInstance = Instantiate(levelObject.Prefab, Input.mousePosition, Quaternion.identity, levelObjectsParent);
+        levelObjectInstance.GetComponent<LevelObject_Selectable>().LevelObject = levelObject;
     }
 
 

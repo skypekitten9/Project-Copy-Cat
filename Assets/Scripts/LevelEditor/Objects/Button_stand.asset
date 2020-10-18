@@ -15,6 +15,7 @@ MonoBehaviour:
   name: Button_stand
   icon: {fileID: 21300000, guid: 67365ee6ab5770f48b1db25b93301515, type: 3}
   prefab: {fileID: 6403264677785046492, guid: b156038dc5d68794e87a71dabe960d2a, type: 3}
+  boundsSize: {x: 1, y: 1, z: 1}
   canPlaceOnGround: 1
   canPlaceOnCeiling: 1
   canPlaceOnWall: 1
