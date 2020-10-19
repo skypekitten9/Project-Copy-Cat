@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody), typeof(Collider))]
 public class PickUp : MonoBehaviour
 {
-    float throwForce = 600f;
+    float throwForce = 800f;
     float distance;
 
     Vector3 objectPosition;
