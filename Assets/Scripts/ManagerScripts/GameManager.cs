@@ -21,8 +21,4 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
     }
 
-    public void DamagePlayer(int damage)
-    {
-        player.GetComponent<PlayerInteraction>().RecieveDamage(damage);
-    }
 }

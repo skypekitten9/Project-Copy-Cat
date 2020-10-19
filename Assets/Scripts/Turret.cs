@@ -63,7 +63,7 @@ public class Turret : MonoBehaviour
                     lineRenderer.SetPosition(1, hit.transform.position);
                     if (firingRate <= 0)
                     {
-                        GameManager.Instance.DamagePlayer(damage);
+                        DamageManager.Instance.playerHit = true;
 
                         firingRate = reloadFire;
                     }

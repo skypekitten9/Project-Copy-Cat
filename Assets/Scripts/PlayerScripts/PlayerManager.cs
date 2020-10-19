@@ -7,6 +7,14 @@ public class PlayerManager : MonoBehaviour
 
     public int playerHealth = 100;
 
+    void Update()
+    {
+        if (playerHealth <= 0)
+        {
+            //gameover
+        }
+    }
+
     public void Awake()
     {
         if (instance != null && instance != this)
