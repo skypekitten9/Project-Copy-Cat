@@ -44,9 +44,9 @@ GameObject:
   - component: {fileID: 6403264677785046488}
   - component: {fileID: 6403264677785046491}
   - component: {fileID: 3366215482310781071}
-  - component: {fileID: 3366215481650933266}
   - component: {fileID: 1636528164743309649}
   - component: {fileID: 8072109880961458586}
+  - component: {fileID: 8675205720005269701}
   m_Layer: 0
   m_Name: StandButton
   m_TagString: Untagged
@@ -91,19 +91,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
---- !u!135 &3366215481650933266
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6403264677785046492}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.8132527
-  m_Center: {x: -0.0113015175, y: 0.2474854, z: 0.006384611}
 --- !u!82 &1636528164743309649
 AudioSource:
   m_ObjectHideFlags: 0
@@ -212,6 +199,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d262fbad3213742459678b00d268a0a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!65 &8675205720005269701
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6403264677785046492}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.4969834, y: 0.22472382, z: 1.5301068}
+  m_Center: {x: 0.009942343, y: 0.38764077, z: -0.00000006409102}
 --- !u!1001 &3366215480563535515
 PrefabInstance:
   m_ObjectHideFlags: 0
