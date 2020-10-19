@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -42,7 +43,12 @@ public class LevelObjectManager : MonoBehaviour
         }
 
         if (Input.GetKey(KeyCode.Escape))
-            PlaceLevelObject(true);
+        {
+            if (LevelEditor.Instance.selectedLevelObject != null)
+                DeselectLevelObject();
+            else if (selectedUIObject != null)
+                PlaceLevelObject(true);
+        }
         else if (Input.GetKey(KeyCode.Delete))
             DestroyLevelObject();
     }
@@ -118,7 +124,7 @@ public class LevelObjectManager : MonoBehaviour
         cursorIcon.SetActive(false);
 
         if (destroy)
-            DestroyLevelObject();
+            Destroy(levelObjectInstance);
 
         objectPlaced = false;
         selectedUIObject = null;
@@ -128,8 +134,13 @@ public class LevelObjectManager : MonoBehaviour
     {
         if (LevelEditor.Instance.selectedLevelObject != null)
         {
+            GameObject.Destroy(LevelEditor.Instance.selectedLevelObject.gameObject);
             LevelEditor.Instance.selectedLevelObject = null;
-            GameObject.Destroy(levelObjectInstance);
         }
+    }
+
+    private void DeselectLevelObject()
+    {
+        LevelEditor.Instance.selectedLevelObject.Deselect();
     }
 }
