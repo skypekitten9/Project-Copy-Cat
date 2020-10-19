@@ -8,6 +8,7 @@ TagManager:
   - Interactable
   - Tile_SelectCollider
   - Tile_ExtrudeCollider
+  - Pickupable
   layers:
   - Default
   - TransparentFX

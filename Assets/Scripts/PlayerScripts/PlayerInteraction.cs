@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal.Internal;
@@ -6,6 +7,7 @@ using UnityEngine.Rendering.Universal.Internal;
 public class PlayerInteraction : MonoBehaviour
 {
     public Transform cameraTransform;
+    public Transform pickUpTransform;
 
     private Ray ray;
     public RaycastHit hit;
@@ -15,6 +17,7 @@ public class PlayerInteraction : MonoBehaviour
     void Start()
     {
         cameraTransform = gameObject.GetComponentInChildren<Transform>().Find("Main Camera").transform;
+        pickUpTransform = gameObject.GetComponentInChildren<Transform>().Find("Main Camera").Find("PickupPosition").transform;
         ray = new Ray(cameraTransform.position, cameraTransform.forward);
         rayRange = 1.5f;
     }
@@ -27,6 +30,7 @@ public class PlayerInteraction : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             Interact();
+            PickUp();
         }
     }
 
@@ -45,6 +49,28 @@ public class PlayerInteraction : MonoBehaviour
                     {
                         GameObject.Find("SyncBar").GetComponent<SyncBar>().SpawnInteraction();
                         GameManager.Instance.GetComponent<RecordManager>().AddInteractionNode(hit.collider.gameObject.GetComponent<ButtonScript>().id);
+                    }
+                }
+            }
+        }
+    }
+
+    public void PickUp()
+    {
+        if (Physics.Raycast(ray, out hit))
+        {
+            if (hit.distance < rayRange)
+            {
+                if (hit.collider.tag == "Pickupable")
+                {
+                    if (!hit.collider.gameObject.GetComponent<PickUp>().IsHeld())
+                    {
+                        hit.collider.gameObject.GetComponent<PickUp>().tempParent = pickUpTransform.gameObject;
+                        hit.collider.gameObject.GetComponent<PickUp>().SetToHeld();
+                    }
+                    else
+                    {
+                        hit.collider.gameObject.GetComponent<PickUp>().Throw();
                     }
                 }
             }
