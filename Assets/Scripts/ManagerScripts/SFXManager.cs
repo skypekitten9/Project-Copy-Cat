@@ -26,12 +26,12 @@ public class SFXManager : MonoBehaviour
 
     public void PlayDoorOpen(AudioSource source)
     {
-        source.PlayOneShot(doorOpen, 0.4f);
+        source.PlayOneShot(doorOpen, 0.7f);
     }
 
     public void PlayDoorClose(AudioSource source)
     {
-        source.PlayOneShot(doorClose, 0.4f);
+        source.PlayOneShot(doorClose, 0.7f);
     }
 
     public void PlayButtonClick(AudioSource source)
