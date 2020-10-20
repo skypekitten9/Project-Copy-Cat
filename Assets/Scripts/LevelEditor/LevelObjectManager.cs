@@ -33,8 +33,6 @@ public class LevelObjectManager : MonoBehaviour
     {
         if (selectedUIObject != null)
         {
-            MoveSelectedObject();
-
             if (objectPlaced)
                 cursorIcon.SetActive(false);
             else
@@ -42,6 +40,8 @@ public class LevelObjectManager : MonoBehaviour
 
             if (Input.GetMouseButtonDown(0))
                 PlaceLevelObject(!objectPlaced);
+
+            MoveLevelObject(levelObjectInstance);
         }
 
         if (Input.GetKey(KeyCode.Escape))
@@ -70,7 +70,7 @@ public class LevelObjectManager : MonoBehaviour
     }
 
 
-    private void MoveSelectedObject()
+    public void MoveLevelObject(GameObject levelObject)
     {
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
@@ -79,26 +79,27 @@ public class LevelObjectManager : MonoBehaviour
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, tilesMask) && hit.transform.parent.GetComponent<Tile_Selectable>())
         {
             Tile_Selectable target = hit.transform.parent.GetComponent<Tile_Selectable>();
+            LevelObject levelObjectTarget = levelObject.GetComponentInChildren<LevelObject_Selectable>().LevelObject;
 
             TileDirection tileDir = target.TileDir;
             switch (tileDir)
             {
                 case TileDirection.Y_positive:
-                    if (selectedUIObject.CanPlaceOnGround == true)
+                    if (levelObjectTarget.CanPlaceOnGround == true)
                     {
-                        levelObjectInstance.transform.localRotation = Quaternion.LookRotation(target.GetDirectionVector());
-                        levelObjectInstance.transform.localEulerAngles += new Vector3(90.0f, 0, 0);
-                        levelObjectInstance.transform.position = target.transform.position;
+                        levelObject.transform.localRotation = Quaternion.LookRotation(target.GetDirectionVector());
+                        levelObject.transform.localEulerAngles += new Vector3(90.0f, 0, 0);
+                        levelObject.transform.position = target.transform.position;
 
                         objectPlaced = true;
                     }
                     break;
                 case TileDirection.Y_negative:
-                    if (selectedUIObject.CanPlaceOnCeiling == true)
+                    if (levelObjectTarget.CanPlaceOnCeiling == true)
                     {
-                        levelObjectInstance.transform.localRotation = Quaternion.LookRotation(target.GetDirectionVector());
-                        levelObjectInstance.transform.localEulerAngles += new Vector3(90.0f, 0, 0);
-                        levelObjectInstance.transform.position = target.transform.position;
+                        levelObject.transform.localRotation = Quaternion.LookRotation(target.GetDirectionVector());
+                        levelObject.transform.localEulerAngles += new Vector3(90.0f, 0, 0);
+                        levelObject.transform.position = target.transform.position;
 
                         objectPlaced = true;
                     }
@@ -108,11 +109,11 @@ public class LevelObjectManager : MonoBehaviour
                 case TileDirection.X_negative:
                 case TileDirection.Z_positive:
                 case TileDirection.Z_negative:
-                    if (selectedUIObject.CanPlaceOnWall == true)
+                    if (levelObjectTarget.CanPlaceOnWall == true)
                     {
-                        levelObjectInstance.transform.localRotation = Quaternion.LookRotation(target.GetDirectionVector());
-                        levelObjectInstance.transform.localEulerAngles += new Vector3(90.0f, 0, 0);
-                        levelObjectInstance.transform.position = target.transform.position;
+                        levelObject.transform.localRotation = Quaternion.LookRotation(target.GetDirectionVector());
+                        levelObject.transform.localEulerAngles += new Vector3(90.0f, 0, 0);
+                        levelObject.transform.position = target.transform.position;
 
                         objectPlaced = true;
                     }

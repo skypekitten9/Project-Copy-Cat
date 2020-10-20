@@ -5,7 +5,7 @@ public class LevelObject_Selectable : Selectable
 {
     private LevelObjectManager levelObjectManager;
 
-    public LevelObject LevelObject { private get; set; }
+    public LevelObject LevelObject { get; set; }
 
 
     public void Start()

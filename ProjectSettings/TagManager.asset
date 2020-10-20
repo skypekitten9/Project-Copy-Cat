@@ -39,7 +39,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - LevelEditorRotation
   - LevelEditorObjects
   - LevelEditorTiles
   m_SortingLayers:

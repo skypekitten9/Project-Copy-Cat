@@ -84,27 +84,10 @@ public class Selector : MonoBehaviour
                 SetCursor(CursorModes.Select);
                 if (Input.GetMouseButtonDown(0) && EditorUI.hoveringUI == false)
                 {
-                    if (target.isSelected)
-                    {
-                        target.Deselect();
-                        //lastSelected = null;
-                    }
-                    else
-                    {
-                        if (LevelEditor.Instance.selectedLevelObject)
-                            LevelEditor.Instance.selectedLevelObject.Deselect();
-
-                        DeselectAllTiles();
-                        //lastSelected = levelObjectTarget.gameObject;
-
-                        target.Select();
-
-                        //Debug.Log("Selected pos: " + levelObjectTarget.transform.position);
-                    }
+                    StartCoroutine(ToggleSelectObject(target as LevelObject_Selectable));
                 }
             }
         }
-
 
         if (Input.GetKeyDown(KeyCode.A))
         {
@@ -199,6 +182,45 @@ public class Selector : MonoBehaviour
             CanChangeCursor = true;
         }
     }
+
+
+
+    public System.Collections.IEnumerator ToggleSelectObject(LevelObject_Selectable target)
+    {
+        DeselectAllTiles();
+
+        yield return new WaitForSeconds(0.125f);
+
+        if (Input.GetMouseButton(0) == false)
+        {
+            if (target.isSelected)
+            {
+                target.Deselect();
+            }
+            else
+            {
+                if (LevelEditor.Instance.selectedLevelObject)
+                    LevelEditor.Instance.selectedLevelObject.Deselect();
+
+                target.Select();
+            }
+        }
+        else
+        {
+            if (target.isSelected)
+            {
+                while (Input.GetMouseButton(0))
+                {
+                    LevelEditor.Instance.GetComponent<LevelObjectManager>().MoveLevelObject(target.gameObject);
+                    yield return new WaitForFixedUpdate();
+                }
+            }
+        }
+
+
+    }
+
+
 
     private void SelectWholePlane(Tile_Selectable target)
     {

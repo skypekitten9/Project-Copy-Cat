@@ -10,7 +10,7 @@ public class TileExtruder : MonoBehaviour
 
     public System.Collections.IEnumerator Extrude(Tile_Selectable target)
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.125f);
 
         LevelEditor.Instance.GetComponent<Selector>().CanChangeCursor = false;
         while (Input.GetMouseButton(0))
