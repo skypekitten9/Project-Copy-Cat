@@ -10,7 +10,10 @@ public class LevelObject_Selectable : Selectable
 
     public void Start()
     {
-        levelObjectManager = LevelEditor.Instance.GetComponent<LevelObjectManager>();
+        if (LevelEditor.Instance)
+        {
+            levelObjectManager = LevelEditor.Instance.GetComponent<LevelObjectManager>();
+        }
     }
 
 
