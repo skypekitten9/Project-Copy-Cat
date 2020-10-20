@@ -1,0 +1,5 @@
+Key:	Timestamp:
+Escape	3,227133s
+Escape	6,449159s
+Escape	10,19882s
+
