@@ -163,6 +163,7 @@ public class RecordManager : MonoBehaviour
                 playerInstance.GetComponent<PlayerMovement>().enabled = true;
                 playerInstance.transform.GetChild(0).GetComponent<Camera>().enabled = true;
                 playerInstance.transform.GetChild(0).GetComponent<AudioListener>().enabled = true;
+                playerInstance.transform.GetChild(0).GetComponent<PlayerCamera>().enabled = true;
                 playerInstance.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);     //Enables the player's canvas
 
                 if (HoloInstance)
@@ -179,6 +180,7 @@ public class RecordManager : MonoBehaviour
                 playerInstance.GetComponent<PlayerMovement>().enabled = false;
                 playerInstance.transform.GetChild(0).GetComponent<Camera>().enabled = false;
                 playerInstance.transform.GetChild(0).GetComponent<AudioListener>().enabled = false;
+                playerInstance.transform.GetChild(0).GetComponent<PlayerCamera>().enabled = false;
                 playerInstance.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);     //Disables the player's canvas
 
                 SpawnHolo();
