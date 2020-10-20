@@ -39,7 +39,7 @@ public class Selector : MonoBehaviour
             //    hit = hits[hits.Length - 2];
             //}
 
-//            Debug.Log("Hit: " + hit.transform.name);
+            //            Debug.Log("Hit: " + hit.transform.name);
 
             if (hit.transform.parent != null)
                 target = hit.transform.parent.GetComponentInChildren<Selectable>();
@@ -54,7 +54,7 @@ public class Selector : MonoBehaviour
                     SetCursor(CursorModes.Select);
                     if (Input.GetMouseButtonDown(0) && EditorUI.hoveringUI == false)
                     {
-//                        Debug.Log("Select tile");
+                        //                        Debug.Log("Select tile");
                         StartCoroutine(ToggleSelectTile(target as Tile_Selectable));    //Start tile selection
                     }
                 }
@@ -65,7 +65,7 @@ public class Selector : MonoBehaviour
                         SetCursor(CursorModes.Select);
                         if (Input.GetMouseButtonDown(0) && EditorUI.hoveringUI == false)
                         {
-//                            Debug.Log("Select tile");
+                            //                            Debug.Log("Select tile");
                             StartCoroutine(ToggleSelectTile(target as Tile_Selectable));    //Start tile selection
                         }
                     }
@@ -139,7 +139,7 @@ public class Selector : MonoBehaviour
             LevelEditor.Instance.selectedLevelObject = null;
         }
 
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.125f);
 
         if (Input.GetMouseButton(0) == false)
         {
@@ -150,14 +150,17 @@ public class Selector : MonoBehaviour
             }
             else
             {
-                target.Select();
+                target.Select(Input.GetKey(KeyCode.LeftShift));
                 //lastSelected = target.gameObject;
             }
         }
         else
         {
             CanChangeCursor = false;
-            DeselectAllTiles();
+
+            if (Input.GetKey(KeyCode.LeftShift) == false)
+                DeselectAllTiles();
+
             //lastSelected = target.gameObject;
 
             while (Input.GetMouseButton(0) == true)
