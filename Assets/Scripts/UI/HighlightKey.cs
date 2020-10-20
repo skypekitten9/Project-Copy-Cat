@@ -22,9 +22,10 @@ public class HighlightKey : MonoBehaviour
         {
             gameObject.GetComponent<TextMeshProUGUI>().color = highlightColor;
         }
-        else
+        if (Input.GetKeyUp(key))
         {
             gameObject.GetComponent<TextMeshProUGUI>().color = defaultColor;
         }
+        
     }
 }
