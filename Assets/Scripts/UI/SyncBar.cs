@@ -76,11 +76,12 @@ public class SyncBar : MonoBehaviour
     {
         Hide();
         SetValue(0);
-        foreach(GameObject action in actionsList)
+        StopBar();
+        foreach (GameObject action in actionsList)
         {
             Destroy(action);
         }
-        StopBar();
+        
     }
 
     private void Hide()
