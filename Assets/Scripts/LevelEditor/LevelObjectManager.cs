@@ -136,7 +136,11 @@ public class LevelObjectManager : MonoBehaviour
     {
         if (LevelEditor.Instance.selectedLevelObject != null)
         {
-            GameObject.Destroy(LevelEditor.Instance.selectedLevelObject.gameObject);
+            if (LevelEditor.Instance.selectedLevelObject.transform.parent)
+                GameObject.Destroy(LevelEditor.Instance.selectedLevelObject.transform.parent.gameObject);
+            else
+                GameObject.Destroy(LevelEditor.Instance.selectedLevelObject.gameObject);
+
             LevelEditor.Instance.selectedLevelObject = null;
         }
     }
