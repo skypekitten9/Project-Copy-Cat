@@ -211,12 +211,11 @@ public class Selector : MonoBehaviour
             {
                 while (Input.GetMouseButton(0))
                 {
-                    LevelEditor.Instance.GetComponent<LevelObjectManager>().MoveLevelObject(target.gameObject);
+                    LevelEditor.Instance.GetComponent<LevelObjectManager>().MoveLevelObject(target.transform.parent.gameObject);
                     yield return new WaitForFixedUpdate();
                 }
             }
         }
-
 
     }
 
