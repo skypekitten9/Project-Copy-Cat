@@ -156,6 +156,7 @@ public class RecordManager : MonoBehaviour
             for (int j = 0; j < pickupData[i].PickupObject.Length; j++)
             {
                 pickupData[i].PickupObject[j].GetComponent<PickUp>().tempParent = HoloInstance.GetComponent<Transform>().Find("Main Camera").Find("PickupPosition").gameObject;
+                pickupData[i].PickupObject[j].GetComponent<PickUp>().SetToHeld();
             }
         }
 
@@ -172,6 +173,14 @@ public class RecordManager : MonoBehaviour
             fadeValue -= Time.deltaTime;
             HoloInstance.GetComponent<SkinnedMeshRenderer>().material.SetFloat("Vector1_DCDBC5A6", fadeValue);
             yield return new WaitForFixedUpdate();
+        }
+
+        for (int i = 0; i < pickupData.Count; i++)
+        {
+            for (int j = 0; j < pickupData[i].PickupObject.Length; j++)
+            {
+                pickupData[i].PickupObject[j].GetComponent<PickUp>().SetToNotHeld();
+            }
         }
 
         recordPhase = RecordPhase.None;

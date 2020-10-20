@@ -55,6 +55,11 @@ public class PickUp : MonoBehaviour
                 transform.SetParent(tempParent.transform);
                 transform.position = tempParent.transform.position;
 
+                if (tempParent == null)
+                {
+                    SetToNotHeld();
+                }
+
                 break;
 
         }
