@@ -1202,9 +1202,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectionMask:
     serializedVersion: 2
-    m_Bits: 3221225472
+    m_Bits: 3758096384
   selectCursor: {fileID: 2800000, guid: 7ee8c35b04d3a7b4cbe44a2574eea20f, type: 3}
   extrudeCursor: {fileID: 2800000, guid: c93c055e1d2631f4e8abc8d4ecc20b14, type: 3}
+  moveCursor: {fileID: 2800000, guid: 8f2f71d98b7abde4487f2abc728088c7, type: 3}
+  rotateCursor: {fileID: 2800000, guid: 2bac7de0d2cece94d8813daec4468492, type: 3}
 --- !u!114 &1208712548
 MonoBehaviour:
   m_ObjectHideFlags: 0

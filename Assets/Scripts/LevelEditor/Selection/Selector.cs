@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-enum CursorModes { None, Select, Extrude, Move, Rotate }
+public enum CursorModes { None, Select, Extrude, Move, Rotate }
 
 public class Selector : MonoBehaviour
 {
@@ -8,6 +8,8 @@ public class Selector : MonoBehaviour
 
     [SerializeField] private Texture2D selectCursor;
     [SerializeField] private Texture2D extrudeCursor;
+    [SerializeField] private Texture2D moveCursor;
+    [SerializeField] private Texture2D rotateCursor;
 
     private CursorModes cursorMode;
     public bool CanChangeCursor { get; set; } = true;
@@ -81,7 +83,7 @@ public class Selector : MonoBehaviour
             }
             else if (target is LevelObject_Selectable)
             {
-                SetCursor(CursorModes.Select);
+                SetCursor(CursorModes.Move);
                 if (Input.GetMouseButtonDown(0) && EditorUI.hoveringUI == false)
                 {
                     StartCoroutine(ToggleSelectObject(target as LevelObject_Selectable));
@@ -209,11 +211,13 @@ public class Selector : MonoBehaviour
         {
             if (target.isSelected)
             {
+                CanChangeCursor = false;
                 while (Input.GetMouseButton(0))
                 {
                     LevelEditor.Instance.GetComponent<LevelObjectManager>().MoveLevelObject(target.transform.parent.gameObject);
                     yield return new WaitForFixedUpdate();
                 }
+                CanChangeCursor = true;
             }
         }
 
@@ -276,8 +280,7 @@ public class Selector : MonoBehaviour
     }
 
 
-
-    private void SetCursor(CursorModes newMode)
+    public void SetCursor(CursorModes newMode)
     {
         if (cursorMode != newMode && CanChangeCursor)
         {
@@ -290,8 +293,14 @@ public class Selector : MonoBehaviour
                     Cursor.SetCursor(extrudeCursor, new Vector3(32, 32), CursorMode.Auto);
                     break;
                 case CursorModes.Move:
+                    Cursor.SetCursor(moveCursor, new Vector3(32, 32), CursorMode.Auto);
                     break;
                 case CursorModes.Rotate:
+                    Cursor.SetCursor(rotateCursor, new Vector3(32, 32), CursorMode.Auto);
+                    break;
+
+                default:
+                    Cursor.SetCursor(null, Vector3.zero, CursorMode.Auto);
                     break;
             }
             cursorMode = newMode;

@@ -5,7 +5,7 @@ public class TileExtruder : MonoBehaviour
     private float mouseX_extrude = 0;
     private float mouseY_extrude = 0;
 
-    private float extrude_sensitivity = 20.0f;
+    private float extrude_sensitivity = 0.4f;//20.0f;
 
 
     public System.Collections.IEnumerator Extrude(Tile_Selectable target)
@@ -15,8 +15,8 @@ public class TileExtruder : MonoBehaviour
         LevelEditor.Instance.GetComponent<Selector>().CanChangeCursor = false;
         while (Input.GetMouseButton(0))
         {
-            mouseX_extrude += Input.GetAxis("Mouse X") * extrude_sensitivity * Time.deltaTime;
-            mouseY_extrude += Input.GetAxis("Mouse Y") * extrude_sensitivity * Time.deltaTime;
+            mouseX_extrude += Input.GetAxis("Mouse X") * extrude_sensitivity;// * Time.deltaTime;
+            mouseY_extrude += Input.GetAxis("Mouse Y") * extrude_sensitivity;// * Time.deltaTime;
 
             Transform cam = Camera.main.transform;
             Vector3 normal = (Vector3)target.GetDirectionVector();

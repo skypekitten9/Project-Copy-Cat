@@ -6,13 +6,13 @@ public class CameraOrientation : MonoBehaviour
     private Transform camTransform;
 
     private float mouseX_pan, mouseY_pan;
-    private float pan_sensitivity = 50.0f;
+    private float pan_sensitivity = 0.2f;//50.0f;
 
     private float mouseX_rot, mouseY_rot;
-    private float rot_sensitivity = 100.0f;
+    private float rot_sensitivity = 0.7f;//100.0f;
 
     private float zoom;
-    private float zoomSpeed = 2000.0f;
+    private float zoomSpeed = 15.0f;//2000.0f;
     private Vector2 zoomClamp = new Vector2(5.0f, 50.0f);
 
 
@@ -65,8 +65,8 @@ public class CameraOrientation : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.Locked;
 
-            mouseX_pan = Input.GetAxis("Mouse X") * pan_sensitivity * Time.deltaTime;
-            mouseY_pan = Input.GetAxis("Mouse Y") * pan_sensitivity * Time.deltaTime;
+            mouseX_pan = Input.GetAxis("Mouse X") * pan_sensitivity;// * Time.deltaTime;
+            mouseY_pan = Input.GetAxis("Mouse Y") * pan_sensitivity;// * Time.deltaTime;
             transform.position += transform.right * -mouseX_pan + transform.up * -mouseY_pan;
             transform.position = new Vector3(Mathf.Clamp(transform.position.x, -LevelEditor.Instance.maxTiles.x, LevelEditor.Instance.maxTiles.x),
                                              Mathf.Clamp(transform.position.y, -LevelEditor.Instance.maxTiles.y, LevelEditor.Instance.maxTiles.y),
@@ -81,8 +81,8 @@ public class CameraOrientation : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
 
-        mouseX_rot += Input.GetAxis("Mouse X") * rot_sensitivity * Time.deltaTime;
-        mouseY_rot += Input.GetAxis("Mouse Y") * rot_sensitivity * Time.deltaTime;
+        mouseX_rot += Input.GetAxis("Mouse X") * rot_sensitivity;// * Time.deltaTime;
+        mouseY_rot += Input.GetAxis("Mouse Y") * rot_sensitivity;// * Time.deltaTime;
 
         transform.rotation = Quaternion.Euler(-mouseY_rot, mouseX_rot, 0);
     }
@@ -91,8 +91,8 @@ public class CameraOrientation : MonoBehaviour
     {
         if (EditorUI.hoveringUI)
             return;
-        
-        zoom -= Input.GetAxis("Mouse ScrollWheel") * zoomSpeed * Time.deltaTime;
+
+        zoom -= Input.GetAxis("Mouse ScrollWheel") * zoomSpeed;// * Time.deltaTime;
         zoom = Mathf.Clamp(zoom, zoomClamp.x, zoomClamp.y);
         camTransform.localPosition = new Vector3(camTransform.localPosition.x, camTransform.localPosition.y, -zoom);
     }

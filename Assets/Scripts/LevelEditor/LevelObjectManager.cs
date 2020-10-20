@@ -58,7 +58,8 @@ public class LevelObjectManager : MonoBehaviour
 
     public void SelectUIObject(LevelObject levelObject)
     {
-        LevelEditor.Instance.GetComponent<Selector>().DeselectAllTiles();
+        Selector selector = LevelEditor.Instance.GetComponent<Selector>();
+        selector.DeselectAllTiles();
         objectPlaced = false;
 
         cursorIcon.GetComponent<Image>().sprite = levelObject.Icon;
@@ -67,6 +68,9 @@ public class LevelObjectManager : MonoBehaviour
         selectedUIObject = levelObject;
         levelObjectInstance = Instantiate(levelObject.Prefab, Input.mousePosition, Quaternion.identity, levelObjectsParent);
         levelObjectInstance.GetComponentInChildren<LevelObject_Selectable>().LevelObject = levelObject;
+
+        selector.SetCursor(CursorModes.Move);
+        selector.CanChangeCursor = false;
     }
 
 
@@ -131,6 +135,8 @@ public class LevelObjectManager : MonoBehaviour
 
         objectPlaced = false;
         selectedUIObject = null;
+
+        LevelEditor.Instance.GetComponent<Selector>().CanChangeCursor = true;
     }
 
     private void DestroyLevelObject()
