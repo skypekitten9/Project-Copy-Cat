@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,6 +17,8 @@ public class LevelObjectManager : MonoBehaviour
 
     [SerializeField] private GameObject cursorIcon;
     private bool objectPlaced = false;
+
+    [SerializeField] private LayerMask tilesMask;
 
 
     private void Awake()
@@ -42,7 +45,14 @@ public class LevelObjectManager : MonoBehaviour
         }
 
         if (Input.GetKey(KeyCode.Escape))
-            PlaceLevelObject(true);
+        {
+            if (LevelEditor.Instance.selectedLevelObject != null)
+                DeselectLevelObject();
+            else if (selectedUIObject != null)
+                PlaceLevelObject(true);
+        }
+        else if (Input.GetKey(KeyCode.Delete))
+            DestroyLevelObject();
     }
 
 
@@ -56,6 +66,7 @@ public class LevelObjectManager : MonoBehaviour
 
         selectedUIObject = levelObject;
         levelObjectInstance = Instantiate(levelObject.Prefab, Input.mousePosition, Quaternion.identity, levelObjectsParent);
+        levelObjectInstance.GetComponentInChildren<LevelObject_Selectable>().LevelObject = levelObject;
     }
 
 
@@ -65,7 +76,7 @@ public class LevelObjectManager : MonoBehaviour
         RaycastHit hit;
 
 
-        if (Physics.Raycast(ray, out hit) && hit.transform.parent.GetComponent<Tile_Selectable>())
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, tilesMask) && hit.transform.parent.GetComponent<Tile_Selectable>())
         {
             Tile_Selectable target = hit.transform.parent.GetComponent<Tile_Selectable>();
 
@@ -115,9 +126,23 @@ public class LevelObjectManager : MonoBehaviour
         cursorIcon.SetActive(false);
 
         if (destroy)
-            GameObject.Destroy(levelObjectInstance);
+            Destroy(levelObjectInstance);
 
         objectPlaced = false;
         selectedUIObject = null;
+    }
+
+    private void DestroyLevelObject()
+    {
+        if (LevelEditor.Instance.selectedLevelObject != null)
+        {
+            GameObject.Destroy(LevelEditor.Instance.selectedLevelObject.gameObject);
+            LevelEditor.Instance.selectedLevelObject = null;
+        }
+    }
+
+    private void DeselectLevelObject()
+    {
+        LevelEditor.Instance.selectedLevelObject.Deselect();
     }
 }

@@ -3,11 +3,17 @@
 
 public class LevelObject_Selectable : Selectable
 {
-    LevelObjectManager levelObjectManager;
+    private LevelObjectManager levelObjectManager;
 
-    private void Start()
+    public LevelObject LevelObject { private get; set; }
+
+
+    public void Start()
     {
-        levelObjectManager = LevelEditor.Instance.GetComponent<LevelObjectManager>();
+        if (LevelEditor.Instance)
+        {
+            levelObjectManager = LevelEditor.Instance.GetComponent<LevelObjectManager>();
+        }
     }
 
 
@@ -16,8 +22,10 @@ public class LevelObject_Selectable : Selectable
         base.Select(multiple);
 
         GameObject boundingBox = Instantiate(levelObjectManager.LevelObjectBoundingBox);
-        boundingBox.transform.localScale = new Vector3(1, 1, 1); //temp (store objects bounds in levelObject-file)
-        boundingBox.transform.localPosition = this.transform.position;
+        boundingBox.transform.localScale = LevelObject.Bounds;
+        boundingBox.transform.localPosition = this.transform.parent.position + new Vector3((LevelObject.Bounds.x % 2 == 0) ? 1.0f : 0, 0, (LevelObject.Bounds.z % 2 == 0) ? 1.0f : 0);
+
+
         boundingBox.transform.rotation = this.transform.rotation;
         boundingBox.transform.parent = this.transform;
 

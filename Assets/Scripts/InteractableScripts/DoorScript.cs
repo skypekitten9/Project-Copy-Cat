@@ -37,35 +37,38 @@ public class DoorScript : MonoBehaviour
 
     private void Update()
     {
-        //Detta är endast till för att lösa ett problem där dörrens logik inte funkade bra ihop med ljuduppsleningen. Eftersom stand-buttons alltid skickar iväg en signal dörren ska lyssna efter stängs den tekniskt sett hela tiden
-        //som någon står på den. Denna lösningen fixade det, men är annars ganska överflödig.
-        switch (soundState)
+        if (TestLevelManager.Instance != null)
         {
-            case SoundState.CLOSED:
+            //Detta är endast till för att lösa ett problem där dörrens logik inte funkade bra ihop med ljuduppsleningen. Eftersom stand-buttons alltid skickar iväg en signal dörren ska lyssna efter stängs den tekniskt sett hela tiden
+            //som någon står på den. Denna lösningen fixade det, men är annars ganska överflödig.
+            switch (soundState)
+            {
+                case SoundState.CLOSED:
 
-                if (doorOpenedCount == 0 || dynamicDoor)
-                {
-                    if (TestLevelManager.Instance.interactablesArray[doorID] == true && TestLevelManager.Instance.interactablesArray[doorID2] == true)
+                    if (doorOpenedCount == 0 || dynamicDoor)
                     {
-                        SFXManager.Instance.PlayDoorOpen(audio);
-                        soundState = SoundState.OPEN;
+                        if (TestLevelManager.Instance.interactablesArray[doorID] == true && TestLevelManager.Instance.interactablesArray[doorID2] == true)
+                        {
+                            SFXManager.Instance.PlayDoorOpen(audio);
+                            soundState = SoundState.OPEN;
+                        }
                     }
-                }
 
-                break;
+                    break;
 
-            case SoundState.OPEN:
+                case SoundState.OPEN:
 
-                if (doorOpenedCount == 0 || dynamicDoor)
-                {
-                    if (TestLevelManager.Instance.interactablesArray[doorID] == false || TestLevelManager.Instance.interactablesArray[doorID2] == false)
+                    if (doorOpenedCount == 0 || dynamicDoor)
                     {
-                        SFXManager.Instance.PlayDoorClose(audio);
-                        soundState = SoundState.CLOSED;
+                        if (TestLevelManager.Instance.interactablesArray[doorID] == false || TestLevelManager.Instance.interactablesArray[doorID2] == false)
+                        {
+                            SFXManager.Instance.PlayDoorClose(audio);
+                            soundState = SoundState.CLOSED;
+                        }
                     }
-                }
 
-                break;
+                    break;
+            }
         }
     }
 
@@ -86,7 +89,7 @@ public class DoorScript : MonoBehaviour
     //Dörren tittar ifall dens channel har uppdaterats.
     public void ListenToChannel()
     {
-        if(doorOpenedCount == 0 || dynamicDoor)
+        if (doorOpenedCount == 0 || dynamicDoor)
         {
             if (TestLevelManager.Instance.interactablesArray[doorID] == true && TestLevelManager.Instance.interactablesArray[doorID2] == true)
             {

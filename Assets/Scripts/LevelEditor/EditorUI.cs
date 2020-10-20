@@ -8,7 +8,6 @@ public class EditorUI : MonoBehaviour
 
 
     [SerializeField] private GameObject objectsPanel;
-    //[SerializeField] private RectTransform objectsPanelIcon;
     private RectTransform objectsRectTransform;
     private bool objectsPanelVisible = false;
     private bool canShowHideObjectsPanel = true;
@@ -20,8 +19,6 @@ public class EditorUI : MonoBehaviour
 
         if (objectsPanelVisible == false)
             objectsRectTransform.localPosition -= new Vector3(objectsRectTransform.rect.width, 0, 0);
-        //else
-            //objectsPanelIcon.localScale = new Vector3(-1, 1, 1);
     }
 
 
@@ -54,7 +51,6 @@ public class EditorUI : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
         canShowHideObjectsPanel = true;
-        //objectsPanelIcon.localScale = Vector3.Scale(objectsPanelIcon.localScale, new Vector3(-1, 1, 1));
     }
 
 }
