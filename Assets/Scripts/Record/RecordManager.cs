@@ -33,7 +33,7 @@ public class RecordManager : MonoBehaviour
     private void Start()
     {
         playerInstance = PlayerManager.Instance.gameObject;
-        
+
         syncBar = GameManager.Instance.GetComponentInChildren<SyncBar>();
 
         objectRecorders = UnityEngine.Object.FindObjectsOfType<RecordTransformHierarchy>();
@@ -161,19 +161,25 @@ public class RecordManager : MonoBehaviour
         {
             case ControlStates.Player:
                 playerInstance.GetComponent<PlayerMovement>().enabled = true;
-                playerInstance.transform.GetChild(0).gameObject.SetActive(true);    //Enables all the player's camera objects
+                playerInstance.transform.GetChild(0).GetComponent<Camera>().enabled = true;
+                playerInstance.transform.GetChild(0).GetComponent<AudioListener>().enabled = true;
+                playerInstance.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);     //Enables the player's canvas
 
                 if (HoloInstance)
                 {
                     HoloInstance.GetComponent<PlayerMovement>().enabled = false;
-                    HoloInstance.transform.GetChild(0).gameObject.SetActive(false);     //Disables all the hologram's camera objects
+                    HoloInstance.transform.GetChild(0).GetComponent<Camera>().enabled = false;
+                    HoloInstance.transform.GetChild(0).GetComponent<AudioListener>().enabled = false;
+                    HoloInstance.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);     //Disables the hologram's canvas
                 }
                 break;
 
             case ControlStates.Holo:
 
                 playerInstance.GetComponent<PlayerMovement>().enabled = false;
-                playerInstance.transform.GetChild(0).gameObject.SetActive(false);    //Disables all the player's camera objects
+                playerInstance.transform.GetChild(0).GetComponent<Camera>().enabled = false;
+                playerInstance.transform.GetChild(0).GetComponent<AudioListener>().enabled = false;
+                playerInstance.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);     //Disables the player's canvas
 
                 SpawnHolo();
                 break;
