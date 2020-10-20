@@ -23,7 +23,7 @@ public class LevelObject_Selectable : Selectable
 
         GameObject boundingBox = Instantiate(levelObjectManager.LevelObjectBoundingBox);
         boundingBox.transform.localScale = LevelObject.Bounds;
-        boundingBox.transform.localPosition = this.transform.parent.position + new Vector3((LevelObject.Bounds.x % 2 == 0) ? 1.0f : 0, 0, (LevelObject.Bounds.z % 2 == 0) ? 1.0f : 0);
+        boundingBox.transform.localPosition = this.transform.position + new Vector3((LevelObject.Bounds.x % 2 == 0) ? 1.0f : 0, 0, (LevelObject.Bounds.z % 2 == 0) ? 1.0f : 0);
 
 
         boundingBox.transform.rotation = this.transform.rotation;

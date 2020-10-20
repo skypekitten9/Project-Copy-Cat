@@ -39,7 +39,7 @@ public class Selector : MonoBehaviour
             //    hit = hits[hits.Length - 2];
             //}
 
-            Debug.Log("Hit: " + hit.transform.name);
+//            Debug.Log("Hit: " + hit.transform.name);
 
             if (hit.transform.parent != null)
                 target = hit.transform.parent.GetComponentInChildren<Selectable>();
@@ -54,7 +54,7 @@ public class Selector : MonoBehaviour
                     SetCursor(CursorModes.Select);
                     if (Input.GetMouseButtonDown(0) && EditorUI.hoveringUI == false)
                     {
-                        Debug.Log("Select tile");
+//                        Debug.Log("Select tile");
                         StartCoroutine(ToggleSelectTile(target as Tile_Selectable));    //Start tile selection
                     }
                 }
@@ -65,7 +65,7 @@ public class Selector : MonoBehaviour
                         SetCursor(CursorModes.Select);
                         if (Input.GetMouseButtonDown(0) && EditorUI.hoveringUI == false)
                         {
-                            Debug.Log("Select tile");
+//                            Debug.Log("Select tile");
                             StartCoroutine(ToggleSelectTile(target as Tile_Selectable));    //Start tile selection
                         }
                     }

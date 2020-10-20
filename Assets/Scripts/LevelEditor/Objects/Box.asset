@@ -15,8 +15,8 @@ MonoBehaviour:
   name: Box
   icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   prefab: {fileID: 2239727661880600050, guid: a273dba0118705042a78c2fa8aa6c5fd, type: 3}
-  boundsSize: {x: 1, y: 1, z: 1}
+  bounds: {x: 1, y: 1, z: 1}
   canPlaceOnGround: 1
-  canPlaceOnCeiling: 1
-  canPlaceOnWall: 1
+  canPlaceOnCeiling: 0
+  canPlaceOnWall: 0
   canBeRotated: 1
