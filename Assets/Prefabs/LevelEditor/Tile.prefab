@@ -108,7 +108,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8048554946947572307}
   - component: {fileID: 565858251459695421}
-  m_Layer: 0
+  m_Layer: 31
   m_Name: ExtrudeCollider
   m_TagString: Tile_ExtrudeCollider
   m_Icon: {fileID: 0}
@@ -153,7 +153,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2753268637220383114}
   - component: {fileID: 4470735480828045736}
-  m_Layer: 0
+  m_Layer: 31
   m_Name: SelectCollider
   m_TagString: Tile_SelectCollider
   m_Icon: {fileID: 0}

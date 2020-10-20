@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 58062182}
   - component: {fileID: 58062181}
   - component: {fileID: 58062180}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: EventSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -609,7 +609,7 @@ GameObject:
   m_Component:
   - component: {fileID: 541132497}
   - component: {fileID: 541132498}
-  m_Layer: 0
+  m_Layer: 31
   m_Name: CameraPivot
   m_TagString: Untagged
   m_Icon: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000, type: 0}
@@ -655,7 +655,7 @@ GameObject:
   - component: {fileID: 562715898}
   - component: {fileID: 562715897}
   - component: {fileID: 562715900}
-  m_Layer: 0
+  m_Layer: 31
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -1060,7 +1060,7 @@ GameObject:
   - component: {fileID: 1208712550}
   - component: {fileID: 1208712551}
   - component: {fileID: 1208712547}
-  m_Layer: 0
+  m_Layer: 31
   m_Name: LevelEditorManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1093,6 +1093,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55861ec45f6395240b3dbbd2b751c5e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectionMask:
+    serializedVersion: 2
+    m_Bits: 3221225472
   selectCursor: {fileID: 2800000, guid: 7ee8c35b04d3a7b4cbe44a2574eea20f, type: 3}
   extrudeCursor: {fileID: 2800000, guid: c93c055e1d2631f4e8abc8d4ecc20b14, type: 3}
 --- !u!114 &1208712548
@@ -1150,6 +1153,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelObjectBoundingBox: {fileID: 280457135363014236, guid: 7b63f06da3e0cc444ad87c72db0233b6, type: 3}
   cursorIcon: {fileID: 921028952}
+  tilesMask:
+    serializedVersion: 2
+    m_Bits: 2147483648
 --- !u!1 &1487667252
 GameObject:
   m_ObjectHideFlags: 0

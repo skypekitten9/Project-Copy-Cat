@@ -18,6 +18,8 @@ public class LevelObjectManager : MonoBehaviour
     [SerializeField] private GameObject cursorIcon;
     private bool objectPlaced = false;
 
+    [SerializeField] private LayerMask tilesMask;
+
 
     private void Awake()
     {
@@ -64,7 +66,7 @@ public class LevelObjectManager : MonoBehaviour
 
         selectedUIObject = levelObject;
         levelObjectInstance = Instantiate(levelObject.Prefab, Input.mousePosition, Quaternion.identity, levelObjectsParent);
-        levelObjectInstance.GetComponent<LevelObject_Selectable>().LevelObject = levelObject;
+        levelObjectInstance.GetComponentInChildren<LevelObject_Selectable>().LevelObject = levelObject;
     }
 
 
@@ -74,7 +76,7 @@ public class LevelObjectManager : MonoBehaviour
         RaycastHit hit;
 
 
-        if (Physics.Raycast(ray, out hit) && hit.transform.parent.GetComponent<Tile_Selectable>())
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, tilesMask) && hit.transform.parent.GetComponent<Tile_Selectable>())
         {
             Tile_Selectable target = hit.transform.parent.GetComponent<Tile_Selectable>();
 
