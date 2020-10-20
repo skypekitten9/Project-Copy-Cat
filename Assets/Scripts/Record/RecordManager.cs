@@ -27,6 +27,7 @@ public class RecordManager : MonoBehaviour
     private Stopwatch stopwatch;
 
     private List<InteractionData> interactionData;
+    private List<PickupData> pickupData;
     private SyncBar syncBar;
 
 
@@ -73,10 +74,16 @@ public class RecordManager : MonoBehaviour
         interactionData.Add(new InteractionData(stopwatch.ElapsedMilliseconds, id));
     }
 
+    public void AddPickupNode(params GameObject[] gObj)
+    {
+        pickupData.Add(new PickupData(stopwatch.ElapsedMilliseconds, gObj));
+    }
+
 
     private IEnumerator StartRecording()
     {
         interactionData = new List<InteractionData>();
+        pickupData = new List<PickupData>();
 
         recordPhase = RecordPhase.Recording;
 
@@ -116,6 +123,7 @@ public class RecordManager : MonoBehaviour
         ChangeControlState(ControlStates.Player);
 
         StartCoroutine(CallInteractions());
+        StartCoroutine(CallPickups());
     }
 
     private IEnumerator CallInteractions()
@@ -138,6 +146,23 @@ public class RecordManager : MonoBehaviour
         stopwatch.Stop();
     }
 
+    private IEnumerator CallPickups()
+    {
+        stopwatch.Restart();
+
+        for (int i = 0; i < pickupData.Count; i++)
+        {
+            yield return new WaitForSeconds((float)(pickupData[i].Time - stopwatch.ElapsedMilliseconds) / 1000);
+            for (int j = 0; j < pickupData[i].PickupObject.Length; j++)
+            {
+                pickupData[i].PickupObject[j].GetComponent<PickUp>().tempParent = HoloInstance.GetComponent<Transform>().Find("Main Camera").Find("PickupPosition").gameObject;
+                pickupData[i].PickupObject[j].GetComponent<PickUp>().SetToHeld();
+            }
+        }
+
+        stopwatch.Stop();
+    }
+
     public IEnumerator StopPlayback()
     {
         syncBar.Reset();
@@ -148,6 +173,14 @@ public class RecordManager : MonoBehaviour
             fadeValue -= Time.deltaTime;
             HoloInstance.GetComponent<SkinnedMeshRenderer>().material.SetFloat("Vector1_DCDBC5A6", fadeValue);
             yield return new WaitForFixedUpdate();
+        }
+
+        for (int i = 0; i < pickupData.Count; i++)
+        {
+            for (int j = 0; j < pickupData[i].PickupObject.Length; j++)
+            {
+                pickupData[i].PickupObject[j].GetComponent<PickUp>().SetToNotHeld();
+            }
         }
 
         recordPhase = RecordPhase.None;
