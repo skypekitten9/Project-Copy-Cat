@@ -22,7 +22,7 @@ public class LevelObject_Selectable : Selectable
         base.Select(multiple);
 
         GameObject boundingBox = Instantiate(levelObjectManager.LevelObjectBoundingBox);
-        boundingBox.transform.localScale = LevelObject.Bounds;
+        boundingBox.transform.localScale = (Vector3)LevelObject.Bounds * 1.1f;
         boundingBox.transform.localPosition = this.transform.position + new Vector3((LevelObject.Bounds.x % 2 == 0) ? 1.0f : 0, 0, (LevelObject.Bounds.z % 2 == 0) ? 1.0f : 0);
 
 
