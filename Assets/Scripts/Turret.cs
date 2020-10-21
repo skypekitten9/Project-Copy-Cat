@@ -25,8 +25,8 @@ public class Turret : MonoBehaviour
 
         lineRenderer = gameObject.GetComponent<LineRenderer>();
         lineRenderer.SetPosition(0, new Vector3(transform.position.x, transform.position.y + 0.1f, transform.position.z));
-        lineRenderer.startWidth = 0.2f; 
-        lineRenderer.endWidth = 0.2f;
+        lineRenderer.startWidth = 0.02f; 
+        lineRenderer.endWidth = 0.02f;
         lineRenderer.enabled = false;
 
     }
@@ -53,14 +53,13 @@ public class Turret : MonoBehaviour
         firingRate -= Time.deltaTime;
 
         Physics.Raycast(eye.position, targetDirection, out hit, firingRange, layerMask);
-
+        
         if (hit.transform != null)
         {
             switch (hit.transform.gameObject.layer)
             {
                 case 9:     //Player
-                    lineRenderer.enabled = true;
-                    lineRenderer.SetPosition(1, hit.transform.position);
+                    
                     if (firingRate <= 0)
                     {
                         DamageManager.Instance.playerHit = true;
@@ -86,8 +85,19 @@ public class Turret : MonoBehaviour
         }
         else
         {
-            lineRenderer.enabled = false;
+            DisableTargetLazer();
         }
+    }
+
+    void EnableTargetLazer()
+    {
+        lineRenderer.enabled = true;
+        lineRenderer.SetPosition(1, hit.transform.position);
+    }
+
+    void DisableTargetLazer()
+    {
+        lineRenderer.enabled = false;
     }
 
 }
