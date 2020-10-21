@@ -12,5 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 957c7f606cbc0934ca22c6c92e69fd52, type: 3}
   m_Name: Turret
   m_EditorClassIdentifier: 
+  name: Turret
   icon: {fileID: 0}
-  prefab: {fileID: 0}
+  prefab: {fileID: 6149780821653323717, guid: 2d176564a27c3e443953d11a8521ff78, type: 3}
+  bounds: {x: 1, y: 1, z: 1}
+  canPlaceOnGround: 1
+  canPlaceOnCeiling: 0
+  canPlaceOnWall: 0
+  canBeRotated: 1
