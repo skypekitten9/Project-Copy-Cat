@@ -28,7 +28,6 @@ public class Turret : MonoBehaviour
         lineRenderer.startWidth = 0.02f; 
         lineRenderer.endWidth = 0.02f;
         lineRenderer.enabled = false;
-
     }
 
     void Update()
@@ -56,10 +55,11 @@ public class Turret : MonoBehaviour
         
         if (hit.transform != null)
         {
+            //gameObject.transform.Find("ParticleEffectTurret").position = hit.point;
             switch (hit.transform.gameObject.layer)
             {
                 case 9:     //Player
-                    
+                    EnableTargetLazer();
                     if (firingRate <= 0)
                     {
                         DamageManager.Instance.playerHit = true;
@@ -70,13 +70,12 @@ public class Turret : MonoBehaviour
                     break;
 
                 case 10:    //Hologram
-                    lineRenderer.enabled = true;
-                    lineRenderer.SetPosition(1, hit.transform.position);
+                    EnableTargetLazer();
                     //debugColor = new Color(0, 0.2f, 0.7f);
                     break;
 
                 default:
-                    lineRenderer.enabled = false;
+                    DisableTargetLazer();
                     //debugColor = Color.white;
                     break;
             }
@@ -93,11 +92,13 @@ public class Turret : MonoBehaviour
     {
         lineRenderer.enabled = true;
         lineRenderer.SetPosition(1, hit.transform.position);
+        gameObject.transform.Find("ParticleEffectTurret").gameObject.SetActive(true);
     }
 
     void DisableTargetLazer()
     {
         lineRenderer.enabled = false;
+        gameObject.transform.Find("ParticleEffectTurret").gameObject.SetActive(false);
     }
 
 }
