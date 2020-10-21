@@ -11,6 +11,7 @@ public class Turret : MonoBehaviour
 
     private RaycastHit hit;
     LineRenderer lineRenderer;
+    GameObject particleEffect;
 
     Vector3 distanceToTarget;
     Vector3 destination;
@@ -28,6 +29,8 @@ public class Turret : MonoBehaviour
         lineRenderer.startWidth = 0.02f; 
         lineRenderer.endWidth = 0.02f;
         lineRenderer.enabled = false;
+
+        particleEffect = GameObject.Find("ParticleEffectTurret");
     }
 
     void Update()
@@ -55,14 +58,14 @@ public class Turret : MonoBehaviour
         
         if (hit.transform != null)
         {
-            //gameObject.transform.Find("ParticleEffectTurret").position = hit.point;
+            particleEffect.transform.position = hit.point;
             switch (hit.transform.gameObject.layer)
             {
                 case 9:     //Player
                     EnableTargetLazer();
                     if (firingRate <= 0)
                     {
-                        DamageManager.Instance.playerHit = true;
+                    //    DamageManager.Instance.playerHit = true;
 
                         firingRate = reloadFire;
                     }
@@ -91,14 +94,14 @@ public class Turret : MonoBehaviour
     void EnableTargetLazer()
     {
         lineRenderer.enabled = true;
-        lineRenderer.SetPosition(1, hit.transform.position);
-        gameObject.transform.Find("ParticleEffectTurret").gameObject.SetActive(true);
+        lineRenderer.SetPosition(1, hit.point);
+        particleEffect.SetActive(true);
     }
 
     void DisableTargetLazer()
     {
         lineRenderer.enabled = false;
-        gameObject.transform.Find("ParticleEffectTurret").gameObject.SetActive(false);
+        particleEffect.SetActive(false);
     }
 
 }
