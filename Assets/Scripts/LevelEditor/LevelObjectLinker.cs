@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class LevelObjectLinker : MonoBehaviour, IPointerClickHandler
+public class LevelObjectLinker : MonoBehaviour, IPointerDownHandler
 {
     [SerializeField] private LevelObject levelObject;
 
@@ -27,8 +27,8 @@ public class LevelObjectLinker : MonoBehaviour, IPointerClickHandler
     }
 
 
-    public void OnPointerClick(PointerEventData eventData)
+    public void OnPointerDown(PointerEventData eventData)
     {
-        LevelEditor.Instance.GetComponent<LevelObjectManager>().SelectUIObject(levelObject);
+        StartCoroutine(LevelEditor.Instance.GetComponent<LevelObjectManager>().SelectUIObject(levelObject));
     }
 }

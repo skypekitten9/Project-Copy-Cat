@@ -40,8 +40,6 @@ public class LevelObjectManager : MonoBehaviour
 
             if (Input.GetMouseButtonDown(0))
                 PlaceLevelObject(!objectPlaced);
-
-            MoveLevelObject(levelObjectInstance);
         }
 
         if (Input.GetKey(KeyCode.Escape))
@@ -56,21 +54,36 @@ public class LevelObjectManager : MonoBehaviour
     }
 
 
-    public void SelectUIObject(LevelObject levelObject)
+    public IEnumerator SelectUIObject(LevelObject levelObject)
     {
-        Selector selector = LevelEditor.Instance.GetComponent<Selector>();
-        selector.DeselectAllTiles();
-        objectPlaced = false;
+        yield return new WaitForSeconds(0.125f);
 
-        cursorIcon.GetComponent<Image>().sprite = levelObject.Icon;
-        cursorIcon.SetActive(true);
+        if (Input.GetMouseButton(0))
+        {
 
-        selectedUIObject = levelObject;
-        levelObjectInstance = Instantiate(levelObject.Prefab, Input.mousePosition, Quaternion.identity, levelObjectsParent);
-        levelObjectInstance.GetComponentInChildren<LevelObject_Selectable>().LevelObject = levelObject;
+            Selector selector = LevelEditor.Instance.GetComponent<Selector>();
+            selector.DeselectAllTiles();
+            objectPlaced = false;
 
-        selector.SetCursor(CursorModes.Move);
-        selector.CanChangeCursor = false;
+            cursorIcon.GetComponent<Image>().sprite = levelObject.Icon;
+            cursorIcon.SetActive(true);
+
+            selectedUIObject = levelObject;
+            levelObjectInstance = Instantiate(levelObject.Prefab, Input.mousePosition, Quaternion.identity, levelObjectsParent);
+            levelObjectInstance.GetComponentInChildren<LevelObject_Selectable>().LevelObject = levelObject;
+
+            selector.SetCursor(CursorModes.Move);
+            selector.CanChangeCursor = false;
+
+
+            while (Input.GetMouseButton(0))
+            {
+                MoveLevelObject(levelObjectInstance);
+                yield return new WaitForFixedUpdate();
+            }
+            PlaceLevelObject();
+        }
+
     }
 
 
@@ -126,7 +139,7 @@ public class LevelObjectManager : MonoBehaviour
         }
     }
 
-    private void PlaceLevelObject(bool destroy)
+    private void PlaceLevelObject(bool destroy = false)
     {
         cursorIcon.SetActive(false);
 
