@@ -6,7 +6,7 @@ public class Turret : MonoBehaviour
     private float turningSpeed = 6.0f;
     private float firingRate = 0.2f;
     private float reloadFire;
-    private float firingRange = 5f;
+    private float firingRange = 7f;
     private int damage = 2;
 
     private RaycastHit hit;
@@ -65,8 +65,7 @@ public class Turret : MonoBehaviour
                     EnableTargetLazer();
                     if (firingRate <= 0)
                     {
-                    //    DamageManager.Instance.playerHit = true;
-
+                        DamageManager.Instance.playerHit = true;
                         firingRate = reloadFire;
                     }
                     
@@ -74,6 +73,10 @@ public class Turret : MonoBehaviour
 
                 case 10:    //Hologram
                     EnableTargetLazer();
+                    if (firingRate <= 0)
+                    {
+                        firingRate = reloadFire;
+                    }
                     //debugColor = new Color(0, 0.2f, 0.7f);
                     break;
 

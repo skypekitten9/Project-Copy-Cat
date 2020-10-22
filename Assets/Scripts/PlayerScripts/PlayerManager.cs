@@ -12,6 +12,7 @@ public class PlayerManager : MonoBehaviour
         if (playerHealth <= 0)
         {
             //gameover
+            Debug.Log("Dead");
         }
     }
 
