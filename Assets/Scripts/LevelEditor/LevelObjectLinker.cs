@@ -17,13 +17,13 @@ public class LevelObjectLinker : MonoBehaviour, IPointerDownHandler
         }
 
         if (levelObject.Icon == null)
-            Debug.LogError($"Level object \"{levelObject.Name}\" - missing icon");
+            Debug.LogError($"Level object \"{levelObject.name}\" - missing icon");
         else
             GetComponent<Image>().sprite = levelObject.Icon;
 
 
         if (levelObject.Prefab == null)
-            Debug.LogError($"Level object \"{levelObject.Name}\" - missing prefab");
+            Debug.LogError($"Level object \"{levelObject.name}\" - missing prefab");
     }
 
 
