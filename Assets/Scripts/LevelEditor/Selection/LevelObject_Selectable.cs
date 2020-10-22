@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
 
+[RequireComponent(typeof(Collider))]
 public class LevelObject_Selectable : Selectable
 {
     private LevelObjectManager levelObjectManager;
