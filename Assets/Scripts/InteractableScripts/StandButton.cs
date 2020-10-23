@@ -40,6 +40,8 @@ public class StandButton : MonoBehaviour
     {
         triggerCount++;
         SFXManager.Instance.PlayButtonClick(audio);
+        Debug.Log("Enter, things left: " + triggerCount);
+
 
     }
 
@@ -47,6 +49,7 @@ public class StandButton : MonoBehaviour
     {
         triggerCount--;
         SFXManager.Instance.PlayButtonClick(audio);
+        Debug.Log("Exit, things left: " + triggerCount);
     }
 
     private void SignalChannel(bool status)
