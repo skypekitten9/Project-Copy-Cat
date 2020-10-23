@@ -6,17 +6,29 @@ public class LeverScript : MonoBehaviour
 {
     private Ray ray;
     Animator animator;
+    AudioSource audio;
     [SerializeField] public int id;
+    float timer;
 
     void Start()
     {
         animator = gameObject.GetComponentInChildren<Animator>();
+        audio = gameObject.GetComponent<AudioSource>();
+        timer = 0;
+    }
+
+    private void Update()
+    {
+        timer -= Time.deltaTime;
     }
     public void SignalChannel()
     {
-        Debug.Log("Lever signaled!");
+        if (timer > 0) return;
         TestLevelManager.Instance.interactablesArray[id] = !TestLevelManager.Instance.interactablesArray[id];
         animator.SetBool("isActive", TestLevelManager.Instance.interactablesArray[id]);
         TestLevelManager.Instance.UpdateChannels();
+        //SFXManager.Instance.PlayButtonClick(audio);       //Ger errors
+        GameObject.Find("SyncBar").GetComponent<SyncBar>().SpawnInteraction();
+        timer = animator.GetCurrentAnimatorStateInfo(0).length;
     }
 }
