@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+﻿using UnityEditor.Animations;
 using UnityEngine;
 
 public class DoorScript : MonoBehaviour
@@ -8,7 +8,8 @@ public class DoorScript : MonoBehaviour
     public bool toggle;
 
     [SerializeField] private int[] ids;
-    bool isOpen;
+    bool isOpen, listenAfterAnimation;
+    float timer;
 
     AudioSource audio;
 
@@ -20,25 +21,22 @@ public class DoorScript : MonoBehaviour
 
         audio = gameObject.GetComponent<AudioSource>();
         isOpen = false;
+        listenAfterAnimation = false;
+        timer = 0;
     }
 
     private void Update()
     {
+        if(timer > 0)
+        {
+            timer -= Time.deltaTime;
+            if (timer < 0 && listenAfterAnimation)
+            {
+                ListenToChannel();
+                listenAfterAnimation = false;
+            }
+        }
     }
-
-    //Manuel testning av att öppna och stänga dörrar.
-    //void TestDoor()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.T))
-    //    {
-    //        isOpen = true;
-    //    }
-
-    //    if (Input.GetKeyDown(KeyCode.Y))
-    //    {
-    //        isOpen = false;
-    //    }
-    //}
 
     //Dörren tittar ifall dens channel har uppdaterats.
     public void ListenToChannel()
@@ -54,7 +52,11 @@ public class DoorScript : MonoBehaviour
             changeState = true;
         }
 
-
+        if (timer > 0)
+        {
+            listenAfterAnimation = true;
+            return;
+        }
         if (changeState)
         {
             if(toggle)
@@ -81,5 +83,15 @@ public class DoorScript : MonoBehaviour
         animator.SetBool("isOpened", state);
         collider.enabled = !state;
         isOpen = state;
+        if(state)
+        {
+            animator.Play("Open");
+        }
+        else
+        {
+            animator.Play("Close");
+        }
+        timer = animator.GetCurrentAnimatorStateInfo(0).length;
+
     }
 }
