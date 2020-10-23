@@ -9,7 +9,8 @@ public class StandButton : MonoBehaviour
 
     Animator animator;
 
-    int triggerCount;
+    int triggerCount, previousTriggerCount;
+    bool isActive, previousState;
 
     SphereCollider collider;
 
@@ -22,31 +23,32 @@ public class StandButton : MonoBehaviour
         audio = gameObject.GetComponent<AudioSource>();
 
         triggerCount = 0;
+        isActive = false;
+        previousState = false;
     }
 
     private void Update()
     {
+        previousState = isActive;
         if (triggerCount > 0)
         {
-            SignalChannel(true);
+            isActive = true; ;
         }
         else
         {
-            SignalChannel(false);
+            isActive = false; ;
         }
+        if (isActive != previousState) SignalChannel(isActive);
     }
 
     private void OnTriggerEnter(Collider other)
     {
         triggerCount++;
-        SFXManager.Instance.PlayButtonClick(audio);
-
     }
 
     private void OnTriggerExit(Collider other)
     {
         triggerCount--;
-        SFXManager.Instance.PlayButtonClick(audio);
     }
 
     private void SignalChannel(bool status)
@@ -57,6 +59,7 @@ public class StandButton : MonoBehaviour
             TestLevelManager.Instance.UpdateChannels();
         }
         animator.SetBool("isPressed", status);
+        SFXManager.Instance.PlayButtonClick(audio);
     }
 
 
