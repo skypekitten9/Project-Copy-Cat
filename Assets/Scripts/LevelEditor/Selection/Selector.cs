@@ -22,6 +22,8 @@ public class Selector : MonoBehaviour
 
     //private GameObject lastSelected;
 
+    private float mouseX_rotate = 0;
+    private float rotate_sensitivity = 0.3f;
 
     void Start()
     {
@@ -237,10 +239,16 @@ public class Selector : MonoBehaviour
         CanChangeCursor = false;
         while (Input.GetMouseButton(0))
         {
-            RotateLevelObject(target, 1);
+            mouseX_rotate += Input.GetAxis("Mouse X") * rotate_sensitivity;
+            if (Mathf.Abs(mouseX_rotate) >= 1.0f)
+            {
+                RotateLevelObject(target, mouseX_rotate);
+                mouseX_rotate = 0;
+            }
 
-            yield return new WaitForSeconds(1.0f);
-            //yield return new WaitForFixedUpdate();
+            //Debug.Log(mouseX_rotate);
+
+            yield return new WaitForFixedUpdate();
         }
         CanChangeCursor = true;
     }
@@ -301,8 +309,9 @@ public class Selector : MonoBehaviour
     }
 
 
-    private void RotateLevelObject(GameObject target, int direction)
+    private void RotateLevelObject(GameObject target, float direction)
     {
+        direction = direction >= 0 ? -1 : 1;
         target.transform.Rotate(Vector3.up, 90.0f * direction);
     }
 
