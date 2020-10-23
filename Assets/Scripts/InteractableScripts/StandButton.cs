@@ -9,7 +9,7 @@ public class StandButton : MonoBehaviour
 
     Animator animator;
 
-    int triggerCount;
+    int triggerCount, previousTriggerCount;
 
     SphereCollider collider;
 
