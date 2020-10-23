@@ -99,24 +99,33 @@ public class LevelObjectManager : MonoBehaviour
             LevelObject levelObjectTarget = levelObject.GetComponentInChildren<LevelObject_Selectable>().LevelObject;
 
             TileDirection tileDir = target.TileDir;
+
             switch (tileDir)
             {
                 case TileDirection.Y_positive:
                     if (levelObjectTarget.CanPlaceOnGround == true)
                     {
-                        levelObject.transform.localRotation = Quaternion.LookRotation(target.GetDirectionVector());
-                        levelObject.transform.localEulerAngles += new Vector3(90.0f, 0, 0);
+                        if (levelObjectTarget.LastPlacedTileDir != tileDir)
+                        {
+                            levelObject.transform.localRotation = Quaternion.LookRotation(target.GetDirectionVector());
+                            levelObject.transform.localEulerAngles += new Vector3(90.0f, 0, 0);
+                        }
                         levelObject.transform.position = target.transform.position;
 
                         objectPlaced = true;
+                        levelObjectTarget.LastPlacedTileDir = tileDir;
                     }
                     break;
                 case TileDirection.Y_negative:
                     if (levelObjectTarget.CanPlaceOnCeiling == true)
                     {
-                        levelObject.transform.localRotation = Quaternion.LookRotation(target.GetDirectionVector());
-                        levelObject.transform.localEulerAngles += new Vector3(90.0f, 0, 0);
+                        if (levelObjectTarget.LastPlacedTileDir != tileDir)
+                        {
+                            levelObject.transform.localRotation = Quaternion.LookRotation(target.GetDirectionVector());
+                            levelObject.transform.localEulerAngles += new Vector3(90.0f, 0, 0);
+                        }
                         levelObject.transform.position = target.transform.position;
+                        levelObjectTarget.LastPlacedTileDir = tileDir;
 
                         objectPlaced = true;
                     }
@@ -128,9 +137,13 @@ public class LevelObjectManager : MonoBehaviour
                 case TileDirection.Z_negative:
                     if (levelObjectTarget.CanPlaceOnWall == true)
                     {
-                        levelObject.transform.localRotation = Quaternion.LookRotation(target.GetDirectionVector());
-                        levelObject.transform.localEulerAngles += new Vector3(90.0f, 0, 0);
+                        if (levelObjectTarget.LastPlacedTileDir != tileDir)
+                        {
+                            levelObject.transform.localRotation = Quaternion.LookRotation(target.GetDirectionVector());
+                            levelObject.transform.localEulerAngles += new Vector3(90.0f, 0, 0);
+                        }
                         levelObject.transform.position = target.transform.position;
+                        levelObjectTarget.LastPlacedTileDir = tileDir;
 
                         objectPlaced = true;
                     }

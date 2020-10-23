@@ -21,4 +21,7 @@ public class LevelObject : ScriptableObject
     public bool CanPlaceOnCeiling { get { return canPlaceOnCeiling; } }
     public bool CanPlaceOnWall { get { return canPlaceOnWall; } }
     public bool CanBeRotated { get { return canBeRotated; } }
+
+
+    public TileDirection LastPlacedTileDir { get; set; } = TileDirection.Y_positive;
 }
