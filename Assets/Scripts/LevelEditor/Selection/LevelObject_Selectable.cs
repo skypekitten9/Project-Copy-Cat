@@ -23,11 +23,13 @@ public class LevelObject_Selectable : Selectable
         base.Select(multiple);
 
         GameObject boundingBox = Instantiate(levelObjectManager.LevelObjectBoundingBox);
+
         boundingBox.transform.localScale = GetComponent<Collider>().bounds.size / 2 + new Vector3(0.1f, 0.1f, 0.1f);
         boundingBox.transform.localPosition = GetComponent<Collider>().bounds.center;
 
-        boundingBox.transform.rotation = this.transform.rotation;
         boundingBox.transform.parent = this.transform;
+        boundingBox.transform.localRotation = this.transform.parent.rotation;
+
 
         LevelEditor.Instance.selectedLevelObject = this;
     }

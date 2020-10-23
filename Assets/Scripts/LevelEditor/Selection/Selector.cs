@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public enum CursorModes { None, Select, Extrude, Move, Rotate }
 
@@ -41,12 +42,12 @@ public class Selector : MonoBehaviour
             //    hit = hits[hits.Length - 2];
             //}
 
-            //            Debug.Log("Hit: " + hit.transform.name);
+            //Debug.Log("Hit: " + hit.transform.name);
 
-            if (hit.transform.parent != null)
-                target = hit.transform.parent.GetComponentInChildren<Selectable>();
-            else
-                target = hit.transform.GetComponent<Selectable>();
+
+            target = hit.transform.GetComponent<Selectable>();
+            if (hit.transform.tag == "Tile_SelectCollider" || hit.transform.tag == "Tile_ExtrudeCollider")
+                target = hit.transform.parent.GetComponent<Selectable>();
 
 
             if (target is Tile_Selectable)
@@ -89,6 +90,14 @@ public class Selector : MonoBehaviour
                     StartCoroutine(ToggleSelectObject(target as LevelObject_Selectable));
                 }
             }
+            else if (hit.transform.gameObject.layer == 29)     //LevelEditorRotation
+            {
+                SetCursor(CursorModes.Rotate);
+                if (Input.GetMouseButtonDown(0))
+                {
+                    StartCoroutine(RotateLevelObject(hit.transform.parent.parent.gameObject));
+                }
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.A))
@@ -116,7 +125,7 @@ public class Selector : MonoBehaviour
     }
 
 
-    public System.Collections.IEnumerator ToggleSelectTile(Tile_Selectable target)
+    public IEnumerator ToggleSelectTile(Tile_Selectable target)
     {
         if (LevelEditor.Instance.selectedLevelObject)
         {
@@ -185,9 +194,7 @@ public class Selector : MonoBehaviour
         }
     }
 
-
-
-    public System.Collections.IEnumerator ToggleSelectObject(LevelObject_Selectable target)
+    public IEnumerator ToggleSelectObject(LevelObject_Selectable target)
     {
         DeselectAllTiles();
 
@@ -223,6 +230,20 @@ public class Selector : MonoBehaviour
 
     }
 
+    private IEnumerator RotateLevelObject(GameObject target)
+    {
+        yield return new WaitForSeconds(0.125f);
+
+        CanChangeCursor = false;
+        while (Input.GetMouseButton(0))
+        {
+            RotateLevelObject(target, 1);
+
+            yield return new WaitForSeconds(1.0f);
+            //yield return new WaitForFixedUpdate();
+        }
+        CanChangeCursor = true;
+    }
 
 
     private void SelectWholePlane(Tile_Selectable target)
@@ -277,6 +298,12 @@ public class Selector : MonoBehaviour
 
         LevelEditor.Instance.selectedTiles.Clear();
         allSelected = false;
+    }
+
+
+    private void RotateLevelObject(GameObject target, int direction)
+    {
+        target.transform.Rotate(Vector3.up, 90.0f * direction);
     }
 
 
