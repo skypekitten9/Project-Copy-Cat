@@ -5,7 +5,7 @@ using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public enum RecordPhase { None, Recording, Rewinding, PlayingBack }
+public enum RecordPhase { None, Recording, Rewinding, PlayingBack, StoppingPlayback }
 public enum ControlStates { Player, Holo }
 
 public class RecordManager : MonoBehaviour
@@ -165,6 +165,8 @@ public class RecordManager : MonoBehaviour
 
     public IEnumerator StopPlayback()
     {
+        recordPhase = RecordPhase.StoppingPlayback;
+
         syncBar.Reset();
 
         float fadeValue = 1;

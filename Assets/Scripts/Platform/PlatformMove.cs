@@ -3,54 +3,52 @@ using UnityEngine;
 
 public class PlatformMove : MonoBehaviour
 {
+    private RecordManager recordManager;
+
+    private Transform moveable;
+
     [SerializeField] float speed = 1.0f;
     [SerializeField] bool loop = false;
 
     private Vector3[] keyPoints;
-    private float t;
+    private int currentKeyPointIndex = 0;
+    private int recordStartKeyPointIndex = 0;
+
+    private float t = 0;
+
+    bool set_t = true;
 
 
     private void Start()
     {
+        moveable = transform.GetChild(0);
+
         Transform keyPointsParent = transform.GetChild(1);
         keyPoints = new Vector3[keyPointsParent.childCount];
         for (int i = 0; i < keyPoints.Length; i++)
             keyPoints[i] = keyPointsParent.GetChild(i).position;
-
-        //StartCoroutine(Move());
     }
 
-    /*
-    public System.Collections.IEnumerator Move()
+
+    private void Update()
     {
-        Transform moveable = transform.GetChild(0);
-        Vector3 oldPos;
+        recordManager = GameManager.Instance.GetComponent<RecordManager>();
 
-        float t = 0;
-
-        for (int i = 0; i < keyPoints.Length - 1 + Convert.ToInt32(loop); i++)
+        if (recordManager.recordPhase != RecordPhase.Rewinding && recordManager.recordPhase != RecordPhase.PlayingBack)
         {
-            while (t <= 1)
-            {
-                if (GameManager.Instance.GetComponent<RecordManager>().recordPhase == RecordPhase.Rewinding || GameManager.Instance.GetComponent<RecordManager>().recordPhase == RecordPhase.PlayingBack)
-                {
-                    yield return new WaitForFixedUpdate();
-                    continue;
-                }
-
-                t += Time.deltaTime * speed / Vector3.Distance(keyPoints[i], keyPoints[(i + 1) % keyPoints.Length]);
-
-                oldPos = moveable.position;
-                moveable.position = Vector3.Lerp(keyPoints[i], keyPoints[(i + 1) % keyPoints.Length], t);
-
-                yield return new WaitForFixedUpdate();
-            }
-
-            t = 0;
-            moveable.position = keyPoints[(i + 1) % keyPoints.Length];
-        }
-
-        if (loop) StartCoroutine(Move());
+            Move();
+        }     
     }
-    */
-}
+
+    private void Move()
+    {
+        t += Time.deltaTime * speed / Vector3.Distance(keyPoints[currentKeyPointIndex], keyPoints[(currentKeyPointIndex + 1) % keyPoints.Length]);
+
+        moveable.position = Vector3.Lerp(keyPoints[currentKeyPointIndex], keyPoints[(currentKeyPointIndex + 1) % keyPoints.Length], t);
+
+        if (t >= 1.0f)
+        {
+            t = 0;
+            currentKeyPointIndex = (currentKeyPointIndex + 1) % keyPoints.Length;
+        }
+    }
