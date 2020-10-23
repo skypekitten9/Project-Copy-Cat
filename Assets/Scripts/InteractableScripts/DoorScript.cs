@@ -5,19 +5,12 @@ public class DoorScript : MonoBehaviour
 {
     Animator animator;
     BoxCollider collider;
+    public bool toggle;
 
-    [SerializeField] private int[] channelIDs;
+    [SerializeField] private int[] ids;
     bool isOpen;
 
     AudioSource audio;
-
-    enum SoundState
-    {
-        OPEN,
-        CLOSED
-    }
-
-    SoundState soundState;
 
     void Start()
     {
@@ -27,7 +20,6 @@ public class DoorScript : MonoBehaviour
 
         audio = gameObject.GetComponent<AudioSource>();
         isOpen = false;
-        soundState = SoundState.CLOSED;
     }
 
     private void Update()
@@ -51,29 +43,43 @@ public class DoorScript : MonoBehaviour
     //Dörren tittar ifall dens channel har uppdaterats.
     public void ListenToChannel()
     {
-        bool previousState = isOpen;
-        for (int i = 0; i < channelIDs.Length; i++)
+        bool changeState = false;
+        for (int i = 0; i < ids.Length; i++)
         {
-            if (TestLevelManager.Instance.interactablesArray[channelIDs[i]] == false)
+            if (TestLevelManager.Instance.interactablesArray[ids[i]] == false)
             {
-                isOpen = false;
+                changeState = false;
                 break;
             }
-            isOpen = true;
+            changeState = true;
         }
-        
 
-        if(previousState != isOpen && isOpen)
+
+        if (changeState)
         {
-            SFXManager.Instance.PlayDoorClose(audio);
-            animator.SetBool("isOpened", true);
-            collider.enabled = false;
+            if(toggle)
+            {
+                ToggleDoor(!isOpen);
+            }
+            else
+            {
+                ToggleDoor(true);
+            }
         }
-        else if (previousState != isOpen && !isOpen)
+        else
         {
-            SFXManager.Instance.PlayDoorClose(audio);
-            animator.SetBool("isOpened", false);
-            collider.enabled = true;
+            if(!toggle && isOpen)
+            {
+                ToggleDoor(false);
+            }
         }
+    }
+
+    void ToggleDoor(bool state)
+    {
+        SFXManager.Instance.PlayDoorClose(audio);
+        animator.SetBool("isOpened", state);
+        collider.enabled = !state;
+        isOpen = state;
     }
 }
