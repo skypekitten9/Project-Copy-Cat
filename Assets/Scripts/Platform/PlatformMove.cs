@@ -16,7 +16,8 @@ public class PlatformMove : MonoBehaviour
 
     private float t = 0;
 
-    bool set_t = true;
+    private bool set_t = true;
+    private bool stop = true;
 
 
     private void Start()
@@ -27,6 +28,20 @@ public class PlatformMove : MonoBehaviour
         keyPoints = new Vector3[keyPointsParent.childCount];
         for (int i = 0; i < keyPoints.Length; i++)
             keyPoints[i] = keyPointsParent.GetChild(i).position;
+
+
+        StartPlatform();
+    }
+
+
+    public void StartPlatform()
+    {
+        stop = false;
+    }
+
+    public void StopPlatform()
+    {
+        stop = true;
     }
 
 
@@ -36,8 +51,11 @@ public class PlatformMove : MonoBehaviour
 
         if (recordManager.recordPhase != RecordPhase.Rewinding && recordManager.recordPhase != RecordPhase.PlayingBack)
         {
-            Move();
-        }     
+            if (stop == false)
+            {
+                Move();
+            }
+        }
     }
 
     private void Move()
@@ -50,5 +68,11 @@ public class PlatformMove : MonoBehaviour
         {
             t = 0;
             currentKeyPointIndex = (currentKeyPointIndex + 1) % keyPoints.Length;
+            if (currentKeyPointIndex == 0 && loop == false)
+            {
+                stop = true;
+            }
         }
     }
+
+}
