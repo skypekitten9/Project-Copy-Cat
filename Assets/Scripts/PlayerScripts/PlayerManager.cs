@@ -1,9 +1,13 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class PlayerManager : MonoBehaviour
 {
     private static PlayerManager instance = null;
     public static PlayerManager Instance { get { return instance; } }
+
+    [SerializeField] private GameObject deadUI;
 
     public int playerHealth = 100;
 
@@ -11,8 +15,15 @@ public class PlayerManager : MonoBehaviour
     {
         if (playerHealth <= 0)
         {
-            //gameover
-            Debug.Log("Dead");
+            deadUI.SetActive(true);
+            GameManager.Instance.GetComponent<RecordManager>().ChangeControlState(ControlStates.Dead);
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                playerHealth = 100;
+                deadUI.SetActive(false);
+                GameManager.Instance.GetComponent<RecordManager>().ChangeControlState(ControlStates.Player);
+                TestLevelManager.Instance.GetComponent<SceneTransition>().ChangeToScene(SceneManager.GetActiveScene().buildIndex);
+            }
         }
     }
 
