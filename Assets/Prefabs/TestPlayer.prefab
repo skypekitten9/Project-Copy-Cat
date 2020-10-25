@@ -101,6 +101,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83ad81fa1f3f03741822fc879421923f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deadUI: {fileID: 5430203923447462008}
+  SpawnPoint: {fileID: 0}
   playerHealth: 100
 --- !u!114 &1352266641120925332
 MonoBehaviour:

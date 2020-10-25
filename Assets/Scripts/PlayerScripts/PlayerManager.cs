@@ -8,8 +8,6 @@ public class PlayerManager : MonoBehaviour
     public static PlayerManager Instance { get { return instance; } }
 
     [SerializeField] private GameObject deadUI;
-    [SerializeField] private Transform SpawnPoint;
-
 
     public int playerHealth = 100;
 
