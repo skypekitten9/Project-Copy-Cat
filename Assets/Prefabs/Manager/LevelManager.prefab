@@ -150,12 +150,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1497f829c7b928498fa5fc8a9d53f23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneStartOverride: 0
+  sceneStartOverride: 1
   interactablesArray: 
   doorList: []
   levels:
   - {fileID: 11400000, guid: 034463693d14dd04b9f711dea86bbabf, type: 2}
   - {fileID: 11400000, guid: c9f53fb7f0ecdb0458e1982a8acbab35, type: 2}
+  - {fileID: 11400000, guid: d2cbc24a15d01fd44b15c4c4f03e1b9e, type: 2}
   testInt: 0
 --- !u!114 &2094489335
 MonoBehaviour:

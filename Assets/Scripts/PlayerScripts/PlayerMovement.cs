@@ -5,14 +5,13 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public LayerMask groundMask;
+    //public LayerMask groundMask;
 
     private Rigidbody rb;
     private AudioSource audio;
     private Vector3 velocity;
 
     private bool isGrounded;
-    private float groundDistance;
 
     [SerializeField] private float speed = 7.0f;
     [SerializeField] private float jumpSpeed = 10.0f;
@@ -20,7 +19,6 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        groundDistance = GetComponent<Collider>().bounds.extents.y;
         audio = gameObject.GetComponent<AudioSource>();
     }
 
@@ -31,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        isGrounded = Physics.Raycast(transform.position, -Vector3.up, groundDistance + 0.2f);
+        isGrounded = Physics.Raycast(transform.position + new Vector3(0, 0.1f, 0), -Vector3.up, 0.2f);
         //if (Input.GetAxis("Mouse ScrollWheel") > 0 && isGrounded)
         if (Input.GetButtonDown("Jump") && isGrounded)
             Jump();

@@ -10,7 +10,7 @@ public class PlayerCamera : MonoBehaviour
 
     void Start()
     {
-        playerBody = transform.parent.gameObject.transform;
+        playerBody = transform.parent.parent.gameObject.transform;
 
         Cursor.lockState = CursorLockMode.Locked;
     }

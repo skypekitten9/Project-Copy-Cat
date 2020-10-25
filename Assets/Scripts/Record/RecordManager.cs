@@ -11,7 +11,7 @@ public enum ControlStates { Player, Holo, Dead }
 public class RecordManager : MonoBehaviour
 {
     public int RecordTime { get; } = 5000;    //ms
-    public float RewindSpeed { get; } = 3.0f;  //multiplier (x times faster than normal speed)
+    public float RewindSpeed { get; } = 0.5f;//3.0f;  //multiplier (x times faster than normal speed)
 
 
     public RecordPhase recordPhase { get; set; } = RecordPhase.None;
@@ -201,28 +201,28 @@ public class RecordManager : MonoBehaviour
         {
             case ControlStates.Player:
                 alive = true;
-                playerInstance.GetComponent<PlayerMovement>().enabled = true;
-                playerInstance.transform.GetChild(0).GetComponent<Camera>().enabled = true;
-                playerInstance.transform.GetChild(0).GetComponent<AudioListener>().enabled = true;
-                playerInstance.transform.GetChild(0).GetComponent<PlayerCamera>().enabled = true;
-                playerInstance.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);     //Enables the player's canvas
+                playerInstance.GetComponentInChildren<PlayerMovement>().enabled = true;
+                playerInstance.transform.GetComponentInChildren<Camera>().enabled = true;
+                playerInstance.transform.GetComponentInChildren<AudioListener>().enabled = true;
+                playerInstance.transform.GetComponentInChildren<PlayerCamera>().enabled = true;
+                playerInstance.transform.GetChild(0).GetChild(0).GetChild(0).gameObject.SetActive(true);     //Enables the player's canvas
 
                 if (HoloInstance)
                 {
-                    HoloInstance.GetComponent<PlayerMovement>().enabled = false;
-                    HoloInstance.transform.GetChild(0).GetComponent<Camera>().enabled = false;
-                    HoloInstance.transform.GetChild(0).GetComponent<AudioListener>().enabled = false;
-                    HoloInstance.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);     //Disables the hologram's canvas
+                    HoloInstance.GetComponentInChildren<PlayerMovement>().enabled = false;
+                    HoloInstance.transform.GetComponentInChildren<Camera>().enabled = false;
+                    HoloInstance.transform.GetComponentInChildren<AudioListener>().enabled = false;
+                    HoloInstance.transform.GetChild(0).GetChild(0).GetChild(0).gameObject.SetActive(false);     //Disables the hologram's canvas
                 }
                 break;
 
             case ControlStates.Holo:
 
-                playerInstance.GetComponent<PlayerMovement>().enabled = false;
-                playerInstance.transform.GetChild(0).GetComponent<Camera>().enabled = false;
-                playerInstance.transform.GetChild(0).GetComponent<AudioListener>().enabled = false;
-                playerInstance.transform.GetChild(0).GetComponent<PlayerCamera>().enabled = false;
-                playerInstance.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);     //Disables the player's canvas
+                playerInstance.GetComponentInChildren<PlayerMovement>().enabled = false;
+                playerInstance.transform.GetComponentInChildren<Camera>().enabled = false;
+                playerInstance.transform.GetComponentInChildren<AudioListener>().enabled = false;
+                playerInstance.transform.GetComponentInChildren<PlayerCamera>().enabled = false;
+                playerInstance.transform.GetChild(0).GetChild(0).GetChild(0).gameObject.SetActive(false);     //Disables the player's canvas
 
                 SpawnHolo();
                 break;
@@ -230,8 +230,8 @@ public class RecordManager : MonoBehaviour
             case ControlStates.Dead:
 
                 playerInstance.GetComponent<PlayerMovement>().enabled = false;
-                playerInstance.transform.GetChild(0).GetComponent<PlayerCamera>().enabled = false;
-                playerInstance.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
+                playerInstance.transform.GetComponentInChildren<PlayerCamera>().enabled = false;
+                playerInstance.transform.GetChild(0).GetChild(0).GetChild(0).gameObject.SetActive(false);    //Disables the player's canvas
                 alive = false;
                 break;
         }
@@ -242,7 +242,7 @@ public class RecordManager : MonoBehaviour
         HoloInstance = Instantiate(holoPrefab);
         HoloInstance.transform.position = playerInstance.transform.position;
         HoloInstance.transform.rotation = playerInstance.transform.rotation;
-        HoloInstance.transform.GetChild(0).GetComponent<PlayerCamera>().MouseY = PlayerManager.Instance.transform.GetChild(0).GetComponent<PlayerCamera>().MouseY;
-        HoloInstance.transform.GetChild(0).localRotation = PlayerManager.Instance.transform.GetChild(0).localRotation;
+        HoloInstance.transform.GetComponentInChildren<PlayerCamera>().MouseY = PlayerManager.Instance.transform.GetComponentInChildren<PlayerCamera>().MouseY;
+        HoloInstance.transform.GetChild(0).GetChild(0).GetChild(0).localRotation = PlayerManager.Instance.transform.GetChild(0).GetChild(0).localRotation;
     }
 }

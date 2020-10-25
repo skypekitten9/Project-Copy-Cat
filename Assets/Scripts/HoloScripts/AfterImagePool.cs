@@ -49,9 +49,9 @@ class AfterImagePool : MonoBehaviour
 
     private void SpawnAfterImage(int index)
     {
-        GameManager.Instance.GetComponent<RecordManager>().HoloInstance.GetComponent<SkinnedMeshRenderer>().BakeMesh(afterImagesPool[index].GetComponent<MeshFilter>().mesh);
+        GameManager.Instance.GetComponent<RecordManager>().HoloInstance.GetComponentInChildren<SkinnedMeshRenderer>().BakeMesh(afterImagesPool[index].GetComponent<MeshFilter>().mesh);
         afterImagesPool[index].GetComponent<AfterImage>().Enable();
-        afterImagesPool[index].transform.position = GameManager.Instance.GetComponent<RecordManager>().HoloInstance.transform.position;
+        afterImagesPool[index].transform.position = GameManager.Instance.GetComponent<RecordManager>().HoloInstance.transform.position + new Vector3(0, 1.0f, 0);
 
     }
 }
