@@ -12,11 +12,9 @@ public class PlatformMove : MonoBehaviour
 
     private Vector3[] keyPoints;
     private int currentKeyPointIndex = 0;
-    private int recordStartKeyPointIndex = 0;
 
     private float t = 0;
 
-    private bool set_t = true;
     private bool stop = true;
 
 

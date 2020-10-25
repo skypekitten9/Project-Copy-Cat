@@ -9,6 +9,7 @@ TagManager:
   - Tile_SelectCollider
   - Tile_ExtrudeCollider
   - Pickupable
+  - IgnorePlatform
   layers:
   - Default
   - TransparentFX
@@ -23,7 +24,7 @@ TagManager:
   - Hologram
   - HoloPass
   - HoloVisible
-  - Platform
+  - 
   - KillTrigger
   - PlayerPass
   - 
@@ -38,7 +39,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - ' '
   - LevelEditorRotation
   - LevelEditorObjects
   - LevelEditorTiles

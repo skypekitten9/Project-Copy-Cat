@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEditor.Animations;
 using UnityEngine;
@@ -6,14 +7,18 @@ using UnityEngine;
 [RequireComponent(typeof(Animation))]
 public class RecordTransformHierarchy : MonoBehaviour
 {
+    [SerializeField] private bool isHolo = false;
+
+
     private new Animation animation;
-
-    public AnimationClip Clip { get; private set; }
-    private GameObjectRecorder recorder;
-
     private bool recording = false;
 
-    [SerializeField] private bool isHolo = false;
+    public Stack<AnimationClip> clips = new Stack<AnimationClip>();
+    private Stack<GameObjectRecorder> recorders = new Stack<GameObjectRecorder>();
+    private int clipsCounter = 0;
+
+    private bool parented = false;
+
 
 
     void Awake()
@@ -21,61 +26,95 @@ public class RecordTransformHierarchy : MonoBehaviour
         animation = GetComponent<Animation>();
     }
 
-
     public void StartRecording()
     {
-        try
-        {
-            //UnityEngine.Debug.Log("Start Recording");
+        recording = true;
 
-            recorder = new GameObjectRecorder(gameObject);
-            recorder.BindComponentsOfType<Transform>(gameObject, true);
-
-            Clip = new AnimationClip();
-            Clip.legacy = true;
-
-            recording = true;
-        }
-        catch (System.Exception) { }
+        NewClip();
     }
 
-    private void LateUpdate()
+    private void FixedUpdate()
     {
         if (recording == true)
         {
-            recorder.TakeSnapshot(Time.deltaTime);
+            if ((parented && transform.parent == null) || (!parented && transform.parent != null))
+            {
+                EndClip();
+                NewClip();
+            }
+            recorders.Peek().TakeSnapshot(Time.deltaTime);
         }
     }
+
 
     public void StopRecording()
     {
         recording = false;
+        EndClip();
 
-        if (recorder.isRecording)
+        StartCoroutine(Rewind());
+    }
+
+
+
+    private void NewClip()
+    {
+        clipsCounter++;
+        parented = transform.parent ? true : false;
+
+        recorders.Push(new GameObjectRecorder(parented ? transform.parent.gameObject : gameObject));
+        recorders.Peek().BindComponentsOfType<Transform>(parented ? transform.parent.gameObject : gameObject, true);
+
+        clips.Push(new AnimationClip());
+        clips.Peek().legacy = true;
+    }
+
+    public void EndClip()
+    {
+        if (recorders.Peek().isRecording)
         {
             //UnityEngine.Debug.Log("Stop Recording");
 
-            recorder.SaveToClip(Clip);
-            recorder.ResetRecording();
-            animation.AddClip(Clip, "recording_rew");
-            animation.AddClip(Clip, "recording");
+            recorders.Peek().SaveToClip(clips.Peek());
+            //recorders[index].ResetRecording();
 
-            StartCoroutine(RewindPlayback());
+            animation.AddClip(clips.Peek(), $"rewind_{clipsCounter}");
+            animation.AddClip(clips.Peek(), $"record_{clipsCounter}");
         }
     }
 
-    private IEnumerator RewindPlayback()
+
+
+    private IEnumerator Rewind()
     {
-        animation["recording_rew"].speed = -GameManager.Instance.GetComponent<RecordManager>().RewindSpeed;
-        animation["recording_rew"].time = animation["recording_rew"].length;
-        animation.Play("recording_rew");
+        for (int i = clipsCounter; i >= 1; i--)
+        {
+            string clipName = $"rewind_{i}";
 
-        while (animation.isPlaying)
-            yield return new WaitForFixedUpdate();
+            animation[clipName].speed = -GameManager.Instance.GetComponent<RecordManager>().RewindSpeed;
+            animation[clipName].time = animation[clipName].length;
+            animation.Play(clipName);
 
+            while (animation.isPlaying)
+            {
+                if (isHolo)
+                {
+                    UnityEngine.Debug.Log($"GameObject: {gameObject.name}  |  Animation: {clipName}");
+                }
+
+                yield return new WaitForFixedUpdate();
+            }
+        }
+
+
+
+        //StartCoroutine(Playback());
+    }
+
+    private IEnumerator Playback()
+    {
         if (isHolo)
             GameManager.Instance.GetComponent<RecordManager>().StartPlayback();
-
 
         animation.Play("recording");
 
@@ -87,4 +126,5 @@ public class RecordTransformHierarchy : MonoBehaviour
             StartCoroutine(GameManager.Instance.GetComponent<RecordManager>().StopPlayback());
         }
     }
+
 }
