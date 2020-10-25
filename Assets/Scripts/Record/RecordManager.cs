@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public enum RecordPhase { None, Recording, Rewinding, PlayingBack, StoppingPlayback }
-public enum ControlStates { Player, Holo }
+public enum ControlStates { Player, Holo, Dead }
 
 public class RecordManager : MonoBehaviour
 {
@@ -23,6 +23,8 @@ public class RecordManager : MonoBehaviour
 
     private RecordTransformHierarchy holoRecorder;
     private RecordTransformHierarchy[] objectRecorders;
+
+    private bool alive = true;
 
     private Stopwatch stopwatch;
 
@@ -54,17 +56,20 @@ public class RecordManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (alive)
         {
-            switch (recordPhase)
+            if (Input.GetKeyDown(KeyCode.Q))
             {
-                case RecordPhase.None:
-                    StartCoroutine(StartRecording());
-                    break;
+                switch (recordPhase)
+                {
+                    case RecordPhase.None:
+                        StartCoroutine(StartRecording());
+                        break;
 
-                case RecordPhase.Recording:
-                    StopRecording();
-                    break;
+                    case RecordPhase.Recording:
+                        StopRecording();
+                        break;
+                }
             }
         }
     }
@@ -190,11 +195,12 @@ public class RecordManager : MonoBehaviour
     }
 
 
-    private void ChangeControlState(ControlStates controlState)
+    public void ChangeControlState(ControlStates controlState)
     {
         switch (controlState)
         {
             case ControlStates.Player:
+                alive = true;
                 playerInstance.GetComponent<PlayerMovement>().enabled = true;
                 playerInstance.transform.GetChild(0).GetComponent<Camera>().enabled = true;
                 playerInstance.transform.GetChild(0).GetComponent<AudioListener>().enabled = true;
@@ -219,6 +225,14 @@ public class RecordManager : MonoBehaviour
                 playerInstance.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);     //Disables the player's canvas
 
                 SpawnHolo();
+                break;
+
+            case ControlStates.Dead:
+
+                playerInstance.GetComponent<PlayerMovement>().enabled = false;
+                playerInstance.transform.GetChild(0).GetComponent<PlayerCamera>().enabled = false;
+                playerInstance.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
+                alive = false;
                 break;
         }
     }

@@ -24,10 +24,10 @@ public class TestLevelManager : MonoBehaviour
 
     private void OnEnable()
     {
-        if (sceneStartOverride != -1 && sceneStartOverride != SceneManager.GetActiveScene().buildIndex)
-        {
-            GetComponent<SceneTransition>().ChangeToScene(sceneStartOverride);
-        }
+        //if (sceneStartOverride != -1 && sceneStartOverride != SceneManager.GetActiveScene().buildIndex)
+        //{
+        //    GetComponent<SceneTransition>().ChangeToScene(sceneStartOverride);
+        //}
     }
 
     public void Awake()
