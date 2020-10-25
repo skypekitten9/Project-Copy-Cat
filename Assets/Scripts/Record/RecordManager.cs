@@ -11,7 +11,7 @@ public enum ControlStates { Player, Holo, Dead }
 public class RecordManager : MonoBehaviour
 {
     public int RecordTime { get; } = 5000;    //ms
-    public float RewindSpeed { get; } = 0.5f;//3.0f;  //multiplier (x times faster than normal speed)
+    public float RewindSpeed { get; } = 3.0f;  //multiplier (x times faster than normal speed)
 
 
     public RecordPhase recordPhase { get; set; } = RecordPhase.None;
@@ -178,7 +178,7 @@ public class RecordManager : MonoBehaviour
         while (fadeValue > 0)
         {
             fadeValue -= Time.deltaTime;
-            HoloInstance.GetComponent<SkinnedMeshRenderer>().material.SetFloat("Vector1_DCDBC5A6", fadeValue);
+            HoloInstance.GetComponentInChildren<SkinnedMeshRenderer>().material.SetFloat("Vector1_DCDBC5A6", fadeValue);
             yield return new WaitForFixedUpdate();
         }
 

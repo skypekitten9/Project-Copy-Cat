@@ -13,9 +13,9 @@ public class RecordTransformHierarchy : MonoBehaviour
     private new Animation animation;
     private bool recording = false;
 
-    public Stack<AnimationClip> clips = new Stack<AnimationClip>();
-    private Stack<GameObjectRecorder> recorders = new Stack<GameObjectRecorder>();
-    private int clipsCounter = 0;
+    public Stack<AnimationClip> clips;
+    private Stack<GameObjectRecorder> recorders;
+    private int clipsCounter;
 
     private bool parented = false;
 
@@ -28,6 +28,10 @@ public class RecordTransformHierarchy : MonoBehaviour
 
     public void StartRecording()
     {
+        clips = new Stack<AnimationClip>();
+        recorders = new Stack<GameObjectRecorder>();
+        clipsCounter = 0;
+
         recording = true;
 
         NewClip();
@@ -96,19 +100,10 @@ public class RecordTransformHierarchy : MonoBehaviour
             animation.Play(clipName);
 
             while (animation.isPlaying)
-            {
-                if (isHolo)
-                {
-                    UnityEngine.Debug.Log($"GameObject: {gameObject.name}  |  Animation: {clipName}");
-                }
-
                 yield return new WaitForFixedUpdate();
-            }
         }
 
-
-
-        //StartCoroutine(Playback());
+        StartCoroutine(Playback());
     }
 
     private IEnumerator Playback()
@@ -116,13 +111,19 @@ public class RecordTransformHierarchy : MonoBehaviour
         if (isHolo)
             GameManager.Instance.GetComponent<RecordManager>().StartPlayback();
 
-        animation.Play("recording");
+
+        for (int i = 1; i <= clipsCounter; i++)
+        {
+            string clipName = $"record_{i}";
+
+            animation.Play(clipName);
+
+            while (animation.isPlaying)
+                yield return new WaitForFixedUpdate();
+        }
 
         if (isHolo)
         {
-            while (animation.isPlaying)
-                yield return new WaitForFixedUpdate();
-
             StartCoroutine(GameManager.Instance.GetComponent<RecordManager>().StopPlayback());
         }
     }

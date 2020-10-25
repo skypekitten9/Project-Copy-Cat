@@ -16,7 +16,7 @@ public class PlayerInteraction : MonoBehaviour
 
     void Start()
     {
-        cameraTransform = gameObject.transform.GetChild(0).GetChild(0);
+        cameraTransform = gameObject.GetComponentInChildren<Camera>().transform;
         pickUpTransform = cameraTransform.Find("PickupPosition");
         ray = new Ray(cameraTransform.position, cameraTransform.forward);
         rayRange = 1.5f;
