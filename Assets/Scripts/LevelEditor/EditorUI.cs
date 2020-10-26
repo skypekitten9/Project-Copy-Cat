@@ -8,6 +8,8 @@ public class EditorUI : MonoBehaviour
 
 
     [SerializeField] private GameObject objectsPanel;
+    [SerializeField] private GameObject popupMenu;
+
     private RectTransform objectsRectTransform;
     private bool objectsPanelVisible = false;
     private bool canShowHideObjectsPanel = true;
@@ -19,15 +21,34 @@ public class EditorUI : MonoBehaviour
 
         if (objectsPanelVisible == false)
             objectsRectTransform.localPosition -= new Vector3(objectsRectTransform.rect.width, 0, 0);
+
+        popupMenu.SetActive(false);
+    }
+
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            if (!hoveringUI)
+                StartCoroutine(OpenPopupMenu());
+            else
+                PointerExitUI();
+        }
     }
 
 
     public void PointerEnterUI()
     {
+        GetComponent<Selector>().SetCursor(CursorModes.Select);
+        GetComponent<Selector>().CanChangeCursor = false;
+
         hoveringUI = true;
     }
     public void PointerExitUI()
     {
+        GetComponent<Selector>().CanChangeCursor = true;
+
         hoveringUI = false;
     }
 
@@ -40,6 +61,7 @@ public class EditorUI : MonoBehaviour
             objectsPanelVisible = !objectsPanelVisible;
         }
     }
+
     private IEnumerator AnimateObjectsPanel(int direction)
     {
         canShowHideObjectsPanel = false;
@@ -53,4 +75,19 @@ public class EditorUI : MonoBehaviour
         canShowHideObjectsPanel = true;
     }
 
+    public IEnumerator OpenPopupMenu()
+    {
+        yield return new WaitForSeconds(0.125f);
+
+        if (Input.GetMouseButton(1) == false)
+        {
+            popupMenu.transform.position = Input.mousePosition;
+            popupMenu.SetActive(true);
+        }
+    }
+
+    public void ClosePopupMenu()
+    {
+        popupMenu.SetActive(false);
+    }
 }

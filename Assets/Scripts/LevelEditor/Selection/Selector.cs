@@ -59,9 +59,10 @@ public class Selector : MonoBehaviour
                     SetCursor(CursorModes.Select);
                     if (Input.GetMouseButtonDown(0) && EditorUI.hoveringUI == false)
                     {
-                        //                        Debug.Log("Select tile");
+                        //Debug.Log("Select tile");
                         StartCoroutine(ToggleSelectTile(target as Tile_Selectable));    //Start tile selection
                     }
+
                 }
                 else if (hit.transform.tag == "Tile_ExtrudeCollider")
                 {
@@ -70,9 +71,10 @@ public class Selector : MonoBehaviour
                         SetCursor(CursorModes.Select);
                         if (Input.GetMouseButtonDown(0) && EditorUI.hoveringUI == false)
                         {
-                            //                            Debug.Log("Select tile");
+                            //Debug.Log("Select tile");
                             StartCoroutine(ToggleSelectTile(target as Tile_Selectable));    //Start tile selection
                         }
+
                     }
                     else if (LevelEditor.Instance.selectedTiles.Contains(target as Tile_Selectable))
                     {
@@ -129,6 +131,7 @@ public class Selector : MonoBehaviour
 
     public IEnumerator ToggleSelectTile(Tile_Selectable target)
     {
+        GetComponent<EditorUI>().ClosePopupMenu();
         if (LevelEditor.Instance.selectedLevelObject)
         {
             LevelEditor.Instance.selectedLevelObject.Deselect();
@@ -198,6 +201,7 @@ public class Selector : MonoBehaviour
 
     public IEnumerator ToggleSelectObject(LevelObject_Selectable target)
     {
+        GetComponent<EditorUI>().ClosePopupMenu();
         DeselectAllTiles();
 
         yield return new WaitForSeconds(0.125f);
@@ -234,6 +238,7 @@ public class Selector : MonoBehaviour
 
     private IEnumerator RotateLevelObject(GameObject target)
     {
+        GetComponent<EditorUI>().ClosePopupMenu();
         yield return new WaitForSeconds(0.125f);
 
         CanChangeCursor = false;
@@ -254,8 +259,10 @@ public class Selector : MonoBehaviour
     }
 
 
+
     private void SelectWholePlane(Tile_Selectable target)
     {
+        GetComponent<EditorUI>().ClosePopupMenu();
         DeselectAllTiles();
 
         switch (target.TileDir)
