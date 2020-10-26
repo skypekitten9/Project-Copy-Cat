@@ -9,15 +9,13 @@ public class RecordTransformHierarchy : MonoBehaviour
 {
     [SerializeField] private bool isHolo = false;
 
-
     private new Animation animation;
     private bool recording = false;
 
-    public Stack<AnimationClip> clips;
-    private Stack<GameObjectRecorder> recorders;
-    private int clipsCounter;
+    private AnimationClip clip;
+    private GameObjectRecorder recorder;
 
-    private bool parented = false;
+    private Transform parent;
 
 
 
@@ -28,10 +26,6 @@ public class RecordTransformHierarchy : MonoBehaviour
 
     public void StartRecording()
     {
-        clips = new Stack<AnimationClip>();
-        recorders = new Stack<GameObjectRecorder>();
-        clipsCounter = 0;
-
         recording = true;
 
         NewClip();
@@ -41,12 +35,10 @@ public class RecordTransformHierarchy : MonoBehaviour
     {
         if (recording == true)
         {
-            if ((parented && transform.parent == null) || (!parented && transform.parent != null))
-            {
-                EndClip();
-                NewClip();
-            }
-            recorders.Peek().TakeSnapshot(Time.deltaTime);
+            parent = transform.parent;
+            transform.parent = null;
+            recorder.TakeSnapshot(Time.deltaTime);
+            transform.parent = parent;
         }
     }
 
@@ -60,48 +52,38 @@ public class RecordTransformHierarchy : MonoBehaviour
     }
 
 
-
     private void NewClip()
     {
-        clipsCounter++;
-        parented = transform.parent ? true : false;
+        recorder = new GameObjectRecorder(gameObject);
+        recorder.BindComponentsOfType<Transform>(gameObject, true);
 
-        recorders.Push(new GameObjectRecorder(parented ? transform.parent.gameObject : gameObject));
-        recorders.Peek().BindComponentsOfType<Transform>(parented ? transform.parent.gameObject : gameObject, true);
-
-        clips.Push(new AnimationClip());
-        clips.Peek().legacy = true;
+        clip = new AnimationClip();
+        clip.legacy = true;
     }
 
     public void EndClip()
     {
-        if (recorders.Peek().isRecording)
+        if (recorder.isRecording)
         {
-            //UnityEngine.Debug.Log("Stop Recording");
+            recorder.SaveToClip(clip);
+            recorder.ResetRecording();
 
-            recorders.Peek().SaveToClip(clips.Peek());
-            //recorders[index].ResetRecording();
-
-            animation.AddClip(clips.Peek(), $"rewind_{clipsCounter}");
-            animation.AddClip(clips.Peek(), $"record_{clipsCounter}");
+            animation.AddClip(clip, "rewind");
+            animation.AddClip(clip, "record");
         }
     }
 
 
-
     private IEnumerator Rewind()
     {
-        for (int i = clipsCounter; i >= 1; i--)
-        {
-            string clipName = $"rewind_{i}";
+        string clipName = "rewind";
 
-            animation[clipName].speed = -GameManager.Instance.GetComponent<RecordManager>().RewindSpeed;
-            animation[clipName].time = animation[clipName].length;
-            animation.Play(clipName);
+        animation[clipName].speed = -GameManager.Instance.GetComponent<RecordManager>().RewindSpeed;
+        animation[clipName].time = animation[clipName].length;
+        animation.Play(clipName);
 
-            while (animation.isPlaying)
-                yield return new WaitForFixedUpdate();
-        }
+        while (animation.isPlaying)
+            yield return new WaitForFixedUpdate();
 
         StartCoroutine(Playback());
     }
@@ -111,21 +93,19 @@ public class RecordTransformHierarchy : MonoBehaviour
         if (isHolo)
             GameManager.Instance.GetComponent<RecordManager>().StartPlayback();
 
+        string clipName = "record";
 
-        for (int i = 1; i <= clipsCounter; i++)
-        {
-            string clipName = $"record_{i}";
+        animation.Play(clipName);
 
-            animation.Play(clipName);
-
-            while (animation.isPlaying)
-                yield return new WaitForFixedUpdate();
-        }
+        while (animation.isPlaying)
+            yield return new WaitForFixedUpdate();
 
         if (isHolo)
         {
             StartCoroutine(GameManager.Instance.GetComponent<RecordManager>().StopPlayback());
         }
+
+        this.transform.parent = parent;
     }
 
 }

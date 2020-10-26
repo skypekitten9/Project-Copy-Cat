@@ -5,7 +5,7 @@ public class PlatformAttach : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         RecordPhase recordPhase = GameManager.Instance.GetComponent<RecordManager>().recordPhase;
-        if (recordPhase != RecordPhase.PlayingBack || recordPhase != RecordPhase.Rewinding)
+        if (recordPhase != RecordPhase.PlayingBack && recordPhase != RecordPhase.Rewinding)
         {
             Debug.Log("On platform");
 
@@ -15,8 +15,8 @@ public class PlatformAttach : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        RecordPhase recordPhase = GameManager.Instance.GetComponent<RecordManager>().recordPhase;
-        if (recordPhase != RecordPhase.PlayingBack || recordPhase != RecordPhase.Rewinding)
+        //RecordPhase recordPhase = GameManager.Instance.GetComponent<RecordManager>().recordPhase;
+        //if (recordPhase != RecordPhase.PlayingBack && recordPhase != RecordPhase.Rewinding)
         {
             Debug.Log("Off platform");
 
