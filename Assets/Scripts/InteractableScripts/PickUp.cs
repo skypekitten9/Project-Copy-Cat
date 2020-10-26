@@ -40,8 +40,6 @@ public class PickUp : MonoBehaviour
             case HoldState.NOTHELD:
 
                 objectPosition = transform.position;
-                transform.SetParent(null);
-                transform.position = objectPosition;
 
                 break;
 
@@ -73,6 +71,9 @@ public class PickUp : MonoBehaviour
 
     public void SetToNotHeld()
     {
+        transform.SetParent(null);
+        //transform.position = objectPosition;
+
         holdState = HoldState.NOTHELD;
         body.useGravity = true;
     }

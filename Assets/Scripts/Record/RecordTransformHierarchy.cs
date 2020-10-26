@@ -110,10 +110,7 @@ public class RecordTransformHierarchy : MonoBehaviour
             StartCoroutine(GameManager.Instance.GetComponent<RecordManager>().StopPlayback());
         }
 
-        if (GetComponentInChildren<PickUp>())
-            this.transform.parent = null;
-        else
-            this.transform.parent = parent;
+        this.transform.parent = null;//parent;
     }
 
 }
