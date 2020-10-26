@@ -59,7 +59,6 @@ public class PickUp : MonoBehaviour
                 {
                     SetToNotHeld();
                 }
-
                 break;
 
         }
@@ -103,5 +102,5 @@ public class PickUp : MonoBehaviour
 
     }
 
-    
+
 }

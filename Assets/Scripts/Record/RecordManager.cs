@@ -79,16 +79,16 @@ public class RecordManager : MonoBehaviour
         interactionData.Add(new InteractionData(stopwatch.ElapsedMilliseconds, id));
     }
 
-    public void AddPickupNode(params GameObject[] gObj)
-    {
-        pickupData.Add(new PickupData(stopwatch.ElapsedMilliseconds, gObj));
-    }
+    //public void AddPickupNode(params GameObject[] gObj)
+    //{
+    //    pickupData.Add(new PickupData(stopwatch.ElapsedMilliseconds, gObj));
+    //}
 
 
     private IEnumerator StartRecording()
     {
         interactionData = new List<InteractionData>();
-        pickupData = new List<PickupData>();
+        //pickupData = new List<PickupData>();
 
         recordPhase = RecordPhase.Recording;
 
@@ -118,6 +118,8 @@ public class RecordManager : MonoBehaviour
 
         holoRecorder.StopRecording();
         Array.ForEach(objectRecorders, element => element.StopRecording());
+
+
     }
 
     public void StartPlayback()
@@ -128,7 +130,7 @@ public class RecordManager : MonoBehaviour
         ChangeControlState(ControlStates.Player);
 
         StartCoroutine(CallInteractions());
-        StartCoroutine(CallPickups());
+        //StartCoroutine(CallPickups());
     }
 
     private IEnumerator CallInteractions()
@@ -151,6 +153,7 @@ public class RecordManager : MonoBehaviour
         stopwatch.Stop();
     }
 
+    /*
     private IEnumerator CallPickups()
     {
         stopwatch.Restart();
@@ -160,13 +163,15 @@ public class RecordManager : MonoBehaviour
             yield return new WaitForSeconds((float)(pickupData[i].Time - stopwatch.ElapsedMilliseconds) / 1000);
             for (int j = 0; j < pickupData[i].PickupObject.Length; j++)
             {
-                pickupData[i].PickupObject[j].GetComponent<PickUp>().tempParent = HoloInstance.GetComponent<Transform>().Find("Main Camera").Find("PickupPosition").gameObject;
+                
+                pickupData[i].PickupObject[j].GetComponent<PickUp>().tempParent = HoloInstance.GetComponentInChildren<Camera>().transform.Find("PickupPosition").gameObject;
                 pickupData[i].PickupObject[j].GetComponent<PickUp>().SetToHeld();
             }
         }
 
         stopwatch.Stop();
     }
+    */
 
     public IEnumerator StopPlayback()
     {
@@ -182,13 +187,13 @@ public class RecordManager : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
 
-        for (int i = 0; i < pickupData.Count; i++)
-        {
-            for (int j = 0; j < pickupData[i].PickupObject.Length; j++)
-            {
-                pickupData[i].PickupObject[j].GetComponent<PickUp>().SetToNotHeld();
-            }
-        }
+        //for (int i = 0; i < pickupData.Count; i++)
+        //{
+        //    for (int j = 0; j < pickupData[i].PickupObject.Length; j++)
+        //    {
+        //        pickupData[i].PickupObject[j].GetComponent<PickUp>().SetToNotHeld();
+        //    }
+        //}
 
         recordPhase = RecordPhase.None;
         Destroy(HoloInstance);

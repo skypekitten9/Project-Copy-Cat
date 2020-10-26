@@ -48,6 +48,11 @@ public class RecordTransformHierarchy : MonoBehaviour
         recording = false;
         EndClip();
 
+        if (GetComponentInChildren<PickUp>())
+        {
+            GetComponentInChildren<PickUp>().SetToNotHeld();
+        }
+
         StartCoroutine(Rewind());
     }
 
@@ -105,7 +110,10 @@ public class RecordTransformHierarchy : MonoBehaviour
             StartCoroutine(GameManager.Instance.GetComponent<RecordManager>().StopPlayback());
         }
 
-        this.transform.parent = parent;
+        if (GetComponentInChildren<PickUp>())
+            this.transform.parent = null;
+        else
+            this.transform.parent = parent;
     }
 
 }

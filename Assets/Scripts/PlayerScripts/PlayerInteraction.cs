@@ -65,12 +65,16 @@ public class PlayerInteraction : MonoBehaviour
                 {
                     if (!hit.collider.gameObject.GetComponent<PickUp>().IsHeld())
                     {
-                        hit.collider.gameObject.GetComponent<PickUp>().tempParent = pickUpTransform.gameObject;
-                        hit.collider.gameObject.GetComponent<PickUp>().SetToHeld();
+                        RecordPhase recordPhase = GameManager.Instance.GetComponent<RecordManager>().recordPhase;
+                        if (recordPhase != RecordPhase.PlayingBack && recordPhase != RecordPhase.Rewinding)
+                        {
+                            hit.collider.gameObject.GetComponent<PickUp>().tempParent = pickUpTransform.gameObject;
+                            hit.collider.gameObject.GetComponent<PickUp>().SetToHeld();
+                        }
 
                         if (GameManager.Instance.GetComponent<RecordManager>().recordPhase == RecordPhase.Recording)
                         {
-                            GameManager.Instance.GetComponent<RecordManager>().AddPickupNode(hit.collider.gameObject);
+                            //GameManager.Instance.GetComponent<RecordManager>().AddPickupNode(hit.collider.gameObject);
                         }
                     }
                     else
