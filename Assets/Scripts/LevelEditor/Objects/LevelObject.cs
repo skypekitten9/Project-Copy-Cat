@@ -10,7 +10,7 @@ public class LevelObject : ScriptableObject
     [SerializeField] private bool canPlaceOnCeiling = false;
     [SerializeField] private bool canPlaceOnWall = false;
     [SerializeField] private bool canBeRotated = true;
-
+    [SerializeField] private bool canBeDeleted = true;
 
 
     public Sprite Icon { get { return icon; } }
@@ -21,5 +21,7 @@ public class LevelObject : ScriptableObject
     public bool CanPlaceOnCeiling { get { return canPlaceOnCeiling; } }
     public bool CanPlaceOnWall { get { return canPlaceOnWall; } }
     public bool CanBeRotated { get { return canBeRotated; } }
+
+    public bool CanBeDeleted { get { return canBeDeleted; } }
 
 }

@@ -161,20 +161,23 @@ public class LevelObjectManager : MonoBehaviour
         LevelEditor.Instance.GetComponent<Selector>().CanChangeCursor = true;
     }
 
-    private void DestroyLevelObject()
+    public void DestroyLevelObject()
     {
         if (LevelEditor.Instance.selectedLevelObject != null)
         {
-            if (LevelEditor.Instance.selectedLevelObject.transform.parent)
+            if (LevelEditor.Instance.selectedLevelObject.LevelObject.CanBeDeleted)
             {
-                GameObject.Destroy(LevelEditor.Instance.selectedLevelObject.transform.parent.gameObject);
-            }
-            else
-            {
-                GameObject.Destroy(LevelEditor.Instance.selectedLevelObject.gameObject);
-            }
+                if (LevelEditor.Instance.selectedLevelObject.transform.parent)
+                {
+                    GameObject.Destroy(LevelEditor.Instance.selectedLevelObject.transform.parent.gameObject);
+                }
+                else
+                {
+                    GameObject.Destroy(LevelEditor.Instance.selectedLevelObject.gameObject);
+                }
 
-            LevelEditor.Instance.selectedLevelObject = null;
+                LevelEditor.Instance.selectedLevelObject = null;
+            }
         }
     }
 

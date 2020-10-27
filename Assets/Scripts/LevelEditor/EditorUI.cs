@@ -103,6 +103,9 @@ public class EditorUI : MonoBehaviour
         bool canRotate = LevelEditor.Instance.selectedLevelObject && LevelEditor.Instance.selectedLevelObject.LevelObject.CanBeRotated;
         SetPopupItemInteractableState(popupMenu.transform.GetChild(5).gameObject, canRotate);
         SetPopupItemInteractableState(popupMenu.transform.GetChild(6).gameObject, canRotate);
+
+        bool canDelete = LevelEditor.Instance.selectedLevelObject && LevelEditor.Instance.selectedLevelObject.LevelObject.CanBeDeleted;
+        SetPopupItemInteractableState(popupMenu.transform.GetChild(8).gameObject, canDelete);
     }
 
     private void SetPopupItemInteractableState(GameObject item, bool interactable)

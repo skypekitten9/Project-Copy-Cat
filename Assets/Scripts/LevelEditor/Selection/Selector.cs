@@ -323,8 +323,11 @@ public class Selector : MonoBehaviour
 
     public void RotateLevelObject(float direction)
     {
-        direction = direction >= 0 ? -1 : 1;
-        LevelEditor.Instance.selectedLevelObject.transform.parent.Rotate(Vector3.up, 90.0f * direction);
+        if (LevelEditor.Instance.selectedLevelObject)
+        {
+            direction = direction >= 0 ? -1 : 1;
+            LevelEditor.Instance.selectedLevelObject.transform.parent.Rotate(Vector3.up, 90.0f * direction);
+        }
     }
 
 
