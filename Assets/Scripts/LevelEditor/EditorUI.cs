@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class EditorUI : MonoBehaviour
 {
@@ -81,6 +83,7 @@ public class EditorUI : MonoBehaviour
 
         if (Input.GetMouseButton(1) == false)
         {
+            UpdatePopupItemsInteractable();
             popupMenu.transform.position = Input.mousePosition;
             popupMenu.SetActive(true);
         }
@@ -89,5 +92,20 @@ public class EditorUI : MonoBehaviour
     public void ClosePopupMenu()
     {
         popupMenu.SetActive(false);
+    }
+
+    private void UpdatePopupItemsInteractable()
+    {
+        SetPopupItemInteractableState(popupMenu.transform.GetChild(2).gameObject, LevelEditor.Instance.selectedTiles.Count > 0);
+        SetPopupItemInteractableState(popupMenu.transform.GetChild(3).gameObject, LevelEditor.Instance.selectedTiles.Count > 0);
+
+        SetPopupItemInteractableState(popupMenu.transform.GetChild(5).gameObject, LevelEditor.Instance.selectedLevelObject);
+        SetPopupItemInteractableState(popupMenu.transform.GetChild(6).gameObject, LevelEditor.Instance.selectedLevelObject);
+    }
+
+    private void SetPopupItemInteractableState(GameObject item, bool interactable)
+    {
+        item.GetComponent<UnityEngine.UI.Button>().interactable = interactable;
+        item.GetComponentInChildren<TextMeshProUGUI>().color = interactable ? Color.white : new Color(1.0f, 1.0f, 1.0f, 0.4f);
     }
 }

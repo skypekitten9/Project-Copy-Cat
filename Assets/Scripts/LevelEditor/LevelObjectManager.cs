@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,6 +21,7 @@ public class LevelObjectManager : MonoBehaviour
     private bool objectPlaced = false;
 
     [SerializeField] private LayerMask tilesMask;
+
 
 
     private void Awake()
@@ -105,27 +108,22 @@ public class LevelObjectManager : MonoBehaviour
                 case TileDirection.Y_positive:
                     if (levelObjectTarget.CanPlaceOnGround == true)
                     {
-                        if (levelObjectTarget.LastPlacedTileDir != tileDir)
-                        {
-                            levelObject.transform.localRotation = Quaternion.LookRotation(target.GetDirectionVector());
-                            levelObject.transform.localEulerAngles += new Vector3(90.0f, 0, 0);
-                        }
+                        levelObject.transform.localRotation = Quaternion.LookRotation(target.GetDirectionVector());
+                        levelObject.transform.localEulerAngles += new Vector3(90.0f, 0, 0);
+
                         levelObject.transform.position = target.transform.position;
 
                         objectPlaced = true;
-                        levelObjectTarget.LastPlacedTileDir = tileDir;
                     }
                     break;
                 case TileDirection.Y_negative:
                     if (levelObjectTarget.CanPlaceOnCeiling == true)
                     {
-                        if (levelObjectTarget.LastPlacedTileDir != tileDir)
-                        {
-                            levelObject.transform.localRotation = Quaternion.LookRotation(target.GetDirectionVector());
-                            levelObject.transform.localEulerAngles += new Vector3(90.0f, 0, 0);
-                        }
+
+                        levelObject.transform.localRotation = Quaternion.LookRotation(target.GetDirectionVector());
+                        levelObject.transform.localEulerAngles += new Vector3(90.0f, 0, 0);
+
                         levelObject.transform.position = target.transform.position;
-                        levelObjectTarget.LastPlacedTileDir = tileDir;
 
                         objectPlaced = true;
                     }
@@ -137,13 +135,11 @@ public class LevelObjectManager : MonoBehaviour
                 case TileDirection.Z_negative:
                     if (levelObjectTarget.CanPlaceOnWall == true)
                     {
-                        if (levelObjectTarget.LastPlacedTileDir != tileDir)
-                        {
-                            levelObject.transform.localRotation = Quaternion.LookRotation(target.GetDirectionVector());
-                            levelObject.transform.localEulerAngles += new Vector3(90.0f, 0, 0);
-                        }
+
+                        levelObject.transform.localRotation = Quaternion.LookRotation(target.GetDirectionVector());
+                        levelObject.transform.localEulerAngles += new Vector3(90.0f, 0, 0);
+
                         levelObject.transform.position = target.transform.position;
-                        levelObjectTarget.LastPlacedTileDir = tileDir;
 
                         objectPlaced = true;
                     }
@@ -170,9 +166,13 @@ public class LevelObjectManager : MonoBehaviour
         if (LevelEditor.Instance.selectedLevelObject != null)
         {
             if (LevelEditor.Instance.selectedLevelObject.transform.parent)
+            {
                 GameObject.Destroy(LevelEditor.Instance.selectedLevelObject.transform.parent.gameObject);
+            }
             else
+            {
                 GameObject.Destroy(LevelEditor.Instance.selectedLevelObject.gameObject);
+            }
 
             LevelEditor.Instance.selectedLevelObject = null;
         }

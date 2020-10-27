@@ -99,7 +99,7 @@ public class Selector : MonoBehaviour
                 SetCursor(CursorModes.Rotate);
                 if (Input.GetMouseButtonDown(0))
                 {
-                    StartCoroutine(RotateLevelObject(hit.transform.parent.parent.gameObject));
+                    StartCoroutine(RotateLevelObject(hit.transform.parent.GetComponent<LevelObject_Selectable>()));
                 }
             }
         }
@@ -236,10 +236,12 @@ public class Selector : MonoBehaviour
 
     }
 
-    private IEnumerator RotateLevelObject(GameObject target)
+    private IEnumerator RotateLevelObject(LevelObject_Selectable target)
     {
         GetComponent<EditorUI>().ClosePopupMenu();
         yield return new WaitForSeconds(0.125f);
+
+        LevelEditor.Instance.selectedLevelObject = target;
 
         CanChangeCursor = false;
         while (Input.GetMouseButton(0))
@@ -247,7 +249,7 @@ public class Selector : MonoBehaviour
             mouseX_rotate += Input.GetAxis("Mouse X") * rotate_sensitivity;
             if (Mathf.Abs(mouseX_rotate) >= 1.0f)
             {
-                RotateLevelObject(target, mouseX_rotate);
+                RotateLevelObject(mouseX_rotate);
                 mouseX_rotate = 0;
             }
 
@@ -316,10 +318,10 @@ public class Selector : MonoBehaviour
     }
 
 
-    private void RotateLevelObject(GameObject target, float direction)
+    public void RotateLevelObject(float direction)
     {
         direction = direction >= 0 ? -1 : 1;
-        target.transform.Rotate(Vector3.up, 90.0f * direction);
+        LevelEditor.Instance.selectedLevelObject.transform.parent.Rotate(Vector3.up, 90.0f * direction);
     }
 
 
