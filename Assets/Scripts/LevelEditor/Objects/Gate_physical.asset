@@ -12,10 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 957c7f606cbc0934ca22c6c92e69fd52, type: 3}
   m_Name: Gate_physical
   m_EditorClassIdentifier: 
-  name: Gate_physical
   icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   prefab: {fileID: 905833608604299875, guid: fb428457239ee1345b78e0fc4c88304f, type: 3}
-  bounds: {x: 1, y: 2, z: 3}
   canPlaceOnGround: 1
   canPlaceOnCeiling: 0
   canPlaceOnWall: 0

@@ -96,11 +96,13 @@ public class EditorUI : MonoBehaviour
 
     private void UpdatePopupItemsInteractable()
     {
-        SetPopupItemInteractableState(popupMenu.transform.GetChild(2).gameObject, LevelEditor.Instance.selectedTiles.Count > 0);
-        SetPopupItemInteractableState(popupMenu.transform.GetChild(3).gameObject, LevelEditor.Instance.selectedTiles.Count > 0);
+        bool canExtrude = LevelEditor.Instance.selectedTiles.Count > 0;
+        SetPopupItemInteractableState(popupMenu.transform.GetChild(2).gameObject, canExtrude);
+        SetPopupItemInteractableState(popupMenu.transform.GetChild(3).gameObject, canExtrude);
 
-        SetPopupItemInteractableState(popupMenu.transform.GetChild(5).gameObject, LevelEditor.Instance.selectedLevelObject);
-        SetPopupItemInteractableState(popupMenu.transform.GetChild(6).gameObject, LevelEditor.Instance.selectedLevelObject);
+        bool canRotate = LevelEditor.Instance.selectedLevelObject && LevelEditor.Instance.selectedLevelObject.LevelObject.CanBeRotated;
+        SetPopupItemInteractableState(popupMenu.transform.GetChild(5).gameObject, canRotate);
+        SetPopupItemInteractableState(popupMenu.transform.GetChild(6).gameObject, canRotate);
     }
 
     private void SetPopupItemInteractableState(GameObject item, bool interactable)

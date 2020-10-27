@@ -96,10 +96,13 @@ public class Selector : MonoBehaviour
             }
             else if (hit.transform.gameObject.layer == 29)     //LevelEditorRotation
             {
-                SetCursor(CursorModes.Rotate);
-                if (Input.GetMouseButtonDown(0))
+                if (hit.transform.parent.GetComponent<LevelObject_Selectable>().LevelObject.CanBeRotated)
                 {
-                    StartCoroutine(RotateLevelObject(hit.transform.parent.GetComponent<LevelObject_Selectable>()));
+                    SetCursor(CursorModes.Rotate);
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        StartCoroutine(RotateLevelObject(hit.transform.parent.GetComponent<LevelObject_Selectable>()));
+                    }
                 }
             }
         }
