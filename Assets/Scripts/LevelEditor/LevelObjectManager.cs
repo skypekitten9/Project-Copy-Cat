@@ -23,7 +23,6 @@ public class LevelObjectManager : MonoBehaviour
     [SerializeField] private LayerMask tilesMask;
 
 
-
     private void Awake()
     {
         cursorIcon.SetActive(false);
@@ -75,6 +74,8 @@ public class LevelObjectManager : MonoBehaviour
             selectedUIObject = levelObject;
             levelObjectInstance = Instantiate(levelObject.Prefab, Input.mousePosition, Quaternion.identity, levelObjectsParent);
             levelObjectInstance.GetComponentInChildren<LevelObject_Selectable>().LevelObject = levelObject;
+
+            GetComponent<LevelObjectConnector>().Connections.Add(levelObjectInstance, new List<int>());
 
             selector.SetCursor(CursorModes.Move);
             selector.CanChangeCursor = false;
@@ -151,7 +152,10 @@ public class LevelObjectManager : MonoBehaviour
         cursorIcon.SetActive(false);
 
         if (destroy)
+        {
+            GetComponent<LevelObjectConnector>().Connections.Remove(levelObjectInstance);
             Destroy(levelObjectInstance);
+        }
 
         objectPlaced = false;
         selectedUIObject = null;
@@ -165,6 +169,8 @@ public class LevelObjectManager : MonoBehaviour
         {
             if (LevelEditor.Instance.selectedLevelObject.LevelObject.CanBeDeleted)
             {
+                GetComponent<LevelObjectConnector>().Connections.Remove(LevelEditor.Instance.selectedLevelObject.transform.parent.gameObject);
+
                 if (LevelEditor.Instance.selectedLevelObject.transform.parent)
                 {
                     GameObject.Destroy(LevelEditor.Instance.selectedLevelObject.transform.parent.gameObject);

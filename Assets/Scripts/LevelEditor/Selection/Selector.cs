@@ -6,6 +6,7 @@ public enum CursorModes { None, Select, Extrude, Move, Rotate }
 public class Selector : MonoBehaviour
 {
     [SerializeField] private LayerMask selectionMask;
+    public LayerMask SelectionMask { get { return selectionMask; } }
 
     [SerializeField] private Texture2D selectCursor;
     [SerializeField] private Texture2D extrudeCursor;

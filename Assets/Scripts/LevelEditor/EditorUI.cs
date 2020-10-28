@@ -98,26 +98,23 @@ public class EditorUI : MonoBehaviour
 
     private void UpdatePopupItemsInteractable()
     {
-        bool canConnectFrom = LevelEditor.Instance.selectedLevelObject &&
+        bool canConnect = LevelEditor.Instance.selectedLevelObject &&
             (LevelEditor.Instance.selectedLevelObject.GetComponentInParent<StandButton>() ||
             LevelEditor.Instance.selectedLevelObject.GetComponentInParent<ButtonScript>() ||
-            LevelEditor.Instance.selectedLevelObject.GetComponentInParent<LeverScript>());
-        popupMenu.transform.GetChild(0).gameObject.SetActive(canConnectFrom);
-
-        bool canConnectTo = LevelEditor.Instance.selectedLevelObject &&
-            LevelEditor.Instance.selectedLevelObject.GetComponentInParent<DoorScript>();
-        popupMenu.transform.GetChild(1).gameObject.SetActive(canConnectTo);
+            LevelEditor.Instance.selectedLevelObject.GetComponentInParent<LeverScript>() ||
+            LevelEditor.Instance.selectedLevelObject.GetComponentInParent<DoorScript>());
+        SetPopupItemInteractableState(popupMenu.transform.GetChild(0).gameObject, canConnect);
 
         bool canExtrude = LevelEditor.Instance.selectedTiles.Count > 0;
+        SetPopupItemInteractableState(popupMenu.transform.GetChild(2).gameObject, canExtrude);
         SetPopupItemInteractableState(popupMenu.transform.GetChild(3).gameObject, canExtrude);
-        SetPopupItemInteractableState(popupMenu.transform.GetChild(4).gameObject, canExtrude);
 
         bool canRotate = LevelEditor.Instance.selectedLevelObject && LevelEditor.Instance.selectedLevelObject.LevelObject.CanBeRotated;
+        SetPopupItemInteractableState(popupMenu.transform.GetChild(5).gameObject, canRotate);
         SetPopupItemInteractableState(popupMenu.transform.GetChild(6).gameObject, canRotate);
-        SetPopupItemInteractableState(popupMenu.transform.GetChild(7).gameObject, canRotate);
 
         bool canDelete = LevelEditor.Instance.selectedLevelObject && LevelEditor.Instance.selectedLevelObject.LevelObject.CanBeDeleted;
-        SetPopupItemInteractableState(popupMenu.transform.GetChild(9).gameObject, canDelete);
+        SetPopupItemInteractableState(popupMenu.transform.GetChild(8).gameObject, canDelete);
     }
 
     private void SetPopupItemInteractableState(GameObject item, bool interactable)
