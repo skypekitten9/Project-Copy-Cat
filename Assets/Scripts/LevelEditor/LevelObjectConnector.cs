@@ -85,6 +85,20 @@ public class LevelObjectConnector : MonoBehaviour
         }
     }
 
+    public void RemoveChannels(int channelId)
+    {
+        foreach (var connection in Connections)
+        {
+            for (int i = connection.Value.Count - 1; i >= 0; i--)
+            {
+                if (connection.Value[i] == channelId)
+                {
+                    connection.Value.RemoveAt(i);
+                }
+            }
+        }
+    }
+
 
     private int GetNewId()
     {
