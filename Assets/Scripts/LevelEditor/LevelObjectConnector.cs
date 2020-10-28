@@ -132,7 +132,26 @@ public class LevelObjectConnector : MonoBehaviour
                 style.normal.textColor = Color.green;
                 style.fontSize = 18;
                 Handles.Label(Connections.ElementAt(i).Key.transform.position, string.Join(",", Connections.ElementAt(i).Value), style);
+
+                Gizmos.color = Color.green;
+                for (int j = Connections.Count - 1; j >= 0; j--)
+                {
+                    if (i != j)
+                    {
+                        if (Connections.ElementAt(i).Key.GetComponent<ButtonScript>() ||
+                            Connections.ElementAt(i).Key.GetComponent<StandButton>() ||
+                            Connections.ElementAt(i).Key.GetComponent<LeverScript>())
+                        {
+                            if (Connections.ElementAt(i).Value.Count > 0 && Connections.ElementAt(j).Value.Contains(Connections.ElementAt(i).Value[0]))
+                            {
+                                Gizmos.DrawLine(Connections.ElementAt(i).Key.transform.position, Connections.ElementAt(j).Key.transform.position);
+                            }
+                        }
+
+                    }
+                }
             }
         }
     }
+
 }

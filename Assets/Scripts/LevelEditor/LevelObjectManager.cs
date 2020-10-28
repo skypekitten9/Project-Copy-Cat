@@ -169,8 +169,9 @@ public class LevelObjectManager : MonoBehaviour
         {
             if (LevelEditor.Instance.selectedLevelObject.LevelObject.CanBeDeleted)
             {
-                if (GetComponent<LevelObjectConnector>().Connections.ContainsKey(LevelEditor.Instance.selectedLevelObject.transform.parent.gameObject) &&
-                    LevelEditor.Instance.selectedLevelObject.GetComponentInParent<DoorScript>() == null)
+                if (GetComponent<LevelObjectConnector>().Connections.ContainsKey(LevelEditor.Instance.selectedLevelObject.transform.parent.gameObject) && (LevelEditor.Instance.selectedLevelObject.GetComponentInParent<ButtonScript>() ||
+                                                                                                                                                           LevelEditor.Instance.selectedLevelObject.GetComponentInParent<StandButton>() ||
+                                                                                                                                                           LevelEditor.Instance.selectedLevelObject.GetComponentInParent<LeverScript>()))
                 {
                     int channelId = GetComponent<LevelObjectConnector>().Connections[LevelEditor.Instance.selectedLevelObject.transform.parent.gameObject][0];
                     GetComponent<LevelObjectConnector>().RemoveChannels(channelId);
