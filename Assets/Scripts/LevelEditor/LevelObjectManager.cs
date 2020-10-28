@@ -40,9 +40,6 @@ public class LevelObjectManager : MonoBehaviour
                 cursorIcon.SetActive(false);
             else
                 cursorIcon.transform.position = Input.mousePosition;
-
-            if (Input.GetMouseButtonDown(0))
-                PlaceLevelObject(!objectPlaced);
         }
 
         if (Input.GetKey(KeyCode.Escape))
@@ -51,9 +48,14 @@ public class LevelObjectManager : MonoBehaviour
                 DeselectLevelObject();
             else if (selectedUIObject != null)
                 PlaceLevelObject(true);
+
+            GetComponent<EditorUI>().ClosePopupMenu();
         }
         else if (Input.GetKey(KeyCode.Delete))
+        {
             DestroyLevelObject();
+            GetComponent<EditorUI>().ClosePopupMenu();
+        }
     }
 
 
@@ -63,7 +65,6 @@ public class LevelObjectManager : MonoBehaviour
 
         if (Input.GetMouseButton(0))
         {
-
             Selector selector = LevelEditor.Instance.GetComponent<Selector>();
             selector.DeselectAllTiles();
             objectPlaced = false;
@@ -78,15 +79,13 @@ public class LevelObjectManager : MonoBehaviour
             selector.SetCursor(CursorModes.Move);
             selector.CanChangeCursor = false;
 
-
             while (Input.GetMouseButton(0))
             {
                 MoveLevelObject(levelObjectInstance);
                 yield return new WaitForFixedUpdate();
             }
-            PlaceLevelObject();
+            PlaceLevelObject(!objectPlaced);
         }
-
     }
 
 
@@ -94,7 +93,6 @@ public class LevelObjectManager : MonoBehaviour
     {
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-
 
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, tilesMask) && hit.transform.parent.GetComponent<Tile_Selectable>())
         {

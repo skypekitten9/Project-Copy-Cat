@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -92,25 +93,43 @@ public class EditorUI : MonoBehaviour
     public void ClosePopupMenu()
     {
         popupMenu.SetActive(false);
+        hoveringUI = false;
     }
 
     private void UpdatePopupItemsInteractable()
     {
+        bool canConnectFrom = LevelEditor.Instance.selectedLevelObject &&
+            (LevelEditor.Instance.selectedLevelObject.GetComponentInParent<StandButton>() ||
+            LevelEditor.Instance.selectedLevelObject.GetComponentInParent<ButtonScript>() ||
+            LevelEditor.Instance.selectedLevelObject.GetComponentInParent<LeverScript>());
+        popupMenu.transform.GetChild(0).gameObject.SetActive(canConnectFrom);
+
+        bool canConnectTo = LevelEditor.Instance.selectedLevelObject &&
+            LevelEditor.Instance.selectedLevelObject.GetComponentInParent<DoorScript>();
+        popupMenu.transform.GetChild(1).gameObject.SetActive(canConnectTo);
+
         bool canExtrude = LevelEditor.Instance.selectedTiles.Count > 0;
-        SetPopupItemInteractableState(popupMenu.transform.GetChild(2).gameObject, canExtrude);
         SetPopupItemInteractableState(popupMenu.transform.GetChild(3).gameObject, canExtrude);
+        SetPopupItemInteractableState(popupMenu.transform.GetChild(4).gameObject, canExtrude);
 
         bool canRotate = LevelEditor.Instance.selectedLevelObject && LevelEditor.Instance.selectedLevelObject.LevelObject.CanBeRotated;
-        SetPopupItemInteractableState(popupMenu.transform.GetChild(5).gameObject, canRotate);
         SetPopupItemInteractableState(popupMenu.transform.GetChild(6).gameObject, canRotate);
+        SetPopupItemInteractableState(popupMenu.transform.GetChild(7).gameObject, canRotate);
 
         bool canDelete = LevelEditor.Instance.selectedLevelObject && LevelEditor.Instance.selectedLevelObject.LevelObject.CanBeDeleted;
-        SetPopupItemInteractableState(popupMenu.transform.GetChild(8).gameObject, canDelete);
+        SetPopupItemInteractableState(popupMenu.transform.GetChild(9).gameObject, canDelete);
     }
 
     private void SetPopupItemInteractableState(GameObject item, bool interactable)
     {
         item.GetComponent<UnityEngine.UI.Button>().interactable = interactable;
         item.GetComponentInChildren<TextMeshProUGUI>().color = interactable ? Color.white : new Color(1.0f, 1.0f, 1.0f, 0.4f);
+    }
+
+
+    public void DestroyLevelObject()
+    {
+        LevelEditor.Instance.GetComponent<LevelObjectManager>().DestroyLevelObject();
+        ClosePopupMenu();
     }
 }
