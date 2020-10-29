@@ -173,8 +173,11 @@ public class LevelObjectManager : MonoBehaviour
                                                                                                                                                            LevelEditor.Instance.selectedLevelObject.GetComponentInParent<StandButton>() ||
                                                                                                                                                            LevelEditor.Instance.selectedLevelObject.GetComponentInParent<LeverScript>()))
                 {
-                    int channelId = GetComponent<LevelObjectConnector>().Connections[LevelEditor.Instance.selectedLevelObject.transform.parent.gameObject][0];
-                    GetComponent<LevelObjectConnector>().RemoveChannels(channelId);
+                    if (GetComponent<LevelObjectConnector>().Connections[LevelEditor.Instance.selectedLevelObject.transform.parent.gameObject].Count != 0)
+                    {
+                        int channelId = GetComponent<LevelObjectConnector>().Connections[LevelEditor.Instance.selectedLevelObject.transform.parent.gameObject][0];
+                        GetComponent<LevelObjectConnector>().RemoveChannels(channelId);
+                    }
                 }
                 GetComponent<LevelObjectConnector>().Connections.Remove(LevelEditor.Instance.selectedLevelObject.transform.parent.gameObject);
 
