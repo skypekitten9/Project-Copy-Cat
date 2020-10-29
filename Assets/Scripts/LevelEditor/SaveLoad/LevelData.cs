@@ -1,5 +1,4 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 
 [System.Serializable]
 public class LevelData
@@ -13,12 +12,17 @@ public class LevelData
 [System.Serializable]
 public class TileData
 {
-    public TileData()
+    public TileData(int x, int y, int z, int i)
     {
-        tiles = new int[6];
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.i = i;
     }
-
-    public int[] tiles;
+    public int x;
+    public int y;
+    public int z;
+    public int i;
 }
 
 [System.Serializable]
@@ -37,9 +41,11 @@ public class LevelObjectData
 [System.Serializable]
 public class ConnectionData
 {
-    int[] channels;
+    public int[] channels;
 }
 
+
+/*
 public static class LevelDataHelper
 {
     public static int To1D(int x, int y, int z)
@@ -59,3 +65,4 @@ public static class LevelDataHelper
         return new int[] { x, y, z };
     }
 }
+*/
