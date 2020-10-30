@@ -25,6 +25,7 @@ public class LevelObjectConnector : MonoBehaviour
         GetComponent<Selector>().CanChangeCursor = false;
 
         GetComponent<EditorUI>().ClosePopupMenu();
+        GetComponent<EditorUI>().CloseLevelsMenu();
 
         GameObject channelFrom = LevelEditor.Instance.selectedLevelObject.transform.parent.gameObject;
         bool reciever = LevelEditor.Instance.selectedLevelObject.GetComponentInParent<DoorScript>();

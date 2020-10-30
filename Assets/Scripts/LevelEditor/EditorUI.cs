@@ -18,6 +18,10 @@ public class EditorUI : MonoBehaviour
     private bool canShowHideObjectsPanel = true;
 
 
+    [SerializeField] private GameObject levelsMenu;
+    [SerializeField] private GameObject levelButton;
+
+
     private void Start()
     {
         objectsRectTransform = objectsPanel.GetComponent<RectTransform>();
@@ -26,6 +30,7 @@ public class EditorUI : MonoBehaviour
             objectsRectTransform.localPosition -= new Vector3(objectsRectTransform.rect.width, 0, 0);
 
         popupMenu.SetActive(false);
+        levelsMenu.SetActive(false);
     }
 
 
@@ -95,6 +100,17 @@ public class EditorUI : MonoBehaviour
         popupMenu.SetActive(false);
         hoveringUI = false;
     }
+    public void OpenLevelsMenu()
+    {
+        ClosePopupMenu();
+        FillLevelsList();
+        levelsMenu.SetActive(true);
+    }
+    public void CloseLevelsMenu()
+    {
+        levelsMenu.SetActive(false);
+        hoveringUI = false;
+    }
 
     private void UpdatePopupItemsInteractable()
     {
@@ -128,5 +144,12 @@ public class EditorUI : MonoBehaviour
     {
         LevelEditor.Instance.GetComponent<LevelObjectManager>().DestroyLevelObject();
         ClosePopupMenu();
+        CloseLevelsMenu();
     }
+
+
+    private void FillLevelsList()
+    {
+    }
+
 }
