@@ -37,6 +37,7 @@ public class SyncBar : MonoBehaviour
 
     public void StartBar()
     {
+        Reset();
         Show();
         active = true;
     }
