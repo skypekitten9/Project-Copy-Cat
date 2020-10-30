@@ -102,7 +102,6 @@ public class DoorScript : MonoBehaviour
 
     public void SaveState()
     {
-        Debug.Log("Save state!");
         rewindIsOpen = isOpen;
         rewindListenAfterAnimation = listenAfterAnimation;
         rewindTimer = timer;
@@ -110,7 +109,6 @@ public class DoorScript : MonoBehaviour
 
     public void Rewind()
     {
-        Debug.Log("Rewind!");
         isOpen = rewindIsOpen;
         rewindListenAfterAnimation = listenAfterAnimation;
         rewindTimer = timer;
