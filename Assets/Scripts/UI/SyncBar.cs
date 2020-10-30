@@ -9,7 +9,7 @@ public class SyncBar : MonoBehaviour
 {
     private Slider slider;
     private bool active;
-    public GameObject interact, stop;
+    public GameObject interact, stop, standOn, standOff;
     private Transform transformForPosition, transformForHierarchy;
     private List<GameObject> actionsList;
 

@@ -368,6 +368,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interact: {fileID: 3339513995692765669, guid: b170694068fb90f4a844a05f742c692a, type: 3}
   stop: {fileID: 4197837252868083672, guid: 4430dda0cc0913b4fb0f32fd2ce7b668, type: 3}
+  standOn: {fileID: 6690182555001726262, guid: 7d5d412d6c52b0e42a80d87a6f2e81f1, type: 3}
+  standOff: {fileID: 4091992886288835928, guid: 6ea7e6341ebb3c944aa8788f1c4ae7c7, type: 3}
 --- !u!1 &462994901
 GameObject:
   m_ObjectHideFlags: 0
