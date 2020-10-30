@@ -190,7 +190,9 @@ public class RecordManager : MonoBehaviour
             HoloInstance.GetComponentInChildren<SkinnedMeshRenderer>().material.SetFloat("Vector1_DCDBC5A6", fadeValue);
             yield return new WaitForFixedUpdate();
         }
-
+        HoloInstance.transform.position = new Vector3(1000, 1000, 1000);
+        //dances
+        yield return new WaitForSeconds(0.25f);
         //for (int i = 0; i < pickupData.Count; i++)
         //{
         //    for (int j = 0; j < pickupData[i].PickupObject.Length; j++)
