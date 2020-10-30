@@ -48,7 +48,6 @@ public class CameraOrientation : MonoBehaviour
 
         if (Input.GetAxis("Mouse ScrollWheel") != 0)
         {
-            LevelEditor.Instance.GetComponent<EditorUI>().CloseAllMenus();
             Zoom();
         }
     }
@@ -92,7 +91,7 @@ public class CameraOrientation : MonoBehaviour
 
     private void Zoom()
     {
-        if (EditorUI.hoveringUI)
+        if (EditorUI.hoveringUI || EditorUI.menuOpen)
             return;
 
         zoom -= Input.GetAxis("Mouse ScrollWheel") * zoomSpeed;// * Time.deltaTime;

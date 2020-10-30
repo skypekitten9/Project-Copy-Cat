@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -183,6 +184,21 @@ public class EditorUI : MonoBehaviour
 
     private void FillLevelsList()
     {
+        DirectoryInfo dir = new System.IO.DirectoryInfo(Application.dataPath + $"/Scenes/Levels/LevelData");
+        FileInfo[] levelData = dir.GetFiles("*.json");
+
+        Transform content = levelsPanel.GetComponentInChildren<GridLayoutGroup>().transform;
+
+        for (int i = 0; i < content.childCount; i++)
+            Destroy(content.GetChild(i).gameObject);
+
+        foreach (FileInfo level in levelData)
+        {
+            string fileName = Path.GetFileNameWithoutExtension(level.ToString());
+
+            GameObject levelButton = Instantiate(this.levelButton, content);
+            levelButton.GetComponentInChildren<TextMeshProUGUI>().text = fileName;
+        }
     }
 
 }
