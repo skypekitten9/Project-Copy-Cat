@@ -9,7 +9,8 @@ public class DoorScript : MonoBehaviour
 
     [SerializeField] private int[] ids;
     bool isOpen, listenAfterAnimation;
-    float timer;
+    bool rewindIsOpen, rewindListenAfterAnimation;
+    float timer, rewindTimer;
 
     AudioSource audio;
 
@@ -23,6 +24,10 @@ public class DoorScript : MonoBehaviour
         isOpen = false;
         listenAfterAnimation = false;
         timer = 0;
+
+        rewindIsOpen = isOpen;
+        rewindListenAfterAnimation = listenAfterAnimation;
+        rewindTimer = timer;
     }
 
     private void Update()
@@ -92,6 +97,31 @@ public class DoorScript : MonoBehaviour
             animator.Play("Close");
         }
         timer = animator.GetCurrentAnimatorStateInfo(0).length;
+    }
 
+    void SaveState()
+    {
+        rewindIsOpen = isOpen;
+        rewindListenAfterAnimation = listenAfterAnimation;
+        rewindTimer = timer;
+    }
+
+    void Rewind()
+    {
+        isOpen = rewindIsOpen;
+        rewindListenAfterAnimation = listenAfterAnimation;
+        rewindTimer = timer;
+
+        float tempSpeed = animator.speed;
+        animator.speed = 1000;
+        if (isOpen)
+        {
+            animator.Play("Open");
+        }
+        else
+        {
+            animator.Play("Close");
+        }
+        animator.speed = tempSpeed;
     }
 }

@@ -142,7 +142,6 @@ public class RecordManager : MonoBehaviour
             yield return new WaitForSeconds((float)(interactionData[i].Time - stopwatch.ElapsedMilliseconds) / 1000);
             for (int j = 0; j < interactionData[i].InteractionObjects.Length; j++)
             {
-                UnityEngine.Debug.Log("PLAYBACK INTERACTION");
                 if (interactionData[i].InteractionObjects[j].GetComponent<ButtonScript>() != null) interactionData[i].InteractionObjects[j].GetComponent<ButtonScript>().SignalChannel();
                 if (interactionData[i].InteractionObjects[j].GetComponent<LeverScript>() != null) interactionData[i].InteractionObjects[j].GetComponent<LeverScript>().SignalChannel();
             }
