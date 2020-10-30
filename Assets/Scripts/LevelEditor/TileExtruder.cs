@@ -10,55 +10,61 @@ public class TileExtruder : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Equals) || Input.GetKeyDown(KeyCode.KeypadPlus))
+        if (EditorUI.hoveringUI == false && EditorUI.menuOpen == false)
         {
-            Extrude(1);
-        }
-        else if (Input.GetKeyDown(KeyCode.Minus) || Input.GetKeyDown(KeyCode.KeypadMinus))
-        {
-            Extrude(-1);
+            if (Input.GetKeyDown(KeyCode.Equals) || Input.GetKeyDown(KeyCode.KeypadPlus))
+            {
+                Extrude(1);
+            }
+            else if (Input.GetKeyDown(KeyCode.Minus) || Input.GetKeyDown(KeyCode.KeypadMinus))
+            {
+                Extrude(-1);
+            }
         }
     }
 
 
     public System.Collections.IEnumerator Extrude(Tile_Selectable target)
     {
-        GetComponent<EditorUI>().ClosePopupMenu();
-
-        yield return new WaitForSeconds(0.125f);
-
-        LevelEditor.Instance.GetComponent<Selector>().CanChangeCursor = false;
-        while (Input.GetMouseButton(0))
+        if (EditorUI.hoveringUI == false && EditorUI.menuOpen == false)
         {
-            mouseX_extrude += Input.GetAxis("Mouse X") * extrude_sensitivity;// * Time.deltaTime;
-            mouseY_extrude += Input.GetAxis("Mouse Y") * extrude_sensitivity;// * Time.deltaTime;
+            GetComponent<EditorUI>().CloseAllMenus();
 
-            Transform cam = Camera.main.transform;
-            Vector3 normal = (Vector3)target.GetDirectionVector();
-            float extudeDir = Vector3.Dot(cam.right * mouseX_extrude, normal) +
-                              Vector3.Dot(cam.up * mouseY_extrude, normal);
+            yield return new WaitForSeconds(0.125f);
 
-            int direction = 0;
-            if (extudeDir > 1.0f)
+            LevelEditor.Instance.GetComponent<Selector>().CanChangeCursor = false;
+            while (Input.GetMouseButton(0))
             {
-                direction = 1;
-            }
-            else if (extudeDir < -1.0f)
-            {
-                direction = -1;
-            }
+                mouseX_extrude += Input.GetAxis("Mouse X") * extrude_sensitivity;// * Time.deltaTime;
+                mouseY_extrude += Input.GetAxis("Mouse Y") * extrude_sensitivity;// * Time.deltaTime;
 
-            if (direction != 0)
-            {
-                mouseX_extrude = 0;
-                mouseY_extrude = 0;
+                Transform cam = Camera.main.transform;
+                Vector3 normal = (Vector3)target.GetDirectionVector();
+                float extudeDir = Vector3.Dot(cam.right * mouseX_extrude, normal) +
+                                  Vector3.Dot(cam.up * mouseY_extrude, normal);
 
-                Extrude(direction);
+                int direction = 0;
+                if (extudeDir > 1.0f)
+                {
+                    direction = 1;
+                }
+                else if (extudeDir < -1.0f)
+                {
+                    direction = -1;
+                }
+
+                if (direction != 0)
+                {
+                    mouseX_extrude = 0;
+                    mouseY_extrude = 0;
+
+                    Extrude(direction);
+                }
+
+                yield return new WaitForFixedUpdate();
             }
-
-            yield return new WaitForFixedUpdate();
+            LevelEditor.Instance.GetComponent<Selector>().CanChangeCursor = true;
         }
-        LevelEditor.Instance.GetComponent<Selector>().CanChangeCursor = true;
     }
 
     public void Extrude(int direction)

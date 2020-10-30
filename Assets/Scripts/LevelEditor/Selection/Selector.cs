@@ -33,6 +33,9 @@ public class Selector : MonoBehaviour
 
     private void Update()
     {
+        if (EditorUI.hoveringUI == true || EditorUI.menuOpen == true)
+            return;
+
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         //RaycastHit[] hits;
@@ -58,7 +61,7 @@ public class Selector : MonoBehaviour
                 if (hit.transform.tag == "Tile_SelectCollider")
                 {
                     SetCursor(CursorModes.Select);
-                    if (Input.GetMouseButtonDown(0) && EditorUI.hoveringUI == false)
+                    if (Input.GetMouseButtonDown(0))
                     {
                         //Debug.Log("Select tile");
                         StartCoroutine(ToggleSelectTile(target as Tile_Selectable));    //Start tile selection
@@ -70,7 +73,7 @@ public class Selector : MonoBehaviour
                     if (LevelEditor.Instance.selectedTiles.Contains(target as Tile_Selectable) == false)   //If the hovered tile isn't selected - the extrude-collider is used as a select-collider
                     {
                         SetCursor(CursorModes.Select);
-                        if (Input.GetMouseButtonDown(0) && EditorUI.hoveringUI == false)
+                        if (Input.GetMouseButtonDown(0))
                         {
                             //Debug.Log("Select tile");
                             StartCoroutine(ToggleSelectTile(target as Tile_Selectable));    //Start tile selection
@@ -80,7 +83,7 @@ public class Selector : MonoBehaviour
                     else if (LevelEditor.Instance.selectedTiles.Contains(target as Tile_Selectable))
                     {
                         SetCursor(CursorModes.Extrude);
-                        if (Input.GetMouseButtonDown(0) && EditorUI.hoveringUI == false)
+                        if (Input.GetMouseButtonDown(0))
                         {
                             StartCoroutine(GetComponent<TileExtruder>().Extrude(LevelEditor.Instance.selectedTiles[0]));    //Start extrusion
                         }
@@ -90,7 +93,7 @@ public class Selector : MonoBehaviour
             else if (target is LevelObject_Selectable)
             {
                 SetCursor(CursorModes.Move);
-                if (Input.GetMouseButtonDown(0) && EditorUI.hoveringUI == false)
+                if (Input.GetMouseButtonDown(0))
                 {
                     StartCoroutine(ToggleSelectObject(target as LevelObject_Selectable));
                 }
@@ -135,8 +138,7 @@ public class Selector : MonoBehaviour
 
     public IEnumerator ToggleSelectTile(Tile_Selectable target)
     {
-        GetComponent<EditorUI>().ClosePopupMenu();
-        GetComponent<EditorUI>().CloseLevelsMenu();
+        GetComponent<EditorUI>().CloseAllMenus();
 
         if (LevelEditor.Instance.selectedLevelObject)
         {
@@ -207,8 +209,7 @@ public class Selector : MonoBehaviour
 
     public IEnumerator ToggleSelectObject(LevelObject_Selectable target)
     {
-        GetComponent<EditorUI>().ClosePopupMenu();
-        GetComponent<EditorUI>().CloseLevelsMenu();
+        GetComponent<EditorUI>().CloseAllMenus();
         DeselectAllTiles();
 
         yield return new WaitForSeconds(0.125f);
@@ -245,8 +246,7 @@ public class Selector : MonoBehaviour
 
     private IEnumerator RotateLevelObject(LevelObject_Selectable target)
     {
-        GetComponent<EditorUI>().ClosePopupMenu();
-        GetComponent<EditorUI>().CloseLevelsMenu();
+        GetComponent<EditorUI>().CloseAllMenus();
         yield return new WaitForSeconds(0.125f);
 
         LevelEditor.Instance.selectedLevelObject = target;
@@ -272,8 +272,7 @@ public class Selector : MonoBehaviour
 
     private void SelectWholePlane(Tile_Selectable target)
     {
-        GetComponent<EditorUI>().ClosePopupMenu();
-        GetComponent<EditorUI>().CloseLevelsMenu();
+        GetComponent<EditorUI>().CloseAllMenus();
         DeselectAllTiles();
 
         switch (target.TileDir)

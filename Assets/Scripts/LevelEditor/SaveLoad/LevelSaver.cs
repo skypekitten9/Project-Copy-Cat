@@ -17,10 +17,9 @@ public class LevelSaver : MonoBehaviour
 
     public void SaveLevel()
     {
-        GetComponent<EditorUI>().ClosePopupMenu();
-        GetComponent<EditorUI>().CloseLevelsMenu();
+        GetComponent<EditorUI>().CloseAllMenus();
         SetData();
-        SaveJSON();
+        SaveJSON(GetComponent<EditorUI>().FileName);
     }
 
 
@@ -69,21 +68,23 @@ public class LevelSaver : MonoBehaviour
         }
     }
 
-    private void SaveJSON()
+    private void SaveJSON(string fileName)
     {
         string levelData = JsonUtility.ToJson(data);
 
         string path;
         int counter = 0;
 
-        do
-        {
-            ++counter;
-            path = Application.dataPath + $"/Scenes/Levels/LevelData_{counter}.json";
-        }
-        while (System.IO.File.Exists(path));
 
-            Debug.Log($"Saving Level to: \"Assets/Scenes/Levels/LevelData_{counter}.json\"");
+        path = Application.dataPath + $"/Scenes/Levels/LevelData/{fileName}.json";
+
+        while (System.IO.File.Exists(path))
+        {
+            path = Application.dataPath + $"/Scenes/Levels/LevelData/{fileName}({counter}).json";
+            ++counter;
+        }
+
+        Debug.Log($"Saving Level to: \"{path}\"");
 
         System.IO.File.WriteAllText(path, levelData);
     }

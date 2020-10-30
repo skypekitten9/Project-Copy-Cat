@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class EditorUI : MonoBehaviour
 {
     public static bool hoveringUI = false;
-
+    public static bool menuOpen = false;
 
     [SerializeField] private GameObject objectsPanel;
     [SerializeField] private GameObject popupMenu;
@@ -18,7 +19,15 @@ public class EditorUI : MonoBehaviour
     private bool canShowHideObjectsPanel = true;
 
 
-    [SerializeField] private GameObject levelsMenu;
+    [SerializeField] private GameObject saveAsPanel;
+    [SerializeField] private TMP_InputField saveNameField;
+    [SerializeField] private Button saveAsButton;
+    public string FileName { get { return saveNameField.text; } }
+
+
+    [SerializeField] private GameObject levelsPanel;
+    //[SerializeField] private GameObject playLevelPanel;
+
     [SerializeField] private GameObject levelButton;
 
 
@@ -30,7 +39,10 @@ public class EditorUI : MonoBehaviour
             objectsRectTransform.localPosition -= new Vector3(objectsRectTransform.rect.width, 0, 0);
 
         popupMenu.SetActive(false);
-        levelsMenu.SetActive(false);
+        levelsPanel.SetActive(false);
+        levelsPanel.transform.position = new Vector3(Screen.width * 0.5f, Screen.height - 75, 0); ;
+        saveAsPanel.SetActive(false);
+        saveAsPanel.transform.position = new Vector3(Screen.width * 0.5f, Screen.height - 75, 0); ;
     }
 
 
@@ -95,21 +107,44 @@ public class EditorUI : MonoBehaviour
         }
     }
 
-    public void ClosePopupMenu()
+    public void CloseAllMenus()
     {
         popupMenu.SetActive(false);
+        saveAsPanel.SetActive(false);
+        levelsPanel.SetActive(false);
+        menuOpen = false;
         hoveringUI = false;
     }
-    public void OpenLevelsMenu()
+
+
+    public void ToggleSaveAsPanel()
     {
-        ClosePopupMenu();
-        FillLevelsList();
-        levelsMenu.SetActive(true);
+        bool shouldOpen = !saveAsPanel.activeSelf;
+        CloseAllMenus();
+        if (shouldOpen)
+        {
+            saveAsPanel.SetActive(true);
+            saveNameField.Select();
+            menuOpen = true;
+        }
     }
-    public void CloseLevelsMenu()
+
+    public void ToggleSaveAsButton()
     {
-        levelsMenu.SetActive(false);
-        hoveringUI = false;
+        saveAsButton.interactable = FileName == "" ? false : true;
+    }
+
+    public void ToggleLevelsPanel()
+    {
+        bool shouldOpen = !levelsPanel.activeSelf;
+        CloseAllMenus();
+        if (shouldOpen)
+        {
+            FillLevelsList();
+            levelsPanel.SetActive(true);
+            hoveringUI = true;
+            menuOpen = true;
+        }
     }
 
     private void UpdatePopupItemsInteractable()
@@ -143,13 +178,27 @@ public class EditorUI : MonoBehaviour
     public void DestroyLevelObject()
     {
         LevelEditor.Instance.GetComponent<LevelObjectManager>().DestroyLevelObject();
-        ClosePopupMenu();
-        CloseLevelsMenu();
+        CloseAllMenus();
     }
 
 
     private void FillLevelsList()
     {
+        DirectoryInfo dir = new System.IO.DirectoryInfo(Application.dataPath + $"/Scenes/Levels/LevelData");
+        FileInfo[] levelData = dir.GetFiles("*.json");
+
+        Transform content = levelsPanel.GetComponentInChildren<GridLayoutGroup>().transform;
+
+        for (int i = 0; i < content.childCount; i++)
+            Destroy(content.GetChild(i).gameObject);
+
+        foreach (FileInfo level in levelData)
+        {
+            string fileName = Path.GetFileNameWithoutExtension(level.ToString());
+
+            GameObject levelButton = Instantiate(this.levelButton, content);
+            levelButton.GetComponentInChildren<TextMeshProUGUI>().text = fileName;
+        }
     }
 
 }
