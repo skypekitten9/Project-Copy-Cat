@@ -66,6 +66,23 @@ public class TestLevelManager : MonoBehaviour
         }
     }
 
+    public void SaveDoorStates()
+    {
+        foreach (GameObject door in doorList)
+        {
+            door.GetComponent<DoorScript>().SaveState();
+        }
+    }
+
+    public void RewindDoors()
+    {
+        
+        foreach (GameObject door in doorList)
+        {
+            door.GetComponent<DoorScript>().Rewind();
+        }
+    }
+
     //Samlar alla dörrar i scenen i en lista.
     private void ListAllDoors()
     {

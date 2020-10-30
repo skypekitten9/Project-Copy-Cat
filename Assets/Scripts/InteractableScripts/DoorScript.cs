@@ -84,6 +84,7 @@ public class DoorScript : MonoBehaviour
 
     void ToggleDoor(bool state)
     {
+        animator.speed = 1;
         SFXManager.Instance.PlayDoorClose(audio);
         animator.SetBool("isOpened", state);
         collider.enabled = !state;
@@ -99,29 +100,31 @@ public class DoorScript : MonoBehaviour
         timer = animator.GetCurrentAnimatorStateInfo(0).length;
     }
 
-    void SaveState()
+    public void SaveState()
     {
+        Debug.Log("Save state!");
         rewindIsOpen = isOpen;
         rewindListenAfterAnimation = listenAfterAnimation;
         rewindTimer = timer;
     }
 
-    void Rewind()
+    public void Rewind()
     {
+        Debug.Log("Rewind!");
         isOpen = rewindIsOpen;
         rewindListenAfterAnimation = listenAfterAnimation;
         rewindTimer = timer;
 
-        float tempSpeed = animator.speed;
-        animator.speed = 1000;
+        animator.speed = 100;
         if (isOpen)
         {
             animator.Play("Open");
+            collider.enabled = false;
         }
         else
         {
             animator.Play("Close");
+            collider.enabled = true;
         }
-        animator.speed = tempSpeed;
     }
 }

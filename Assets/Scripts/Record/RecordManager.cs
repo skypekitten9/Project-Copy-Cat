@@ -93,6 +93,7 @@ public class RecordManager : MonoBehaviour
         recordPhase = RecordPhase.Recording;
 
         syncBar.StartBar();
+        GameObject.Find("LevelManager").GetComponent<TestLevelManager>().SaveDoorStates();
 
         stopwatch.Restart();
         ChangeControlState(ControlStates.Holo);
@@ -125,6 +126,7 @@ public class RecordManager : MonoBehaviour
     public void StartPlayback()
     {
         syncBar.Replay();
+        GameObject.Find("LevelManager").GetComponent<TestLevelManager>().RewindDoors();
 
         recordPhase = RecordPhase.PlayingBack;
         ChangeControlState(ControlStates.Player);
@@ -177,6 +179,7 @@ public class RecordManager : MonoBehaviour
         recordPhase = RecordPhase.StoppingPlayback;
 
         syncBar.Reset();
+        
 
         float fadeValue = 1;
         while (fadeValue > 0)
