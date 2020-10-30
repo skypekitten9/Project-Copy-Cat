@@ -73,6 +73,23 @@ public class SyncBar : MonoBehaviour
         actionsList.Add(actionGameObj);
     }
 
+    public void SpawnStandState(bool state)
+    {
+        if(state)
+        {
+            GameObject actionGameObj = Instantiate(standOn, transformForHierarchy);
+            actionGameObj.transform.position = transformForPosition.position;
+            actionsList.Add(actionGameObj);
+        }
+        else
+        {
+            GameObject actionGameObj = Instantiate(standOff, transformForHierarchy);
+            actionGameObj.transform.position = transformForPosition.position;
+            actionsList.Add(actionGameObj);
+        }
+        
+    }
+
     public void Reset()
     {
         Hide();
