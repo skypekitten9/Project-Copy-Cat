@@ -49,11 +49,13 @@ public class LevelObjectManager : MonoBehaviour
                 PlaceLevelObject(true);
 
             GetComponent<EditorUI>().ClosePopupMenu();
+            GetComponent<EditorUI>().CloseLevelsMenu();
         }
         else if (Input.GetKey(KeyCode.Delete))
         {
             DestroyLevelObject();
             GetComponent<EditorUI>().ClosePopupMenu();
+            GetComponent<EditorUI>().CloseLevelsMenu();
         }
     }
 

@@ -34,11 +34,13 @@ public class CameraOrientation : MonoBehaviour
         if (Input.GetMouseButton(1))
         {
             LevelEditor.Instance.GetComponent<EditorUI>().ClosePopupMenu();
+            LevelEditor.Instance.GetComponent<EditorUI>().CloseLevelsMenu();
             StartCoroutine(Pan());
         }
         else if (Input.GetMouseButton((int)UnityEngine.UIElements.MouseButton.MiddleMouse))
         {
             LevelEditor.Instance.GetComponent<EditorUI>().ClosePopupMenu();
+            LevelEditor.Instance.GetComponent<EditorUI>().CloseLevelsMenu();
             Rotate();
         }
         else
@@ -49,6 +51,7 @@ public class CameraOrientation : MonoBehaviour
         if (Input.GetAxis("Mouse ScrollWheel") != 0)
         {
             LevelEditor.Instance.GetComponent<EditorUI>().ClosePopupMenu();
+            LevelEditor.Instance.GetComponent<EditorUI>().CloseLevelsMenu();
             Zoom();
         }
     }

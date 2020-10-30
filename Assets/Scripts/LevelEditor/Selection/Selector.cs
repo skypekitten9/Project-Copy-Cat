@@ -136,6 +136,8 @@ public class Selector : MonoBehaviour
     public IEnumerator ToggleSelectTile(Tile_Selectable target)
     {
         GetComponent<EditorUI>().ClosePopupMenu();
+        GetComponent<EditorUI>().CloseLevelsMenu();
+
         if (LevelEditor.Instance.selectedLevelObject)
         {
             LevelEditor.Instance.selectedLevelObject.Deselect();
@@ -206,6 +208,7 @@ public class Selector : MonoBehaviour
     public IEnumerator ToggleSelectObject(LevelObject_Selectable target)
     {
         GetComponent<EditorUI>().ClosePopupMenu();
+        GetComponent<EditorUI>().CloseLevelsMenu();
         DeselectAllTiles();
 
         yield return new WaitForSeconds(0.125f);
@@ -243,6 +246,7 @@ public class Selector : MonoBehaviour
     private IEnumerator RotateLevelObject(LevelObject_Selectable target)
     {
         GetComponent<EditorUI>().ClosePopupMenu();
+        GetComponent<EditorUI>().CloseLevelsMenu();
         yield return new WaitForSeconds(0.125f);
 
         LevelEditor.Instance.selectedLevelObject = target;
@@ -269,6 +273,7 @@ public class Selector : MonoBehaviour
     private void SelectWholePlane(Tile_Selectable target)
     {
         GetComponent<EditorUI>().ClosePopupMenu();
+        GetComponent<EditorUI>().CloseLevelsMenu();
         DeselectAllTiles();
 
         switch (target.TileDir)

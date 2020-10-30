@@ -18,6 +18,7 @@ public class LevelSaver : MonoBehaviour
     public void SaveLevel()
     {
         GetComponent<EditorUI>().ClosePopupMenu();
+        GetComponent<EditorUI>().CloseLevelsMenu();
         SetData();
         SaveJSON();
     }
