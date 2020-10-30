@@ -1,13 +1,15 @@
 ﻿
+using UnityEngine;
+
 class InteractionData
 {
-    public InteractionData(float time, params int[] interactionChannels)
+    public InteractionData(float time, params GameObject[] interactionObjects)
     {
         this.Time = time;
-        this.InteractionChannels = interactionChannels;
+        this.InteractionObjects = interactionObjects;
     }
 
     public float Time { private set; get; }
-    public int[] InteractionChannels { get; private set; }
+    public GameObject[] InteractionObjects { get; private set; }
 }
 

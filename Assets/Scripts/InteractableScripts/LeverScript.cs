@@ -28,7 +28,7 @@ public class LeverScript : MonoBehaviour
         animator.SetBool("isActive", TestLevelManager.Instance.interactablesArray[id]);
         TestLevelManager.Instance.UpdateChannels();
         //SFXManager.Instance.PlayButtonClick(audio);       //Ger errors
-        GameObject.Find("SyncBar").GetComponent<SyncBar>().SpawnInteraction();
+        if (GameObject.Find("Game Manager").GetComponent<RecordManager>().recordPhase == RecordPhase.Recording) GameObject.Find("SyncBar").GetComponent<SyncBar>().SpawnInteraction();
         timer = animator.GetCurrentAnimatorStateInfo(0).length;
     }
 }

@@ -74,7 +74,7 @@ public class RecordManager : MonoBehaviour
         }
     }
 
-    public void AddInteractionNode(params int[] id)
+    public void AddInteractionNode(params GameObject[] id)
     {
         interactionData.Add(new InteractionData(stopwatch.ElapsedMilliseconds, id));
     }
@@ -140,13 +140,13 @@ public class RecordManager : MonoBehaviour
         for (int i = 0; i < interactionData.Count; i++)
         {
             yield return new WaitForSeconds((float)(interactionData[i].Time - stopwatch.ElapsedMilliseconds) / 1000);
-            for (int j = 0; j < interactionData[i].InteractionChannels.Length; j++)
+            for (int j = 0; j < interactionData[i].InteractionObjects.Length; j++)
             {
-                TestLevelManager.Instance.interactablesArray[interactionData[i].InteractionChannels[j]] =
-                    !TestLevelManager.Instance.interactablesArray[interactionData[i].InteractionChannels[j]];
+                UnityEngine.Debug.Log("PLAYBACK INTERACTION");
+                if (interactionData[i].InteractionObjects[j].GetComponent<ButtonScript>() != null) interactionData[i].InteractionObjects[j].GetComponent<ButtonScript>().SignalChannel();
+                if (interactionData[i].InteractionObjects[j].GetComponent<LeverScript>() != null) interactionData[i].InteractionObjects[j].GetComponent<LeverScript>().SignalChannel();
             }
 
-            TestLevelManager.Instance.NotifyDoors();
             //UnityEngine.Debug.Log($"Interact_{i}");
         }
 
