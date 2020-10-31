@@ -21,6 +21,8 @@ public class EditorUI : MonoBehaviour
 
     [SerializeField] private GameObject saveAsPanel;
     [SerializeField] private TMP_InputField saveNameField;
+
+    [SerializeField] private Button deleteButton;
     [SerializeField] private Button saveAsButton;
     [SerializeField] private Button saveButton;
 
@@ -35,6 +37,8 @@ public class EditorUI : MonoBehaviour
 
     private void Start()
     {
+        ToggleDeleteLevelButton();
+
         objectsRectTransform = objectsPanel.GetComponent<RectTransform>();
 
         if (objectsPanelVisible == false)
@@ -42,9 +46,10 @@ public class EditorUI : MonoBehaviour
 
         popupMenu.SetActive(false);
         levelsPanel.SetActive(false);
-        levelsPanel.transform.position = new Vector3(Screen.width * 0.5f, Screen.height - 75, 0); ;
+        levelsPanel.transform.position = new Vector3(Screen.width * 0.5f, Screen.height - 75, 0);
         saveAsPanel.SetActive(false);
-        saveAsPanel.transform.position = new Vector3(Screen.width * 0.5f, Screen.height - 75, 0); ;
+        saveAsPanel.transform.position = new Vector3(Screen.width * 0.5f, Screen.height - 75, 0);
+
     }
 
 
@@ -114,6 +119,8 @@ public class EditorUI : MonoBehaviour
         popupMenu.SetActive(false);
         saveAsPanel.SetActive(false);
         levelsPanel.SetActive(false);
+        GetComponent<LevelDeleter>().CloseUI();
+
         menuOpen = false;
         hoveringUI = false;
     }
@@ -136,6 +143,10 @@ public class EditorUI : MonoBehaviour
     public void ToggleSaveAsButton()
     {
         saveAsButton.interactable = FileName == "" ? false : true;
+    }
+    public void ToggleDeleteLevelButton()
+    {
+        deleteButton.interactable = GetComponent<LevelSaver>().SaveName != "";
     }
 
     public void ToggleLevelsPanel()

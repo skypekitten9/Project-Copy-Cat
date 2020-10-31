@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 2303419457597482310}
   - component: {fileID: 2303419457597482311}
   - component: {fileID: 1208712546}
+  - component: {fileID: 1480348209}
   m_Layer: 31
   m_Name: LevelEditorManager
   m_TagString: Untagged
@@ -82,7 +83,9 @@ MonoBehaviour:
   popupMenu: {fileID: 0}
   saveAsPanel: {fileID: 0}
   saveNameField: {fileID: 0}
+  deleteButton: {fileID: 0}
   saveAsButton: {fileID: 0}
+  saveButton: {fileID: 0}
   levelsPanel: {fileID: 0}
   levelButton: {fileID: 1837548845574655011, guid: 1f1db6bb76f2d9240975a5d79d6ac929, type: 3}
 --- !u!114 &2303419457597482312
@@ -157,3 +160,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dafa84daf9f9a6145837e50ebc772e5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1480348209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2303419457597482318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9196dd3343830db488f22c124d51a79b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deletePrompt: {fileID: 6352019039586723690, guid: 73af3e0221ef36441b61f65ed1342908, type: 3}

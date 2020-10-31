@@ -12,7 +12,8 @@ public class LevelLoader : MonoBehaviour
 
         LevelData data = JsonUtility.FromJson<LevelData>(jsonData);
 
-        Destroy(LevelEditor.Instance.TilesParent.gameObject);
+        if (LevelEditor.Instance.TilesParent)
+            Destroy(LevelEditor.Instance.TilesParent.gameObject);
         LevelEditor.Instance.TilesParent = new GameObject("Tiles").transform;
 
         foreach (var tile in data.tileData)
@@ -20,10 +21,10 @@ public class LevelLoader : MonoBehaviour
             LevelEditor.Instance.PlaceTile(tile.x, tile.y, tile.z, (TileDirection)tile.i);
         }
 
-
         GetComponent<LevelObjectConnector>().Connections = new Dictionary<GameObject, List<int>>();
 
-        Destroy(GetComponent<LevelObjectManager>().LevelObjectsParent.gameObject);
+        if (GetComponent<LevelObjectManager>().LevelObjectsParent)
+            Destroy(GetComponent<LevelObjectManager>().LevelObjectsParent.gameObject);
         Transform parent = GetComponent<LevelObjectManager>().LevelObjectsParent = new GameObject("LevelObjects").transform;
 
         for (int i = 0; i < data.levelObjectData.Length; i++)
@@ -33,5 +34,7 @@ public class LevelLoader : MonoBehaviour
 
             GetComponent<LevelObjectConnector>().Connections.Add(instance, data.connectionsData[i].channels.ToList());
         }
+
+        GetComponent<EditorUI>().ToggleDeleteLevelButton();
     }
 }

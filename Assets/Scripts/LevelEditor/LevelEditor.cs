@@ -35,13 +35,8 @@ public class LevelEditor : MonoBehaviour
         else
             instance = this;
 
-
-        SetBoundingBox();
-
-        TilesParent = new GameObject("Tiles").transform;
         Tiles = new Tile_Selectable[maxTiles.x, maxTiles.y, maxTiles.z, 6];
-
-        CreateStartRoom();
+        SetBoundingBox();
     }
 
 
@@ -51,9 +46,29 @@ public class LevelEditor : MonoBehaviour
         boundingBox.transform.localScale = maxTiles + new Vector3(0.1f, 0.1f, 0.1f);
     }
 
+
+
+    public void NewLevel()
+    {
+        if (TilesParent)
+            Destroy(TilesParent.gameObject);
+
+        TilesParent = new GameObject("Tiles").transform;
+        Tiles = new Tile_Selectable[maxTiles.x, maxTiles.y, maxTiles.z, 6];
+
+        GetComponent<LevelObjectConnector>().Connections.Clear();
+
+        if (GetComponent<LevelObjectManager>().LevelObjectsParent)
+            Destroy(GetComponent<LevelObjectManager>().LevelObjectsParent.gameObject);
+
+        GetComponent<LevelObjectManager>().LevelObjectsParent = new GameObject("LevelObjects").transform;
+
+        GetComponent<LevelSaver>().SaveName = "";
+        CreateStartRoom();
+    }
+
     private void CreateStartRoom()
     {
-        GetComponent<LevelSaver>().SaveName = "";
         for (int y = 4; y < 9; y++)
         {
             for (int z = 6; z < 15; z++)

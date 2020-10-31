@@ -26,7 +26,6 @@ public class LevelObjectManager : MonoBehaviour
     private void Awake()
     {
         cursorIcon.SetActive(false);
-        LevelObjectsParent = new GameObject("LevelObjects").transform;
         cam = Camera.main;
     }
 

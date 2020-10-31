@@ -36,6 +36,8 @@ public class LevelSaver : MonoBehaviour
             SetData();
 
             SaveJSON(SaveName, true);
+
+            GetComponent<EditorUI>().ToggleDeleteLevelButton();
         }
     }
 
@@ -86,7 +88,7 @@ public class LevelSaver : MonoBehaviour
         {
             data.levelObjectData[i] = new LevelObjectData();
             GameObject levelObject = levelObjectConnector.Connections.ElementAt(i).Key;
-            data.levelObjectData[i].prefab = levelObject.GetComponentInChildren<LevelObject_Selectable>().LevelObject.Prefab;
+            data.levelObjectData[i].prefab = levelObject.GetComponentInChildren<LevelObject_Selectable>().LevelObject.Prefab.id;
             data.levelObjectData[i].position = levelObject.transform.position;
             data.levelObjectData[i].rotation = levelObject.transform.localEulerAngles;
             data.levelObjectData[i].properties = levelObject.GetComponentInChildren<LevelObject_Selectable>().LevelObject;
