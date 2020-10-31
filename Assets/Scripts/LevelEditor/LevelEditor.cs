@@ -18,7 +18,7 @@ public class LevelEditor : MonoBehaviour
     [SerializeField] private GameObject tilePrefab;
     [SerializeField] private GameObject boundingBox;
 
-    private Transform tilesParent;
+    public Transform TilesParent { get; set; }
 
     public readonly Vector3Int maxTiles = new Vector3Int(21, 15, 21);
     public Tile_Selectable[,,,] Tiles { get; private set; }
@@ -38,7 +38,7 @@ public class LevelEditor : MonoBehaviour
 
         SetBoundingBox();
 
-        tilesParent = new GameObject("Tiles").transform;
+        TilesParent = new GameObject("Tiles").transform;
         Tiles = new Tile_Selectable[maxTiles.x, maxTiles.y, maxTiles.z, 6];
 
         CreateStartRoom();
@@ -53,6 +53,7 @@ public class LevelEditor : MonoBehaviour
 
     private void CreateStartRoom()
     {
+        GetComponent<LevelSaver>().SaveName = "";
         for (int y = 4; y < 9; y++)
         {
             for (int z = 6; z < 15; z++)
@@ -83,7 +84,7 @@ public class LevelEditor : MonoBehaviour
 
     public Tile_Selectable PlaceTile(int x, int y, int z, TileDirection i)
     {
-        Tiles[x, y, z, (int)i] = Instantiate(tilePrefab, IndexToWorldPos(x, y, z, i), IndexToRotation(i), tilesParent).GetComponent<Tile_Selectable>();
+        Tiles[x, y, z, (int)i] = Instantiate(tilePrefab, IndexToWorldPos(x, y, z, i), IndexToRotation(i), TilesParent).GetComponent<Tile_Selectable>();
         Tiles[x, y, z, (int)i].SetTileData(x, y, z, i);
         return Tiles[x, y, z, (int)i];
     }

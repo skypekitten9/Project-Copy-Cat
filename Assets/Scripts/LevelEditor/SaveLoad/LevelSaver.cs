@@ -9,17 +9,43 @@ public class LevelSaver : MonoBehaviour
 
     private LevelObjectConnector levelObjectConnector;
 
+    public string SaveName { get; set; } = "";
+
 
     private void Awake()
     {
         levelObjectConnector = GetComponent<LevelObjectConnector>();
     }
 
-    public void SaveLevel()
+
+    private void Update()
+    {
+        if ((Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl)) && Input.GetKeyDown(KeyCode.S))
+        {
+            Save();
+        }
+    }
+
+
+
+    public void Save()
+    {
+        if (SaveName != "")
+        {
+            GetComponent<EditorUI>().CloseAllMenus();
+            SetData();
+
+            SaveJSON(SaveName, true);
+        }
+    }
+
+    public void SaveAs()
     {
         GetComponent<EditorUI>().CloseAllMenus();
         SetData();
-        SaveJSON(GetComponent<EditorUI>().FileName);
+
+        SaveName = GetComponent<EditorUI>().FileName;
+        SaveJSON(SaveName);
     }
 
 
@@ -68,20 +94,20 @@ public class LevelSaver : MonoBehaviour
         }
     }
 
-    private void SaveJSON(string fileName)
+    private void SaveJSON(string fileName, bool overwrite = false)
     {
         string levelData = JsonUtility.ToJson(data);
 
-        string path;
-        int counter = 0;
+        string path = Application.dataPath + $"/Scenes/Levels/LevelData/{fileName}.json";
 
-
-        path = Application.dataPath + $"/Scenes/Levels/LevelData/{fileName}.json";
-
-        while (System.IO.File.Exists(path))
+        if (overwrite == false)
         {
-            path = Application.dataPath + $"/Scenes/Levels/LevelData/{fileName}({counter}).json";
-            ++counter;
+            int counter = 0;
+            while (System.IO.File.Exists(path))
+            {
+                path = Application.dataPath + $"/Scenes/Levels/LevelData/{fileName}({counter}).json";
+                ++counter;
+            }
         }
 
         Debug.Log($"Saving Level to: \"{path}\"");

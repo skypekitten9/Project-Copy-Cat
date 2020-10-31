@@ -22,6 +22,8 @@ public class EditorUI : MonoBehaviour
     [SerializeField] private GameObject saveAsPanel;
     [SerializeField] private TMP_InputField saveNameField;
     [SerializeField] private Button saveAsButton;
+    [SerializeField] private Button saveButton;
+
     public string FileName { get { return saveNameField.text; } }
 
 
@@ -123,6 +125,8 @@ public class EditorUI : MonoBehaviour
         CloseAllMenus();
         if (shouldOpen)
         {
+            saveButton.interactable = GetComponent<LevelSaver>().SaveName != "";
+
             saveAsPanel.SetActive(true);
             saveNameField.Select();
             menuOpen = true;

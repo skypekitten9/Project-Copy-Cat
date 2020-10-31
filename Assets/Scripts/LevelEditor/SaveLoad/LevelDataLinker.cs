@@ -18,6 +18,7 @@ public class LevelDataLinker : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        LevelEditor.Instance.GetComponent<LevelLoader>().LoadToEditor(File.ReadAllText(levelDataFile.FullName));
+        LevelEditor.Instance.GetComponent<EditorUI>().CloseAllMenus();
+        LevelEditor.Instance.GetComponent<LevelLoader>().LoadToEditor(File.ReadAllText(levelDataFile.FullName), GetComponentInChildren<TextMeshProUGUI>().text);
     }
 }
