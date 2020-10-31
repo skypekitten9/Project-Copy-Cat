@@ -28,8 +28,10 @@ public class TileData
 [System.Serializable]
 public class LevelObjectData
 {
+    public GameObject prefab;
     public Vector3 position;
     public Vector3 rotation;
+    public LevelObject properties;
 }
 
 [System.Serializable]

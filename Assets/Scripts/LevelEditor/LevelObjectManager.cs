@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class LevelObjectManager : MonoBehaviour
 {
-    private Transform levelObjectsParent;
+    public Transform LevelObjectsParent { get; set; }
 
     private LevelObject selectedUIObject;
     private GameObject levelObjectInstance;
@@ -26,7 +26,7 @@ public class LevelObjectManager : MonoBehaviour
     private void Awake()
     {
         cursorIcon.SetActive(false);
-        levelObjectsParent = new GameObject("LevelObjects").transform;
+        LevelObjectsParent = new GameObject("LevelObjects").transform;
         cam = Camera.main;
     }
 
@@ -72,7 +72,7 @@ public class LevelObjectManager : MonoBehaviour
             cursorIcon.SetActive(true);
 
             selectedUIObject = levelObject;
-            levelObjectInstance = Instantiate(levelObject.Prefab, Input.mousePosition, Quaternion.identity, levelObjectsParent);
+            levelObjectInstance = Instantiate(levelObject.Prefab, Input.mousePosition, Quaternion.identity, LevelObjectsParent);
             levelObjectInstance.GetComponentInChildren<LevelObject_Selectable>().LevelObject = levelObject;
 
             GetComponent<LevelObjectConnector>().Connections.Add(levelObjectInstance, new List<int>());
