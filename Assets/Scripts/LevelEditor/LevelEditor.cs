@@ -47,25 +47,27 @@ public class LevelEditor : MonoBehaviour
     }
 
 
-
-    public void NewLevel()
+    public void ClearLevel()
     {
         if (TilesParent)
             Destroy(TilesParent.gameObject);
-
         TilesParent = new GameObject("Tiles").transform;
+
         Tiles = new Tile_Selectable[maxTiles.x, maxTiles.y, maxTiles.z, 6];
 
         GetComponent<LevelObjectConnector>().Connections.Clear();
 
         if (GetComponent<LevelObjectManager>().LevelObjectsParent)
             Destroy(GetComponent<LevelObjectManager>().LevelObjectsParent.gameObject);
-
         GetComponent<LevelObjectManager>().LevelObjectsParent = new GameObject("LevelObjects").transform;
 
         GetComponent<LevelSaver>().SaveName = "";
         GetComponent<EditorUI>().CloseAllMenus();
+    }
 
+    public void NewLevel()
+    {
+        ClearLevel();
         CreateStartRoom();
     }
 

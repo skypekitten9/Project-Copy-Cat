@@ -129,7 +129,6 @@ public class LevelSaver : MonoBehaviour
             }
         }
 
-
         System.IO.File.WriteAllText(path, levelData);
 
         Debug.Log($"Saving Level to: \"{path}\"");
