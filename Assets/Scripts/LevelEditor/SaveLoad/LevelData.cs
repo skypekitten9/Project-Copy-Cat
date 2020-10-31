@@ -28,14 +28,8 @@ public class TileData
 [System.Serializable]
 public class LevelObjectData
 {
-    public LevelObjectData()
-    {
-        position = new float[3];
-        rotation = new float[3];
-    }
-
-    public float[] position;
-    public float[] rotation;
+    public Vector3 position;
+    public Vector3 rotation;
 }
 
 [System.Serializable]

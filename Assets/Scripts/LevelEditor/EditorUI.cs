@@ -194,10 +194,7 @@ public class EditorUI : MonoBehaviour
 
         foreach (FileInfo level in levelData)
         {
-            string fileName = Path.GetFileNameWithoutExtension(level.ToString());
-
-            GameObject levelButton = Instantiate(this.levelButton, content);
-            levelButton.GetComponentInChildren<TextMeshProUGUI>().text = fileName;
+            Instantiate(this.levelButton, content).GetComponent<LevelDataLinker>().SetLevelData(level);
         }
     }
 

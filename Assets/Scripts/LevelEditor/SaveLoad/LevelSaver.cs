@@ -60,8 +60,8 @@ public class LevelSaver : MonoBehaviour
         {
             data.levelObjectData[i] = new LevelObjectData();
             GameObject levelObject = levelObjectConnector.Connections.ElementAt(i).Key;
-            data.levelObjectData[i].position = new float[] { levelObject.transform.position.x, levelObject.transform.position.y, levelObject.transform.position.z };
-            data.levelObjectData[i].rotation = new float[] { levelObject.transform.localEulerAngles.x, levelObject.transform.localEulerAngles.y, levelObject.transform.localEulerAngles.z };
+            data.levelObjectData[i].position = levelObject.transform.position;
+            data.levelObjectData[i].rotation = levelObject.transform.localEulerAngles;
 
             data.connectionsData[i] = new ConnectionData();
             data.connectionsData[i].channels = levelObjectConnector.Connections.ElementAt(i).Value.ToArray();
