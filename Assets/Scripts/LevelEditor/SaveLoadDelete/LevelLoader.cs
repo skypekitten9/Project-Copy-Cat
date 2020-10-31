@@ -27,10 +27,16 @@ public class LevelLoader : MonoBehaviour
             Destroy(GetComponent<LevelObjectManager>().LevelObjectsParent.gameObject);
         Transform parent = GetComponent<LevelObjectManager>().LevelObjectsParent = new GameObject("LevelObjects").transform;
 
+
+        LevelObject[] levelObjectResources = Resources.LoadAll<LevelObject>("Objects");
+
+
         for (int i = 0; i < data.levelObjectData.Length; i++)
         {
-            GameObject instance = Instantiate(data.levelObjectData[i].prefab, data.levelObjectData[i].position, Quaternion.Euler(data.levelObjectData[i].rotation), parent);
-            instance.GetComponentInChildren<LevelObject_Selectable>().LevelObject = data.levelObjectData[i].properties;
+            LevelObject levelObject = levelObjectResources[data.levelObjectData[i].levelObjectId];
+
+            GameObject instance = Instantiate(levelObject.Prefab, data.levelObjectData[i].position, Quaternion.Euler(data.levelObjectData[i].rotation), parent);
+            instance.GetComponentInChildren<LevelObject_Selectable>().LevelObject = levelObject;
 
             GetComponent<LevelObjectConnector>().Connections.Add(instance, data.connectionsData[i].channels.ToList());
         }

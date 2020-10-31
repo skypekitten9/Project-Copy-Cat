@@ -120,6 +120,7 @@ public class EditorUI : MonoBehaviour
         saveAsPanel.SetActive(false);
         levelsPanel.SetActive(false);
         GetComponent<LevelDeleter>().CloseUI();
+        ToggleDeleteLevelButton();
 
         menuOpen = false;
         hoveringUI = false;
@@ -199,7 +200,7 @@ public class EditorUI : MonoBehaviour
 
     private void FillLevelsList()
     {
-        DirectoryInfo dir = new System.IO.DirectoryInfo(Application.dataPath + $"/Scenes/Levels/LevelData");
+        DirectoryInfo dir = new System.IO.DirectoryInfo(Application.dataPath + $"/Resources/LevelData");
         FileInfo[] levelData = dir.GetFiles("*.json");
 
         Transform content = levelsPanel.GetComponentInChildren<GridLayoutGroup>().transform;

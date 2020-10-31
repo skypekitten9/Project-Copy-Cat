@@ -64,6 +64,8 @@ public class LevelEditor : MonoBehaviour
         GetComponent<LevelObjectManager>().LevelObjectsParent = new GameObject("LevelObjects").transform;
 
         GetComponent<LevelSaver>().SaveName = "";
+        GetComponent<EditorUI>().CloseAllMenus();
+
         CreateStartRoom();
     }
 

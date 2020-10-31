@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 957c7f606cbc0934ca22c6c92e69fd52, type: 3}
-  m_Name: Gate_physical
+  m_Name: 02_Button_press
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: 849a830f49e54a1428eff078ec563eac, type: 3}
-  prefab: {fileID: 905833608604299875, guid: fb428457239ee1345b78e0fc4c88304f, type: 3}
+  icon: {fileID: 21300000, guid: 30f0c1a2ad4441a4fa8053bfb3536e48, type: 3}
+  prefab: {fileID: 4231206272615696653, guid: e303dc12d301f8e4ca2d910ad852bb25, type: 3}
   canPlaceOnGround: 1
   canPlaceOnCeiling: 0
   canPlaceOnWall: 0

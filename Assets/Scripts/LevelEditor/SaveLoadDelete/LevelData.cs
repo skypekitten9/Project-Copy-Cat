@@ -28,10 +28,9 @@ public class TileData
 [System.Serializable]
 public class LevelObjectData
 {
-    public GameObject prefab;
+    public int levelObjectId;
     public Vector3 position;
     public Vector3 rotation;
-    public LevelObject properties;
 }
 
 [System.Serializable]
@@ -39,26 +38,3 @@ public class ConnectionData
 {
     public int[] channels;
 }
-
-
-/*
-public static class LevelDataHelper
-{
-    public static int To1D(int x, int y, int z)
-    {
-        Vector3Int maxTiles = LevelEditor.Instance.maxTiles;
-        return (z * maxTiles.x * maxTiles.y) + (y * maxTiles.x) + x;
-    }
-
-    public static int[] To3D(int i)
-    {
-        Vector3Int maxTiles = LevelEditor.Instance.maxTiles;
-
-        int z = i / (maxTiles.x * maxTiles.y);
-        i -= (z * maxTiles.x * maxTiles.y);
-        int y = i / maxTiles.x;
-        int x = i % maxTiles.x;
-        return new int[] { x, y, z };
-    }
-}
-*/

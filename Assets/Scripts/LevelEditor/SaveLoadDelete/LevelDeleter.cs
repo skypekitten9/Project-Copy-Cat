@@ -33,7 +33,7 @@ public class LevelDeleter : MonoBehaviour
 
     public void DeleteLevel()
     {
-        string path = Application.dataPath + $"/Scenes/Levels/LevelData/{GetComponent<LevelSaver>().SaveName}.json";
+        string path = Application.dataPath + $"/Resources/LevelData/{GetComponent<LevelSaver>().SaveName}.json";
         Debug.Log(path);
     }
 

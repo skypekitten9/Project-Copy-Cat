@@ -80,18 +80,32 @@ public class LevelSaver : MonoBehaviour
 
         data.tileData = tileData_temp.ToArray();
 
-
         data.levelObjectData = new LevelObjectData[levelObjectConnector.Connections.Count];
         data.connectionsData = new ConnectionData[levelObjectConnector.Connections.Count];
+
+
+        LevelObject[] levelObjectResources = Resources.LoadAll<LevelObject>("Objects");
+
 
         for (int i = 0; i < levelObjectConnector.Connections.Count; i++)
         {
             data.levelObjectData[i] = new LevelObjectData();
             GameObject levelObject = levelObjectConnector.Connections.ElementAt(i).Key;
-            data.levelObjectData[i].prefab = levelObject.GetComponentInChildren<LevelObject_Selectable>().LevelObject.Prefab.id;
+
+            int levelObjectId = 0;
+
+            for (int r = 0; r < levelObjectResources.Length; r++)
+            {
+                if (levelObject.GetComponentInChildren<LevelObject_Selectable>().LevelObject == levelObjectResources[r])
+                {
+                    levelObjectId = r;
+                    break;
+                }
+            }
+
+            data.levelObjectData[i].levelObjectId = levelObjectId;
             data.levelObjectData[i].position = levelObject.transform.position;
             data.levelObjectData[i].rotation = levelObject.transform.localEulerAngles;
-            data.levelObjectData[i].properties = levelObject.GetComponentInChildren<LevelObject_Selectable>().LevelObject;
 
             data.connectionsData[i] = new ConnectionData();
             data.connectionsData[i].channels = levelObjectConnector.Connections.ElementAt(i).Value.ToArray();
@@ -102,14 +116,14 @@ public class LevelSaver : MonoBehaviour
     {
         string levelData = JsonUtility.ToJson(data);
 
-        string path = Application.dataPath + $"/Scenes/Levels/LevelData/{fileName}.json";
+        string path = Application.dataPath + $"/Resources/LevelData/{fileName}.json";
 
         if (overwrite == false)
         {
             int counter = 0;
             while (System.IO.File.Exists(path))
             {
-                path = Application.dataPath + $"/Scenes/Levels/LevelData/{fileName}({counter}).json";
+                path = Application.dataPath + $"/Resources/LevelData/{fileName}({counter}).json";
                 ++counter;
             }
         }

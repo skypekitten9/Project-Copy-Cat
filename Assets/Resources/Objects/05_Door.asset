@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 957c7f606cbc0934ca22c6c92e69fd52, type: 3}
-  m_Name: Turret
+  m_Name: 05_Door
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: dbb4619e236e6e846b65ccc3a2fe408d, type: 3}
-  prefab: {fileID: 6149780821653323717, guid: 2d176564a27c3e443953d11a8521ff78, type: 3}
+  icon: {fileID: 21300000, guid: d094c80f1fbb2d343a13356da819ec8b, type: 3}
+  prefab: {fileID: 1629497360216603498, guid: 95b86c5be4c09b84480d2478ba29fea6, type: 3}
   canPlaceOnGround: 1
   canPlaceOnCeiling: 0
   canPlaceOnWall: 0
