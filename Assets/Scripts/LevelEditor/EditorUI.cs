@@ -34,6 +34,8 @@ public class EditorUI : MonoBehaviour
 
     [SerializeField] private GameObject levelButton;
 
+    [SerializeField] private GameObject messageBox;
+
 
     private void Start()
     {
@@ -49,7 +51,8 @@ public class EditorUI : MonoBehaviour
         levelsPanel.transform.position = new Vector3(Screen.width * 0.5f, Screen.height - 75, 0);
         saveAsPanel.SetActive(false);
         saveAsPanel.transform.position = new Vector3(Screen.width * 0.5f, Screen.height - 75, 0);
-
+        messageBox.SetActive(false);
+        messageBox.transform.position = new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0);
     }
 
 
@@ -63,7 +66,6 @@ public class EditorUI : MonoBehaviour
                 PointerExitUI();
         }
     }
-
 
     public void PointerEnterUI()
     {
@@ -214,4 +216,15 @@ public class EditorUI : MonoBehaviour
         }
     }
 
+
+
+    private float visibleTime = 3.0f;
+
+    public IEnumerator MessageBox(string message)
+    {
+        messageBox.GetComponentInChildren<TextMeshProUGUI>().text = message;
+        messageBox.SetActive(true);
+        yield return new WaitForSeconds(visibleTime);
+        messageBox.SetActive(false);
+    }
 }

@@ -88,6 +88,7 @@ MonoBehaviour:
   saveButton: {fileID: 0}
   levelsPanel: {fileID: 0}
   levelButton: {fileID: 1837548845574655011, guid: 1f1db6bb76f2d9240975a5d79d6ac929, type: 3}
+  messageBox: {fileID: 0}
 --- !u!114 &2303419457597482312
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -172,4 +173,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9196dd3343830db488f22c124d51a79b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deletePrompt: {fileID: 6352019039586723690, guid: 73af3e0221ef36441b61f65ed1342908, type: 3}
+  deletePrompt: {fileID: 0}

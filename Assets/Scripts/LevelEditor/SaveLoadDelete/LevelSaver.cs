@@ -27,7 +27,6 @@ public class LevelSaver : MonoBehaviour
     }
 
 
-
     public void Save()
     {
         if (SaveName != "")
@@ -38,6 +37,8 @@ public class LevelSaver : MonoBehaviour
             SaveJSON(SaveName, true);
 
             GetComponent<EditorUI>().ToggleDeleteLevelButton();
+
+            StartCoroutine(GetComponent<EditorUI>().MessageBox($"Level saved!"));
         }
     }
 
@@ -128,9 +129,10 @@ public class LevelSaver : MonoBehaviour
             }
         }
 
-        Debug.Log($"Saving Level to: \"{path}\"");
 
         System.IO.File.WriteAllText(path, levelData);
+
+        Debug.Log($"Saving Level to: \"{path}\"");
     }
 
 }

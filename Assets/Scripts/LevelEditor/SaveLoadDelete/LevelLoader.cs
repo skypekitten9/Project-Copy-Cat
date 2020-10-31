@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class LevelLoader : MonoBehaviour
 {
+
     public void LoadToEditor(string jsonData, string levelName)
     {
         GetComponent<LevelSaver>().SaveName = levelName;
 
         Debug.Log($"Loaded: {levelName}.json");
+        StartCoroutine(GetComponent<EditorUI>().MessageBox($"Loaded level: {levelName}"));
 
         LevelData data = JsonUtility.FromJson<LevelData>(jsonData);
 
