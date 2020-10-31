@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 957c7f606cbc0934ca22c6c92e69fd52, type: 3}
   m_Name: Lamp_Hanging
   m_EditorClassIdentifier: 
-  icon: {fileID: 10915, guid: 0000000000000000f000000000000000, type: 0}
+  icon: {fileID: 21300000, guid: 3debe0c083eeec94a93866c23e284768, type: 3}
   prefab: {fileID: 2284028265786578611, guid: f6831faa8ab30ed4b8f5f7a1307f25d0, type: 3}
   canPlaceOnGround: 0
   canPlaceOnCeiling: 1
