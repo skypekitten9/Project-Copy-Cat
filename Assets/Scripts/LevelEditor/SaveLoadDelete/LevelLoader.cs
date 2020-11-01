@@ -23,15 +23,13 @@ public class LevelLoader : MonoBehaviour
             LevelEditor.Instance.PlaceTile(tile.x, tile.y, tile.z, (TileDirection)tile.i);
         }
 
-        GetComponent<LevelObjectConnector>().Connections = new Dictionary<GameObject, List<int>>();
+        GetComponent<LevelObjectConnector>().ResetConnections();
 
         if (GetComponent<LevelObjectManager>().LevelObjectsParent)
             Destroy(GetComponent<LevelObjectManager>().LevelObjectsParent.gameObject);
         Transform parent = GetComponent<LevelObjectManager>().LevelObjectsParent = new GameObject("LevelObjects").transform;
 
-
         LevelObject[] levelObjectResources = Resources.LoadAll<LevelObject>("Objects");
-
 
         for (int i = 0; i < data.levelObjectData.Length; i++)
         {
@@ -43,6 +41,7 @@ public class LevelLoader : MonoBehaviour
             GetComponent<LevelObjectConnector>().Connections.Add(instance, data.connectionsData[i].channels.ToList());
         }
 
+        GetComponent<LevelObjectConnector>().SetLineRenderers();
         GetComponent<EditorUI>().ToggleDeleteLevelButton();
     }
 }

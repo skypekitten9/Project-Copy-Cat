@@ -11275,6 +11275,10 @@ PrefabInstance:
       propertyPath: deletePrompt
       value: 
       objectReference: {fileID: 349857451}
+    - target: {fileID: 2303419457597482310, guid: 37011d202fcefda449f5491df7d0acad, type: 3}
+      propertyPath: lineRendererPrefab
+      value: 
+      objectReference: {fileID: 2840277694639033187, guid: 7e41dc8e0aeba9542bf5000ae5202b67, type: 3}
     - target: {fileID: 2303419457597482312, guid: 37011d202fcefda449f5491df7d0acad, type: 3}
       propertyPath: cursorIcon
       value: 

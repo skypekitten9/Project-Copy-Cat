@@ -9,14 +9,58 @@ public class LevelObjectConnector : MonoBehaviour
 {
     private Camera cam;
 
-
     public Dictionary<GameObject, List<int>> Connections { get; set; }
+
+    [SerializeField] private GameObject lineRendererPrefab;
+
+    private Transform lineRendererParent;
+
+    private List<VisualConnection> visualConnections;
 
 
     private void Awake()
     {
         cam = Camera.main;
+        ResetConnections();
+    }
+
+    public void ResetConnections()
+    {
+        if (lineRendererParent)
+            Destroy(lineRendererParent.gameObject);
+        lineRendererParent = new GameObject("LineRenderers").transform;
+
         Connections = new Dictionary<GameObject, List<int>>();
+        visualConnections = new List<VisualConnection>();
+    }
+
+    public void SetLineRenderers()
+    {
+        for (int i = Connections.Count - 1; i >= 0; i--)
+        {
+            for (int j = Connections.Count - 1; j >= 0; j--)
+            {
+                if (i != j)
+                {
+                    if (Connections.ElementAt(i).Key.GetComponent<ButtonScript>() ||
+                        Connections.ElementAt(i).Key.GetComponent<StandButton>() ||
+                        Connections.ElementAt(i).Key.GetComponent<LeverScript>())
+                    {
+                        if (Connections.ElementAt(i).Value.Count > 0 && Connections.ElementAt(j).Value.Contains(Connections.ElementAt(i).Value[0]))
+                        {
+                            SetLineRenderer(Connections.ElementAt(i).Key, Connections.ElementAt(j).Key);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void SetLineRenderer(GameObject from, GameObject to)
+    {
+        GameObject lr = Instantiate(lineRendererPrefab, lineRendererParent);
+        lr.GetComponent<VisualConnection>().From = from;
+        lr.GetComponent<VisualConnection>().To = to;
     }
 
     public void AddChannel()
@@ -57,13 +101,11 @@ public class LevelObjectConnector : MonoBehaviour
                     {
                         Connect(from, to);
                     }
-
                 }
 
                 GetComponent<Selector>().CanChangeCursor = true;
                 break;
             }
-
             yield return new WaitForSeconds(Time.deltaTime);
         }
     }
@@ -83,6 +125,8 @@ public class LevelObjectConnector : MonoBehaviour
                 Connections[reciever].Add(Connections[transmitter][0]);
             }
         }
+
+        SetLineRenderer(transmitter, reciever);
     }
 
     public void RemoveChannels(int channelId)
@@ -98,7 +142,6 @@ public class LevelObjectConnector : MonoBehaviour
             }
         }
     }
-
 
     private int GetNewId()
     {
@@ -153,5 +196,4 @@ public class LevelObjectConnector : MonoBehaviour
             }
         }
     }
-
 }
