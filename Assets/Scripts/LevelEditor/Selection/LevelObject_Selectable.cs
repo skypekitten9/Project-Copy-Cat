@@ -28,7 +28,6 @@ public class LevelObject_Selectable : Selectable
         boundingBox.transform.localPosition = GetComponent<Collider>().bounds.center;
 
         boundingBox.transform.parent = this.transform;
-        boundingBox.transform.localRotation = this.transform.parent.rotation;
 
         LevelEditor.Instance.selectedLevelObject = this;
     }
