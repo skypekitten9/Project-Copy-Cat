@@ -18,7 +18,6 @@ public class EditorUI : MonoBehaviour
     private bool objectsPanelVisible = false;
     private bool canShowHideObjectsPanel = true;
 
-
     [SerializeField] private GameObject saveAsPanel;
     [SerializeField] private TMP_InputField saveNameField;
 
@@ -28,13 +27,12 @@ public class EditorUI : MonoBehaviour
 
     public string FileName { get { return saveNameField.text; } }
 
-
     [SerializeField] private GameObject levelsPanel;
-    //[SerializeField] private GameObject playLevelPanel;
-
     [SerializeField] private GameObject levelButton;
 
     [SerializeField] private GameObject messageBox;
+
+    private float msgBoxDisplayTime = 3.0f;
 
 
     private void Start()
@@ -123,6 +121,7 @@ public class EditorUI : MonoBehaviour
         levelsPanel.SetActive(false);
         GetComponent<LevelDeleter>().CloseUI();
         ToggleDeleteLevelButton();
+        LevelEditor.Instance.CloseUI();
 
         menuOpen = false;
         hoveringUI = false;
@@ -217,14 +216,11 @@ public class EditorUI : MonoBehaviour
     }
 
 
-
-    private float visibleTime = 3.0f;
-
     public IEnumerator MessageBox(string message)
     {
         messageBox.GetComponentInChildren<TextMeshProUGUI>().text = message;
         messageBox.SetActive(true);
-        yield return new WaitForSeconds(visibleTime);
+        yield return new WaitForSeconds(msgBoxDisplayTime);
         messageBox.SetActive(false);
     }
 }

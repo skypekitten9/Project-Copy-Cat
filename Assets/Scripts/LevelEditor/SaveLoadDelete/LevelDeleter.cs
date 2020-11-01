@@ -21,14 +21,14 @@ public class LevelDeleter : MonoBehaviour
 
     public void ToggleDeletePrompt()
     {
-        bool active = !deletePrompt.activeSelf;
+        bool activate = !deletePrompt.activeSelf;
 
-        if (active)
+        if (activate)
             deletePrompt.transform.GetChild(0).GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = $"({GetComponent<LevelSaver>().SaveName}.json)";
 
         editorUI.CloseAllMenus();
-        EditorUI.menuOpen = active;
-        deletePrompt.SetActive(active);
+        EditorUI.menuOpen = activate;
+        deletePrompt.SetActive(activate);
 
     }
 

@@ -28,6 +28,10 @@ public class LevelEditor : MonoBehaviour
     public LevelObject_Selectable selectedLevelObject { get; set; } = null;
 
 
+    [SerializeField] private GameObject createNewPrompt;
+
+
+
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -37,6 +41,9 @@ public class LevelEditor : MonoBehaviour
 
         Tiles = new Tile_Selectable[maxTiles.x, maxTiles.y, maxTiles.z, 6];
         SetBoundingBox();
+
+        createNewPrompt.SetActive(false);
+        createNewPrompt.transform.position = new Vector3(Screen.width * 0.5f, Screen.height - 75, 0);
     }
 
 
@@ -184,4 +191,26 @@ public class LevelEditor : MonoBehaviour
         }
     }
 
+
+
+    public void ToggleCreateNewPrompt()
+    {
+        bool activate = !createNewPrompt.activeSelf;
+        GetComponent<EditorUI>().CloseAllMenus();
+        EditorUI.menuOpen = activate;
+
+        if (GetComponent<LevelSaver>().SaveName != "")
+        {
+            createNewPrompt.SetActive(activate);
+        }
+        else if (activate)
+        {
+            NewLevel();
+        }
+    }
+
+    public void CloseUI()
+    {
+        createNewPrompt.SetActive(false);
+    }
 }
