@@ -117,7 +117,6 @@ public class LevelObjectManager : MonoBehaviour
                 case TileDirection.Y_negative:
                     if (levelObjectTarget.CanPlaceOnCeiling == true)
                     {
-
                         levelObject.transform.localRotation = Quaternion.LookRotation(target.GetDirectionVector());
                         levelObject.transform.localEulerAngles += new Vector3(90.0f, 0, 0);
 
@@ -133,7 +132,6 @@ public class LevelObjectManager : MonoBehaviour
                 case TileDirection.Z_negative:
                     if (levelObjectTarget.CanPlaceOnWall == true)
                     {
-
                         levelObject.transform.localRotation = Quaternion.LookRotation(target.GetDirectionVector());
                         levelObject.transform.localEulerAngles += new Vector3(90.0f, 0, 0);
 

@@ -199,14 +199,7 @@ public class LevelEditor : MonoBehaviour
         GetComponent<EditorUI>().CloseAllMenus();
         EditorUI.menuOpen = activate;
 
-        if (GetComponent<LevelSaver>().SaveName != "")
-        {
-            createNewPrompt.SetActive(activate);
-        }
-        else if (activate)
-        {
-            NewLevel();
-        }
+        createNewPrompt.SetActive(activate);
     }
 
     public void CloseUI()

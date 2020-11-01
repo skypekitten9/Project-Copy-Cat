@@ -30,7 +30,6 @@ public class LevelObject_Selectable : Selectable
         boundingBox.transform.parent = this.transform;
         boundingBox.transform.localRotation = this.transform.parent.rotation;
 
-
         LevelEditor.Instance.selectedLevelObject = this;
     }
 
