@@ -62,7 +62,7 @@ public class LevelEditor : MonoBehaviour
 
         Tiles = new Tile_Selectable[maxTiles.x, maxTiles.y, maxTiles.z, 6];
 
-        GetComponent<LevelObjectConnector>().Connections.Clear();
+        GetComponent<LevelObjectConnector>().ResetConnections();
 
         if (GetComponent<LevelObjectManager>().LevelObjectsParent)
             Destroy(GetComponent<LevelObjectManager>().LevelObjectsParent.gameObject);
