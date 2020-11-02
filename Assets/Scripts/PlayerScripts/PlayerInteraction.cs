@@ -32,6 +32,11 @@ public class PlayerInteraction : MonoBehaviour
             Interact();
             PickUp();
         }
+
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            hit.collider.gameObject.GetComponent<PickUp>().Throw();
+        }
     }
 
     public void Interact()
@@ -78,7 +83,7 @@ public class PlayerInteraction : MonoBehaviour
                     }
                     else
                     {
-                        hit.collider.gameObject.GetComponent<PickUp>().Throw();
+                        hit.collider.gameObject.GetComponent<PickUp>().SetToNotHeld();
                     }
                 }
             }
