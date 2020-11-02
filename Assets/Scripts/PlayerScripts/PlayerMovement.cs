@@ -48,7 +48,6 @@ public class PlayerMovement : MonoBehaviour
 
     void Jump()
     {
-        Debug.Log("Jump!");
         rb.velocity = jumpSpeed * Vector3.up;
         //rb.AddForce(new Vector3(0, jumpForce, 0), ForceMode.Impulse);
         //jumpTimer = 0;

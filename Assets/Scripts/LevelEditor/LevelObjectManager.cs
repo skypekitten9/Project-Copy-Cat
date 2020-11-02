@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class LevelObjectManager : MonoBehaviour
 {
-    private Transform levelObjectsParent;
+    public Transform LevelObjectsParent { get; set; }
 
     private LevelObject selectedUIObject;
     private GameObject levelObjectInstance;
@@ -26,7 +26,6 @@ public class LevelObjectManager : MonoBehaviour
     private void Awake()
     {
         cursorIcon.SetActive(false);
-        levelObjectsParent = new GameObject("LevelObjects").transform;
         cam = Camera.main;
     }
 
@@ -48,12 +47,12 @@ public class LevelObjectManager : MonoBehaviour
             else if (selectedUIObject != null)
                 PlaceLevelObject(true);
 
-            GetComponent<EditorUI>().ClosePopupMenu();
+            GetComponent<EditorUI>().CloseAllMenus();
         }
         else if (Input.GetKey(KeyCode.Delete))
         {
             DestroyLevelObject();
-            GetComponent<EditorUI>().ClosePopupMenu();
+            GetComponent<EditorUI>().CloseAllMenus();
         }
     }
 
@@ -72,7 +71,7 @@ public class LevelObjectManager : MonoBehaviour
             cursorIcon.SetActive(true);
 
             selectedUIObject = levelObject;
-            levelObjectInstance = Instantiate(levelObject.Prefab, Input.mousePosition, Quaternion.identity, levelObjectsParent);
+            levelObjectInstance = Instantiate(levelObject.Prefab, Input.mousePosition, Quaternion.identity, LevelObjectsParent);
             levelObjectInstance.GetComponentInChildren<LevelObject_Selectable>().LevelObject = levelObject;
 
             GetComponent<LevelObjectConnector>().Connections.Add(levelObjectInstance, new List<int>());
@@ -118,7 +117,6 @@ public class LevelObjectManager : MonoBehaviour
                 case TileDirection.Y_negative:
                     if (levelObjectTarget.CanPlaceOnCeiling == true)
                     {
-
                         levelObject.transform.localRotation = Quaternion.LookRotation(target.GetDirectionVector());
                         levelObject.transform.localEulerAngles += new Vector3(90.0f, 0, 0);
 
@@ -134,7 +132,6 @@ public class LevelObjectManager : MonoBehaviour
                 case TileDirection.Z_negative:
                     if (levelObjectTarget.CanPlaceOnWall == true)
                     {
-
                         levelObject.transform.localRotation = Quaternion.LookRotation(target.GetDirectionVector());
                         levelObject.transform.localEulerAngles += new Vector3(90.0f, 0, 0);
 

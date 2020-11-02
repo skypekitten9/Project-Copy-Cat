@@ -9,7 +9,8 @@ public class DoorScript : MonoBehaviour
 
     [SerializeField] private int[] ids;
     bool isOpen, listenAfterAnimation;
-    float timer;
+    bool rewindIsOpen, rewindListenAfterAnimation;
+    float timer, rewindTimer;
 
     AudioSource audio;
 
@@ -23,6 +24,10 @@ public class DoorScript : MonoBehaviour
         isOpen = false;
         listenAfterAnimation = false;
         timer = 0;
+
+        rewindIsOpen = isOpen;
+        rewindListenAfterAnimation = listenAfterAnimation;
+        rewindTimer = timer;
     }
 
     private void Update()
@@ -79,6 +84,7 @@ public class DoorScript : MonoBehaviour
 
     void ToggleDoor(bool state)
     {
+        animator.speed = 1;
         SFXManager.Instance.PlayDoorClose(audio);
         animator.SetBool("isOpened", state);
         collider.enabled = !state;
@@ -92,6 +98,31 @@ public class DoorScript : MonoBehaviour
             animator.Play("Close");
         }
         timer = animator.GetCurrentAnimatorStateInfo(0).length;
+    }
 
+    public void SaveState()
+    {
+        rewindIsOpen = isOpen;
+        rewindListenAfterAnimation = listenAfterAnimation;
+        rewindTimer = timer;
+    }
+
+    public void Rewind()
+    {
+        isOpen = rewindIsOpen;
+        rewindListenAfterAnimation = listenAfterAnimation;
+        rewindTimer = timer;
+
+        animator.speed = 100;
+        if (isOpen)
+        {
+            animator.Play("Open");
+            collider.enabled = false;
+        }
+        else
+        {
+            animator.Play("Close");
+            collider.enabled = true;
+        }
     }
 }

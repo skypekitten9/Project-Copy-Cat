@@ -8,6 +8,7 @@ public class LeverScript : MonoBehaviour
     Animator animator;
     AudioSource audio;
     [SerializeField] public int id;
+    bool rewindState;
     float timer;
 
     void Start()
@@ -15,6 +16,7 @@ public class LeverScript : MonoBehaviour
         animator = gameObject.GetComponentInChildren<Animator>();
         audio = gameObject.GetComponent<AudioSource>();
         timer = 0;
+        rewindState = false;
     }
 
     private void Update()
@@ -24,11 +26,33 @@ public class LeverScript : MonoBehaviour
     public void SignalChannel()
     {
         if (timer > 0) return;
+        animator.speed = 1;
         TestLevelManager.Instance.interactablesArray[id] = !TestLevelManager.Instance.interactablesArray[id];
         animator.SetBool("isActive", TestLevelManager.Instance.interactablesArray[id]);
         TestLevelManager.Instance.UpdateChannels();
         //SFXManager.Instance.PlayButtonClick(audio);       //Ger errors
         if (GameObject.Find("Game Manager").GetComponent<RecordManager>().recordPhase == RecordPhase.Recording) GameObject.Find("SyncBar").GetComponent<SyncBar>().SpawnInteraction();
-        timer = animator.GetCurrentAnimatorStateInfo(0).length;
+        timer = 0.5f;
+    }
+
+    public void SaveState()
+    {
+        rewindState = TestLevelManager.Instance.interactablesArray[id];
+    }
+
+    public void Rewind()
+    {
+        TestLevelManager.Instance.interactablesArray[id] = rewindState;
+        animator.speed = 100;
+        if (rewindState)
+        {
+            animator.Play("Activate");
+        }
+        else
+        {
+            animator.Play("Deactivate");
+        }
+        animator.SetBool("isActive", TestLevelManager.Instance.interactablesArray[id]);
+        timer = 0;
     }
 }

@@ -93,6 +93,8 @@ public class RecordManager : MonoBehaviour
         recordPhase = RecordPhase.Recording;
 
         syncBar.StartBar();
+        GameObject.Find("LevelManager").GetComponent<TestLevelManager>().SaveDoorStates();
+        GameObject.Find("LevelManager").GetComponent<TestLevelManager>().SaveLeverStates();
 
         stopwatch.Restart();
         ChangeControlState(ControlStates.Holo);
@@ -125,6 +127,8 @@ public class RecordManager : MonoBehaviour
     public void StartPlayback()
     {
         syncBar.Replay();
+        GameObject.Find("LevelManager").GetComponent<TestLevelManager>().RewindDoors();
+        GameObject.Find("LevelManager").GetComponent<TestLevelManager>().RewindLevers();
 
         recordPhase = RecordPhase.PlayingBack;
         ChangeControlState(ControlStates.Player);
@@ -142,7 +146,6 @@ public class RecordManager : MonoBehaviour
             yield return new WaitForSeconds((float)(interactionData[i].Time - stopwatch.ElapsedMilliseconds) / 1000);
             for (int j = 0; j < interactionData[i].InteractionObjects.Length; j++)
             {
-                UnityEngine.Debug.Log("PLAYBACK INTERACTION");
                 if (interactionData[i].InteractionObjects[j].GetComponent<ButtonScript>() != null) interactionData[i].InteractionObjects[j].GetComponent<ButtonScript>().SignalChannel();
                 if (interactionData[i].InteractionObjects[j].GetComponent<LeverScript>() != null) interactionData[i].InteractionObjects[j].GetComponent<LeverScript>().SignalChannel();
             }
@@ -178,6 +181,7 @@ public class RecordManager : MonoBehaviour
         recordPhase = RecordPhase.StoppingPlayback;
 
         syncBar.Reset();
+        
 
         float fadeValue = 1;
         while (fadeValue > 0)
@@ -186,7 +190,9 @@ public class RecordManager : MonoBehaviour
             HoloInstance.GetComponentInChildren<SkinnedMeshRenderer>().material.SetFloat("Vector1_DCDBC5A6", fadeValue);
             yield return new WaitForFixedUpdate();
         }
-
+        HoloInstance.transform.position = new Vector3(1000, 1000, 1000);
+        //dances
+        yield return new WaitForSeconds(0.25f);
         //for (int i = 0; i < pickupData.Count; i++)
         //{
         //    for (int j = 0; j < pickupData[i].PickupObject.Length; j++)

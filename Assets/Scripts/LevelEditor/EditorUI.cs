@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class EditorUI : MonoBehaviour
 {
     public static bool hoveringUI = false;
-
+    public static bool menuOpen = false;
 
     [SerializeField] private GameObject objectsPanel;
     [SerializeField] private GameObject popupMenu;
@@ -17,15 +18,39 @@ public class EditorUI : MonoBehaviour
     private bool objectsPanelVisible = false;
     private bool canShowHideObjectsPanel = true;
 
+    [SerializeField] private GameObject saveAsPanel;
+    [SerializeField] private TMP_InputField saveNameField;
+
+    [SerializeField] private Button deleteButton;
+    [SerializeField] private Button saveAsButton;
+    [SerializeField] private Button saveButton;
+
+    public string FileName { get { return saveNameField.text; } }
+
+    [SerializeField] private GameObject levelsPanel;
+    [SerializeField] private GameObject levelButton;
+
+    [SerializeField] private GameObject messageBox;
+
+    private float msgBoxDisplayTime = 3.0f;
+
 
     private void Start()
     {
+        ToggleDeleteLevelButton();
+
         objectsRectTransform = objectsPanel.GetComponent<RectTransform>();
 
         if (objectsPanelVisible == false)
             objectsRectTransform.localPosition -= new Vector3(objectsRectTransform.rect.width, 0, 0);
 
         popupMenu.SetActive(false);
+        levelsPanel.SetActive(false);
+        levelsPanel.transform.position = new Vector3(Screen.width * 0.5f, Screen.height - 75, 0);
+        saveAsPanel.SetActive(false);
+        saveAsPanel.transform.position = new Vector3(Screen.width * 0.5f, Screen.height - 75, 0);
+        messageBox.SetActive(false);
+        messageBox.transform.position = new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0);
     }
 
 
@@ -39,7 +64,6 @@ public class EditorUI : MonoBehaviour
                 PointerExitUI();
         }
     }
-
 
     public void PointerEnterUI()
     {
@@ -90,10 +114,54 @@ public class EditorUI : MonoBehaviour
         }
     }
 
-    public void ClosePopupMenu()
+    public void CloseAllMenus()
     {
         popupMenu.SetActive(false);
+        saveAsPanel.SetActive(false);
+        levelsPanel.SetActive(false);
+        GetComponent<LevelDeleter>().CloseUI();
+        ToggleDeleteLevelButton();
+        LevelEditor.Instance.CloseUI();
+
+        menuOpen = false;
         hoveringUI = false;
+    }
+
+
+    public void ToggleSaveAsPanel()
+    {
+        bool shouldOpen = !saveAsPanel.activeSelf;
+        CloseAllMenus();
+        if (shouldOpen)
+        {
+            saveButton.interactable = GetComponent<LevelSaver>().SaveName != "";
+
+            saveAsPanel.SetActive(true);
+            saveNameField.Select();
+            menuOpen = true;
+        }
+    }
+
+    public void ToggleSaveAsButton()
+    {
+        saveAsButton.interactable = FileName == "" ? false : true;
+    }
+    public void ToggleDeleteLevelButton()
+    {
+        deleteButton.interactable = GetComponent<LevelSaver>().SaveName != "";
+    }
+
+    public void ToggleLevelsPanel()
+    {
+        bool shouldOpen = !levelsPanel.activeSelf;
+        CloseAllMenus();
+        if (shouldOpen)
+        {
+            FillLevelsList();
+            levelsPanel.SetActive(true);
+            hoveringUI = true;
+            menuOpen = true;
+        }
     }
 
     private void UpdatePopupItemsInteractable()
@@ -127,6 +195,32 @@ public class EditorUI : MonoBehaviour
     public void DestroyLevelObject()
     {
         LevelEditor.Instance.GetComponent<LevelObjectManager>().DestroyLevelObject();
-        ClosePopupMenu();
+        CloseAllMenus();
+    }
+
+
+    private void FillLevelsList()
+    {
+        DirectoryInfo dir = new System.IO.DirectoryInfo(Application.dataPath + $"/Resources/LevelData");
+        FileInfo[] levelData = dir.GetFiles("*.json");
+
+        Transform content = levelsPanel.GetComponentInChildren<GridLayoutGroup>().transform;
+
+        for (int i = 0; i < content.childCount; i++)
+            Destroy(content.GetChild(i).gameObject);
+
+        foreach (FileInfo level in levelData)
+        {
+            Instantiate(this.levelButton, content).GetComponent<LevelDataLinker>().SetLevelData(level);
+        }
+    }
+
+
+    public IEnumerator MessageBox(string message)
+    {
+        messageBox.GetComponentInChildren<TextMeshProUGUI>().text = message;
+        messageBox.SetActive(true);
+        yield return new WaitForSeconds(msgBoxDisplayTime);
+        messageBox.SetActive(false);
     }
 }

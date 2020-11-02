@@ -59,6 +59,7 @@ public class StandButton : MonoBehaviour
             TestLevelManager.Instance.UpdateChannels();
         }
         animator.SetBool("isPressed", status);
+        if (GameObject.Find("Game Manager").GetComponent<RecordManager>().recordPhase == RecordPhase.Recording) GameObject.Find("SyncBar").GetComponent<SyncBar>().SpawnStandState(status);
         SFXManager.Instance.PlayButtonClick(audio);
     }
 

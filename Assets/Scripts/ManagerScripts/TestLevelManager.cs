@@ -13,6 +13,7 @@ public class TestLevelManager : MonoBehaviour
     //Listan som håller alla bools för om dörrar ska vara stängda eller öppna.
     public bool[] interactablesArray;
     [SerializeField] private List<GameObject> doorList;
+    [SerializeField] private List<GameObject> leverList;
 
 
     [SerializeField] private Level[] levels;
@@ -41,8 +42,10 @@ public class TestLevelManager : MonoBehaviour
 
         interactablesArray = new bool[30];
         doorList = new List<GameObject>();
+        leverList = new List<GameObject>();
 
         ListAllDoors();
+        ListAllLevers();
         SetTestValues();
     }
 
@@ -66,10 +69,53 @@ public class TestLevelManager : MonoBehaviour
         }
     }
 
+    public void SaveDoorStates()
+    {
+        foreach (GameObject door in doorList)
+        {
+            door.GetComponent<DoorScript>().SaveState();
+        }
+    }
+
+    public void RewindDoors()
+    {
+        
+        foreach (GameObject door in doorList)
+        {
+            door.GetComponent<DoorScript>().Rewind();
+        }
+    }
+
+    public void SaveLeverStates()
+    {
+        foreach (GameObject lever in leverList)
+        {
+            lever.GetComponent<LeverScript>().SaveState();
+        }
+    }
+
+    public void RewindLevers()
+    {
+
+        foreach (GameObject lever in leverList)
+        {
+            lever.GetComponent<LeverScript>().Rewind();
+        }
+    }
+
     //Samlar alla dörrar i scenen i en lista.
     private void ListAllDoors()
     {
         doorList.AddRange(GameObject.FindGameObjectsWithTag("Door"));
+    }
+
+    private void ListAllLevers()
+    {
+        leverList.AddRange(GameObject.FindGameObjectsWithTag("Interactable"));
+        for (int i = 0; i < leverList.Count; i++)
+        {
+            if (leverList[i].GetComponent<LeverScript>() == null) leverList.RemoveAt(i);
+        }
     }
 
     //Sätter alla channels till false vid start.

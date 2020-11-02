@@ -32,6 +32,11 @@ public class PlayerInteraction : MonoBehaviour
             Interact();
             PickUp();
         }
+
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            hit.collider.gameObject.GetComponent<PickUp>().Throw();
+        }
     }
 
     public void Interact()
@@ -42,7 +47,6 @@ public class PlayerInteraction : MonoBehaviour
             {
                 if (hit.collider.tag == "Interactable")
                 {
-                    Debug.Log("Hit interactable!");
                     if (hit.collider.gameObject.GetComponent<ButtonScript>() != null) hit.collider.gameObject.GetComponent<ButtonScript>().SignalChannel();
                     if (hit.collider.gameObject.GetComponent<LeverScript>() != null) hit.collider.gameObject.GetComponent<LeverScript>().SignalChannel();
 
@@ -79,7 +83,7 @@ public class PlayerInteraction : MonoBehaviour
                     }
                     else
                     {
-                        hit.collider.gameObject.GetComponent<PickUp>().Throw();
+                        hit.collider.gameObject.GetComponent<PickUp>().SetToNotHeld();
                     }
                 }
             }
