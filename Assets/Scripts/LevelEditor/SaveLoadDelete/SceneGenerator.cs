@@ -6,30 +6,25 @@ using UnityEngine.SceneManagement;
 
 public class SceneGenerator : MonoBehaviour
 {
-    public void Generate()
+    [SerializeField] private GameObject masterPrefabs;
+
+    public void Generate(FileInfo levelData)
     {
         DirectoryInfo levelsDir = new System.IO.DirectoryInfo(Application.dataPath + $"/Resources/LevelData");
         DirectoryInfo scenesDir = new System.IO.DirectoryInfo(Application.dataPath + $"/Scenes/Levels");
-        string masterSceneDir = Application.dataPath + $"/Scenes/MasterScene.unity";
-
-        FileInfo[] levelData = levelsDir.GetFiles("*.json");
 
 
-        foreach (FileInfo level in levelData)
-        {
-            Scene scene = EditorSceneManager.GetSceneByName(level.Name);
+        Scene scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
+        scene.name = $"{Path.GetFileNameWithoutExtension(levelData.FullName)}";
 
-            if (scene.IsValid() == false)
-            {
-                scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
-                scene.name = $"{Path.GetFileNameWithoutExtension(level.FullName)}";
-            }
+        Instantiate(masterPrefabs);
 
-            GameObject.CreatePrimitive(PrimitiveType.Cube);
 
-            EditorSceneManager.SaveScene(scene, $"{scenesDir.FullName}/{scene.name}.unity");
-        }
-        
+        Debug.Log($"Level saved to scene: {scene.name}");
+        EditorSceneManager.SaveScene(scene, $"{scenesDir.FullName}/{scene.name}.unity");
         EditorSceneManager.OpenScene(Application.dataPath + $"/Scenes/LevelEditor/LevelEditor.unity");
+
+
+
     }
 }
