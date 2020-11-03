@@ -66,7 +66,7 @@ public class PickUp : MonoBehaviour
     {
         holdState = HoldState.HELD;
         body.useGravity = false;
-        body.detectCollisions = true;
+        //body.detectCollisions = true;
     }
 
     public void SetToNotHeld()
@@ -100,7 +100,10 @@ public class PickUp : MonoBehaviour
     //Stub to be för att lösa kollision med väggar när man bär runt objekt.
     private void OnCollisionEnter(Collision collision)
     {
-
+        if (IsHeld())
+        {
+            SetToNotHeld();
+        }
     }
 
 

@@ -71,10 +71,8 @@ public class LevelObjectManager : MonoBehaviour
             cursorIcon.SetActive(true);
 
             selectedUIObject = levelObject;
-            levelObjectInstance = Instantiate(levelObject.Prefab, Input.mousePosition, Quaternion.identity, LevelObjectsParent);
-            levelObjectInstance.GetComponentInChildren<LevelObject_Selectable>().LevelObject = levelObject;
 
-            GetComponent<LevelObjectConnector>().Connections.Add(levelObjectInstance, new List<int>());
+            CreateLevelObject(levelObject, Input.mousePosition, Vector3.zero);
 
             selector.SetCursor(CursorModes.Move);
             selector.CanChangeCursor = false;
@@ -88,6 +86,13 @@ public class LevelObjectManager : MonoBehaviour
         }
     }
 
+    public void CreateLevelObject(LevelObject levelObject, Vector3 position, Vector3 rotation)
+    {
+        levelObjectInstance = Instantiate(levelObject.Prefab, position, Quaternion.Euler(rotation), LevelObjectsParent);
+        levelObjectInstance.GetComponentInChildren<LevelObject_Selectable>().LevelObject = levelObject;
+
+        GetComponent<LevelObjectConnector>().Connections.Add(levelObjectInstance, new List<int>());
+    }
 
     public void MoveLevelObject(GameObject levelObject)
     {
