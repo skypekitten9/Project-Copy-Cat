@@ -57,6 +57,7 @@ MonoBehaviour:
   boundingBox: {fileID: 0}
   createNewPrompt: {fileID: 0}
   spawnPortals: {fileID: 11400000, guid: f20ac682442a1e34888a5dd78e39d3ff, type: 2}
+  goalPortal: {fileID: 11400000, guid: 9c8fb6108ead8744c95d6124d81d45bd, type: 2}
 --- !u!114 &2303419457597482314
 MonoBehaviour:
   m_ObjectHideFlags: 0

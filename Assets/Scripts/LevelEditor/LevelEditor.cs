@@ -29,6 +29,7 @@ public class LevelEditor : MonoBehaviour
 
 
     [SerializeField] private LevelObject spawnPortals;
+    [SerializeField] private LevelObject goalPortal;
 
 
 
@@ -107,6 +108,7 @@ public class LevelEditor : MonoBehaviour
         }
 
         GetComponent<LevelObjectManager>().CreateLevelObject(spawnPortals, new Vector3(-8, -7, 0), new Vector3(0, -90, 0));
+        GetComponent<LevelObjectManager>().CreateLevelObject(goalPortal, new Vector3(8, -7, 0), new Vector3(0, 0, 0));
     }
 
 
