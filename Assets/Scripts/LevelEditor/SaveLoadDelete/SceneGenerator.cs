@@ -29,7 +29,7 @@ public class SceneGenerator : MonoBehaviour
 
             EditorSceneManager.SaveScene(scene, $"{scenesDir.FullName}/{scene.name}.unity");
         }
-
-        //EditorSceneManager.OpenScenec);
+        
+        EditorSceneManager.OpenScene(Application.dataPath + $"/Scenes/LevelEditor/LevelEditor.unity");
     }
 }
