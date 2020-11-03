@@ -11,13 +11,14 @@ public class GoalChecker : MonoBehaviour
         {
             if (other.gameObject == PlayerManager.Instance.gameObject)
             {
+                /*
                 int nextBuildIndex = TestLevelManager.Instance.Levels[SceneManager.GetActiveScene().buildIndex].nextLevelIndex;
                 if (nextBuildIndex == -1)
                     nextBuildIndex = SceneManager.GetActiveScene().buildIndex + 1;
 
 
                 TestLevelManager.Instance.GetComponent<SceneTransition>().ChangeToScene(nextBuildIndex);
-
+                */
             }
         }
         catch (System.Exception) { }

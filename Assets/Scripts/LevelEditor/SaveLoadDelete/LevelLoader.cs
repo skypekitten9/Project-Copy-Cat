@@ -44,4 +44,11 @@ public class LevelLoader : MonoBehaviour
         GetComponent<LevelObjectConnector>().SetLineRenderers();
         GetComponent<EditorUI>().ToggleDeleteLevelButton();
     }
+
+
+    public void LoadToScene(string jsonData, string levelName)
+    {
+
+    }
+
 }
