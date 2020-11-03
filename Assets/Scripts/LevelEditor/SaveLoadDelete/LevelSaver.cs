@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelSaver : MonoBehaviour
 {
@@ -32,9 +34,10 @@ public class LevelSaver : MonoBehaviour
         if (SaveName != "")
         {
             GetComponent<EditorUI>().CloseAllMenus();
-            SetData();
 
+            SetData();
             SaveJSON(SaveName, true);
+            SaveToScene(SaveName);
 
             GetComponent<EditorUI>().ToggleDeleteLevelButton();
 
@@ -48,7 +51,9 @@ public class LevelSaver : MonoBehaviour
         SetData();
 
         SaveName = GetComponent<EditorUI>().FileName;
-        SaveJSON(SaveName);
+        string saveName = SaveJSON(SaveName);
+
+        SaveToScene(saveName);
     }
 
 
@@ -113,7 +118,7 @@ public class LevelSaver : MonoBehaviour
         }
     }
 
-    private void SaveJSON(string fileName, bool overwrite = false)
+    private string SaveJSON(string fileName, bool overwrite = false)
     {
         string levelData = JsonUtility.ToJson(data);
 
@@ -132,6 +137,25 @@ public class LevelSaver : MonoBehaviour
         System.IO.File.WriteAllText(path, levelData);
 
         Debug.Log($"Saving Level to: \"{path}\"");
+
+        return Path.GetFileNameWithoutExtension(path);
     }
 
+
+    private void SaveToScene(string fileName)
+    {
+        //Scene scene = SceneManager.GetSceneByName(fileName);
+
+        //if (scene.IsValid())
+        //{
+        //    Debug.Log($"Scene: {fileName} exists!");
+        //}
+        //else
+        //{
+        //    Debug.Log($"Can't find scene: {fileName}. Creating new scene");
+
+        //    scene = SceneManager.CreateScene(fileName);
+        //}
+
+    }
 }
