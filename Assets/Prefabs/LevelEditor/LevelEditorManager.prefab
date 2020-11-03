@@ -56,6 +56,7 @@ MonoBehaviour:
   tilePrefab: {fileID: 1553481241576147018, guid: 2e252de5ca2face43b4e91cd0648e074, type: 3}
   boundingBox: {fileID: 0}
   createNewPrompt: {fileID: 0}
+  spawnPortals: {fileID: 11400000, guid: f20ac682442a1e34888a5dd78e39d3ff, type: 2}
 --- !u!114 &2303419457597482314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -138,6 +139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cdce84ca593acd42b517cadeda01def, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lineRendererPrefab: {fileID: 2840277694639033187, guid: 7e41dc8e0aeba9542bf5000ae5202b67, type: 3}
 --- !u!114 &2303419457597482311
 MonoBehaviour:
   m_ObjectHideFlags: 0

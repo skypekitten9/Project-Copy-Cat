@@ -14,7 +14,6 @@ public class LevelEditor : MonoBehaviour
     [SerializeField] private bool debug = false;
     public bool Debug { get { return debug; } }
 
-
     [SerializeField] private GameObject tilePrefab;
     [SerializeField] private GameObject boundingBox;
 
@@ -23,12 +22,13 @@ public class LevelEditor : MonoBehaviour
     public readonly Vector3Int maxTiles = new Vector3Int(21, 15, 21);
     public Tile_Selectable[,,,] Tiles { get; private set; }
 
-
     public List<Tile_Selectable> selectedTiles { get; set; } = new List<Tile_Selectable>();
     public LevelObject_Selectable selectedLevelObject { get; set; } = null;
 
-
     [SerializeField] private GameObject createNewPrompt;
+
+
+    [SerializeField] private LevelObject spawnPortals;
 
 
 
@@ -105,6 +105,8 @@ public class LevelEditor : MonoBehaviour
                 PlaceTile(x, y, 14, TileDirection.Z_negative);
             }
         }
+
+        GetComponent<LevelObjectManager>().CreateLevelObject(spawnPortals, new Vector3(-8, -7, 0), new Vector3(0, -90, 0));
     }
 
 
