@@ -24,7 +24,7 @@ public class LevelObject_Selectable : Selectable
 
         GameObject boundingBox = Instantiate(levelObjectManager.LevelObjectBoundingBox);
 
-        boundingBox.transform.localScale = GetComponent<Collider>().bounds.size / 2 + new Vector3(0.1f, 0.1f, 0.1f);
+        boundingBox.transform.localScale = GetComponent<Collider>().bounds.size + new Vector3(0.1f, 0.1f, 0.1f);
         boundingBox.transform.localPosition = GetComponent<Collider>().bounds.center;
 
         boundingBox.transform.parent = this.transform;

@@ -5,13 +5,18 @@ using UnityEngine;
 public class LevelLoader : MonoBehaviour
 {
 
-    public void LoadToEditor(string jsonData, string levelName)
+    public void LoadLevel(string jsonData, string levelName)
     {
         GetComponent<LevelSaver>().SaveName = levelName;
 
         Debug.Log($"Loaded: {levelName}.json");
         StartCoroutine(GetComponent<EditorUI>().MessageBox($"Loaded level: {levelName}"));
 
+        LoadLevel(jsonData);
+    }
+
+    public void LoadLevel(string jsonData)
+    {
         LevelData data = JsonUtility.FromJson<LevelData>(jsonData);
 
         if (LevelEditor.Instance.TilesParent)
@@ -57,7 +62,7 @@ public class LevelLoader : MonoBehaviour
             }
         }
 
-        Debug.LogError($"Function \"IdToObject\" fail. No object matches id: {id}");
+        Debug.LogError($"Function \"IdToObject\" failed. No object matches id: {id}");
         return null;
     }
 }
