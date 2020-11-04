@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using UnityEngine;
 
 public class LevelLoader : MonoBehaviour
@@ -28,11 +29,10 @@ public class LevelLoader : MonoBehaviour
             Destroy(GetComponent<LevelObjectManager>().LevelObjectsParent.gameObject);
         Transform parent = GetComponent<LevelObjectManager>().LevelObjectsParent = new GameObject("LevelObjects").transform;
 
-        LevelObject[] levelObjectResources = Resources.LoadAll<LevelObject>("Objects");
 
         for (int i = 0; i < data.levelObjectData.Length; i++)
         {
-            LevelObject levelObject = levelObjectResources[data.levelObjectData[i].levelObjectId];
+            LevelObject levelObject = IdToObject(data.levelObjectData[i].levelObjectId);
 
             GameObject instance = Instantiate(levelObject.Prefab, data.levelObjectData[i].position, Quaternion.Euler(data.levelObjectData[i].rotation), parent);
             instance.GetComponentInChildren<LevelObject_Selectable>().LevelObject = levelObject;
@@ -44,4 +44,20 @@ public class LevelLoader : MonoBehaviour
         GetComponent<EditorUI>().ToggleDeleteLevelButton();
     }
 
+
+    public static LevelObject IdToObject(int id)
+    {
+        LevelObject[] levelObjectResources = Resources.LoadAll<LevelObject>("Objects");
+
+        foreach (LevelObject lo in levelObjectResources)
+        {
+            if (id == Int32.Parse(lo.name.Split('_')[0]))
+            {
+                return lo;
+            }
+        }
+
+        Debug.LogError($"Function \"IdToObject\" fail. No object matches id: {id}");
+        return null;
+    }
 }

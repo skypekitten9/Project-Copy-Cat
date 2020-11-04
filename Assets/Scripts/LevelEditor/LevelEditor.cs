@@ -19,7 +19,7 @@ public class LevelEditor : MonoBehaviour
 
     public Transform TilesParent { get; set; }
 
-    public readonly Vector3Int maxTiles = new Vector3Int(21, 15, 21);
+    public static readonly Vector3Int maxTiles = new Vector3Int(21, 15, 21);
     public Tile_Selectable[,,,] Tiles { get; private set; }
 
     public List<Tile_Selectable> selectedTiles { get; set; } = new List<Tile_Selectable>();
@@ -107,7 +107,7 @@ public class LevelEditor : MonoBehaviour
             }
         }
 
-        GetComponent<LevelObjectManager>().CreateLevelObject(spawnPortals, new Vector3(-8, -7, 0), new Vector3(0, -90, 0));
+        GetComponent<LevelObjectManager>().CreateLevelObject(spawnPortals, new Vector3(-8, -7, 0), new Vector3(0, 0, 0));
         GetComponent<LevelObjectManager>().CreateLevelObject(goalPortal, new Vector3(8, -7, 0), new Vector3(0, 0, 0));
     }
 
@@ -139,7 +139,7 @@ public class LevelEditor : MonoBehaviour
         DestroyTile(xyz.x, xyz.y, xyz.z, i);
     }
 
-    public Vector3 IndexToWorldPos(int x, int y, int z, TileDirection i)
+    public static Vector3 IndexToWorldPos(int x, int y, int z, TileDirection i)
     {
         Vector3 worldPos = new Vector3(2 * (x - maxTiles.x / 2), 2 * (y - maxTiles.y / 2), 2 * (z - maxTiles.z / 2));
 
@@ -168,7 +168,7 @@ public class LevelEditor : MonoBehaviour
         return worldPos;
     }
 
-    private Quaternion IndexToRotation(TileDirection i)
+    public static Quaternion IndexToRotation(TileDirection i)
     {
         switch (i)
         {

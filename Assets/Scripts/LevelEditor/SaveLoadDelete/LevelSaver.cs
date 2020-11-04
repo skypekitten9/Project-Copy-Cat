@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
@@ -37,7 +38,6 @@ public class LevelSaver : MonoBehaviour
 
             SetData();
             SaveJSON(SaveName, true);
-            SaveToScene(SaveName);
 
             GetComponent<EditorUI>().ToggleDeleteLevelButton();
 
@@ -52,8 +52,6 @@ public class LevelSaver : MonoBehaviour
 
         SaveName = GetComponent<EditorUI>().FileName;
         string saveName = SaveJSON(SaveName);
-
-        SaveToScene(saveName);
     }
 
 
@@ -61,17 +59,13 @@ public class LevelSaver : MonoBehaviour
     {
         data = new LevelData();
 
-        int maxTiles_X = LevelEditor.Instance.maxTiles.x;
-        int maxTiles_Y = LevelEditor.Instance.maxTiles.y;
-        int maxTiles_Z = LevelEditor.Instance.maxTiles.z;
-
         List<TileData> tileData_temp = new List<TileData>();
 
-        for (int x = 0; x < maxTiles_X; x++)
+        for (int x = 0; x < LevelEditor.maxTiles.x; x++)
         {
-            for (int y = 0; y < maxTiles_Y; y++)
+            for (int y = 0; y < LevelEditor.maxTiles.y; y++)
             {
-                for (int z = 0; z < maxTiles_Z; z++)
+                for (int z = 0; z < LevelEditor.maxTiles.z; z++)
                 {
                     for (int i = 0; i < 6; i++)
                     {
@@ -104,7 +98,7 @@ public class LevelSaver : MonoBehaviour
             {
                 if (levelObject.GetComponentInChildren<LevelObject_Selectable>().LevelObject == levelObjectResources[r])
                 {
-                    levelObjectId = r;
+                    levelObjectId = Int32.Parse(levelObjectResources[r].name.Split('_')[0]);
                     break;
                 }
             }
@@ -139,23 +133,5 @@ public class LevelSaver : MonoBehaviour
         Debug.Log($"Saving Level to: \"{path}\"");
 
         return Path.GetFileNameWithoutExtension(path);
-    }
-
-
-    private void SaveToScene(string fileName)
-    {
-        //Scene scene = SceneManager.GetSceneByName(fileName);
-
-        //if (scene.IsValid())
-        //{
-        //    Debug.Log($"Scene: {fileName} exists!");
-        //}
-        //else
-        //{
-        //    Debug.Log($"Can't find scene: {fileName}. Creating new scene");
-
-        //    scene = SceneManager.CreateScene(fileName);
-        //}
-
     }
 }
