@@ -4419,8 +4419,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 932021229}
   m_HandleRect: {fileID: 932021228}
   m_Direction: 2
-  m_Value: 0.99999964
-  m_Size: 0.5243909
+  m_Value: 0.9999998
+  m_Size: 0.52439094
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -11443,9 +11443,5 @@ PrefabInstance:
       propertyPath: m_Name
       value: SceneGenerator
       objectReference: {fileID: 0}
-    - target: {fileID: 4845120891484125595, guid: 84a004c1133962f439dde0573bfed18b, type: 3}
-      propertyPath: playerPrefab
-      value: 
-      objectReference: {fileID: 2746281143397562987, guid: 4de34e5f395c11c498c2030bbd01ca1b, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 84a004c1133962f439dde0573bfed18b, type: 3}

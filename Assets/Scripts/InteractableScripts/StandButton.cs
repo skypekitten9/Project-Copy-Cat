@@ -6,6 +6,7 @@ public class StandButton : MonoBehaviour
 {
 
     [SerializeField] private int id;
+    public int Id { set { id = value; } }
 
     Animator animator;
 

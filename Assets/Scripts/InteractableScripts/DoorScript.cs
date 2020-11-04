@@ -8,6 +8,8 @@ public class DoorScript : MonoBehaviour
     public bool toggle;
 
     [SerializeField] private int[] ids;
+    public int[] Ids { set { ids = value; } }
+
     bool isOpen, listenAfterAnimation;
     bool rewindIsOpen, rewindListenAfterAnimation;
     float timer, rewindTimer;

@@ -4,13 +4,14 @@ using System.IO;
 using UnityEditor.SceneManagement;
 using UnityEngine.SceneManagement;
 using System;
+using System.Collections.Generic;
 
 public class SceneGenerator : MonoBehaviour
 {
     [SerializeField] private GameObject masterPrefabs;
+    [SerializeField] private LightingSettings lightingSettings;
     [SerializeField] private GameObject sceneTile;
     [SerializeField] private GameObject playerPrefab;
-
 
     public void Generate(FileInfo levelDataFile)
     {
@@ -26,6 +27,7 @@ public class SceneGenerator : MonoBehaviour
         #endregion
 
         PopulateScene(data);
+        ApplyLightSettings();
 
         #region Save & Exit Scene
         Debug.Log($"Level saved to scene: {scene.name}");
@@ -40,9 +42,10 @@ public class SceneGenerator : MonoBehaviour
         Instantiate(masterPrefabs);
 
         Transform levelObjectsParent = new GameObject("LevelObjects").transform;
+        List<GameObject> levelObjects = new List<GameObject>();
         foreach (var lod in data.levelObjectData)
         {
-            Instantiate(LevelLoader.IdToObject(lod.levelObjectId).Prefab, lod.position, Quaternion.Euler(lod.rotation), levelObjectsParent);
+            levelObjects.Add(Instantiate(LevelLoader.IdToObject(lod.levelObjectId).Prefab, lod.position, Quaternion.Euler(lod.rotation), levelObjectsParent));
         }
 
         Transform tilesParent = new GameObject("Tiles").transform;
@@ -52,5 +55,26 @@ public class SceneGenerator : MonoBehaviour
         }
 
         Instantiate(playerPrefab, levelObjectsParent.GetChild(0).GetChild(0).position + new Vector3(0, 0.6f, 0), levelObjectsParent.GetChild(0).rotation);
+
+        for (int i = 0; i < data.connectionsData.Length; i++)
+        {
+            if (data.connectionsData[i].channels.Length > 0)
+            {
+                if (levelObjects[i].GetComponent<ButtonScript>())
+                    levelObjects[i].GetComponent<ButtonScript>().Id = data.connectionsData[i].channels[0];
+                else if (levelObjects[i].GetComponent<StandButton>())
+                    levelObjects[i].GetComponent<StandButton>().Id = data.connectionsData[i].channels[0];
+                else if (levelObjects[i].GetComponent<LeverScript>())
+                    levelObjects[i].GetComponent<LeverScript>().Id = data.connectionsData[i].channels[0];
+                else if (levelObjects[i].GetComponent<DoorScript>())
+                    levelObjects[i].GetComponent<DoorScript>().Ids = data.connectionsData[i].channels;
+            }
+        }
+    }
+
+
+    private void ApplyLightSettings()
+    {
+        Lightmapping.lightingSettings = lightingSettings;
     }
 }

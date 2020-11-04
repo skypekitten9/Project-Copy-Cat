@@ -8,7 +8,8 @@ public class ButtonScript : MonoBehaviour
     Animator animator;
     AudioSource audio;
     [SerializeField] public int id;
-    
+    public int Id { set { id = value; } }
+
     void Start()
     {
         animator = gameObject.GetComponentInChildren<Animator>();
