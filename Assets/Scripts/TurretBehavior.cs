@@ -11,6 +11,7 @@ public class TurretBehavior : MonoBehaviour
     Animator animator;
     TurretState state, nextState;
     Vector3 distanceToTarget;
+    LineRenderer lineRenderer;
     public float fireRange, targetRange, patrolRange, viewAngle;
     public float chargeTime;
     public float patrolSpeed, targetSpeed;
@@ -33,23 +34,21 @@ public class TurretBehavior : MonoBehaviour
         targetSpeed = targetSpeed * 10;
         patrolSpeed = patrolSpeed * 10;
         amountTurned = 0;
+
+        lineRenderer = gameObject.GetComponent<LineRenderer>();
+        lineRenderer.SetPosition(0, eye.transform.position);
+        lineRenderer.startWidth = 0.02f;
+        lineRenderer.endWidth = 0.02f;
+        lineRenderer.enabled = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (PlayerManager.Instance == null)
-            return;
-        distanceToTarget = PlayerManager.Instance.transform.position - eye.transform.position;
-        if (GameManager.Instance.GetComponent<RecordManager>().HoloInstance != null)
-            distanceToTarget = GameManager.Instance.GetComponent<RecordManager>().HoloInstance.transform.position - eye.transform.position;
+        if (PlayerManager.Instance == null) return;
+        distanceToTarget = CalculateDistanceToPlayer();
 
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            animator.SetBool("isIdle", true);
-            animator.Play("Idle");
-        }
-
+        DrawLineRenderer();
         if (animationPlaying) animationTimer -= Time.deltaTime;
         switch (state)
         {
@@ -70,6 +69,30 @@ public class TurretBehavior : MonoBehaviour
         }
         Debug.Log(state);
         Debug.Log(head.transform.rotation.eulerAngles.y);
+    }
+
+    Vector3 CalculateDistanceToPlayer()
+    {
+        Vector3 result;
+        result = PlayerManager.Instance.transform.position - eye.transform.position;
+        if (GameManager.Instance.GetComponent<RecordManager>().HoloInstance != null)
+            result = GameManager.Instance.GetComponent<RecordManager>().HoloInstance.transform.position - eye.transform.position;
+
+        return result;
+    }
+
+    void DrawLineRenderer()
+    {
+        Ray ray = new Ray(eye.transform.position, eye.transform.forward);
+        RaycastHit hit;
+        Vector3 endPos = eye.transform.position + (100 * eye.transform.forward);
+        if(Physics.Raycast(ray, out hit, 100))
+        {
+            endPos = hit.point;
+        }
+
+        lineRenderer.SetPosition(0, eye.transform.position);
+        lineRenderer.SetPosition(1, endPos);
     }
 
     void Disabled()
