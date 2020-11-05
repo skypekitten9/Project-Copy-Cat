@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using System.Threading;
 using UnityEngine;
 
 enum TurretState {Disabled, Patroling, Targeting, Fireing}
@@ -17,9 +18,9 @@ public class TurretBehavior : MonoBehaviour
     public float patrolSpeed, targetSpeed;
     bool transition, animationPlaying;
     float animationTimer;
-    float amountTurned;
-
-
+    Quaternion patrolLeftRotation, patrolRightRotation, defaultRotation, currentRotation;
+    int patrolState;
+    private float timeCount;
 
     void Start()
     {
@@ -31,9 +32,12 @@ public class TurretBehavior : MonoBehaviour
         distanceToTarget = Vector3.positiveInfinity;
         transition = false;
         animationPlaying = false;
-        targetSpeed = targetSpeed * 10;
-        patrolSpeed = patrolSpeed * 10;
-        amountTurned = 0;
+        defaultRotation = head.transform.rotation;
+        currentRotation = defaultRotation;
+        patrolRightRotation = Quaternion.Euler(head.transform.rotation.eulerAngles.x, head.transform.rotation.eulerAngles.y + viewAngle / 2, head.transform.rotation.eulerAngles.z);
+        patrolLeftRotation = Quaternion.Euler(head.transform.rotation.eulerAngles.x, head.transform.rotation.eulerAngles.y + viewAngle / -2, head.transform.rotation.eulerAngles.z);
+        patrolState = 0;
+
 
         lineRenderer = gameObject.GetComponent<LineRenderer>();
         lineRenderer.SetPosition(0, eye.transform.position);
@@ -68,7 +72,7 @@ public class TurretBehavior : MonoBehaviour
                 break;
         }
         Debug.Log(state);
-        Debug.Log(head.transform.rotation.eulerAngles.y);
+        Debug.Log(Vector3.Angle(new Vector3(distanceToTarget.x, 0, distanceToTarget.z), new Vector3(eye.transform.forward.x, 0, eye.transform.forward.z)));
     }
 
     Vector3 CalculateDistanceToPlayer()
@@ -121,10 +125,6 @@ public class TurretBehavior : MonoBehaviour
 
     void Patroling()
     {
-        if(transition)
-        {
-
-        }
         switch (nextState)
         {
             case TurretState.Disabled:
@@ -145,11 +145,9 @@ public class TurretBehavior : MonoBehaviour
                 }
                 break;
             case TurretState.Patroling:
-                amountTurned += patrolSpeed * Time.deltaTime;
-                head.transform.Rotate(0, patrolSpeed * Time.deltaTime, 0);
-                if (amountTurned >= viewAngle / 2  || amountTurned <= viewAngle/2 *-1) patrolSpeed *= -1;
+                TurnTurret();
 
-                if (distanceToTarget.magnitude <= targetRange)
+                if (distanceToTarget.magnitude <= targetRange && Vector3.Angle(new Vector3(distanceToTarget.x, 0, distanceToTarget.z), new Vector3(eye.transform.forward.x, 0, eye.transform.forward.z)) < viewAngle / 2)
                 {
                     nextState = TurretState.Targeting;
 
@@ -157,7 +155,7 @@ public class TurretBehavior : MonoBehaviour
                 else if (distanceToTarget.magnitude > patrolRange)
                 {
                     nextState = TurretState.Disabled;
-                    transition = true;
+                    
                 }
                 break;
             case TurretState.Targeting:
@@ -168,8 +166,45 @@ public class TurretBehavior : MonoBehaviour
         }
     }
 
+    void TurnTurret()
+    {
+        timeCount = timeCount + Time.deltaTime;
+        switch (patrolState)
+        {
+            case 0:
+                head.transform.rotation = Quaternion.Slerp(defaultRotation, patrolRightRotation, timeCount);
+                if (timeCount >= 1)
+                {
+                    patrolState = 1;
+                    timeCount = 0;
+                }
+                break;
+
+            case 1:
+                head.transform.rotation = Quaternion.Slerp(patrolRightRotation, patrolLeftRotation, timeCount);
+                if (timeCount >= 1)
+                {
+                    patrolState = 2;
+                    timeCount = 0;
+                }
+                break;
+
+            case 2:
+                head.transform.rotation = Quaternion.Slerp(patrolLeftRotation, patrolRightRotation, timeCount);
+                if (timeCount >= 1)
+                {
+                    patrolState = 1;
+                    timeCount = 0;
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
     void Targeting()
     {
+        timeCount = timeCount + Time.deltaTime;
         if (distanceToTarget.magnitude <= fireRange)
         {
             state = TurretState.Fireing;
