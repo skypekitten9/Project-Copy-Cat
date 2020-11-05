@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 957c7f606cbc0934ca22c6c92e69fd52, type: 3}
   m_Name: 04_Lever
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: 3debe0c083eeec94a93866c23e284768, type: 3}
+  icon: {fileID: 21300000, guid: 145ecac92a336a14ea5fe04ff40a7f5c, type: 3}
   prefab: {fileID: 1013307021267144202, guid: 4089759a0298f7949b511ea68b11862f, type: 3}
   canPlaceOnGround: 1
   canPlaceOnCeiling: 0

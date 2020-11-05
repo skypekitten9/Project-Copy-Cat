@@ -54,7 +54,7 @@ public class LevelEditor : MonoBehaviour
     private void SetBoundingBox()
     {
         boundingBox.transform.position = new Vector3(0, 0, 0);
-        boundingBox.transform.localScale = maxTiles + new Vector3(0.1f, 0.1f, 0.1f);
+        boundingBox.transform.localScale = maxTiles * (int)tileSize + new Vector3(0.1f, 0.1f, 0.1f);
     }
 
 

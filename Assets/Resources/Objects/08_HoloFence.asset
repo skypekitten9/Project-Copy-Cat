@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 957c7f606cbc0934ca22c6c92e69fd52, type: 3}
   m_Name: 08_HoloFence
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: fb513a5524c23064aae5fccd334bd2ab, type: 3}
+  icon: {fileID: 21300000, guid: 3debe0c083eeec94a93866c23e284768, type: 3}
   prefab: {fileID: 0}
   canPlaceOnGround: 1
   canPlaceOnCeiling: 0

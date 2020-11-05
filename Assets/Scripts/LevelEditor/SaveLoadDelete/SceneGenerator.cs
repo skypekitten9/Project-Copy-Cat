@@ -5,6 +5,7 @@ using UnityEditor.SceneManagement;
 using UnityEngine.SceneManagement;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public class SceneGenerator : MonoBehaviour
 {
@@ -56,18 +57,37 @@ public class SceneGenerator : MonoBehaviour
 
         Instantiate(playerPrefab, levelObjectsParent.GetChild(0).GetChild(0).position + new Vector3(0, 0.6f, 0), levelObjectsParent.GetChild(0).rotation);
 
+
+        List<int> pressButtonIds = new List<int>();
         for (int i = 0; i < data.connectionsData.Length; i++)
         {
             if (data.connectionsData[i].channels.Length > 0)
             {
                 if (levelObjects[i].GetComponent<ButtonScript>())
+                {
                     levelObjects[i].GetComponent<ButtonScript>().Id = data.connectionsData[i].channels[0];
+                    pressButtonIds.Add(data.connectionsData[i].channels[0]);
+                }
                 else if (levelObjects[i].GetComponent<StandButton>())
                     levelObjects[i].GetComponent<StandButton>().Id = data.connectionsData[i].channels[0];
                 else if (levelObjects[i].GetComponent<LeverScript>())
                     levelObjects[i].GetComponent<LeverScript>().Id = data.connectionsData[i].channels[0];
                 else if (levelObjects[i].GetComponent<DoorScript>())
                     levelObjects[i].GetComponent<DoorScript>().Ids = data.connectionsData[i].channels;
+            }
+        }
+        for (int i = 0; i < data.connectionsData.Length; i++)
+        {
+            DoorScript door = levelObjects[i].GetComponent<DoorScript>();
+            if (door)
+            {
+                for (int j = 0; j < pressButtonIds.Count; j++)
+                {
+                    if (levelObjects[i].GetComponent<DoorScript>().Ids.Contains(pressButtonIds[j]))
+                    {
+                        door.toggle = true;
+                    }
+                }
             }
         }
     }
