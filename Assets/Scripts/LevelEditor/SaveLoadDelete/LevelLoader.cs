@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -34,7 +35,6 @@ public class LevelLoader : MonoBehaviour
             Destroy(GetComponent<LevelObjectManager>().LevelObjectsParent.gameObject);
         Transform parent = GetComponent<LevelObjectManager>().LevelObjectsParent = new GameObject("LevelObjects").transform;
 
-
         for (int i = 0; i < data.levelObjectData.Length; i++)
         {
             LevelObject levelObject = IdToObject(data.levelObjectData[i].levelObjectId);
@@ -43,7 +43,13 @@ public class LevelLoader : MonoBehaviour
             instance.GetComponentInChildren<LevelObject_Selectable>().LevelObject = levelObject;
 
             GetComponent<LevelObjectConnector>().Connections.Add(instance, data.connectionsData[i].channels.ToList());
+
+            if (instance.GetComponent<PowerCable>())
+            {
+                GetComponent<PowerCableGrid>().SetCable(instance);
+            }
         }
+        GetComponent<PowerCableGrid>().UpdateCables();
 
         GetComponent<LevelObjectConnector>().SetLineRenderers();
         GetComponent<EditorUI>().ToggleDeleteLevelButton();

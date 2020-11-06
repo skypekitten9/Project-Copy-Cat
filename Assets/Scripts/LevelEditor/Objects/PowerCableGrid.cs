@@ -3,43 +3,43 @@ using UnityEngine;
 
 public class PowerCableGrid : MonoBehaviour
 {
-    private Dictionary<GameObject, Vector3Int> powerCables;
+    public Dictionary<GameObject, Vector3Int> PowerCables { get; set; }
 
 
     private void Awake()
     {
-        powerCables = new Dictionary<GameObject, Vector3Int>();
+        PowerCables = new Dictionary<GameObject, Vector3Int>();
     }
 
     public void SetCable(GameObject instance)
     {
         Vector3Int value = WorldPosToIndex(instance.transform.position, instance.transform.rotation);
 
-        if (powerCables.ContainsKey(instance))
+        if (PowerCables.ContainsKey(instance))
         {
-            powerCables[instance] = value;
+            PowerCables[instance] = value;
         }
         else
         {
-            powerCables.Add(instance, value);
+            PowerCables.Add(instance, value);
         }
         UpdateCables();
     }
 
     public void RemoveCable(GameObject instance)
     {
-        powerCables.Remove(instance);
+        PowerCables.Remove(instance);
         UpdateCables();
     }
 
     public void UpdateCables()
     {
         Debug.Log("Updating cables");
-        foreach (var cable in powerCables)
+        foreach (var cable in PowerCables)
         {
             int meshIndex = 0;
 
-            foreach (var cable2 in powerCables)
+            foreach (var cable2 in PowerCables)
             {
                 if (cable.Key == cable2.Key)
                     continue;
@@ -101,9 +101,9 @@ public class PowerCableGrid : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (powerCables != null)
+        if (PowerCables != null)
         {
-            foreach (var cable in powerCables)
+            foreach (var cable in PowerCables)
             {
                 Vector3 position = cable.Key.transform.position + cable.Key.transform.up * 0.1f;
                 Vector3 cableRight = cable.Key.transform.right;

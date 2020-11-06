@@ -86,6 +86,7 @@ public class LevelSaver : MonoBehaviour
 
         LevelObject[] levelObjectResources = Resources.LoadAll<LevelObject>("Objects");
 
+        List<int> powerCableMeshIds_temp = new List<int>();
 
         for (int i = 0; i < levelObjectConnector.Connections.Count; i++)
         {
@@ -109,7 +110,13 @@ public class LevelSaver : MonoBehaviour
 
             data.connectionsData[i] = new ConnectionData();
             data.connectionsData[i].channels = levelObjectConnector.Connections.ElementAt(i).Value.ToArray();
+
+            if (levelObject.GetComponent<PowerCable>())
+            {
+                powerCableMeshIds_temp.Add(levelObject.GetComponent<PowerCable>().MeshId);
+            }
         }
+        data.powerCableData = powerCableMeshIds_temp.ToArray();
     }
 
     private string SaveJSON(string fileName, bool overwrite = false)

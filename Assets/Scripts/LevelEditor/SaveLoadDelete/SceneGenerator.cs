@@ -44,9 +44,16 @@ public class SceneGenerator : MonoBehaviour
 
         Transform levelObjectsParent = new GameObject("LevelObjects").transform;
         List<GameObject> levelObjects = new List<GameObject>();
+        int cableCounter = 0;
         foreach (var lod in data.levelObjectData)
         {
-            levelObjects.Add(Instantiate(LevelLoader.IdToObject(lod.levelObjectId).Prefab, lod.position, Quaternion.Euler(lod.rotation), levelObjectsParent));
+            GameObject instance = Instantiate(LevelLoader.IdToObject(lod.levelObjectId).Prefab, lod.position, Quaternion.Euler(lod.rotation), levelObjectsParent);
+            levelObjects.Add(instance);
+
+            if (instance.GetComponent<PowerCable>())
+            {
+                instance.GetComponent<PowerCable>().SetCableMesh(data.powerCableData[cableCounter++]);
+            }
         }
 
         Transform tilesParent = new GameObject("Tiles").transform;
