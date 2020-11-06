@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 using System.Threading;
 using UnityEngine;
 
-enum TurretState {Disabled, Patroling, Targeting, Fireing, Busy}
+enum TurretState {Disabled, Patroling, Targeting, Busy}
 
 public class TurretBehavior : MonoBehaviour
 {
@@ -63,9 +63,6 @@ public class TurretBehavior : MonoBehaviour
                 break;
             case TurretState.Targeting:
                 Targeting();
-                break;
-            case TurretState.Fireing:
-                Fireing();
                 break;
             case TurretState.Busy:
                 break;
@@ -175,11 +172,6 @@ public class TurretBehavior : MonoBehaviour
         }
         
     }
-
-    void Fireing()
-    {
-        
-    }
     #endregion
 
     #region Transitions
@@ -210,9 +202,6 @@ public class TurretBehavior : MonoBehaviour
                 StartCoroutine(ToPatroling());
                 break;
             case TurretState.Targeting:
-                transitioningTo = false;
-                break;
-            case TurretState.Fireing:
                 transitioningTo = false;
                 break;
             case TurretState.Busy:
@@ -264,9 +253,6 @@ public class TurretBehavior : MonoBehaviour
                 transitioningFrom = false;
                 break;
             case TurretState.Targeting:
-                transitioningFrom = false;
-                break;
-            case TurretState.Fireing:
                 transitioningFrom = false;
                 break;
             case TurretState.Busy:
