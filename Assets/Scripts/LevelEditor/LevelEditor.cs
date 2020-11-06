@@ -72,6 +72,8 @@ public class LevelEditor : MonoBehaviour
             Destroy(GetComponent<LevelObjectManager>().LevelObjectsParent.gameObject);
         GetComponent<LevelObjectManager>().LevelObjectsParent = new GameObject("LevelObjects").transform;
 
+        GetComponent<PowerCableGrid>().PowerCables.Clear();
+
         GetComponent<LevelSaver>().SaveName = "";
         GetComponent<EditorUI>().CloseAllMenus();
     }
@@ -171,7 +173,6 @@ public class LevelEditor : MonoBehaviour
                 return Quaternion.identity;
         }
     }
-
 
 
     public void ToggleCreateNewPrompt()
