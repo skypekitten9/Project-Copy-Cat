@@ -14,6 +14,8 @@ public class PlayerInteraction : MonoBehaviour
 
     private float rayRange;
 
+    private bool isHolding = false;
+
     void Start()
     {
         cameraTransform = gameObject.GetComponentInChildren<Camera>().transform;
@@ -33,9 +35,10 @@ public class PlayerInteraction : MonoBehaviour
             PickUp();
         }
 
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (Input.GetKeyDown(KeyCode.Mouse0) && isHolding)
         {
             hit.collider.gameObject.GetComponent<PickUp>().Throw();
+            isHolding = false;
         }
     }
 
@@ -55,7 +58,15 @@ public class PlayerInteraction : MonoBehaviour
                         GameManager.Instance.GetComponent<RecordManager>().AddInteractionNode(hit.collider.gameObject);
                     }
                 }
+                else
+                {
+                    return;
+                }
             }
+        }
+        else
+        {
+            return;
         }
     }
 
@@ -74,6 +85,7 @@ public class PlayerInteraction : MonoBehaviour
                         {
                             hit.collider.gameObject.GetComponent<PickUp>().tempParent = pickUpTransform.gameObject;
                             hit.collider.gameObject.GetComponent<PickUp>().SetToHeld();
+                            isHolding = true;
                         }
 
                         if (GameManager.Instance.GetComponent<RecordManager>().recordPhase == RecordPhase.Recording)
@@ -86,7 +98,15 @@ public class PlayerInteraction : MonoBehaviour
                         hit.collider.gameObject.GetComponent<PickUp>().SetToNotHeld();
                     }
                 }
+                else
+                {
+                    return;
+                }
             }
+        }
+        else
+        {
+            return;
         }
     }
 
