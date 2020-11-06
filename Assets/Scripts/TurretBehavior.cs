@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 using System.Threading;
 using UnityEngine;
 
-enum TurretState {Disabled, Patroling, Targeting, Fireing, Busy}
+enum TurretState {Disabled, Patroling, Targeting, Busy}
 
 public class TurretBehavior : MonoBehaviour
 {
@@ -14,12 +14,15 @@ public class TurretBehavior : MonoBehaviour
     TurretState state;
     Vector3 distanceToTarget;
     LineRenderer lineRenderer;
+    ParticleSystem particleSysEye, particleSysHit;
+    Renderer eyeRender, hitRender;
     public float fireRange, targetRange, patrolRange, viewAngle;
     public float chargeTime;
     public float patrolSpeed, targetSpeed;
     bool transitioningFrom, transitioningTo, patrolRight, fireing;
     Quaternion patrolLeftRotation, patrolRightRotation, defaultRotation, currentRotation;
-    private float timeCount, charge;
+    private float timeCount, charge, particleHitSize, particleEyeSize, particleHitSpeed, particleEyeSpeed;
+    Color defaultColor, chargedColor;
 
     void Start()
     {
@@ -35,6 +38,7 @@ public class TurretBehavior : MonoBehaviour
         patrolRight = true;
         fireing = false;
         charge = 0;
+        
 
 
         lineRenderer = gameObject.GetComponent<LineRenderer>();
@@ -43,6 +47,18 @@ public class TurretBehavior : MonoBehaviour
         lineRenderer.startWidth = 0.02f;
         lineRenderer.endWidth = 0.02f;
         lineRenderer.enabled = true;
+        particleSysEye = GameObject.Find("ParticleSys_Eye").GetComponent<ParticleSystem>();
+        particleSysHit = GameObject.Find("ParticleSys_Hit").GetComponent<ParticleSystem>();
+        eyeRender = GameObject.Find("ParticleSys_Eye").GetComponent<ParticleSystemRenderer>();
+        hitRender = GameObject.Find("ParticleSys_Hit").GetComponent<ParticleSystemRenderer>();
+        defaultColor = eyeRender.material.GetColor("Color_D3EC0E17");
+        chargedColor = Color.red;
+        particleSysEye.Stop();
+
+        particleHitSize = particleSysHit.startSize;
+        particleEyeSize = particleSysEye.startSize;
+        particleHitSpeed = particleSysHit.startSpeed;
+        particleEyeSpeed = particleSysEye.startSpeed;
     }
 
     // Update is called once per frame
@@ -52,6 +68,8 @@ public class TurretBehavior : MonoBehaviour
         if (PlayerManager.Instance == null) return;
         timeCount = timeCount + Time.deltaTime;
         distanceToTarget = CalculateDistanceToPlayerFrom(head.transform.position);
+        HandleLaserEffects();
+        
 
         switch (state)
         {
@@ -63,9 +81,6 @@ public class TurretBehavior : MonoBehaviour
                 break;
             case TurretState.Targeting:
                 Targeting();
-                break;
-            case TurretState.Fireing:
-                Fireing();
                 break;
             case TurretState.Busy:
                 break;
@@ -98,6 +113,45 @@ public class TurretBehavior : MonoBehaviour
 
         lineRenderer.SetPosition(0, eye.transform.position);
         lineRenderer.SetPosition(1, endPos);
+        particleSysHit.transform.position = endPos;
+    }
+
+    void HandleLaserEffects()
+    {
+        lineRenderer.startWidth = 0.02f + charge / 10;
+        lineRenderer.endWidth = 0.02f + charge / 10;
+        particleSysHit.startSize = particleHitSize + charge / 30;
+        particleSysHit.startSpeed = particleHitSpeed + charge/2;
+        if(charge > 0)
+        {
+            if(!particleSysEye.isPlaying)
+            {
+                particleSysEye.Play();
+            }
+        }
+        else
+        {
+            particleSysEye.Stop();
+        }
+        if (charge>=1)
+        {
+            ColorLaser(chargedColor);
+            //particleSysEye.startSpeed = particleEyeSpeed + charge;
+            //particleSysEye.startSize = particleEyeSize + charge / 20;
+        }
+        else
+        {
+            ColorLaser(defaultColor);
+            //particleSysEye.startSpeed = particleEyeSpeed;
+            //particleSysEye.startSize = particleEyeSize;
+        }
+    }
+
+    void ColorLaser(Color color)
+    {
+        lineRenderer.material.SetColor("Color_D3EC0E17", color);
+        eyeRender.material.SetColor("Color_D3EC0E17", color);
+        hitRender.material.SetColor("Color_D3EC0E17", color);
     }
 
     #region Updates
@@ -142,6 +196,7 @@ public class TurretBehavior : MonoBehaviour
 
     void Targeting()
     {
+        
         if (charge > 1) charge = 1;
         if (charge < 0) charge = 0;
         if (distanceToTarget.magnitude <= fireRange)
@@ -155,7 +210,11 @@ public class TurretBehavior : MonoBehaviour
                     StartCoroutine(Fire());
                 }
             }
-            else fireing = false;
+        }
+        else
+        {
+            charge -= Time.deltaTime / 2f;
+            fireing = false;
         }
         head.transform.rotation = Quaternion.Lerp(head.transform.rotation, Quaternion.LookRotation(Quaternion.Euler(0, 90, 0) * new Vector3(distanceToTarget.x, 0, distanceToTarget.z)), Time.deltaTime * targetSpeed);
         if (distanceToTarget.magnitude > targetRange)
@@ -173,11 +232,6 @@ public class TurretBehavior : MonoBehaviour
             PlayerManager.Instance.DamagePlayer(10);
             yield return new WaitForSeconds(0.1f);
         }
-        
-    }
-
-    void Fireing()
-    {
         
     }
     #endregion
@@ -210,9 +264,6 @@ public class TurretBehavior : MonoBehaviour
                 StartCoroutine(ToPatroling());
                 break;
             case TurretState.Targeting:
-                transitioningTo = false;
-                break;
-            case TurretState.Fireing:
                 transitioningTo = false;
                 break;
             case TurretState.Busy:
@@ -264,10 +315,7 @@ public class TurretBehavior : MonoBehaviour
                 transitioningFrom = false;
                 break;
             case TurretState.Targeting:
-                transitioningFrom = false;
-                break;
-            case TurretState.Fireing:
-                transitioningFrom = false;
+                StartCoroutine(FromTargeting());
                 break;
             case TurretState.Busy:
                 transitioningFrom = false;
@@ -283,6 +331,16 @@ public class TurretBehavior : MonoBehaviour
         animator.Play("Awake");
         yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
         animator.enabled = false;
+        transitioningFrom = false;
+    }
+
+    IEnumerator FromTargeting()
+    {
+        while (charge > 0)
+        {
+            charge -= Time.deltaTime;
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
         transitioningFrom = false;
     }
     #endregion
