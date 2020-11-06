@@ -14,12 +14,15 @@ public class TurretBehavior : MonoBehaviour
     TurretState state;
     Vector3 distanceToTarget;
     LineRenderer lineRenderer;
+    ParticleSystem particleSysEye, particleSysHit;
+    Renderer eyeRender, hitRender;
     public float fireRange, targetRange, patrolRange, viewAngle;
     public float chargeTime;
     public float patrolSpeed, targetSpeed;
     bool transitioningFrom, transitioningTo, patrolRight, fireing;
     Quaternion patrolLeftRotation, patrolRightRotation, defaultRotation, currentRotation;
-    private float timeCount, charge;
+    private float timeCount, charge, particleHitSize, particleEyeSize, particleHitSpeed, particleEyeSpeed;
+    Color defaultColor, chargedColor;
 
     void Start()
     {
@@ -35,6 +38,7 @@ public class TurretBehavior : MonoBehaviour
         patrolRight = true;
         fireing = false;
         charge = 0;
+        
 
 
         lineRenderer = gameObject.GetComponent<LineRenderer>();
@@ -43,6 +47,18 @@ public class TurretBehavior : MonoBehaviour
         lineRenderer.startWidth = 0.02f;
         lineRenderer.endWidth = 0.02f;
         lineRenderer.enabled = true;
+        particleSysEye = GameObject.Find("ParticleSys_Eye").GetComponent<ParticleSystem>();
+        particleSysHit = GameObject.Find("ParticleSys_Hit").GetComponent<ParticleSystem>();
+        eyeRender = GameObject.Find("ParticleSys_Eye").GetComponent<ParticleSystemRenderer>();
+        hitRender = GameObject.Find("ParticleSys_Hit").GetComponent<ParticleSystemRenderer>();
+        defaultColor = eyeRender.material.GetColor("Color_D3EC0E17");
+        chargedColor = Color.red;
+        particleSysEye.Stop();
+
+        particleHitSize = particleSysHit.startSize;
+        particleEyeSize = particleSysEye.startSize;
+        particleHitSpeed = particleSysHit.startSpeed;
+        particleEyeSpeed = particleSysEye.startSpeed;
     }
 
     // Update is called once per frame
@@ -52,8 +68,8 @@ public class TurretBehavior : MonoBehaviour
         if (PlayerManager.Instance == null) return;
         timeCount = timeCount + Time.deltaTime;
         distanceToTarget = CalculateDistanceToPlayerFrom(head.transform.position);
-        lineRenderer.startWidth = 0.02f + charge / 10;
-        lineRenderer.endWidth = 0.02f + charge / 10;
+        HandleLaserEffects();
+        
 
         switch (state)
         {
@@ -97,6 +113,45 @@ public class TurretBehavior : MonoBehaviour
 
         lineRenderer.SetPosition(0, eye.transform.position);
         lineRenderer.SetPosition(1, endPos);
+        particleSysHit.transform.position = endPos;
+    }
+
+    void HandleLaserEffects()
+    {
+        lineRenderer.startWidth = 0.02f + charge / 10;
+        lineRenderer.endWidth = 0.02f + charge / 10;
+        particleSysHit.startSize = particleHitSize + charge / 30;
+        particleSysHit.startSpeed = particleHitSpeed + charge/2;
+        if(charge > 0)
+        {
+            if(!particleSysEye.isPlaying)
+            {
+                particleSysEye.Play();
+            }
+        }
+        else
+        {
+            particleSysEye.Stop();
+        }
+        if (charge>=1)
+        {
+            ColorLaser(chargedColor);
+            //particleSysEye.startSpeed = particleEyeSpeed + charge;
+            //particleSysEye.startSize = particleEyeSize + charge / 20;
+        }
+        else
+        {
+            ColorLaser(defaultColor);
+            //particleSysEye.startSpeed = particleEyeSpeed;
+            //particleSysEye.startSize = particleEyeSize;
+        }
+    }
+
+    void ColorLaser(Color color)
+    {
+        lineRenderer.material.SetColor("Color_D3EC0E17", color);
+        eyeRender.material.SetColor("Color_D3EC0E17", color);
+        hitRender.material.SetColor("Color_D3EC0E17", color);
     }
 
     #region Updates

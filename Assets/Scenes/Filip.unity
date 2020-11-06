@@ -1021,6 +1021,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Turret
       objectReference: {fileID: 0}
+    - target: {fileID: 1458574602512234060, guid: 0391279a701ee0a4da7445e1a48e9517, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 1458574602512234060, guid: 0391279a701ee0a4da7445e1a48e9517, type: 3}
+      propertyPath: ShapeModule.radius.value
+      value: 0.0001
+      objectReference: {fileID: 0}
+    - target: {fileID: 1458574602512234060, guid: 0391279a701ee0a4da7445e1a48e9517, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 0.1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0391279a701ee0a4da7445e1a48e9517, type: 3}
 --- !u!1001 &2746281143179113316
