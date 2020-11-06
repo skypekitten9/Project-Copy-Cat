@@ -15,10 +15,10 @@ public class TurretBehavior : MonoBehaviour
     LineRenderer lineRenderer;
     public float fireRange, targetRange, patrolRange, viewAngle;
     public float chargeTime;
-    public float patrolMaxSpeed, targetSpeed, patrolAcceleration;
+    public float patrolSpeed, targetSpeed;
     bool transitioningFrom, transitioningTo, patrolRight;
     Quaternion patrolLeftRotation, patrolRightRotation, defaultRotation, currentRotation;
-    private float timeCount, patrolSpeed;
+    private float timeCount;
 
     void Start()
     {
@@ -32,7 +32,6 @@ public class TurretBehavior : MonoBehaviour
         patrolRightRotation = Quaternion.Euler(head.transform.rotation.eulerAngles.x, head.transform.rotation.eulerAngles.y + viewAngle / 2, head.transform.rotation.eulerAngles.z);
         patrolLeftRotation = Quaternion.Euler(head.transform.rotation.eulerAngles.x, head.transform.rotation.eulerAngles.y + viewAngle / -2, head.transform.rotation.eulerAngles.z);
         patrolRight = true;
-        patrolSpeed = 0;
 
 
         lineRenderer = gameObject.GetComponent<LineRenderer>();
