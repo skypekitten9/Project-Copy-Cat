@@ -4,20 +4,19 @@ using System.Security.Cryptography;
 using System.Threading;
 using UnityEngine;
 
-enum TurretState {Disabled, Patroling, Targeting, Fireing}
+enum TurretState {Disabled, Patroling, Targeting, Fireing, Busy}
 
 public class TurretBehavior : MonoBehaviour
 {
     GameObject head, eye;
     Animator animator;
-    TurretState state, nextState;
+    TurretState state;
     Vector3 distanceToTarget;
     LineRenderer lineRenderer;
     public float fireRange, targetRange, patrolRange, viewAngle;
     public float chargeTime;
     public float patrolSpeed, targetSpeed;
-    bool transition, animationPlaying;
-    float animationTimer;
+    bool transitioningFrom, transitioningTo;
     Quaternion patrolLeftRotation, patrolRightRotation, defaultRotation, currentRotation;
     int patrolState;
     private float timeCount;
@@ -28,10 +27,9 @@ public class TurretBehavior : MonoBehaviour
         head = GameObject.Find("Turret_Head");
         eye = GameObject.Find("Turret_Eye");
         state = TurretState.Disabled;
-        nextState = TurretState.Disabled;
         distanceToTarget = Vector3.positiveInfinity;
-        transition = false;
-        animationPlaying = false;
+        transitioningFrom = false;
+        transitioningFrom = false;
         defaultRotation = head.transform.rotation;
         currentRotation = defaultRotation;
         patrolRightRotation = Quaternion.Euler(head.transform.rotation.eulerAngles.x, head.transform.rotation.eulerAngles.y + viewAngle / 2, head.transform.rotation.eulerAngles.z);
@@ -49,11 +47,11 @@ public class TurretBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        timeCount = timeCount + Time.deltaTime;
         if (PlayerManager.Instance == null) return;
         distanceToTarget = CalculateDistanceToPlayer();
 
         DrawLineRenderer();
-        if (animationPlaying) animationTimer -= Time.deltaTime;
         switch (state)
         {
             case TurretState.Disabled:
@@ -68,11 +66,13 @@ public class TurretBehavior : MonoBehaviour
             case TurretState.Fireing:
                 Fireing();
                 break;
+            case TurretState.Busy:
+                break;
             default:
                 break;
         }
-        Debug.Log(state);
-        Debug.Log(Vector3.Angle(new Vector3(distanceToTarget.x, 0, distanceToTarget.z), new Vector3(eye.transform.forward.x, 0, eye.transform.forward.z)));
+        //Debug.Log(state);
+        //Debug.Log(distanceToTarget.magnitude + " and " + patrolRange);
     }
 
     Vector3 CalculateDistanceToPlayer()
@@ -99,76 +99,9 @@ public class TurretBehavior : MonoBehaviour
         lineRenderer.SetPosition(1, endPos);
     }
 
-    void Disabled()
-    {
-        if (transition && animationPlaying && animationTimer <= 0)
-        {
-            animator.enabled = false;
-            animationPlaying = false;
-            transition = false;
-            state = TurretState.Patroling;
-            nextState = TurretState.Patroling;
-            return;
-        }
-        if(transition && !animationPlaying)
-        {
-            animator.enabled = true;
-            animator.Play("Awake");
-            animationPlaying = true;
-            animationTimer = animator.GetCurrentAnimatorStateInfo(0).length;
-        }
-        if (distanceToTarget.magnitude <= patrolRange && !transition)
-        {
-            transition = true;
-        }
-    }
-
-    void Patroling()
-    {
-        switch (nextState)
-        {
-            case TurretState.Disabled:
-                if (animationPlaying && animationTimer <= 0)
-                {
-                    animator.enabled = false;
-                    animationPlaying = false;
-                    transition = false;
-                    state = TurretState.Disabled;
-                    return;
-                }
-                if (!animationPlaying)
-                {
-                    animator.enabled = true;
-                    animator.Play("Sleep");
-                    animationPlaying = true;
-                    animationTimer = animator.GetCurrentAnimatorStateInfo(0).length;
-                }
-                break;
-            case TurretState.Patroling:
-                TurnTurret();
-
-                if (distanceToTarget.magnitude <= targetRange && Vector3.Angle(new Vector3(distanceToTarget.x, 0, distanceToTarget.z), new Vector3(eye.transform.forward.x, 0, eye.transform.forward.z)) < viewAngle / 2)
-                {
-                    nextState = TurretState.Targeting;
-
-                }
-                else if (distanceToTarget.magnitude > patrolRange)
-                {
-                    nextState = TurretState.Disabled;
-                    
-                }
-                break;
-            case TurretState.Targeting:
-                state = TurretState.Targeting;
-                break;
-            default:
-                break;
-        }
-    }
-
     void TurnTurret()
     {
-        timeCount = timeCount + Time.deltaTime;
+        
         switch (patrolState)
         {
             case 0:
@@ -202,28 +135,126 @@ public class TurretBehavior : MonoBehaviour
         }
     }
 
+    #region Updates
+    void Disabled()
+    {
+        if(distanceToTarget.magnitude <= patrolRange)
+        {
+            StartCoroutine(Transition(state, TurretState.Patroling));
+        }
+    }
+
+    void Patroling()
+    {
+        if (distanceToTarget.magnitude > patrolRange)
+        {
+            StartCoroutine(Transition(state, TurretState.Disabled));
+        }
+    }
+
     void Targeting()
     {
-        timeCount = timeCount + Time.deltaTime;
-        if (distanceToTarget.magnitude <= fireRange)
-        {
-            state = TurretState.Fireing;
-            nextState = TurretState.Fireing;
 
-        }
-        else if (distanceToTarget.magnitude > targetRange)
-        {
-            state = TurretState.Patroling;
-            nextState = TurretState.Patroling;
-        }
     }
 
     void Fireing()
     {
-        if (distanceToTarget.magnitude > fireRange)
+    }
+    #endregion
+
+    #region Transitions
+    IEnumerator Transition(TurretState from, TurretState to)
+    {
+        Debug.Log("Transitioning...");
+        state = TurretState.Busy;
+        currentRotation = head.transform.rotation;
+        timeCount = 0;
+        transitioningFrom = true;
+        transitioningTo = true;
+        TransitionFrom(from);
+        while (transitioningFrom) yield return new WaitForSeconds(Time.deltaTime);
+        Debug.Log("From finished!");
+        TransitionTo(to);
+        while (transitioningTo) yield return new WaitForSeconds(Time.deltaTime);
+        state = to;
+        Debug.Log("To finished!");
+        yield return new WaitForEndOfFrame();
+    }
+
+    #region To
+    void TransitionTo(TurretState transitionState)
+    {
+        switch (transitionState)
         {
-            state = TurretState.Targeting;
-            nextState = TurretState.Targeting;
+            case TurretState.Disabled:
+                StartCoroutine(ToDisabled());
+                break;
+            case TurretState.Patroling:
+                transitioningTo = false;
+                break;
+            case TurretState.Targeting:
+                transitioningTo = false;
+                break;
+            case TurretState.Fireing:
+                transitioningTo = false;
+                break;
+            case TurretState.Busy:
+                transitioningTo = false;
+                break;
+            default:
+                transitioningTo = false;
+                break;
         }
     }
+
+    IEnumerator ToDisabled()
+    {
+        while (timeCount >= 1)
+        {
+            head.transform.rotation = Quaternion.Slerp(currentRotation, defaultRotation, timeCount);
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
+        animator.enabled = true;
+        animator.Play("Sleep");
+        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
+        animator.enabled = false;
+        transitioningTo = false;
+    }
+    #endregion
+    #region From
+    void TransitionFrom(TurretState transitionState)
+    {
+        switch (transitionState)
+        {
+            case TurretState.Disabled:
+                StartCoroutine(FromDisabled());
+                break;
+            case TurretState.Patroling:
+                transitioningFrom = false;
+                break;
+            case TurretState.Targeting:
+                transitioningFrom = false;
+                break;
+            case TurretState.Fireing:
+                transitioningFrom = false;
+                break;
+            case TurretState.Busy:
+                transitioningFrom = false;
+                break;
+            default:
+                break;
+        }
+    }
+
+    IEnumerator FromDisabled()
+    {
+        animator.enabled = true;
+        animator.Play("Awake");
+        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
+        animator.enabled = false;
+        transitioningFrom = false;
+    }
+    #endregion
+    #endregion
+
 }
