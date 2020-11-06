@@ -46,11 +46,11 @@ public class TurretBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timeCount = timeCount + Time.deltaTime;
+        DrawLineRenderer();
         if (PlayerManager.Instance == null) return;
+        timeCount = timeCount + Time.deltaTime;
         distanceToTarget = CalculateDistanceToPlayerFrom(head.transform.position);
 
-        DrawLineRenderer();
         switch (state)
         {
             case TurretState.Disabled:
