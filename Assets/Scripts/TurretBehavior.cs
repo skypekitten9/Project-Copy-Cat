@@ -47,7 +47,7 @@ public class TurretBehavior : MonoBehaviour
     {
         timeCount = timeCount + Time.deltaTime;
         if (PlayerManager.Instance == null) return;
-        distanceToTarget = CalculateDistanceToPlayer();
+        distanceToTarget = CalculateDistanceToPlayerFrom(eye.transform.position);
 
         DrawLineRenderer();
         switch (state)
@@ -73,19 +73,19 @@ public class TurretBehavior : MonoBehaviour
         //Debug.Log(distanceToTarget.magnitude + " and " + patrolRange);
     }
 
-    Vector3 CalculateDistanceToPlayer()
+    Vector3 CalculateDistanceToPlayerFrom(Vector3 from)
     {
         Vector3 result;
-        result = PlayerManager.Instance.transform.position - eye.transform.position;
+        result = PlayerManager.Instance.transform.position - from;
         if (GameManager.Instance.GetComponent<RecordManager>().HoloInstance != null)
-            result = GameManager.Instance.GetComponent<RecordManager>().HoloInstance.transform.position - eye.transform.position;
+            result = GameManager.Instance.GetComponent<RecordManager>().HoloInstance.transform.position - from;
 
         return result;
     }
 
     void DrawLineRenderer()
     {
-        Ray ray = new Ray(eye.transform.position, eye.transform.forward);
+        Ray ray = new Ray(head.transform.position, eye.transform.forward);
         RaycastHit hit;
         Vector3 endPos = eye.transform.position + (100 * eye.transform.forward);
         if(Physics.Raycast(ray, out hit, 100))
@@ -119,6 +119,10 @@ public class TurretBehavior : MonoBehaviour
             if (Quaternion.Angle(head.transform.rotation, patrolLeftRotation) < 10) patrolRight = true;
         }
         
+        if(distanceToTarget.magnitude <= targetRange)
+        {
+            StartCoroutine(Transition(state, TurretState.Targeting));
+        }
         if (distanceToTarget.magnitude > patrolRange)
         {
             StartCoroutine(Transition(state, TurretState.Disabled));
@@ -135,7 +139,11 @@ public class TurretBehavior : MonoBehaviour
 
     void Targeting()
     {
-
+        head.transform.rotation = Quaternion.Lerp(head.transform.rotation, Quaternion.LookRotation(distanceToTarget), Time.deltaTime * targetSpeed);
+        if (distanceToTarget.magnitude > targetRange)
+        {
+            StartCoroutine(Transition(state, TurretState.Patroling));
+        }
     }
 
     void Fireing()

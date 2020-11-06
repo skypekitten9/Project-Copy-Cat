@@ -426,7 +426,7 @@ MonoBehaviour:
   viewAngle: 60
   chargeTime: 1
   patrolSpeed: 0.5
-  targetSpeed: 1
+  targetSpeed: 10
 --- !u!120 &569556920
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -1247,6 +1247,30 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 81983294294e8674fb043d47f8765a89, type: 3}
       propertyPath: m_Name
       value: Turret
+      objectReference: {fileID: 0}
+    - target: {fileID: 2956613754390744690, guid: 81983294294e8674fb043d47f8765a89, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2956613754390744690, guid: 81983294294e8674fb043d47f8765a89, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2956613754390744690, guid: 81983294294e8674fb043d47f8765a89, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2956613754390744690, guid: 81983294294e8674fb043d47f8765a89, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2956613754390744690, guid: 81983294294e8674fb043d47f8765a89, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6124283756478745333, guid: 81983294294e8674fb043d47f8765a89, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 81983294294e8674fb043d47f8765a89, type: 3}
