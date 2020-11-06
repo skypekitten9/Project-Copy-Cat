@@ -139,7 +139,7 @@ public class TurretBehavior : MonoBehaviour
 
     void Targeting()
     {
-        head.transform.rotation = Quaternion.Lerp(head.transform.rotation, Quaternion.LookRotation(distanceToTarget), Time.deltaTime * targetSpeed);
+        head.transform.rotation = Quaternion.Lerp(head.transform.rotation, Quaternion.LookRotation(Quaternion.Euler(0, 90, 0) * new Vector3(distanceToTarget.x, 0, distanceToTarget.z)), Time.deltaTime * targetSpeed);
         if (distanceToTarget.magnitude > targetRange)
         {
             StartCoroutine(Transition(state, TurretState.Patroling));
