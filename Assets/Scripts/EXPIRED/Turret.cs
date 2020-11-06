@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class Turret : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class Turret : MonoBehaviour
 
     private RaycastHit hit;
     LineRenderer lineRenderer;
-    GameObject particleEffect;
+    GameObject particleEffect, lazerEffect;
 
     Vector3 distanceToTarget;
     Vector3 destination;
@@ -26,11 +27,14 @@ public class Turret : MonoBehaviour
 
         lineRenderer = gameObject.GetComponent<LineRenderer>();
         lineRenderer.SetPosition(0, new Vector3(transform.position.x, transform.position.y + 0.1f, transform.position.z));
-        lineRenderer.startWidth = 0.02f; 
+        lineRenderer.startWidth = 0.02f;
         lineRenderer.endWidth = 0.02f;
         lineRenderer.enabled = false;
 
         particleEffect = GameObject.Find("ParticleEffectTurret");
+        lazerEffect = GameObject.Find("ParticleEffectLazer");
+        particleEffect.SetActive(false);
+        lazerEffect.SetActive(false);
     }
 
     void Update()
@@ -55,7 +59,12 @@ public class Turret : MonoBehaviour
         firingRate -= Time.deltaTime;
 
         Physics.Raycast(eye.position, targetDirection, out hit, firingRange, layerMask);
-        
+
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            StartCoroutine(FireLaser());
+        }
+
         if (hit.transform != null)
         {
             particleEffect.transform.position = hit.point;
@@ -65,10 +74,11 @@ public class Turret : MonoBehaviour
                     EnableTargetLazer();
                     if (firingRate <= 0)
                     {
-                        DamageManager.Instance.playerHit = true;
+                        //DamageManager.Instance.playerHit = true;
                         firingRate = reloadFire;
+
                     }
-                    
+
                     break;
 
                 case 10:    //Hologram
@@ -91,6 +101,24 @@ public class Turret : MonoBehaviour
         else
         {
             DisableTargetLazer();
+        }
+    }
+
+    IEnumerator FireLaser()
+    {
+        while (true)
+        {
+            lineRenderer.startWidth += Time.deltaTime / 5;
+            lineRenderer.endWidth += Time.deltaTime / 5;
+            yield return new WaitForFixedUpdate();
+            if (lineRenderer.startWidth >= 0.2) break;
+        }
+        while (true)
+        {
+            lazerEffect.transform.position = eye.position;
+            lazerEffect.SetActive(true);
+            lineRenderer.material.SetColor("Color_D3EC0E17", Color.red);
+            yield return new WaitForFixedUpdate();
         }
     }
 
