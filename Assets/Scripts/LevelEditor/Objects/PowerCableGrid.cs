@@ -34,7 +34,7 @@ public class PowerCableGrid : MonoBehaviour
 
     public void UpdateCables()
     {
-        Debug.Log("Updating cables");
+        //Debug.Log("Updating cables");
         foreach (var cable in PowerCables)
         {
             int meshIndex = 0;

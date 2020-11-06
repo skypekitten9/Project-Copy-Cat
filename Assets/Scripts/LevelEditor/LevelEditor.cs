@@ -12,9 +12,7 @@ public class LevelEditor : MonoBehaviour
     public static LevelEditor Instance { get { return instance; } }
 
 
-    [SerializeField] private bool generateRoof = true;
     [SerializeField] private bool debug = false;
-    public bool Debug { get { return debug; } }
 
     [SerializeField] private GameObject tilePrefab;
     [SerializeField] private GameObject boundingBox;
