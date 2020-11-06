@@ -15,11 +15,10 @@ public class TurretBehavior : MonoBehaviour
     LineRenderer lineRenderer;
     public float fireRange, targetRange, patrolRange, viewAngle;
     public float chargeTime;
-    public float patrolSpeed, targetSpeed;
-    bool transitioningFrom, transitioningTo;
+    public float patrolMaxSpeed, targetSpeed, patrolAcceleration;
+    bool transitioningFrom, transitioningTo, patrolRight;
     Quaternion patrolLeftRotation, patrolRightRotation, defaultRotation, currentRotation;
-    int patrolState;
-    private float timeCount;
+    private float timeCount, patrolSpeed;
 
     void Start()
     {
@@ -28,16 +27,16 @@ public class TurretBehavior : MonoBehaviour
         eye = GameObject.Find("Turret_Eye");
         state = TurretState.Disabled;
         distanceToTarget = Vector3.positiveInfinity;
-        transitioningFrom = false;
-        transitioningFrom = false;
         defaultRotation = head.transform.rotation;
         currentRotation = defaultRotation;
         patrolRightRotation = Quaternion.Euler(head.transform.rotation.eulerAngles.x, head.transform.rotation.eulerAngles.y + viewAngle / 2, head.transform.rotation.eulerAngles.z);
         patrolLeftRotation = Quaternion.Euler(head.transform.rotation.eulerAngles.x, head.transform.rotation.eulerAngles.y + viewAngle / -2, head.transform.rotation.eulerAngles.z);
-        patrolState = 0;
+        patrolRight = true;
+        patrolSpeed = 0;
 
 
-        lineRenderer = eye.gameObject.GetComponent<LineRenderer>();
+        lineRenderer = gameObject.GetComponent<LineRenderer>();
+        lineRenderer.useWorldSpace = true;
         lineRenderer.SetPosition(0, eye.transform.position);
         lineRenderer.startWidth = 0.02f;
         lineRenderer.endWidth = 0.02f;
@@ -99,42 +98,6 @@ public class TurretBehavior : MonoBehaviour
         lineRenderer.SetPosition(1, endPos);
     }
 
-    void TurnTurret()
-    {
-        
-        switch (patrolState)
-        {
-            case 0:
-                head.transform.rotation = Quaternion.Slerp(defaultRotation, patrolRightRotation, timeCount);
-                if (timeCount >= 1)
-                {
-                    patrolState = 1;
-                    timeCount = 0;
-                }
-                break;
-
-            case 1:
-                head.transform.rotation = Quaternion.Slerp(patrolRightRotation, patrolLeftRotation, timeCount);
-                if (timeCount >= 1)
-                {
-                    patrolState = 2;
-                    timeCount = 0;
-                }
-                break;
-
-            case 2:
-                head.transform.rotation = Quaternion.Slerp(patrolLeftRotation, patrolRightRotation, timeCount);
-                if (timeCount >= 1)
-                {
-                    patrolState = 1;
-                    timeCount = 0;
-                }
-                break;
-            default:
-                break;
-        }
-    }
-
     #region Updates
     void Disabled()
     {
@@ -146,10 +109,29 @@ public class TurretBehavior : MonoBehaviour
 
     void Patroling()
     {
+        if(patrolRight)
+        {
+            head.transform.rotation = Quaternion.Lerp(head.transform.rotation, patrolRightRotation, Time.deltaTime * patrolSpeed);
+            if (Quaternion.Angle(head.transform.rotation, patrolRightRotation) < 10) patrolRight = false; 
+        }
+        else
+        {
+            head.transform.rotation = Quaternion.Lerp(head.transform.rotation, patrolLeftRotation, Time.deltaTime * patrolSpeed);
+            if (Quaternion.Angle(head.transform.rotation, patrolLeftRotation) < 10) patrolRight = true;
+        }
+        
         if (distanceToTarget.magnitude > patrolRange)
         {
             StartCoroutine(Transition(state, TurretState.Disabled));
         }
+    }
+
+    bool VectorApproximately(Vector3 a, Vector3 b)
+    {
+        if (!Mathf.Approximately(a.x, b.x)) return false;
+        if (!Mathf.Approximately(a.y, b.y)) return false;
+        if (!Mathf.Approximately(a.z, b.z)) return false;
+        return true;
     }
 
     void Targeting()
@@ -209,7 +191,7 @@ public class TurretBehavior : MonoBehaviour
 
     IEnumerator ToDisabled()
     {
-        while (timeCount >= 1)
+        while (timeCount <= 1)
         {
             head.transform.rotation = Quaternion.Slerp(currentRotation, defaultRotation, timeCount);
             yield return new WaitForSeconds(Time.deltaTime);
