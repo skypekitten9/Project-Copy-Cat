@@ -18,7 +18,7 @@ public class TurretBehavior : MonoBehaviour
     public float patrolSpeed, targetSpeed;
     bool transitioningFrom, transitioningTo, patrolRight;
     Quaternion patrolLeftRotation, patrolRightRotation, defaultRotation, currentRotation;
-    private float timeCount;
+    private float timeCount, charge;
 
     void Start()
     {
@@ -32,6 +32,7 @@ public class TurretBehavior : MonoBehaviour
         patrolRightRotation = Quaternion.Euler(head.transform.rotation.eulerAngles.x, head.transform.rotation.eulerAngles.y + viewAngle, head.transform.rotation.eulerAngles.z);
         patrolLeftRotation = Quaternion.Euler(head.transform.rotation.eulerAngles.x, head.transform.rotation.eulerAngles.y + viewAngle * -1, head.transform.rotation.eulerAngles.z);
         patrolRight = true;
+        charge = 0;
 
 
         lineRenderer = gameObject.GetComponent<LineRenderer>();
@@ -139,11 +140,27 @@ public class TurretBehavior : MonoBehaviour
 
     void Targeting()
     {
+        Debug.Log(charge);
+        if (charge > 1) charge = 1;
+        if (charge < 0) charge = 0;
+        if (distanceToTarget.magnitude <= fireRange)
+        {
+            charge += Time.deltaTime/2f;
+            if(charge >= 1)
+            {
+                Fire();
+            }
+        }
         head.transform.rotation = Quaternion.Lerp(head.transform.rotation, Quaternion.LookRotation(Quaternion.Euler(0, 90, 0) * new Vector3(distanceToTarget.x, 0, distanceToTarget.z)), Time.deltaTime * targetSpeed);
         if (distanceToTarget.magnitude > targetRange)
         {
             StartCoroutine(Transition(state, TurretState.Patroling));
         }
+    }
+
+    void Fire()
+    {
+        Debug.Log("Fireing!");
     }
 
     void Fireing()
@@ -154,7 +171,6 @@ public class TurretBehavior : MonoBehaviour
     #region Transitions
     IEnumerator Transition(TurretState from, TurretState to)
     {
-        Debug.Log("Transitioning...");
         state = TurretState.Busy;
         currentRotation = head.transform.rotation;
         timeCount = 0;
@@ -162,11 +178,9 @@ public class TurretBehavior : MonoBehaviour
         transitioningTo = true;
         TransitionFrom(from);
         while (transitioningFrom) yield return new WaitForSeconds(Time.deltaTime);
-        Debug.Log("From finished!");
         TransitionTo(to);
         while (transitioningTo) yield return new WaitForSeconds(Time.deltaTime);
         state = to;
-        Debug.Log("To finished!");
         yield return new WaitForEndOfFrame();
     }
 
