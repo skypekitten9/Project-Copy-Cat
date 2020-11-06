@@ -39,7 +39,7 @@ public class TurretBehavior : MonoBehaviour
         patrolState = 0;
 
 
-        lineRenderer = gameObject.GetComponent<LineRenderer>();
+        lineRenderer = eye.gameObject.GetComponent<LineRenderer>();
         lineRenderer.SetPosition(0, eye.transform.position);
         lineRenderer.startWidth = 0.02f;
         lineRenderer.endWidth = 0.02f;
