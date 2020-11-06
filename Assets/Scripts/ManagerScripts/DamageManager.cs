@@ -21,11 +21,8 @@ public class DamageManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (playerHit)
-        {
-            playerHit = false;
-            PlayerManager.Instance.playerHealth -= 10;
-            Debug.Log("Hit player");
-        }
+
     }
+
+    
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Security.AccessControl;
 using System.Security.Cryptography;
 using System.Threading;
 using UnityEngine;
@@ -16,7 +17,7 @@ public class TurretBehavior : MonoBehaviour
     public float fireRange, targetRange, patrolRange, viewAngle;
     public float chargeTime;
     public float patrolSpeed, targetSpeed;
-    bool transitioningFrom, transitioningTo, patrolRight;
+    bool transitioningFrom, transitioningTo, patrolRight, fireing;
     Quaternion patrolLeftRotation, patrolRightRotation, defaultRotation, currentRotation;
     private float timeCount, charge;
 
@@ -32,6 +33,7 @@ public class TurretBehavior : MonoBehaviour
         patrolRightRotation = Quaternion.Euler(head.transform.rotation.eulerAngles.x, head.transform.rotation.eulerAngles.y + viewAngle, head.transform.rotation.eulerAngles.z);
         patrolLeftRotation = Quaternion.Euler(head.transform.rotation.eulerAngles.x, head.transform.rotation.eulerAngles.y + viewAngle * -1, head.transform.rotation.eulerAngles.z);
         patrolRight = true;
+        fireing = false;
         charge = 0;
 
 
@@ -140,16 +142,20 @@ public class TurretBehavior : MonoBehaviour
 
     void Targeting()
     {
-        Debug.Log(charge);
         if (charge > 1) charge = 1;
         if (charge < 0) charge = 0;
         if (distanceToTarget.magnitude <= fireRange)
         {
             charge += Time.deltaTime/2f;
-            if(charge >= 1)
+            if (charge >= 1)
             {
-                Fire();
+                if (!fireing)
+                {
+                    fireing = true;
+                    StartCoroutine(Fire());
+                }
             }
+            else fireing = false;
         }
         head.transform.rotation = Quaternion.Lerp(head.transform.rotation, Quaternion.LookRotation(Quaternion.Euler(0, 90, 0) * new Vector3(distanceToTarget.x, 0, distanceToTarget.z)), Time.deltaTime * targetSpeed);
         if (distanceToTarget.magnitude > targetRange)
@@ -158,13 +164,21 @@ public class TurretBehavior : MonoBehaviour
         }
     }
 
-    void Fire()
+    IEnumerator Fire()
     {
         Debug.Log("Fireing!");
+        
+        while (fireing)
+        {
+            PlayerManager.Instance.DamagePlayer(10);
+            yield return new WaitForSeconds(0.1f);
+        }
+        
     }
 
     void Fireing()
     {
+        
     }
     #endregion
 
