@@ -52,6 +52,8 @@ public class TurretBehavior : MonoBehaviour
         if (PlayerManager.Instance == null) return;
         timeCount = timeCount + Time.deltaTime;
         distanceToTarget = CalculateDistanceToPlayerFrom(head.transform.position);
+        lineRenderer.startWidth = 0.02f + charge / 10;
+        lineRenderer.endWidth = 0.02f + charge / 10;
 
         switch (state)
         {
@@ -139,6 +141,7 @@ public class TurretBehavior : MonoBehaviour
 
     void Targeting()
     {
+        
         if (charge > 1) charge = 1;
         if (charge < 0) charge = 0;
         if (distanceToTarget.magnitude <= fireRange)
@@ -152,7 +155,11 @@ public class TurretBehavior : MonoBehaviour
                     StartCoroutine(Fire());
                 }
             }
-            else fireing = false;
+        }
+        else
+        {
+            charge -= Time.deltaTime / 2f;
+            fireing = false;
         }
         head.transform.rotation = Quaternion.Lerp(head.transform.rotation, Quaternion.LookRotation(Quaternion.Euler(0, 90, 0) * new Vector3(distanceToTarget.x, 0, distanceToTarget.z)), Time.deltaTime * targetSpeed);
         if (distanceToTarget.magnitude > targetRange)
@@ -253,7 +260,7 @@ public class TurretBehavior : MonoBehaviour
                 transitioningFrom = false;
                 break;
             case TurretState.Targeting:
-                transitioningFrom = false;
+                StartCoroutine(FromTargeting());
                 break;
             case TurretState.Busy:
                 transitioningFrom = false;
@@ -269,6 +276,16 @@ public class TurretBehavior : MonoBehaviour
         animator.Play("Awake");
         yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
         animator.enabled = false;
+        transitioningFrom = false;
+    }
+
+    IEnumerator FromTargeting()
+    {
+        while (charge > 0)
+        {
+            charge -= Time.deltaTime;
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
         transitioningFrom = false;
     }
     #endregion
