@@ -423,7 +423,7 @@ MonoBehaviour:
   fireRange: 5
   targetRange: 10
   patrolRange: 15
-  viewAngle: 60
+  viewAngle: 30
   chargeTime: 1
   patrolSpeed: 0.5
   targetSpeed: 10

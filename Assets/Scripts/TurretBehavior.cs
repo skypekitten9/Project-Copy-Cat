@@ -29,8 +29,8 @@ public class TurretBehavior : MonoBehaviour
         distanceToTarget = Vector3.positiveInfinity;
         defaultRotation = head.transform.rotation;
         currentRotation = defaultRotation;
-        patrolRightRotation = Quaternion.Euler(head.transform.rotation.eulerAngles.x, head.transform.rotation.eulerAngles.y + viewAngle / 2, head.transform.rotation.eulerAngles.z);
-        patrolLeftRotation = Quaternion.Euler(head.transform.rotation.eulerAngles.x, head.transform.rotation.eulerAngles.y + viewAngle / -2, head.transform.rotation.eulerAngles.z);
+        patrolRightRotation = Quaternion.Euler(head.transform.rotation.eulerAngles.x, head.transform.rotation.eulerAngles.y + viewAngle, head.transform.rotation.eulerAngles.z);
+        patrolLeftRotation = Quaternion.Euler(head.transform.rotation.eulerAngles.x, head.transform.rotation.eulerAngles.y + viewAngle * -1, head.transform.rotation.eulerAngles.z);
         patrolRight = true;
 
 
@@ -47,7 +47,7 @@ public class TurretBehavior : MonoBehaviour
     {
         timeCount = timeCount + Time.deltaTime;
         if (PlayerManager.Instance == null) return;
-        distanceToTarget = CalculateDistanceToPlayerFrom(eye.transform.position);
+        distanceToTarget = CalculateDistanceToPlayerFrom(head.transform.position);
 
         DrawLineRenderer();
         switch (state)
@@ -119,7 +119,7 @@ public class TurretBehavior : MonoBehaviour
             if (Quaternion.Angle(head.transform.rotation, patrolLeftRotation) < 10) patrolRight = true;
         }
         
-        if(distanceToTarget.magnitude <= targetRange)
+        if(distanceToTarget.magnitude <= targetRange && Quaternion.Angle(head.transform.rotation, Quaternion.LookRotation(Quaternion.Euler(0, 90, 0) * new Vector3(distanceToTarget.x, 0, distanceToTarget.z))) < viewAngle/2)
         {
             StartCoroutine(Transition(state, TurretState.Targeting));
         }
@@ -179,7 +179,7 @@ public class TurretBehavior : MonoBehaviour
                 StartCoroutine(ToDisabled());
                 break;
             case TurretState.Patroling:
-                transitioningTo = false;
+                StartCoroutine(ToPatroling());
                 break;
             case TurretState.Targeting:
                 transitioningTo = false;
@@ -208,6 +208,20 @@ public class TurretBehavior : MonoBehaviour
         yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
         animator.enabled = false;
         transitioningTo = false;
+    }
+
+    IEnumerator ToPatroling()
+    {
+        if (Quaternion.Angle(head.transform.rotation, patrolRightRotation) < Quaternion.Angle(head.transform.rotation, patrolLeftRotation))
+        {
+            patrolRight = false;
+        }
+        else
+        {
+            patrolRight = true;
+        }
+        transitioningTo = false;
+        yield return new WaitForSeconds(Time.deltaTime);
     }
     #endregion
     #region From
