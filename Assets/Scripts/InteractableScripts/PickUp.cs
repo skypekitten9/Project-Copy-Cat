@@ -37,6 +37,16 @@ public class PickUp : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameManager.Instance == null)
+        {
+            GetComponent<Rigidbody>().isKinematic = true;
+            return;
+        }
+        else
+        {
+            GetComponent<Rigidbody>().isKinematic = false;
+        }
+
         if (GameManager.Instance.GetComponent<RecordManager>().recordPhase == RecordPhase.Rewinding && !hasSavedVelocity)
         {
             lastRealVelocity = body.velocity;
@@ -45,7 +55,7 @@ public class PickUp : MonoBehaviour
 
         if (GameManager.Instance.GetComponent<RecordManager>().recordPhase == RecordPhase.StoppingPlayback && isHolding)
         {
-            body.velocity = lastRealVelocity;           
+            body.velocity = lastRealVelocity;
             isHolding = false;
             hasSavedVelocity = false;
             lastRealVelocity = Vector3.zero;

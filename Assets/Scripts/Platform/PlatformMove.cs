@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlatformMove : MonoBehaviour
 {
@@ -34,7 +33,11 @@ public class PlatformMove : MonoBehaviour
 
     public void StartPlatform()
     {
-        stop = false;
+        if (GameManager.Instance)
+        {
+            recordManager = GameManager.Instance.GetComponent<RecordManager>();
+            stop = false;
+        }
     }
 
     public void StopPlatform()
@@ -45,7 +48,9 @@ public class PlatformMove : MonoBehaviour
 
     private void Update()
     {
-        recordManager = GameManager.Instance.GetComponent<RecordManager>();
+        if (recordManager == null)
+            return;
+
 
         if (recordManager.recordPhase != RecordPhase.Rewinding && recordManager.recordPhase != RecordPhase.PlayingBack)
         {

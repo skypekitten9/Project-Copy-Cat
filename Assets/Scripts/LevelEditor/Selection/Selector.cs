@@ -51,7 +51,7 @@ public class Selector : MonoBehaviour
             //Debug.Log("Hit: " + hit.transform.name);
 
 
-            target = hit.transform.GetComponent<Selectable>();
+            target = hit.transform.GetComponentInChildren<Selectable>();
             if (hit.transform.tag == "Tile_SelectCollider" || hit.transform.tag == "Tile_ExtrudeCollider")
                 target = hit.transform.parent.GetComponent<Selectable>();
 
