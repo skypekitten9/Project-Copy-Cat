@@ -9,11 +9,13 @@ public class PickUp : MonoBehaviour
     float distance;
 
     Vector3 objectPosition;
+    Vector3 lastRealVelocity;
 
     Rigidbody body;
 
     public bool canHold = true;
     public bool isHolding = false;
+    public bool hasSavedVelocity = false;
 
     public GameObject tempParent;
 
@@ -35,6 +37,20 @@ public class PickUp : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameManager.Instance.GetComponent<RecordManager>().recordPhase == RecordPhase.Rewinding && !hasSavedVelocity)
+        {
+            lastRealVelocity = body.velocity;
+            hasSavedVelocity = true;
+        }
+
+        if (GameManager.Instance.GetComponent<RecordManager>().recordPhase == RecordPhase.StoppingPlayback && isHolding)
+        {
+            body.velocity = lastRealVelocity;           
+            isHolding = false;
+            hasSavedVelocity = false;
+            lastRealVelocity = Vector3.zero;
+        }
+
         switch (holdState)
         {
             case HoldState.NOTHELD:
@@ -73,7 +89,7 @@ public class PickUp : MonoBehaviour
     {
         transform.SetParent(null);
         //transform.position = objectPosition;
-
+        isHolding = true;
         holdState = HoldState.NOTHELD;
         body.useGravity = true;
     }

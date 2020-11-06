@@ -394,7 +394,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1485005899243954660, guid: e26688b768219f9469725a1b964a432b, type: 3}
       propertyPath: m_LocalScale.z
-      value: 21.278
+      value: 89.15695
       objectReference: {fileID: 0}
     - target: {fileID: 8807334101120441850, guid: e26688b768219f9469725a1b964a432b, type: 3}
       propertyPath: m_Name
@@ -482,6 +482,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canHold: 1
   isHolding: 0
+  hasSavedVelocity: 0
   tempParent: {fileID: 0}
 --- !u!54 &1581774427
 Rigidbody:
