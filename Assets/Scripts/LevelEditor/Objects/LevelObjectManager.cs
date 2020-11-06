@@ -152,7 +152,7 @@ public class LevelObjectManager : MonoBehaviour
             }
 
             if (levelObject.GetComponent<PowerCable>())
-                GetComponent<PowerCableGrid>().SetCable(levelObjectInstance);
+                GetComponent<PowerCableGrid>().SetCable(levelObject);
         }
     }
 
