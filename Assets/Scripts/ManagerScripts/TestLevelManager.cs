@@ -79,7 +79,7 @@ public class TestLevelManager : MonoBehaviour
 
     public void RewindDoors()
     {
-        
+
         foreach (GameObject door in doorList)
         {
             door.GetComponent<DoorScript>().Rewind();
@@ -111,10 +111,14 @@ public class TestLevelManager : MonoBehaviour
 
     private void ListAllLevers()
     {
-        leverList.AddRange(GameObject.FindGameObjectsWithTag("Interactable"));
-        for (int i = 0; i < leverList.Count; i++)
+        GameObject[] interactables = GameObject.FindGameObjectsWithTag("Interactable");
+
+        foreach (var i in interactables)
         {
-            if (leverList[i].GetComponent<LeverScript>() == null) leverList.RemoveAt(i);
+            if (i.GetComponent<LeverScript>())
+            {
+                leverList.Add(i);
+            }
         }
     }
 
