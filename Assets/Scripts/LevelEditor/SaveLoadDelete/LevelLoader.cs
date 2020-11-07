@@ -35,6 +35,7 @@ public class LevelLoader : MonoBehaviour
             Destroy(GetComponent<LevelObjectManager>().LevelObjectsParent.gameObject);
         Transform parent = GetComponent<LevelObjectManager>().LevelObjectsParent = new GameObject("LevelObjects").transform;
 
+        GetComponent<PowerCableGrid>().PowerCables = new Dictionary<GameObject, Vector3Int>();
         for (int i = 0; i < data.levelObjectData.Length; i++)
         {
             LevelObject levelObject = IdToObject(data.levelObjectData[i].levelObjectId);
@@ -44,7 +45,6 @@ public class LevelLoader : MonoBehaviour
 
             GetComponent<LevelObjectConnector>().Connections.Add(instance, data.connectionsData[i].channels.ToList());
 
-            GetComponent<PowerCableGrid>().PowerCables = new Dictionary<GameObject, Vector3Int>();
             if (instance.GetComponent<PowerCable>())
             {
                 GetComponent<PowerCableGrid>().SetCable(instance);
