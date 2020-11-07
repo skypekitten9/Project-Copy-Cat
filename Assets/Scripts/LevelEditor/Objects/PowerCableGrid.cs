@@ -6,11 +6,6 @@ public class PowerCableGrid : MonoBehaviour
     public Dictionary<GameObject, Vector3Int> PowerCables { get; set; }
 
 
-    private void Awake()
-    {
-        PowerCables = new Dictionary<GameObject, Vector3Int>();
-    }
-
     public void SetCable(GameObject instance)
     {
         Vector3Int value = WorldPosToIndex(instance.transform.position, instance.transform.rotation);
