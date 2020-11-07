@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.Rendering.Universal.Internal;
 
@@ -11,8 +12,11 @@ public class PlayerInteraction : MonoBehaviour
 
     private Ray ray;
     public RaycastHit hit;
+    [SerializeField] LayerMask interactionMask;
 
     private float rayRange;
+
+    private bool isHolding = false;
 
     void Start()
     {
@@ -33,18 +37,21 @@ public class PlayerInteraction : MonoBehaviour
             PickUp();
         }
 
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (Input.GetKeyDown(KeyCode.Mouse0) && isHolding)
         {
             hit.collider.gameObject.GetComponent<PickUp>().Throw();
+            isHolding = false;
         }
     }
 
     public void Interact()
     {
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, interactionMask))
         {
             if (hit.distance < rayRange)
             {
+                UnityEngine.Debug.Log($"Interacted with {hit.transform.name}");
+
                 if (hit.collider.tag == "Interactable")
                 {
                     if (hit.collider.gameObject.GetComponent<ButtonScript>() != null) hit.collider.gameObject.GetComponent<ButtonScript>().SignalChannel();
@@ -55,13 +62,21 @@ public class PlayerInteraction : MonoBehaviour
                         GameManager.Instance.GetComponent<RecordManager>().AddInteractionNode(hit.collider.gameObject);
                     }
                 }
+                else
+                {
+                    return;
+                }
             }
+        }
+        else
+        {
+            return;
         }
     }
 
     public void PickUp()
     {
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out hit, interactionMask))
         {
             if (hit.distance < rayRange)
             {
@@ -74,6 +89,7 @@ public class PlayerInteraction : MonoBehaviour
                         {
                             hit.collider.gameObject.GetComponent<PickUp>().tempParent = pickUpTransform.gameObject;
                             hit.collider.gameObject.GetComponent<PickUp>().SetToHeld();
+                            isHolding = true;
                         }
 
                         if (GameManager.Instance.GetComponent<RecordManager>().recordPhase == RecordPhase.Recording)
@@ -86,7 +102,15 @@ public class PlayerInteraction : MonoBehaviour
                         hit.collider.gameObject.GetComponent<PickUp>().SetToNotHeld();
                     }
                 }
+                else
+                {
+                    return;
+                }
             }
+        }
+        else
+        {
+            return;
         }
     }
 

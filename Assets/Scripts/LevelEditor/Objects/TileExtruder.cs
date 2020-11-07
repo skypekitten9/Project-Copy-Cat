@@ -14,11 +14,11 @@ public class TileExtruder : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Equals) || Input.GetKeyDown(KeyCode.KeypadPlus))
             {
-                Extrude(1);
+                Extrude(-1);
             }
             else if (Input.GetKeyDown(KeyCode.Minus) || Input.GetKeyDown(KeyCode.KeypadMinus))
             {
-                Extrude(-1);
+                Extrude(1);
             }
         }
     }

@@ -8,6 +8,8 @@ public class LeverScript : MonoBehaviour
     Animator animator;
     AudioSource audio;
     [SerializeField] public int id;
+    public int Id { set { id = value; } }
+
     bool rewindState;
     float timer;
 

@@ -2,18 +2,13 @@
 
 public class PowerCable : MonoBehaviour
 {
+    public int MeshId { get; set; }
     [SerializeField] private Mesh[] cableModels;
 
-    private MeshFilter meshFilter;
 
-
-    private void OnEnable()
+    public void SetCableMesh(int index)
     {
-        meshFilter = GetComponent<MeshFilter>();
-    }
-
-    void Update()
-    {
-        meshFilter.mesh = cableModels[5];
+        MeshId = index;
+        GetComponent<MeshFilter>().mesh = cableModels[index];
     }
 }

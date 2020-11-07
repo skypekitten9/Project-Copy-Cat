@@ -22,6 +22,7 @@ public class SceneTransition : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        /*
         TestLevelManager.Instance.transform.GetChild(0).position = TestLevelManager.Instance.Levels[SceneManager.GetActiveScene().buildIndex].startPosition;
         TestLevelManager.Instance.transform.GetChild(1).position = TestLevelManager.Instance.Levels[SceneManager.GetActiveScene().buildIndex].goalPosition;
 
@@ -29,6 +30,7 @@ public class SceneTransition : MonoBehaviour
             Instantiate(GameManager.Instance.Player, TestLevelManager.Instance.transform.GetChild(0).position, Quaternion.identity);
         else
             PlayerManager.Instance.transform.position = TestLevelManager.Instance.transform.GetChild(0).position;
+        */
     }
 
 }

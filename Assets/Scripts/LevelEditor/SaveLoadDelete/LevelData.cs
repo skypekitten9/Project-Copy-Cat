@@ -6,6 +6,7 @@ public class LevelData
     public TileData[] tileData;
     public LevelObjectData[] levelObjectData;
     public ConnectionData[] connectionsData;
+    public int[] powerCableData;
 }
 
 

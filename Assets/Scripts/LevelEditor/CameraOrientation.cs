@@ -13,7 +13,7 @@ public class CameraOrientation : MonoBehaviour
 
     private float zoom;
     private float zoomSpeed = 15.0f;//2000.0f;
-    private Vector2 zoomClamp = new Vector2(5.0f, 50.0f);
+    private Vector2 zoomClamp = new Vector2(3.0f, 100.0f);
 
 
 
@@ -70,9 +70,9 @@ public class CameraOrientation : MonoBehaviour
             mouseX_pan = Input.GetAxis("Mouse X") * pan_sensitivity;// * Time.deltaTime;
             mouseY_pan = Input.GetAxis("Mouse Y") * pan_sensitivity;// * Time.deltaTime;
             transform.position += transform.right * -mouseX_pan + transform.up * -mouseY_pan;
-            transform.position = new Vector3(Mathf.Clamp(transform.position.x, -LevelEditor.Instance.maxTiles.x, LevelEditor.Instance.maxTiles.x),
-                                             Mathf.Clamp(transform.position.y, -LevelEditor.Instance.maxTiles.y, LevelEditor.Instance.maxTiles.y),
-                                             Mathf.Clamp(transform.position.z, -LevelEditor.Instance.maxTiles.z, LevelEditor.Instance.maxTiles.z));
+            transform.position = new Vector3(Mathf.Clamp(transform.position.x, -LevelEditor.maxTiles.x, LevelEditor.maxTiles.x),
+                                             Mathf.Clamp(transform.position.y, -LevelEditor.maxTiles.y, LevelEditor.maxTiles.y),
+                                             Mathf.Clamp(transform.position.z, -LevelEditor.maxTiles.z, LevelEditor.maxTiles.z));
         }
     }
 

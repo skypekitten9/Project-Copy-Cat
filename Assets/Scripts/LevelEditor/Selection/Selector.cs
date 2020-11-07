@@ -51,7 +51,7 @@ public class Selector : MonoBehaviour
             //Debug.Log("Hit: " + hit.transform.name);
 
 
-            target = hit.transform.GetComponent<Selectable>();
+            target = hit.transform.GetComponentInChildren<Selectable>();
             if (hit.transform.tag == "Tile_SelectCollider" || hit.transform.tag == "Tile_ExtrudeCollider")
                 target = hit.transform.parent.GetComponent<Selectable>();
 
@@ -279,15 +279,15 @@ public class Selector : MonoBehaviour
         {
             case TileDirection.X_positive:
             case TileDirection.X_negative:
-                SelectTiles(target.X, target.X + 1, 0, LevelEditor.Instance.maxTiles.y, 0, LevelEditor.Instance.maxTiles.z, target.TileDir);
+                SelectTiles(target.X, target.X + 1, 0, LevelEditor.maxTiles.y, 0, LevelEditor.maxTiles.z, target.TileDir);
                 break;
             case TileDirection.Y_positive:
             case TileDirection.Y_negative:
-                SelectTiles(0, LevelEditor.Instance.maxTiles.x, target.Y, target.Y + 1, 0, LevelEditor.Instance.maxTiles.z, target.TileDir);
+                SelectTiles(0, LevelEditor.maxTiles.x, target.Y, target.Y + 1, 0, LevelEditor.maxTiles.z, target.TileDir);
                 break;
             case TileDirection.Z_positive:
             case TileDirection.Z_negative:
-                SelectTiles(0, LevelEditor.Instance.maxTiles.x, 0, LevelEditor.Instance.maxTiles.y, target.Z, target.Z + 1, target.TileDir);
+                SelectTiles(0, LevelEditor.maxTiles.x, 0, LevelEditor.maxTiles.y, target.Z, target.Z + 1, target.TileDir);
                 break;
         }
 

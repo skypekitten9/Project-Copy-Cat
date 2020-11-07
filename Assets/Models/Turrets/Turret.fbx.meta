@@ -1,36 +1,15 @@
 fileFormatVersion: 2
-guid: b420f25bf97f63947b9120ad6264a14e
+guid: 81983294294e8674fb043d47f8765a89
 ModelImporter:
   serializedVersion: 20101
   internalIDToNameTable:
-  - first:
-      74: -8169130396994861445
-    second: Armature|Cube.134Action
   - first:
       74: -6284119842423112431
     second: Armature|Turret_Activate
   - first:
       74: -1819817702846661889
     second: Armature|Turret_Idle
-  - first:
-      74: 6558778077076684143
-    second: Armature|Turret_Idle (1)
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Turret_color1
-    second: {fileID: 2100000, guid: 397ee0912d342674f894d44020ecc0ca, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Turret_color2
-    second: {fileID: 2100000, guid: 0008315d348e3704ab0abb262befd66d, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Turret_light
-    second: {fileID: 2100000, guid: 1d3253ed6b4f6be46885f3b1389a2acf, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 1
     materialName: 0
@@ -57,65 +36,7 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations:
-    - serializedVersion: 16
-      name: Armature|Turret_Activate
-      takeName: Armature|Turret_Activate
-      internalID: 0
-      firstFrame: 0
-      lastFrame: 41
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: Armature|Turret_Idle
-      takeName: Armature|Turret_Idle
-      internalID: 0
-      firstFrame: 0
-      lastFrame: 41
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
+    clipAnimations: []
     isReadable: 0
   meshes:
     lODScreenPercentages: []

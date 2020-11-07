@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -83,6 +84,9 @@ public class LevelObjectManager : MonoBehaviour
                 yield return new WaitForFixedUpdate();
             }
             PlaceLevelObject(!objectPlaced);
+
+            if (levelObjectInstance.GetComponent<PowerCable>())
+                GetComponent<PowerCableGrid>().SetCable(levelObjectInstance);
         }
     }
 
@@ -146,6 +150,9 @@ public class LevelObjectManager : MonoBehaviour
                     }
                     break;
             }
+
+            if (levelObject.GetComponent<PowerCable>())
+                GetComponent<PowerCableGrid>().SetCable(levelObject);
         }
     }
 
@@ -183,6 +190,11 @@ public class LevelObjectManager : MonoBehaviour
                 }
                 GetComponent<LevelObjectConnector>().Connections.Remove(LevelEditor.Instance.selectedLevelObject.transform.parent.gameObject);
 
+                if (LevelEditor.Instance.selectedLevelObject.GetComponentInParent<PowerCable>())
+                {
+                    GetComponent<PowerCableGrid>().RemoveCable(LevelEditor.Instance.selectedLevelObject.transform.parent.gameObject);
+                }
+
                 if (LevelEditor.Instance.selectedLevelObject.transform.parent)
                 {
                     GameObject.Destroy(LevelEditor.Instance.selectedLevelObject.transform.parent.gameObject);
@@ -194,6 +206,7 @@ public class LevelObjectManager : MonoBehaviour
 
                 LevelEditor.Instance.selectedLevelObject = null;
             }
+
         }
     }
 

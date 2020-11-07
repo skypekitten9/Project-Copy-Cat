@@ -543,6 +543,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 0}
   pickUpTransform: {fileID: 0}
+  interactionMask:
+    serializedVersion: 2
+    m_Bits: 268492595
 --- !u!111 &5295932007794218267
 Animation:
   m_ObjectHideFlags: 0

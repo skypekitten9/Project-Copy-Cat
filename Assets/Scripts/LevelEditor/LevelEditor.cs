@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.IO;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 
@@ -10,23 +12,22 @@ public class LevelEditor : MonoBehaviour
     public static LevelEditor Instance { get { return instance; } }
 
 
-    [SerializeField] private bool generateRoof = true;
     [SerializeField] private bool debug = false;
-    public bool Debug { get { return debug; } }
 
     [SerializeField] private GameObject tilePrefab;
     [SerializeField] private GameObject boundingBox;
 
     public Transform TilesParent { get; set; }
 
-    public readonly Vector3Int maxTiles = new Vector3Int(21, 15, 21);
+    public static readonly Vector3Int maxTiles = new Vector3Int(69, 49, 69);
+    private static float tileSize = 2.0f;
+
     public Tile_Selectable[,,,] Tiles { get; private set; }
 
     public List<Tile_Selectable> selectedTiles { get; set; } = new List<Tile_Selectable>();
     public LevelObject_Selectable selectedLevelObject { get; set; } = null;
 
     [SerializeField] private GameObject createNewPrompt;
-
 
     [SerializeField] private LevelObject spawnPortals;
     [SerializeField] private LevelObject goalPortal;
@@ -51,7 +52,7 @@ public class LevelEditor : MonoBehaviour
     private void SetBoundingBox()
     {
         boundingBox.transform.position = new Vector3(0, 0, 0);
-        boundingBox.transform.localScale = maxTiles + new Vector3(0.1f, 0.1f, 0.1f);
+        boundingBox.transform.localScale = maxTiles * (int)tileSize + new Vector3(0.1f, 0.1f, 0.1f);
     }
 
 
@@ -69,6 +70,8 @@ public class LevelEditor : MonoBehaviour
             Destroy(GetComponent<LevelObjectManager>().LevelObjectsParent.gameObject);
         GetComponent<LevelObjectManager>().LevelObjectsParent = new GameObject("LevelObjects").transform;
 
+        GetComponent<PowerCableGrid>().PowerCables.Clear();
+
         GetComponent<LevelSaver>().SaveName = "";
         GetComponent<EditorUI>().CloseAllMenus();
     }
@@ -76,45 +79,19 @@ public class LevelEditor : MonoBehaviour
     public void NewLevel()
     {
         ClearLevel();
-        CreateStartRoom();
+        CreateStartLevel();
     }
 
-    private void CreateStartRoom()
+    private void CreateStartLevel()
     {
-        for (int y = 4; y < 9; y++)
-        {
-            for (int z = 6; z < 15; z++)
-            {
-                PlaceTile(5, y, z, TileDirection.X_positive);
-                PlaceTile(15, y, z, TileDirection.X_negative);
-            }
-        }
-        for (int x = 5; x < 16; x++)
-        {
-            for (int z = 6; z < 15; z++)
-            {
-                PlaceTile(x, 4, z, TileDirection.Y_positive);
-                if (generateRoof)
-                    PlaceTile(x, 8, z, TileDirection.Y_negative);
-            }
-        }
-        for (int x = 5; x < 16; x++)
-        {
-            for (int y = 4; y < 9; y++)
-            {
-                PlaceTile(x, y, 6, TileDirection.Z_positive);
-                PlaceTile(x, y, 14, TileDirection.Z_negative);
-            }
-        }
-
-        GetComponent<LevelObjectManager>().CreateLevelObject(spawnPortals, new Vector3(-8, -7, 0), new Vector3(0, -90, 0));
-        GetComponent<LevelObjectManager>().CreateLevelObject(goalPortal, new Vector3(8, -7, 0), new Vector3(0, 0, 0));
+        string jsonData = File.ReadAllText(Application.dataPath + "/Scripts/LevelEditor/StartRoom.json");
+        GetComponent<LevelLoader>().LoadLevel(jsonData);
     }
-
 
     public Tile_Selectable PlaceTile(int x, int y, int z, TileDirection i)
     {
         Tiles[x, y, z, (int)i] = Instantiate(tilePrefab, IndexToWorldPos(x, y, z, i), IndexToRotation(i), TilesParent).GetComponent<Tile_Selectable>();
+        Tiles[x, y, z, (int)i].transform.localScale *= tileSize;
         Tiles[x, y, z, (int)i].SetTileData(x, y, z, i);
         return Tiles[x, y, z, (int)i];
     }
@@ -139,36 +116,36 @@ public class LevelEditor : MonoBehaviour
         DestroyTile(xyz.x, xyz.y, xyz.z, i);
     }
 
-    public Vector3 IndexToWorldPos(int x, int y, int z, TileDirection i)
+    public static Vector3 IndexToWorldPos(int x, int y, int z, TileDirection i)
     {
-        Vector3 worldPos = new Vector3(2 * (x - maxTiles.x / 2), 2 * (y - maxTiles.y / 2), 2 * (z - maxTiles.z / 2));
+        Vector3 worldPos = new Vector3(tileSize * (x - maxTiles.x / 2), tileSize * (y - maxTiles.y / 2), tileSize * (z - maxTiles.z / 2));
 
         switch (i)
         {
             case TileDirection.X_positive:
-                worldPos -= Vector3.right;
+                worldPos -= Vector3.right / 2 * tileSize;
                 break;
             case TileDirection.X_negative:
-                worldPos += Vector3.right;
+                worldPos += Vector3.right / 2 * tileSize;
                 break;
             case TileDirection.Y_positive:
-                worldPos -= Vector3.up;
+                worldPos -= Vector3.up / 2 * tileSize;
                 break;
             case TileDirection.Y_negative:
-                worldPos += Vector3.up;
+                worldPos += Vector3.up / 2 * tileSize;
                 break;
             case TileDirection.Z_positive:
-                worldPos -= Vector3.forward;
+                worldPos -= Vector3.forward / 2 * tileSize;
                 break;
             case TileDirection.Z_negative:
-                worldPos += Vector3.forward;
+                worldPos += Vector3.forward / 2 * tileSize;
                 break;
         }
 
         return worldPos;
     }
 
-    private Quaternion IndexToRotation(TileDirection i)
+    public static Quaternion IndexToRotation(TileDirection i)
     {
         switch (i)
         {
@@ -194,7 +171,6 @@ public class LevelEditor : MonoBehaviour
                 return Quaternion.identity;
         }
     }
-
 
 
     public void ToggleCreateNewPrompt()

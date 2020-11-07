@@ -8,6 +8,8 @@ public class DoorScript : MonoBehaviour
     public bool toggle;
 
     [SerializeField] private int[] ids;
+    public int[] Ids { get { return ids; } set { ids = value; } }
+
     bool isOpen, listenAfterAnimation;
     bool rewindIsOpen, rewindListenAfterAnimation;
     float timer, rewindTimer;
@@ -32,7 +34,7 @@ public class DoorScript : MonoBehaviour
 
     private void Update()
     {
-        if(timer > 0)
+        if (timer > 0)
         {
             timer -= Time.deltaTime;
             if (timer < 0 && listenAfterAnimation)
@@ -64,7 +66,7 @@ public class DoorScript : MonoBehaviour
         }
         if (changeState)
         {
-            if(toggle)
+            if (toggle)
             {
                 ToggleDoor(!isOpen);
             }
@@ -75,7 +77,7 @@ public class DoorScript : MonoBehaviour
         }
         else
         {
-            if(!toggle && isOpen)
+            if (!toggle && isOpen)
             {
                 ToggleDoor(false);
             }
@@ -89,7 +91,7 @@ public class DoorScript : MonoBehaviour
         animator.SetBool("isOpened", state);
         collider.enabled = !state;
         isOpen = state;
-        if(state)
+        if (state)
         {
             animator.Play("Open");
         }

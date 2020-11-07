@@ -48,7 +48,7 @@ public class Tile_Selectable : Selectable
         Vector3Int extrudeTangent = tileDir * extrudeDir;
         Vector3Int newTileIndex = new Vector3Int(X, Y, Z) + extrudeTangent;
 
-        Vector3Int maxTiles = LevelEditor.Instance.maxTiles;
+        Vector3Int maxTiles = LevelEditor.maxTiles;
         if (newTileIndex.x >= maxTiles.x || newTileIndex.y >= maxTiles.y || newTileIndex.z >= maxTiles.z || newTileIndex.x < 0 || newTileIndex.y < 0 || newTileIndex.z < 0)
             return;
 
@@ -182,15 +182,4 @@ public class Tile_Selectable : Selectable
         }
     }
 
-
-
-
-    private void OnDrawGizmos()
-    {
-        if (LevelEditor.Instance && LevelEditor.Instance.Debug)
-        {
-            Vector3 pos = LevelEditor.Instance.IndexToWorldPos(X, Y, Z, TileDir);
-            Gizmos.DrawLine(pos, pos + (Vector3)GetDirectionVector() / 2);
-        }
-    }
 }

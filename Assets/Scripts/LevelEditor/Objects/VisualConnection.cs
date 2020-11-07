@@ -14,6 +14,11 @@ public class VisualConnection : MonoBehaviour
 
     private void Update()
     {
+        if (From == null || To == null)
+        {
+            Destroy(gameObject);
+            return;
+        }
         line.SetPosition(0, From.GetComponent<Collider>().bounds.center);
         line.SetPosition(1, To.GetComponent<Collider>().bounds.center);
     }

@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelSaver : MonoBehaviour
 {
@@ -32,8 +35,8 @@ public class LevelSaver : MonoBehaviour
         if (SaveName != "")
         {
             GetComponent<EditorUI>().CloseAllMenus();
-            SetData();
 
+            SetData();
             SaveJSON(SaveName, true);
 
             GetComponent<EditorUI>().ToggleDeleteLevelButton();
@@ -48,7 +51,7 @@ public class LevelSaver : MonoBehaviour
         SetData();
 
         SaveName = GetComponent<EditorUI>().FileName;
-        SaveJSON(SaveName);
+        string saveName = SaveJSON(SaveName);
     }
 
 
@@ -56,17 +59,13 @@ public class LevelSaver : MonoBehaviour
     {
         data = new LevelData();
 
-        int maxTiles_X = LevelEditor.Instance.maxTiles.x;
-        int maxTiles_Y = LevelEditor.Instance.maxTiles.y;
-        int maxTiles_Z = LevelEditor.Instance.maxTiles.z;
-
         List<TileData> tileData_temp = new List<TileData>();
 
-        for (int x = 0; x < maxTiles_X; x++)
+        for (int x = 0; x < LevelEditor.maxTiles.x; x++)
         {
-            for (int y = 0; y < maxTiles_Y; y++)
+            for (int y = 0; y < LevelEditor.maxTiles.y; y++)
             {
-                for (int z = 0; z < maxTiles_Z; z++)
+                for (int z = 0; z < LevelEditor.maxTiles.z; z++)
                 {
                     for (int i = 0; i < 6; i++)
                     {
@@ -87,6 +86,7 @@ public class LevelSaver : MonoBehaviour
 
         LevelObject[] levelObjectResources = Resources.LoadAll<LevelObject>("Objects");
 
+        List<int> powerCableMeshIds_temp = new List<int>();
 
         for (int i = 0; i < levelObjectConnector.Connections.Count; i++)
         {
@@ -99,7 +99,7 @@ public class LevelSaver : MonoBehaviour
             {
                 if (levelObject.GetComponentInChildren<LevelObject_Selectable>().LevelObject == levelObjectResources[r])
                 {
-                    levelObjectId = r;
+                    levelObjectId = Int32.Parse(levelObjectResources[r].name.Split('_')[0]);
                     break;
                 }
             }
@@ -110,10 +110,16 @@ public class LevelSaver : MonoBehaviour
 
             data.connectionsData[i] = new ConnectionData();
             data.connectionsData[i].channels = levelObjectConnector.Connections.ElementAt(i).Value.ToArray();
+
+            if (levelObject.GetComponent<PowerCable>())
+            {
+                powerCableMeshIds_temp.Add(levelObject.GetComponent<PowerCable>().MeshId);
+            }
         }
+        data.powerCableData = powerCableMeshIds_temp.ToArray();
     }
 
-    private void SaveJSON(string fileName, bool overwrite = false)
+    private string SaveJSON(string fileName, bool overwrite = false)
     {
         string levelData = JsonUtility.ToJson(data);
 
@@ -132,6 +138,7 @@ public class LevelSaver : MonoBehaviour
         System.IO.File.WriteAllText(path, levelData);
 
         Debug.Log($"Saving Level to: \"{path}\"");
-    }
 
+        return Path.GetFileNameWithoutExtension(path);
+    }
 }

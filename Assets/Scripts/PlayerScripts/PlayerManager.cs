@@ -22,7 +22,8 @@ public class PlayerManager : MonoBehaviour
                 playerHealth = 100;
                 deadUI.SetActive(false);
                 GameManager.Instance.GetComponent<RecordManager>().ChangeControlState(ControlStates.Player);
-                TestLevelManager.Instance.GetComponent<SceneTransition>().ChangeToScene(SceneManager.GetActiveScene().buildIndex);
+                //TestLevelManager.Instance.GetComponent<SceneTransition>().ChangeToScene(SceneManager.GetActiveScene().buildIndex); //Changes level
+                playerHealth = 100;
             }
         }
     }
@@ -35,5 +36,11 @@ public class PlayerManager : MonoBehaviour
             instance = this; 
 
         DontDestroyOnLoad(this);
+    }
+
+    public void DamagePlayer(int amount)
+    {
+        Debug.Log("Damage Player!" + playerHealth);
+        playerHealth -= amount;
     }
 }
