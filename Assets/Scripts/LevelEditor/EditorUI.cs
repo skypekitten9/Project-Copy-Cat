@@ -122,6 +122,7 @@ public class EditorUI : MonoBehaviour
         GetComponent<LevelDeleter>().CloseUI();
         ToggleDeleteLevelButton();
         LevelEditor.Instance.CloseUI();
+        GetComponent<LevelObjectConnector>().ChannelPrompt.SetActive(false);
 
         menuOpen = false;
         hoveringUI = false;
