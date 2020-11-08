@@ -27,8 +27,8 @@ public class ButtonScript : MonoBehaviour
         {
             TestLevelManager.Instance.interactablesArray[id] = true;
             animator.SetTrigger("pressed");
-            SFXManager.Instance.PlayButtonClick(audio);
-            if(GameObject.Find("Game Manager").GetComponent<RecordManager>().recordPhase == RecordPhase.Recording) GameObject.Find("SyncBar").GetComponent<SyncBar>().SpawnInteraction();
+            SFXManager.Instance.PlaySound(SFXManager.Sound.buttonClick);
+            if (GameObject.Find("Game Manager").GetComponent<RecordManager>().recordPhase == RecordPhase.Recording) GameObject.Find("SyncBar").GetComponent<SyncBar>().SpawnInteraction();
             TestLevelManager.Instance.UpdateChannels();
             StartCoroutine(RevertSignal());
         }
