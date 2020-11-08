@@ -70,7 +70,7 @@ public class LevelEditor : MonoBehaviour
             Destroy(GetComponent<LevelObjectManager>().LevelObjectsParent.gameObject);
         GetComponent<LevelObjectManager>().LevelObjectsParent = new GameObject("LevelObjects").transform;
 
-        GetComponent<PowerCableGrid>().PowerCables.Clear();
+        GetComponent<PowerCableGrid>().PowerCables = new Dictionary<GameObject, Vector3Int>();
 
         GetComponent<LevelSaver>().SaveName = "";
         GetComponent<EditorUI>().CloseAllMenus();
