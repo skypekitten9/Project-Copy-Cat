@@ -1,14 +1,25 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SFXManager : MonoBehaviour
 {
+    public enum Sound
+    {
+        buttonClick,
+        doorClose,
+        doorOpen,
+        playerWalk
+    }
+    
     private static SFXManager instance = null;
     public static SFXManager Instance { get { return instance; } }
 
     //Är nog bättre om det görs om till en array om vi ska spara ljuden på det här sättet.
-    [SerializeField] private AudioClip doorOpen, doorClose, buttonClick, playerWalk;
+    [SerializeField] private SoundAudioClip[] soundAudioClips;
+
+    AudioSource audioSource;
 
     private void Awake()
     {
@@ -18,24 +29,36 @@ public class SFXManager : MonoBehaviour
             instance = this;
     }
 
+    private void Start()
+    {
+        audioSource = gameObject.GetComponent<AudioSource>();
+    }
+
     // Update is called once per frame
     void Update()
     {
         
     }
 
-    public void PlayDoorOpen(AudioSource source)
+    public void PlaySound(Sound sound)
     {
-        source.PlayOneShot(doorOpen, 0.7f);
+        audioSource.PlayOneShot(GetSound(sound));
     }
 
-    public void PlayDoorClose(AudioSource source)
+    private AudioClip GetSound(Sound sound)
     {
-        source.PlayOneShot(doorClose, 0.7f);
+        foreach(SoundAudioClip soundAudioClip in soundAudioClips)
+            if(soundAudioClip.sound == sound)
+            {
+                return soundAudioClip.audioClip;
+            }
+        return null;
     }
 
-    public void PlayButtonClick(AudioSource source)
+    [Serializable]
+    public class SoundAudioClip
     {
-        source.PlayOneShot(buttonClick, 0.7f);
+        public Sound sound;
+        public AudioClip audioClip;
     }
 }
