@@ -52,7 +52,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a58816bfe634e56479965ff6bee02cfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  generateRoof: 1
   debug: 0
   tilePrefab: {fileID: 1553481241576147018, guid: 2e252de5ca2face43b4e91cd0648e074, type: 3}
   boundingBox: {fileID: 0}
@@ -142,6 +141,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lineRendererPrefab: {fileID: 2840277694639033187, guid: 7e41dc8e0aeba9542bf5000ae5202b67, type: 3}
+  channelPrompt: {fileID: 0}
+  idField: {fileID: 0}
 --- !u!114 &3530888468006799717
 MonoBehaviour:
   m_ObjectHideFlags: 0

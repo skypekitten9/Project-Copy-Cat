@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using TMPro;
 using UnityEditor;
 using UnityEngine;
 
@@ -16,6 +18,14 @@ public class LevelObjectConnector : MonoBehaviour
     private Transform lineRendererParent;
 
     private List<VisualConnection> visualConnections;
+
+    [SerializeField] private GameObject channelPrompt;
+    public GameObject ChannelPrompt { get { return channelPrompt; } }
+
+    [SerializeField] private TMP_InputField idField;
+
+    private GameObject tempFrom, tempTo;
+
 
 
     private void Awake()
@@ -95,11 +105,25 @@ public class LevelObjectConnector : MonoBehaviour
                                              to.GetComponent<StandButton>() ||
                                              to.GetComponent<LeverScript>()))
                     {
-                        Connect(to, from);
+                        tempFrom = to;
+                        tempTo = from;
+
+                        if (Connections[to].Count == 0)
+                        {
+                            channelPrompt.transform.position = Input.mousePosition;
+                            channelPrompt.SetActive(true);
+                        }
                     }
                     else if (reciever == false && to.GetComponent<DoorScript>())        //to is a reciever (door)
                     {
-                        Connect(from, to);
+                        tempFrom = from;
+                        tempTo = to;
+
+                        if (Connections[from].Count == 0)
+                        {
+                            channelPrompt.transform.position = Input.mousePosition;
+                            channelPrompt.SetActive(true);
+                        }
                     }
                 }
 
@@ -110,23 +134,32 @@ public class LevelObjectConnector : MonoBehaviour
         }
     }
 
-    private void Connect(GameObject transmitter, GameObject reciever)
+    public void Connect()
     {
-        if (Connections[transmitter].Count == 0)
+        if (Connections[tempFrom].Count == 0)
         {
-            int newId = GetNewId();
-            Connections[reciever].Add(newId);
-            Connections[transmitter].Add(newId);
+            int newId;
+
+            if (idField.text != "")
+                newId = Convert.ToInt32(idField.text);
+            else
+                newId = GetNewId();
+
+            Connections[tempTo].Add(newId);
+            Connections[tempFrom].Add(newId);
         }
         else
         {
-            if (Connections[reciever].Contains(Connections[transmitter][0]) == false)
+            if (Connections[tempTo].Contains(Connections[tempFrom][0]) == false)
             {
-                Connections[reciever].Add(Connections[transmitter][0]);
+                Connections[tempTo].Add(Connections[tempFrom][0]);
             }
         }
+        SetLineRenderer(tempFrom, tempTo);
 
-        SetLineRenderer(transmitter, reciever);
+        tempFrom = null;
+        tempTo = null;
+        channelPrompt.SetActive(false);
     }
 
     public void RemoveChannels(int channelId)
