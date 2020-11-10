@@ -62,7 +62,7 @@ public class TurretBehavior : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         DrawLineRenderer();
         if (PlayerManager.Instance == null) return;
