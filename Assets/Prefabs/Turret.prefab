@@ -4938,10 +4938,10 @@ MonoBehaviour:
   fireRange: 10
   targetRange: 15
   patrolRange: 25
-  viewAngle: 30
-  chargeTime: 1
+  viewAngle: 90
+  chargeTime: 0.5
   patrolSpeed: 0.5
-  targetSpeed: 10
+  targetSpeed: 15
 --- !u!65 &833836608223164058
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9919,19 +9919,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 81983294294e8674fb043d47f8765a89, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 81983294294e8674fb043d47f8765a89, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.3826831
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 81983294294e8674fb043d47f8765a89, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 81983294294e8674fb043d47f8765a89, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9238797
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 81983294294e8674fb043d47f8765a89, type: 3}
       propertyPath: m_RootOrder
@@ -9943,7 +9943,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 81983294294e8674fb043d47f8765a89, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 45
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 81983294294e8674fb043d47f8765a89, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
