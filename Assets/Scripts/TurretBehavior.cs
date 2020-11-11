@@ -23,6 +23,7 @@ public class TurretBehavior : MonoBehaviour
     Quaternion patrolLeftRotation, patrolRightRotation, defaultRotation, currentRotation;
     private float timeCount, charge, particleHitSize, particleEyeSize, particleHitSpeed, particleEyeSpeed;
     Color defaultColor, chargedColor;
+    string hitTag;
 
     void Start()
     {
@@ -39,6 +40,7 @@ public class TurretBehavior : MonoBehaviour
         fireing = false;
         lockTarget = false;
         charge = 0;
+        hitTag = "NO TAG";
         
 
 
@@ -110,8 +112,9 @@ public class TurretBehavior : MonoBehaviour
         if(Physics.Raycast(ray, out hit, 100))
         {
             endPos = hit.point;
+            hitTag = hit.transform.tag;
         }
-
+        
         lineRenderer.SetPosition(0, eye.transform.position);
         lineRenderer.SetPosition(1, endPos);
         particleSysHit.transform.position = endPos;
@@ -194,7 +197,7 @@ public class TurretBehavior : MonoBehaviour
         if (Physics.Raycast(ray, out hit, 100))
         {
             Debug.Log("Hit! " + hit.transform.tag + " " + hit.transform.name);
-            if (hit.transform.tag == "Player") return true;
+            if (hit.transform.tag == "Player" || hit.transform.tag == "Hologram") return true;
         }
         return false;
     }
@@ -256,7 +259,7 @@ public class TurretBehavior : MonoBehaviour
         
         while (fireing)
         {
-            PlayerManager.Instance.DamagePlayer(10);
+            if(hitTag == "Player") PlayerManager.Instance.DamagePlayer(10);
             yield return new WaitForSeconds(0.1f);
         }
         
@@ -318,14 +321,6 @@ public class TurretBehavior : MonoBehaviour
 
     IEnumerator ToPatroling()
     {
-        if (Quaternion.Angle(head.transform.rotation, patrolRightRotation) < Quaternion.Angle(head.transform.rotation, patrolLeftRotation))
-        {
-            patrolRight = false;
-        }
-        else
-        {
-            patrolRight = true;
-        }
         transitioningTo = false;
         yield return new WaitForSeconds(Time.deltaTime);
     }

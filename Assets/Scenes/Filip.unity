@@ -1068,34 +1068,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 833836607911678916, guid: 0391279a701ee0a4da7445e1a48e9517, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 833836607911678921, guid: 0391279a701ee0a4da7445e1a48e9517, type: 3}
-      propertyPath: m_Size.x
-      value: 4.6200004
-      objectReference: {fileID: 0}
-    - target: {fileID: 833836607911678921, guid: 0391279a701ee0a4da7445e1a48e9517, type: 3}
-      propertyPath: m_Size.y
-      value: 1.3237712
-      objectReference: {fileID: 0}
-    - target: {fileID: 833836607911678921, guid: 0391279a701ee0a4da7445e1a48e9517, type: 3}
-      propertyPath: m_Size.z
-      value: 4.6200004
-      objectReference: {fileID: 0}
-    - target: {fileID: 833836607911678921, guid: 0391279a701ee0a4da7445e1a48e9517, type: 3}
-      propertyPath: m_Center.y
-      value: 0.64688575
-      objectReference: {fileID: 0}
-    - target: {fileID: 833836608223164052, guid: 0391279a701ee0a4da7445e1a48e9517, type: 3}
-      propertyPath: patrolViewAngle
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 833836608223164052, guid: 0391279a701ee0a4da7445e1a48e9517, type: 3}
-      propertyPath: targetViewAngle
-      value: 15
-      objectReference: {fileID: 0}
     - target: {fileID: 833836608223164053, guid: 0391279a701ee0a4da7445e1a48e9517, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1143,10 +1115,6 @@ PrefabInstance:
     - target: {fileID: 833836608223164054, guid: 0391279a701ee0a4da7445e1a48e9517, type: 3}
       propertyPath: m_Name
       value: Turret
-      objectReference: {fileID: 0}
-    - target: {fileID: 833836608223164054, guid: 0391279a701ee0a4da7445e1a48e9517, type: 3}
-      propertyPath: m_TagString
-      value: Interactable
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0391279a701ee0a4da7445e1a48e9517, type: 3}

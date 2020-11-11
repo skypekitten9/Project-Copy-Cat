@@ -10,6 +10,7 @@ TagManager:
   - Tile_ExtrudeCollider
   - Pickupable
   - IgnorePlatform
+  - Hologram
   layers:
   - Default
   - TransparentFX
