@@ -19,7 +19,7 @@ public class TurretBehavior : MonoBehaviour
     public float fireRange, targetRange, patrolRange, viewAngle;
     public float chargeTime;
     public float patrolSpeed, targetSpeed;
-    bool transitioningFrom, transitioningTo, patrolRight, fireing;
+    bool transitioningFrom, transitioningTo, patrolRight, fireing, lockTarget;
     Quaternion patrolLeftRotation, patrolRightRotation, defaultRotation, currentRotation;
     private float timeCount, charge, particleHitSize, particleEyeSize, particleHitSpeed, particleEyeSpeed;
     Color defaultColor, chargedColor;
@@ -37,6 +37,7 @@ public class TurretBehavior : MonoBehaviour
         patrolLeftRotation = Quaternion.Euler(head.transform.rotation.eulerAngles.x, head.transform.rotation.eulerAngles.y + viewAngle * -1, head.transform.rotation.eulerAngles.z);
         patrolRight = true;
         fireing = false;
+        lockTarget = false;
         charge = 0;
         
 
@@ -216,7 +217,21 @@ public class TurretBehavior : MonoBehaviour
             charge -= Time.deltaTime / 2f;
             fireing = false;
         }
-        head.transform.rotation = Quaternion.Lerp(head.transform.rotation, Quaternion.LookRotation(Quaternion.Euler(0, 90, 0) * new Vector3(distanceToTarget.x, 0, distanceToTarget.z)), Time.deltaTime * targetSpeed);
+
+        if (Quaternion.Angle(head.transform.rotation, Quaternion.LookRotation(Quaternion.Euler(0, 90, 0) * new Vector3(distanceToTarget.x, 0, distanceToTarget.z))) < 2)
+        {
+            lockTarget = true;
+        }
+        if(lockTarget)
+        {
+            head.transform.rotation = Quaternion.LookRotation(Quaternion.Euler(0, 90, 0) * new Vector3(distanceToTarget.x, 0, distanceToTarget.z));
+        }
+        else
+        {
+            head.transform.rotation = Quaternion.Lerp(head.transform.rotation, Quaternion.LookRotation(Quaternion.Euler(0, 90, 0) * new Vector3(distanceToTarget.x, 0, distanceToTarget.z)), Time.deltaTime * targetSpeed);
+        }
+        DrawLineRenderer();
+
         if (distanceToTarget.magnitude > targetRange)
         {
             StartCoroutine(Transition(state, TurretState.Patroling));
@@ -336,6 +351,7 @@ public class TurretBehavior : MonoBehaviour
 
     IEnumerator FromTargeting()
     {
+        lockTarget = false;
         while (charge > 0)
         {
             charge -= Time.deltaTime;
