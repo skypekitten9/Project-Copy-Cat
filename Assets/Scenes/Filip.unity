@@ -973,6 +973,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 833836608223164052, guid: 0391279a701ee0a4da7445e1a48e9517, type: 3}
+      propertyPath: patrolViewAngle
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 833836608223164052, guid: 0391279a701ee0a4da7445e1a48e9517, type: 3}
+      propertyPath: targetViewAngle
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 833836608223164053, guid: 0391279a701ee0a4da7445e1a48e9517, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

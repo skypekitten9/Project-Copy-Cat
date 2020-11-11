@@ -16,7 +16,7 @@ public class TurretBehavior : MonoBehaviour
     LineRenderer lineRenderer;
     ParticleSystem particleSysEye, particleSysHit;
     Renderer eyeRender, hitRender;
-    public float fireRange, targetRange, patrolRange, viewAngle;
+    public float fireRange, targetRange, patrolRange, patrolViewAngle, targetViewAngle;
     public float chargeTime;
     public float patrolSpeed, targetSpeed;
     bool transitioningFrom, transitioningTo, patrolRight, fireing, lockTarget;
@@ -33,8 +33,8 @@ public class TurretBehavior : MonoBehaviour
         distanceToTarget = Vector3.positiveInfinity;
         defaultRotation = head.transform.rotation;
         currentRotation = defaultRotation;
-        patrolRightRotation = Quaternion.Euler(head.transform.rotation.eulerAngles.x, head.transform.rotation.eulerAngles.y + viewAngle, head.transform.rotation.eulerAngles.z);
-        patrolLeftRotation = Quaternion.Euler(head.transform.rotation.eulerAngles.x, head.transform.rotation.eulerAngles.y + viewAngle * -1, head.transform.rotation.eulerAngles.z);
+        patrolRightRotation = Quaternion.Euler(head.transform.rotation.eulerAngles.x, head.transform.rotation.eulerAngles.y + patrolViewAngle, head.transform.rotation.eulerAngles.z);
+        patrolLeftRotation = Quaternion.Euler(head.transform.rotation.eulerAngles.x, head.transform.rotation.eulerAngles.y + patrolViewAngle * -1, head.transform.rotation.eulerAngles.z);
         patrolRight = true;
         fireing = false;
         lockTarget = false;
@@ -177,7 +177,7 @@ public class TurretBehavior : MonoBehaviour
             if (Quaternion.Angle(head.transform.rotation, patrolLeftRotation) < 10) patrolRight = true;
         }
         
-        if(distanceToTarget.magnitude <= targetRange && Quaternion.Angle(head.transform.rotation, Quaternion.LookRotation(Quaternion.Euler(0, 90, 0) * new Vector3(distanceToTarget.x, 0, distanceToTarget.z))) < viewAngle/2)
+        if(distanceToTarget.magnitude <= targetRange && Quaternion.Angle(head.transform.rotation, Quaternion.LookRotation(Quaternion.Euler(0, 90, 0) * new Vector3(distanceToTarget.x, 0, distanceToTarget.z))) < targetViewAngle)
         {
             StartCoroutine(Transition(state, TurretState.Targeting));
         }
