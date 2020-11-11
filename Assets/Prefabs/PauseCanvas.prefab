@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 829471925}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: PausedBillboard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29,7 +29,7 @@ Transform:
   m_Children:
   - {fileID: 2135559128}
   m_Father: {fileID: 8562973759378699250}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &861040855
 GameObject:
@@ -413,7 +413,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8562973757524254421}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ResumeButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -434,7 +434,7 @@ Transform:
   - {fileID: 8562973757649358045}
   - {fileID: 8562973758407539394}
   m_Father: {fileID: 8562973759378699250}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8562973757649358044
 GameObject:
@@ -1003,7 +1003,7 @@ Canvas:
   m_GameObject: {fileID: 8562973758495698974}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -1344,7 +1344,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8562973758717019245}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: MainMenuButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1365,7 +1365,7 @@ Transform:
   - {fileID: 8562973757396786262}
   - {fileID: 8562973758950891782}
   m_Father: {fileID: 8562973759378699250}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8562973758836026418
 GameObject:
@@ -1656,7 +1656,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8562973759058475158}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: SettingsButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1677,7 +1677,7 @@ Transform:
   - {fileID: 8562973758089555143}
   - {fileID: 8562973758564950755}
   m_Father: {fileID: 8562973759378699250}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8562973759378699249
 GameObject:
@@ -1709,10 +1709,10 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2.4011, y: 2.4011, z: 2.4011}
   m_Children:
+  - {fileID: 829471925}
   - {fileID: 8562973757524254421}
   - {fileID: 8562973759058475158}
   - {fileID: 8562973758717019245}
-  - {fileID: 829471925}
   m_Father: {fileID: 8562973758495698970}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
