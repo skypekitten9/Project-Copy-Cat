@@ -177,7 +177,7 @@ public class TurretBehavior : MonoBehaviour
             if (Quaternion.Angle(head.transform.rotation, patrolLeftRotation) < 10) patrolRight = true;
         }
         
-        if(distanceToTarget.magnitude <= targetRange && Quaternion.Angle(head.transform.rotation, Quaternion.LookRotation(Quaternion.Euler(0, 90, 0) * new Vector3(distanceToTarget.x, 0, distanceToTarget.z))) < targetViewAngle)
+        if(distanceToTarget.magnitude <= targetRange && Quaternion.Angle(head.transform.rotation, Quaternion.LookRotation(Quaternion.Euler(0, 90, 0) * new Vector3(distanceToTarget.x, 0, distanceToTarget.z))) < targetViewAngle && IsPlayerVisable())
         {
             StartCoroutine(Transition(state, TurretState.Targeting));
         }
@@ -185,6 +185,18 @@ public class TurretBehavior : MonoBehaviour
         {
             StartCoroutine(Transition(state, TurretState.Disabled));
         }
+    }
+
+    bool IsPlayerVisable()
+    {
+        Ray ray = new Ray(head.transform.position, CalculateDistanceToPlayerFrom(new Vector3(0, eye.transform.position.y, 0)));
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, 100))
+        {
+            Debug.Log("Hit! " + hit.transform.tag + " " + hit.transform.name);
+            if (hit.transform.tag == "Player") return true;
+        }
+        return false;
     }
 
     bool VectorApproximately(Vector3 a, Vector3 b)
@@ -232,7 +244,7 @@ public class TurretBehavior : MonoBehaviour
         }
         DrawLineRenderer();
 
-        if (distanceToTarget.magnitude > targetRange)
+        if (distanceToTarget.magnitude > targetRange || !IsPlayerVisable())
         {
             StartCoroutine(Transition(state, TurretState.Patroling));
         }
