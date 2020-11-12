@@ -44,12 +44,10 @@ public class EditorUI : MonoBehaviour
         if (objectsPanelVisible == false)
             objectsRectTransform.localPosition -= new Vector3(objectsRectTransform.rect.width, 0, 0);
 
-        popupMenu.SetActive(false);
-        levelsPanel.SetActive(false);
-        levelsPanel.transform.position = new Vector3(Screen.width * 0.5f, Screen.height - 75, 0);
-        saveAsPanel.SetActive(false);
-        saveAsPanel.transform.position = new Vector3(Screen.width * 0.5f, Screen.height - 75, 0);
+        CloseAllMenus();
         messageBox.SetActive(false);
+        levelsPanel.transform.position = new Vector3(Screen.width * 0.5f, Screen.height - 75, 0);
+        saveAsPanel.transform.position = new Vector3(Screen.width * 0.5f, Screen.height - 75, 0);
         messageBox.transform.position = new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0);
     }
 
