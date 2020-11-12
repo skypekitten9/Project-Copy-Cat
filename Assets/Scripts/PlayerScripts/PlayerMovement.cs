@@ -1,69 +1,56 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public CharacterController controller;
+    //public LayerMask groundMask;
 
-    public Transform groundCheck;
-
-    public LayerMask groundMask;
-
+    private Rigidbody rb;
+    private AudioSource audio;
     private Vector3 velocity;
 
-    [SerializeField] private bool isGrounded;
+    private bool isGrounded;
 
-    [SerializeField] private float speed;
-    [SerializeField] private float gravity;
-    [SerializeField] private float groundDistance;
-    [SerializeField] private float jumpHeight;
+    [SerializeField] private float speed = 7.0f;
+    [SerializeField] private float jumpSpeed = 10.0f;
 
-    void Start()
+    private void Start()
     {
-        controller = gameObject.GetComponent<CharacterController>();
-        groundCheck = transform.Find("GroundCheck").transform;
-
-        speed = 12f;
-        gravity = -19.64f;
-        groundDistance = 0.4f;
-        jumpHeight = 3f;
-
+        rb = GetComponent<Rigidbody>();
+        audio = gameObject.GetComponent<AudioSource>();
     }
 
-    void Update()
+    private void FixedUpdate()
     {
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        Move();
+    }
 
-        if (isGrounded && velocity.y < 0)
-        {
-            velocity.y = -3f;
-        }
-
-        Movement();
-
+    private void Update()
+    {
+        isGrounded = Physics.Raycast(transform.position + new Vector3(0, 0.1f, 0), -Vector3.up, 0.2f);
+        //if (Input.GetAxis("Mouse ScrollWheel") > 0 && isGrounded)
         if (Input.GetButtonDown("Jump") && isGrounded)
-        {
             Jump();
-        }
     }
 
-    void Movement()
+    private void Move()
     {
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
+        float x = Input.GetAxisRaw("Horizontal");
+        float z = Input.GetAxisRaw("Vertical");
 
-        Vector3 move = transform.right * x + transform.forward * z;
+        velocity = (transform.right * x + transform.forward * z).normalized * speed;
 
-        controller.Move(move * speed * Time.deltaTime);
-
-        velocity.y += gravity * Time.deltaTime;
-
-        controller.Move(velocity * Time.deltaTime);
+        //rb.MovePosition(transform.position + velocity * Time.deltaTime);
+        rb.velocity = new Vector3(velocity.x, rb.velocity.y, velocity.z);
     }
 
     void Jump()
     {
-        velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+        rb.velocity = jumpSpeed * Vector3.up;
+        //rb.AddForce(new Vector3(0, jumpForce, 0), ForceMode.Impulse);
+        //jumpTimer = 0;
+        //velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
     }
 }

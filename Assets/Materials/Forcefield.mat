@@ -31,75 +31,15 @@ Material:
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
-    m_TexEnvs:
-    - _BaseMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _BumpMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _EmissionMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MetallicGlossMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _OcclusionMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _SampleTexture2D_4CEA0812_Texture_1:
-        m_Texture: {fileID: 2800000, guid: 89d2b3766d0a6aa47949ed2d9765ac0a, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _SpecGlossMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
+    m_TexEnvs: []
     m_Floats:
-    - Vector1_2A37078A: 0
-    - Vector1_48334DB4: 0
-    - Vector1_4F6D5C0: 0.8
-    - Vector1_C41E8354: 0
-    - Vector1_E2A7B005: 0.07
-    - _AlphaClip: 0
-    - _Blend: 0
-    - _BumpScale: 1
-    - _Cull: 2
-    - _Cutoff: 0.5
-    - _DstBlend: 0
-    - _EnvironmentReflections: 1
-    - _GlossMapScale: 0
-    - _Glossiness: 0
-    - _GlossyReflections: 0
-    - _Metallic: 0
-    - _OcclusionStrength: 1
-    - _QueueOffset: 0
-    - _ReceiveShadows: 1
-    - _Smoothness: 0.5
-    - _SmoothnessTextureChannel: 0
-    - _SpecularHighlights: 1
-    - _SrcBlend: 1
-    - _Surface: 0
-    - _WorkflowMode: 1
-    - _ZWrite: 1
+    - Vector1_4F6D5C0: 0.6
+    - Vector1_E2A7B005: 0.24
     m_Colors:
-    - Color_626AFF15: {r: 0, g: 0.76699114, b: 1.9941769, a: 1}
+    - Color_626AFF15: {r: 0, g: 0.8585899, b: 2.256312, a: 1}
     - Vector2_E813C53C: {r: 0.9, g: 0.9, b: 0, a: 0}
-    - Vector2_F97A948D: {r: 40, g: 20, b: 0, a: 0}
-    - Vector4_27054E95: {r: 0.7, g: 0.9, b: 1.2, a: 1.5}
-    - Vector4_5C1D9ABC: {r: 0.1, g: 0.2, b: 0.3, a: 0.4}
+    - Vector2_F97A948D: {r: 20, g: 20, b: 0, a: 0}
+    - Vector4_27054E95: {r: 1, g: 1, b: 1, a: 1}
+    - Vector4_5C1D9ABC: {r: 0.2, g: 0.2, b: 0.2, a: 0.2}
     - Vector4_E1DCC38B: {r: 0.1, g: 0.2, b: 0.3, a: 0.4}
-    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
   m_BuildTextureStacks: []

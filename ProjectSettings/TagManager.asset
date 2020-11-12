@@ -5,6 +5,12 @@ TagManager:
   serializedVersion: 2
   tags:
   - Door
+  - Interactable
+  - Tile_SelectCollider
+  - Tile_ExtrudeCollider
+  - Pickupable
+  - IgnorePlatform
+  - Hologram
   layers:
   - Default
   - TransparentFX
@@ -20,6 +26,8 @@ TagManager:
   - HoloPass
   - HoloVisible
   - 
+  - KillTrigger
+  - PlayerPass
   - 
   - 
   - 
@@ -32,12 +40,10 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - ' '
+  - LevelEditorRotation
+  - LevelEditorObjects
+  - LevelEditorTiles
   m_SortingLayers:
   - name: Default
     uniqueID: 0
