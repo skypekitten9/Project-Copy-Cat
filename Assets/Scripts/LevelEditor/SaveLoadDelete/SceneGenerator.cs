@@ -14,6 +14,11 @@ public class SceneGenerator : MonoBehaviour
     [SerializeField] private GameObject sceneTile;
     [SerializeField] private GameObject playerPrefab;
 
+
+    private Transform tilesParent;
+
+
+
     public void Generate(FileInfo levelDataFile)
     {
         DirectoryInfo levelsDir = new System.IO.DirectoryInfo(Application.dataPath + $"/Resources/LevelData");
@@ -28,6 +33,9 @@ public class SceneGenerator : MonoBehaviour
         #endregion
 
         PopulateScene(data);
+
+        //Optimize();
+
         ApplyLightSettings();
 
         #region Save & Exit Scene
@@ -56,7 +64,8 @@ public class SceneGenerator : MonoBehaviour
             }
         }
 
-        Transform tilesParent = new GameObject("Tiles").transform;
+        tilesParent = new GameObject("Tiles", typeof(MeshFilter), typeof(MeshRenderer), typeof(MeshCombiner)).transform;
+        tilesParent.gameObject.isStatic = true;
         foreach (var td in data.tileData)
         {
             Instantiate(sceneTile, LevelEditor.IndexToWorldPos(td.x, td.y, td.z, (TileDirection)td.i), LevelEditor.IndexToRotation((TileDirection)td.i), tilesParent);
@@ -100,8 +109,14 @@ public class SceneGenerator : MonoBehaviour
     }
 
 
+    private void Optimize()
+    {
+        tilesParent.GetComponent<MeshCombiner>().CombineMeshes();
+    }
+
     private void ApplyLightSettings()
     {
         Lightmapping.lightingSettings = lightingSettings;
+        //< Bake here
     }
 }
