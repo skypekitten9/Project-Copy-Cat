@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Patrick.unity
     guid: 60f3922715723934f865578dcb243bb2
   - enabled: 1
-    path: Assets/Scenes/Filip.unity
+    path: Assets/Resources/Scenes/Filip.unity
     guid: e2d9f458b8754184ca85eaac202e7614
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
