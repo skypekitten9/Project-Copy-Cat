@@ -21,7 +21,7 @@ GameObject:
   m_TagString: Pickupable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1467835781261442888
 Transform:
@@ -132,6 +132,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canHold: 1
   isHolding: 0
+  hasSavedVelocity: 0
   tempParent: {fileID: 0}
 --- !u!111 &673753777857308739
 Animation:
@@ -177,7 +178,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &838531642101844188
 Transform:

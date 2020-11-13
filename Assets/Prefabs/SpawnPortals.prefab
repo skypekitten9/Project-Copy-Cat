@@ -14,7 +14,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &3762520784483158507
 Transform:
@@ -49,7 +49,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &3762520785250501817
 Transform:
@@ -237,9 +237,25 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.38872305
       objectReference: {fileID: 0}
+    - target: {fileID: -2841695311940077995, guid: 6131d058e9e8f8d4288595feec1dd8f8, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 6131d058e9e8f8d4288595feec1dd8f8, type: 3}
       propertyPath: m_Name
       value: Portal2
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6131d058e9e8f8d4288595feec1dd8f8, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 6367892618325462179, guid: 6131d058e9e8f8d4288595feec1dd8f8, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 6459697444325630510, guid: 6131d058e9e8f8d4288595feec1dd8f8, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6131d058e9e8f8d4288595feec1dd8f8, type: 3}
@@ -326,9 +342,25 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.38872305
       objectReference: {fileID: 0}
+    - target: {fileID: -2841695311940077995, guid: 6131d058e9e8f8d4288595feec1dd8f8, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 6131d058e9e8f8d4288595feec1dd8f8, type: 3}
       propertyPath: m_Name
       value: Portal2
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6131d058e9e8f8d4288595feec1dd8f8, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 6367892618325462179, guid: 6131d058e9e8f8d4288595feec1dd8f8, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 6459697444325630510, guid: 6131d058e9e8f8d4288595feec1dd8f8, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6131d058e9e8f8d4288595feec1dd8f8, type: 3}
