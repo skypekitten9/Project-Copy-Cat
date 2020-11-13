@@ -4900,6 +4900,7 @@ GameObject:
   - component: {fileID: 833836608223164052}
   - component: {fileID: 833836608223164058}
   - component: {fileID: 833836608223164059}
+  - component: {fileID: 1392930926}
   m_Layer: 0
   m_Name: Turret
   m_TagString: Interactable
@@ -5054,6 +5055,21 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 0
   m_Loop: 0
+--- !u!111 &1392930926
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 833836608223164054}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations: []
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &833836608335207119
 GameObject:
   m_ObjectHideFlags: 0
