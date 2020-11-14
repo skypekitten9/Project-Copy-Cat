@@ -34,7 +34,7 @@ public class SceneGenerator : MonoBehaviour
 
         PopulateScene(data);
 
-        //Optimize();
+        Optimize();
 
         ApplyLightSettings();
 
@@ -111,12 +111,15 @@ public class SceneGenerator : MonoBehaviour
 
     private void Optimize()
     {
-        tilesParent.GetComponent<MeshCombiner>().CombineMeshes();
+        //tilesParent.GetComponent<MeshCombiner>().CombineMeshes();
     }
 
     private void ApplyLightSettings()
     {
         Lightmapping.lightingSettings = lightingSettings;
-        //< Bake here
+        RenderSettings.subtractiveShadowColor = new Color(100, 100, 100);
+        RenderSettings.skybox = null;
+        RenderSettings.ambientMode = UnityEngine.Rendering.AmbientMode.Flat;
+        RenderSettings.ambientLight = Color.black;
     }
 }
