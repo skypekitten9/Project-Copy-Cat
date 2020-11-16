@@ -184,10 +184,10 @@ public class TurretBehavior : MonoBehaviour
         {
             StartCoroutine(Transition(state, TurretState.Targeting));
         }
-        if (distanceToTarget.magnitude > patrolRange)
-        {
-            StartCoroutine(Transition(state, TurretState.Disabled));
-        }
+        //if (distanceToTarget.magnitude > patrolRange)
+        //{
+        //    StartCoroutine(Transition(state, TurretState.Disabled));
+        //}
     }
 
     bool IsPlayerVisable()
@@ -239,7 +239,10 @@ public class TurretBehavior : MonoBehaviour
         }
         if(lockTarget)
         {
-            head.transform.rotation = Quaternion.LookRotation(Quaternion.Euler(0, 90, 0) * new Vector3(distanceToTarget.x, 0, distanceToTarget.z));
+            if (distanceToTarget.magnitude < 99)
+            {
+                head.transform.rotation = Quaternion.LookRotation(Quaternion.Euler(0, 90, 0) * new Vector3(distanceToTarget.x, 0, distanceToTarget.z));
+            }
         }
         else
         {
