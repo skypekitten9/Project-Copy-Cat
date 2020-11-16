@@ -8,11 +8,14 @@ public class PauseMenu : MonoBehaviour
     public static bool GameIsPaused = false;
 
     public GameObject pauseMenuUI;
+    public GameObject settingsMenuUI;
+    private bool AtSettings;
     // Start is called before the first frame update
     void Start()
     {
         GameIsPaused = false;
         pauseMenuUI.SetActive(false);
+        settingsMenuUI.SetActive(false);
     }
 
     // Update is called once per frame
@@ -45,6 +48,22 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1f;
         GameIsPaused = false;
         Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    public void GoToSettings()
+    {
+        if (AtSettings == false)
+        {
+            pauseMenuUI.SetActive(false);
+            settingsMenuUI.SetActive(true);
+            AtSettings = true;
+        }
+        else if (AtSettings == true)
+        {
+            pauseMenuUI.SetActive(true);
+            settingsMenuUI.SetActive(false);
+            AtSettings = false;
+        }
     }
 
     public void MainMenu()
