@@ -1,11 +1,15 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.IO;
-using UnityEditor.SceneManagement;
+
 using UnityEngine.SceneManagement;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
+#if UNITY_EDITOR
+using UnityEditor.SceneManagement;
+#endif
 
 public class SceneGenerator : MonoBehaviour
 {

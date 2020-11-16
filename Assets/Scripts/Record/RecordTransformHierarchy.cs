@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using UnityEditor.Animations;
 using UnityEngine;
+
+using UnityEditor.Animations;
+
 
 [RequireComponent(typeof(Animation))]
 public class RecordTransformHierarchy : MonoBehaviour
@@ -16,7 +18,6 @@ public class RecordTransformHierarchy : MonoBehaviour
     private GameObjectRecorder recorder;
 
     private Transform parent;
-
 
 
     void Awake()
