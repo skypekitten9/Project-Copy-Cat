@@ -388,7 +388,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1981876428804096142, guid: 468e14207ae028e49b4160d97b9b48b4, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1981876428804096142, guid: 468e14207ae028e49b4160d97b9b48b4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -489,8 +489,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
@@ -885,8 +885,8 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 36eca97159562a9488fee24d3d62ec2f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
 --- !u!1001 &1478398960
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -976,8 +976,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_HorizontalAxis: Horizontal
   m_VerticalAxis: Vertical
   m_SubmitButton: Submit
@@ -995,8 +995,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_FirstSelected: {fileID: 0}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
@@ -1082,6 +1082,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ChatManager
       objectReference: {fileID: 0}
+    - target: {fileID: 1325012868840698427, guid: 5f8cd37d5d1a7d34b9c9d2029cdcb21f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1325012868840698437, guid: 5f8cd37d5d1a7d34b9c9d2029cdcb21f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1128,39 +1132,39 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1325012869629170012, guid: 5f8cd37d5d1a7d34b9c9d2029cdcb21f, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1325012869629170012, guid: 5f8cd37d5d1a7d34b9c9d2029cdcb21f, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1325012869993073792, guid: 5f8cd37d5d1a7d34b9c9d2029cdcb21f, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1325012869993073792, guid: 5f8cd37d5d1a7d34b9c9d2029cdcb21f, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: -17
       objectReference: {fileID: 0}
     - target: {fileID: 1325012869993094416, guid: 5f8cd37d5d1a7d34b9c9d2029cdcb21f, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.99999976
       objectReference: {fileID: 0}
     - target: {fileID: 1325012869993094416, guid: 5f8cd37d5d1a7d34b9c9d2029cdcb21f, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1325012870067524604, guid: 5f8cd37d5d1a7d34b9c9d2029cdcb21f, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1325012870067524604, guid: 5f8cd37d5d1a7d34b9c9d2029cdcb21f, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1325012870067524604, guid: 5f8cd37d5d1a7d34b9c9d2029cdcb21f, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: -17
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5f8cd37d5d1a7d34b9c9d2029cdcb21f, type: 3}
