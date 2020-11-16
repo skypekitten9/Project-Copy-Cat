@@ -8,6 +8,8 @@ public class MainMenu : MonoBehaviour
     public GameObject mainMenuUI;
     public GameObject levelSelectUI;
     public GameObject settingsUI;
+    private bool AtSettings;
+    private bool AtLevelSelect;
     public GameObject camera;
     Scene currentScene;
     // Start is called before the first frame update
@@ -25,18 +27,42 @@ public class MainMenu : MonoBehaviour
 
     public void GoToLevelSelect()
     {
-        mainMenuUI.SetActive(false);
-        settingsUI.SetActive(false);
-        levelSelectUI.SetActive(true);
-        camera.transform.position = camera.transform.position + new Vector3(1000, 0, 0);
+        if (AtLevelSelect == false)
+        {
+            mainMenuUI.SetActive(false);
+            settingsUI.SetActive(false);
+            levelSelectUI.SetActive(true);
+            AtLevelSelect = true;
+            camera.transform.position = camera.transform.position + new Vector3(1000, 0, 0);
+        }
+        else if (AtLevelSelect == true)
+        {
+            mainMenuUI.SetActive(true);
+            settingsUI.SetActive(false);
+            levelSelectUI.SetActive(false);
+            AtLevelSelect = false;
+            camera.transform.position = camera.transform.position + new Vector3(-1000, 0, 0);
+        }
     }
 
     public void GoToSettings()
     {
-        mainMenuUI.SetActive(false);
-        settingsUI.SetActive(true);
-        levelSelectUI.SetActive(false);
-        camera.transform.position = camera.transform.position + new Vector3(-1000, 0, 0);
+        if(AtSettings == false)
+        {
+            mainMenuUI.SetActive(false);
+            settingsUI.SetActive(true);
+            levelSelectUI.SetActive(false);
+            AtSettings = true;
+            camera.transform.position = camera.transform.position + new Vector3(-1000, 0, 0);
+        }
+        else if (AtSettings == true)
+        {
+            mainMenuUI.SetActive(true);
+            settingsUI.SetActive(false);
+            levelSelectUI.SetActive(false);
+            AtSettings = false;
+            camera.transform.position = camera.transform.position + new Vector3(1000, 0, 0);
+        }
     }
 
     public void ChangeLevel(int buildIndex)
