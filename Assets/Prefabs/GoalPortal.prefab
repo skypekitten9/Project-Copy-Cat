@@ -81,7 +81,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5228906805620804127}
   - component: {fileID: 2339889522248317065}
-  - component: {fileID: 8896043789832514500}
+  - component: {fileID: 6027013092299177216}
   m_Layer: 0
   m_Name: GoalPortal
   m_TagString: Untagged
@@ -118,7 +118,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.1496747, y: 1.2858338, z: 2.1638765}
   m_Center: {x: 0.5748373, y: 0.5992305, z: 0.064630985}
---- !u!114 &8896043789832514500
+--- !u!114 &6027013092299177216
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -127,7 +127,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5228906805620804126}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f487e1bc34a3284a9bd284fff7f5f9f, type: 3}
+  m_Script: {fileID: 11500000, guid: 2d29b5e7cc0e8f7498c4643002bf57ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!64 &2565861870484752676

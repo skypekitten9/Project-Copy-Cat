@@ -431,11 +431,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3258535105127732687, guid: e6060fb79bdfeea4aadfafa619eaf3bf, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ChangeLevel
+      value: GoToLevelSelect
       objectReference: {fileID: 0}
     - target: {fileID: 3258535105127732687, guid: e6060fb79bdfeea4aadfafa619eaf3bf, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3258535105127732687, guid: e6060fb79bdfeea4aadfafa619eaf3bf, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
