@@ -197,7 +197,7 @@ public class LevelObjectConnector : MonoBehaviour
         return newId;
     }
 
-
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
         if (Connections != null)
@@ -229,4 +229,5 @@ public class LevelObjectConnector : MonoBehaviour
             }
         }
     }
+#endif
 }

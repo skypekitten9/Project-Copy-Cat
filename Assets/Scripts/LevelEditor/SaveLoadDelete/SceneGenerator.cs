@@ -25,6 +25,7 @@ public class SceneGenerator : MonoBehaviour
 
     public void Generate(FileInfo levelDataFile)
     {
+#if UNITY_EDITOR
         DirectoryInfo levelsDir = new System.IO.DirectoryInfo(Application.dataPath + $"/Resources/LevelData");
         DirectoryInfo scenesDir = new System.IO.DirectoryInfo(Application.dataPath + $"/Scenes/Levels");
 
@@ -32,6 +33,7 @@ public class SceneGenerator : MonoBehaviour
         LevelData data = JsonUtility.FromJson<LevelData>(jsonData);
 
         #region Create Scene
+
         Scene scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
         scene.name = $"{Path.GetFileNameWithoutExtension(levelDataFile.FullName)}";
         #endregion
@@ -47,6 +49,7 @@ public class SceneGenerator : MonoBehaviour
         EditorSceneManager.SaveScene(scene, $"{scenesDir.FullName}/{scene.name}.unity");
         EditorSceneManager.OpenScene(Application.dataPath + $"/Scenes/LevelEditor/LevelEditor.unity");
         #endregion
+#endif
     }
 
 
@@ -120,10 +123,12 @@ public class SceneGenerator : MonoBehaviour
 
     private void ApplyLightSettings()
     {
+#if UNITY_EDITOR
         Lightmapping.lightingSettings = lightingSettings;
         RenderSettings.subtractiveShadowColor = new Color(100, 100, 100);
         RenderSettings.skybox = null;
         RenderSettings.ambientMode = UnityEngine.Rendering.AmbientMode.Flat;
         RenderSettings.ambientLight = Color.black;
+#endif
     }
 }
