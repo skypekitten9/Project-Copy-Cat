@@ -68,6 +68,7 @@ public class MainMenu : MonoBehaviour
     public void ChangeLevel(int buildIndex)
     {
         GameManager.Instance.buildIndex = buildIndex;
+        Time.timeScale = 1f;
         SceneManager.LoadScene(buildIndex);
     }
 
