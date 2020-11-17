@@ -1,35 +1,29 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using UnityEngine;
 
-using UnityEditor.Animations;
 
 
-[RequireComponent(typeof(Animation))]
 public class RecordTransformHierarchy : MonoBehaviour
 {
     [SerializeField] private bool isHolo = false;
 
-    private new Animation animation;
+    private List<RecordData> snapshots;
     private bool recording = false;
-
-    private AnimationClip clip;
-    private GameObjectRecorder recorder;
 
     private Transform parent;
 
 
-    void Awake()
-    {
-        animation = GetComponent<Animation>();
-    }
+    private Transform[] transforms;
+
+
 
     public void StartRecording()
     {
+        snapshots = new List<RecordData>();
+        transforms = GetComponentsInChildren<Transform>();
         recording = true;
-
-        NewClip();
     }
 
     private void FixedUpdate()
@@ -38,8 +32,11 @@ public class RecordTransformHierarchy : MonoBehaviour
         {
             parent = transform.parent;
             transform.parent = null;
-            recorder.TakeSnapshot(Time.deltaTime);
             transform.parent = parent;
+
+            /*Take snapshot*/
+            Transform[] transforms = GetComponentsInChildren<Transform>();
+            snapshots.Add(new RecordData(Array.ConvertAll(transforms, t => t.position), Array.ConvertAll(transforms, t => t.rotation)));
         }
     }
 
@@ -47,49 +44,26 @@ public class RecordTransformHierarchy : MonoBehaviour
     public void StopRecording()
     {
         recording = false;
-        EndClip();
 
         if (GetComponentInChildren<PickUp>())
-        {
             GetComponentInChildren<PickUp>().SetToNotHeld();
-        }
 
         StartCoroutine(Rewind());
     }
 
 
-    private void NewClip()
-    {
-        recorder = new GameObjectRecorder(gameObject);
-        recorder.BindComponentsOfType<Transform>(gameObject, true);
-
-        clip = new AnimationClip();
-        clip.legacy = true;
-    }
-
-    public void EndClip()
-    {
-        if (recorder.isRecording)
-        {
-            recorder.SaveToClip(clip);
-            recorder.ResetRecording();
-
-            animation.AddClip(clip, "rewind");
-            animation.AddClip(clip, "record");
-        }
-    }
-
-
     private IEnumerator Rewind()
     {
-        string clipName = "rewind";
-
-        animation[clipName].speed = -GameManager.Instance.GetComponent<RecordManager>().RewindSpeed;
-        animation[clipName].time = animation[clipName].length;
-        animation.Play(clipName);
-
-        while (animation.isPlaying)
-            yield return new WaitForFixedUpdate();
+        int i = snapshots.Count;
+        while (--i >= 0)
+        {
+            for (int t = 0; t < transforms.Length; t++)
+            {
+                transforms[t].position = snapshots[i].Positions[t];
+                transforms[t].rotation = snapshots[i].Rotations[t];
+            }
+            yield return new WaitForSeconds(Time.fixedDeltaTime / GameManager.Instance.GetComponent<RecordManager>().RewindSpeed);
+        }
 
         StartCoroutine(Playback());
     }
@@ -99,19 +73,34 @@ public class RecordTransformHierarchy : MonoBehaviour
         if (isHolo)
             GameManager.Instance.GetComponent<RecordManager>().StartPlayback();
 
-        string clipName = "record";
-
-        animation.Play(clipName);
-
-        while (animation.isPlaying)
-            yield return new WaitForFixedUpdate();
-
-        if (isHolo)
+        int i = -1;
+        while (++i < snapshots.Count)
         {
-            StartCoroutine(GameManager.Instance.GetComponent<RecordManager>().StopPlayback());
+            for (int t = 0; t < transforms.Length; t++)
+            {
+                transforms[t].position = snapshots[i].Positions[t];
+                transforms[t].rotation = snapshots[i].Rotations[t];
+            }
+            yield return new WaitForFixedUpdate();
         }
 
-        this.transform.parent = null;//parent;
+
+        if (isHolo)
+            StartCoroutine(GameManager.Instance.GetComponent<RecordManager>().StopPlayback());
+
+        this.transform.parent = null;   //parent;
+    }
+}
+
+
+public class RecordData
+{
+    public RecordData(Vector3[] positions, Quaternion[] rotations)
+    {
+        this.Positions = positions;
+        this.Rotations = rotations;
     }
 
+    public Vector3[] Positions { get; private set; }
+    public Quaternion[] Rotations { get; private set; }
 }
