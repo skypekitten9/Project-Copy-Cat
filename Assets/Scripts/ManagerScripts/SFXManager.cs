@@ -10,7 +10,8 @@ public class SFXManager : MonoBehaviour
         buttonClick,
         doorClose,
         doorOpen,
-        playerWalk
+        playerWalk,
+        mineBlast
     }
     
     private static SFXManager instance = null;
@@ -44,9 +45,9 @@ public class SFXManager : MonoBehaviour
         
     }
 
-    public void PlaySound(Sound sound)
+    public void PlaySound(AudioSource source, Sound sound)
     {
-        audioSource.PlayOneShot(GetSound(sound));
+        source.PlayOneShot(GetSound(sound));
     }
 
     //Väldigt ful lösning, men det funkar. Se random delen ifall den ska implementeras istället.

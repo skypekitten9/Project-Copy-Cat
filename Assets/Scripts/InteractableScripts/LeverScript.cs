@@ -32,7 +32,7 @@ public class LeverScript : MonoBehaviour
         TestLevelManager.Instance.interactablesArray[id] = !TestLevelManager.Instance.interactablesArray[id];
         animator.SetBool("isActive", TestLevelManager.Instance.interactablesArray[id]);
         TestLevelManager.Instance.UpdateChannels();
-        SFXManager.Instance.PlaySound(SFXManager.Sound.buttonClick);    //Ger errors
+        SFXManager.Instance.PlaySound(audio, SFXManager.Sound.buttonClick);    //Ger errors
         if (GameObject.Find("Game Manager").GetComponent<RecordManager>().recordPhase == RecordPhase.Recording) GameObject.Find("SyncBar").GetComponent<SyncBar>().SpawnInteraction();
         timer = 0.5f;
     }
