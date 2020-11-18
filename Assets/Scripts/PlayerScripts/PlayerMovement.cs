@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     public bool isKnockedBack;
 
     private float knockbackTimer;
+    private float walkTimer = 15;
     private float resetKnockbackTimer;
 
     [SerializeField] private float speed = 7.0f;
@@ -50,6 +51,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Move()
     {
+
         float x = Input.GetAxisRaw("Horizontal");
         float z = Input.GetAxisRaw("Vertical");
 
@@ -57,11 +59,13 @@ public class PlayerMovement : MonoBehaviour
 
         //rb.MovePosition(transform.position + velocity * Time.deltaTime);
         rb.velocity = new Vector3(velocity.x, rb.velocity.y, velocity.z);
+
     }
 
     void Jump()
     {
         rb.velocity = jumpSpeed * Vector3.up;
+        isGrounded = false;
         //rb.AddForce(new Vector3(0, jumpForce, 0), ForceMode.Impulse);
         //jumpTimer = 0;
         //velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
