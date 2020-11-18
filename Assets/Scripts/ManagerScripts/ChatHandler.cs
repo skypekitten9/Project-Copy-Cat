@@ -6,6 +6,17 @@ using UnityEngine.UI;
 public class ChatHandler : MonoBehaviour
 {
 
+    private static ChatHandler instance = null;
+    public static ChatHandler Instance { get { return instance; } }
+
+    public void Awake()
+    {
+        if (instance != null && instance != this)
+            Destroy(this.gameObject);
+        else
+            instance = this;
+    }
+
     public string username;
 
     public int maxMessages = 25;
@@ -31,6 +42,7 @@ public class ChatHandler : MonoBehaviour
             {
                 SendMessageToChat(username + ": " + chatBox.text, Message.MessageType.playerMessage);
                 chatBox.text = "";
+                chatBox.DeactivateInputField();
             }
         }
         else
@@ -38,14 +50,6 @@ public class ChatHandler : MonoBehaviour
             if (!chatBox.isFocused && Input.GetKeyDown(KeyCode.Return))
             {
                 chatBox.ActivateInputField();
-            }
-        }
-
-        if (!chatBox.isFocused)
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                SendMessageToChat("u pressed space", Message.MessageType.info);
             }
         }
 
@@ -81,7 +85,7 @@ public class ChatHandler : MonoBehaviour
             case Message.MessageType.playerMessage:
                 color = playerMessageColor;
                 break;
-            case Message.MessageType.info:
+            case Message.MessageType.system:
                 color = infoColor;
                 break;
         }
@@ -100,8 +104,8 @@ public class Message
 
     public enum MessageType
     {
-        playerMessage,
-        info
+        playerMessage = 1,
+        system = 2
     }
 }
 
