@@ -150,6 +150,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: VolumeScript, Assembly-CSharp
       objectReference: {fileID: 0}
+    - target: {fileID: 3466558971343461875, guid: de89c2795b77c3942872018d42e3c068, type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3466558971912099009, guid: de89c2795b77c3942872018d42e3c068, type: 3}
       propertyPath: m_Name
       value: SettingsMenuPanel
@@ -460,6 +464,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4497720671443396155}
     m_Modifications:
+    - target: {fileID: 998117936221523202, guid: 09d7f750389c5c340804d624f42cbaf4, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 7377484656875732845}
+    - target: {fileID: 998117936221523202, guid: 09d7f750389c5c340804d624f42cbaf4, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MainMenu, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 998117936221523202, guid: 09d7f750389c5c340804d624f42cbaf4, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: QuitGame
+      objectReference: {fileID: 0}
     - target: {fileID: 998117936481591280, guid: 09d7f750389c5c340804d624f42cbaf4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
