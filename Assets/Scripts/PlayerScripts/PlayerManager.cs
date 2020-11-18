@@ -9,10 +9,21 @@ public class PlayerManager : MonoBehaviour
 
     [SerializeField] private GameObject deadUI;
 
-    public int playerHealth = 100;
+    public float playerHealth = 100;
+
+    private float healthRegenTimer;
+    private float resetHealthRegenTimer;
+
+    private void Start()
+    {
+        healthRegenTimer = 1.5f;
+        resetHealthRegenTimer = healthRegenTimer;
+    }
 
     void Update()
     {
+        healthRegenTimer -= Time.deltaTime;
+
         if (playerHealth <= 0)
         {
             deadUI.SetActive(true);
@@ -24,6 +35,14 @@ public class PlayerManager : MonoBehaviour
                 GameManager.Instance.GetComponent<RecordManager>().ChangeControlState(ControlStates.Player);
                 //TestLevelManager.Instance.GetComponent<SceneTransition>().ChangeToScene(SceneManager.GetActiveScene().buildIndex); //Changes level
                 playerHealth = 100;
+            }
+        }
+
+        if (healthRegenTimer <= 0)
+        {
+            if (playerHealth < 100 && playerHealth > 0)
+            {
+                playerHealth += 0.15f;
             }
         }
     }
@@ -42,5 +61,6 @@ public class PlayerManager : MonoBehaviour
     {
         Debug.Log("Damage Player!" + playerHealth);
         playerHealth -= amount;
+        healthRegenTimer = resetHealthRegenTimer;
     }
 }
