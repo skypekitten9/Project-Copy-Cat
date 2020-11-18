@@ -17,7 +17,7 @@ public class ChatHandler : MonoBehaviour
             instance = this;
     }
 
-    public string username;
+    public string Username { get; private set; }
 
     public int maxMessages = 25;
 
@@ -26,11 +26,12 @@ public class ChatHandler : MonoBehaviour
 
     public Color playerMessageColor, infoColor;
 
-    [SerializeField]List<Message> messageList = new List<Message>();
+    [SerializeField] List<Message> messageList = new List<Message>();
 
     void Start()
     {
-
+        Username = System.Environment.UserName;
+        Username = char.ToUpper(Username[0]) + Username.Substring(1);
     }
 
     void Update()
@@ -40,7 +41,7 @@ public class ChatHandler : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Return))
             {
-                SendMessageToChat(username + ": " + chatBox.text, Message.MessageType.playerMessage);
+                SendMessageToChat(Username + ": " + chatBox.text, Message.MessageType.playerMessage);
                 chatBox.text = "";
                 chatBox.DeactivateInputField();
             }
@@ -95,7 +96,7 @@ public class ChatHandler : MonoBehaviour
 
 }
 
- [System.Serializable]
+[System.Serializable]
 public class Message
 {
     public string text;
