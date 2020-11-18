@@ -4937,6 +4937,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffd7618b737688841a9d74e7c56aec46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  head: {fileID: 964093376163105505}
+  eye: {fileID: 833836608335207119}
+  particleEye: {fileID: 768192171}
+  particleHit: {fileID: 8070251061053356172}
   fireRange: 10
   targetRange: 15
   patrolRange: 25

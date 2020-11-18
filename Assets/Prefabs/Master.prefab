@@ -95,6 +95,10 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 932640813, guid: 1f2709a2e9da4b44b92e6d6e2019b984, type: 3}
+      propertyPath: enable
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1013216263, guid: 1f2709a2e9da4b44b92e6d6e2019b984, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
@@ -130,6 +134,22 @@ PrefabInstance:
     - target: {fileID: 1816886353, guid: 1f2709a2e9da4b44b92e6d6e2019b984, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 1816886356, guid: 1f2709a2e9da4b44b92e6d6e2019b984, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1816886356, guid: 1f2709a2e9da4b44b92e6d6e2019b984, type: 3}
+      propertyPath: m_margin.x
+      value: -13.594788
+      objectReference: {fileID: 0}
+    - target: {fileID: 1816886356, guid: 1f2709a2e9da4b44b92e6d6e2019b984, type: 3}
+      propertyPath: m_margin.z
+      value: -20.667969
+      objectReference: {fileID: 0}
+    - target: {fileID: 1816886356, guid: 1f2709a2e9da4b44b92e6d6e2019b984, type: 3}
+      propertyPath: m_text
+      value: 0,00
       objectReference: {fileID: 0}
     - target: {fileID: 1980081661, guid: 1f2709a2e9da4b44b92e6d6e2019b984, type: 3}
       propertyPath: m_StaticEditorFlags
