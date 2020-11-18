@@ -15,8 +15,10 @@ public class PlayerMovement : MonoBehaviour
     public bool isKnockedBack;
 
     private float knockbackTimer;
-    private float walkTimer = 15;
     private float resetKnockbackTimer;
+
+    private float walkTimer;
+    private float resetWalkTimer;
 
     [SerializeField] private float speed = 7.0f;
     [SerializeField] private float jumpSpeed = 10.0f;
@@ -29,6 +31,9 @@ public class PlayerMovement : MonoBehaviour
 
         knockbackTimer = 0f;
         resetKnockbackTimer = 1f;
+
+        walkTimer = 0f;
+        resetWalkTimer = 0.3f;
     }
 
     private void FixedUpdate()
@@ -41,6 +46,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        walkTimer -= Time.deltaTime;
         isGrounded = Physics.Raycast(transform.position + new Vector3(0, 0.1f, 0), -Vector3.up, 0.2f);
         //if (Input.GetAxis("Mouse ScrollWheel") > 0 && isGrounded)
         if (Input.GetButtonDown("Jump") && isGrounded)
@@ -51,6 +57,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void Move()
     {
+        if (walkTimer <= 0 && Input.GetAxisRaw("Horizontal") != 0  && isGrounded|| walkTimer <= 0 && Input.GetAxisRaw("Vertical") != 0 && isGrounded)
+        {
+            audio.PlayOneShot(SFXManager.Instance.GetRandomWalkingSound());
+
+            walkTimer = resetWalkTimer;
+        }
 
         float x = Input.GetAxisRaw("Horizontal");
         float z = Input.GetAxisRaw("Vertical");

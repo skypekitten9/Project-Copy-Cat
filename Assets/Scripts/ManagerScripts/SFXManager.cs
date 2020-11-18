@@ -19,6 +19,8 @@ public class SFXManager : MonoBehaviour
     //Är nog bättre om det görs om till en array om vi ska spara ljuden på det här sättet.
     [SerializeField] private SoundAudioClip[] soundAudioClips;
 
+    public SoundAudioClip[] walkingSounds = new SoundAudioClip[4];
+
     AudioSource audioSource;
 
     private void Awake()
@@ -43,6 +45,14 @@ public class SFXManager : MonoBehaviour
     public void PlaySound(Sound sound)
     {
         audioSource.PlayOneShot(GetSound(sound));
+    }
+
+    public AudioClip GetRandomWalkingSound()
+    {
+        int randomInt;
+        randomInt = UnityEngine.Random.Range(0, 4);
+
+        return walkingSounds[randomInt].audioClip;
     }
 
     private AudioClip GetSound(Sound sound)
