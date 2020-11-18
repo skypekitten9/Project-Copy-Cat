@@ -120,7 +120,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1325012869993094416}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.99999976
+  m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -169,7 +169,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 370270e00e7e1184a846d3e2773ffad6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  username: patrick
   maxMessages: 25
   chatPanel: {fileID: 1325012869032028385}
   textObject: {fileID: 8870991835333390821, guid: a2d37c3ad217ea441990fc67a2d84316, type: 3}
@@ -345,6 +344,7 @@ GameObject:
   - component: {fileID: 1325012869106173355}
   - component: {fileID: 1325012869106173354}
   - component: {fileID: 1325012869106173353}
+  - component: {fileID: 1873550362975063577}
   m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
@@ -433,6 +433,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!225 &1873550362975063577
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1325012869106173359}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1325012869435815234
 GameObject:
   m_ObjectHideFlags: 0

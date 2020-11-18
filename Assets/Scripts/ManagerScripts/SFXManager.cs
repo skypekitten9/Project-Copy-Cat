@@ -21,6 +21,8 @@ public class SFXManager : MonoBehaviour
 
     public SoundAudioClip[] walkingSounds = new SoundAudioClip[4];
 
+    int stepNumber = 0;
+
     AudioSource audioSource;
 
     private void Awake()
@@ -47,12 +49,20 @@ public class SFXManager : MonoBehaviour
         audioSource.PlayOneShot(GetSound(sound));
     }
 
+    //Väldigt ful lösning, men det funkar. Se random delen ifall den ska implementeras istället.
     public AudioClip GetRandomWalkingSound()
     {
-        int randomInt;
-        randomInt = UnityEngine.Random.Range(0, 4);
-
-        return walkingSounds[randomInt].audioClip;
+        if (stepNumber == 0)
+        {
+            stepNumber++;
+        }
+        else
+        {
+            stepNumber--;
+        }
+        //int randomInt;
+        //randomInt = UnityEngine.Random.Range(0, 4);
+        return walkingSounds[stepNumber].audioClip;
     }
 
     private AudioClip GetSound(Sound sound)

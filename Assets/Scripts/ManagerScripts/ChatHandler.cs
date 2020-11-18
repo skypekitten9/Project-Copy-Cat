@@ -23,8 +23,12 @@ public class ChatHandler : MonoBehaviour
 
     public GameObject chatPanel, textObject;
     public InputField chatBox;
+    private Canvas chatCanvas;
 
     public Color playerMessageColor, infoColor;
+
+    private float chatTimer;
+    private float resetChatTimer;
 
     [SerializeField] List<Message> messageList = new List<Message>();
 
@@ -32,15 +36,31 @@ public class ChatHandler : MonoBehaviour
     {
         Username = System.Environment.UserName;
         Username = char.ToUpper(Username[0]) + Username.Substring(1);
+        chatCanvas = gameObject.GetComponentInChildren<Canvas>();
+
+        chatTimer = 2f;
+        resetChatTimer = chatTimer;
     }
 
     void Update()
     {
+        chatTimer -= Time.deltaTime;
+
+        if (chatTimer <= 0 && !chatBox.isFocused)
+        {
+            chatCanvas.GetComponent<CanvasGroup>().alpha -= 0.005f;
+        }
+        else
+        {
+            chatCanvas.GetComponent<CanvasGroup>().alpha = 1f;
+        }
 
         if (chatBox.text != "")
         {
             if (Input.GetKeyDown(KeyCode.Return))
             {
+                chatTimer = resetChatTimer;
+
                 SendMessageToChat(Username + ": " + chatBox.text, Message.MessageType.playerMessage);
                 chatBox.text = "";
                 chatBox.DeactivateInputField();
@@ -50,6 +70,8 @@ public class ChatHandler : MonoBehaviour
         {
             if (!chatBox.isFocused && Input.GetKeyDown(KeyCode.Return))
             {
+                chatTimer = resetChatTimer;
+
                 chatBox.ActivateInputField();
             }
         }
