@@ -9,7 +9,8 @@ enum TurretState {Disabled, Patroling, Targeting, Busy}
 
 public class TurretBehavior : MonoBehaviour
 {
-    GameObject head, eye;
+    public GameObject head, eye;
+    public GameObject particleEye, particleHit;
     Animator animator;
     TurretState state;
     Vector3 distanceToTarget;
@@ -28,8 +29,6 @@ public class TurretBehavior : MonoBehaviour
     void Start()
     {
         animator = gameObject.GetComponentInChildren<Animator>();
-        head = GameObject.Find("Turret_Head");
-        eye = GameObject.Find("Turret_Eye");
         state = TurretState.Disabled;
         distanceToTarget = Vector3.positiveInfinity;
         defaultRotation = head.transform.rotation;
@@ -50,10 +49,10 @@ public class TurretBehavior : MonoBehaviour
         lineRenderer.startWidth = 0.02f;
         lineRenderer.endWidth = 0.02f;
         lineRenderer.enabled = true;
-        particleSysEye = GameObject.Find("ParticleSys_Eye").GetComponent<ParticleSystem>();
-        particleSysHit = GameObject.Find("ParticleSys_Hit").GetComponent<ParticleSystem>();
-        eyeRender = GameObject.Find("ParticleSys_Eye").GetComponent<ParticleSystemRenderer>();
-        hitRender = GameObject.Find("ParticleSys_Hit").GetComponent<ParticleSystemRenderer>();
+        particleSysEye = particleEye.GetComponent<ParticleSystem>();
+        particleSysHit = particleHit.GetComponent<ParticleSystem>();
+        eyeRender = particleEye.GetComponent<ParticleSystemRenderer>();
+        hitRender = particleHit.GetComponent<ParticleSystemRenderer>();
         defaultColor = eyeRender.material.GetColor("Color_D3EC0E17");
         chargedColor = Color.red;
         particleSysEye.Stop();
