@@ -35,15 +35,21 @@ public class RecordManager : MonoBehaviour
 
     private void Start()
     {
-        playerInstance = PlayerManager.Instance.gameObject;
+        try
+        {
+            playerInstance = PlayerManager.Instance.gameObject;
 
-        syncBar = GameManager.Instance.GetComponentInChildren<SyncBar>();
+            syncBar = GameManager.Instance.GetComponentInChildren<SyncBar>();
 
-        objectRecorders = UnityEngine.Object.FindObjectsOfType<RecordTransformHierarchy>();
+            objectRecorders = UnityEngine.Object.FindObjectsOfType<RecordTransformHierarchy>();
 
-        stopwatch = new Stopwatch();
+            stopwatch = new Stopwatch();
 
-        SceneManager.sceneLoaded += OnSceneLoaded;
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+        catch (Exception)
+        {
+        }
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -181,7 +187,7 @@ public class RecordManager : MonoBehaviour
         recordPhase = RecordPhase.StoppingPlayback;
 
         syncBar.Reset();
-        
+
 
         float fadeValue = 1;
         while (fadeValue > 0)
