@@ -53,6 +53,12 @@ MonoBehaviour:
     audioClip: {fileID: 8300000, guid: c683e42ad1ec21e4e96a60e8c51d8a04, type: 3}
   - sound: 3
     audioClip: {fileID: 8300000, guid: b739984f1abeef14790816cc4d2b5268, type: 3}
+  - sound: 4
+    audioClip: {fileID: 8300000, guid: e95a20e42671b664cabd57f27cccfe69, type: 3}
+  - sound: 3
+    audioClip: {fileID: 8300000, guid: 9e30faaf587c3b64ea9fd731c6705010, type: 3}
+  - sound: 3
+    audioClip: {fileID: 8300000, guid: 46488043f4c76db4ea63746885522937, type: 3}
   walkingSounds:
   - sound: 3
     audioClip: {fileID: 8300000, guid: a8a73009aa3b4a94cb659071f7b5dce7, type: 3}

@@ -14,12 +14,15 @@ public class PlayerInteraction : MonoBehaviour
     public RaycastHit hit;
     [SerializeField] LayerMask interactionMask;
 
+    AudioSource audio;
+
     private float rayRange;
 
     private bool isHolding = false;
 
     void Start()
     {
+        audio = gameObject.GetComponent<AudioSource>();
         cameraTransform = gameObject.GetComponentInChildren<Camera>().transform;
         pickUpTransform = cameraTransform.Find("PickupPosition");
         ray = new Ray(cameraTransform.position, cameraTransform.forward);
@@ -39,6 +42,7 @@ public class PlayerInteraction : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Mouse0) && isHolding)
         {
+            SFXManager.Instance.PlaySound(audio, SFXManager.Sound.throwObject);
             hit.collider.gameObject.GetComponent<PickUp>().Throw();
             isHolding = false;
         }
@@ -84,6 +88,8 @@ public class PlayerInteraction : MonoBehaviour
                 {
                     if (!hit.collider.gameObject.GetComponent<PickUp>().IsHeld())
                     {
+                        SFXManager.Instance.PlaySound(audio, SFXManager.Sound.grabObject);
+
                         RecordPhase recordPhase = GameManager.Instance.GetComponent<RecordManager>().recordPhase;
                         if (recordPhase != RecordPhase.PlayingBack && recordPhase != RecordPhase.Rewinding)
                         {

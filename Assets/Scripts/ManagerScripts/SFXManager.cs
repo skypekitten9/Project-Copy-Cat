@@ -11,7 +11,9 @@ public class SFXManager : MonoBehaviour
         doorClose,
         doorOpen,
         playerWalk,
-        mineBlast
+        mineBlast,
+        throwObject,
+        grabObject
     }
     
     private static SFXManager instance = null;
