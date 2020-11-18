@@ -192,7 +192,7 @@ public class TurretBehavior : MonoBehaviour
 
     bool IsPlayerVisable()
     {
-        Ray ray = new Ray(head.transform.position, CalculateDistanceToPlayerFrom(new Vector3(0, eye.transform.position.y, 0)));
+        Ray ray = new Ray(head.transform.position, CalculateDistanceToPlayerFrom(new Vector3(eye.transform.position.x, 0, eye.transform.position.z)));
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, 100))
         {
