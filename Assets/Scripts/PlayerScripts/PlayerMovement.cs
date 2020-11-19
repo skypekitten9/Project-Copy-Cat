@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 velocity;
 
     private bool isGrounded;
+    private bool lastGroundStatus;
     public bool isKnockedBack;
 
     private float knockbackTimer;
@@ -50,7 +51,10 @@ public class PlayerMovement : MonoBehaviour
         isGrounded = Physics.Raycast(transform.position + new Vector3(0, 0.1f, 0), -Vector3.up, 0.2f);
         //if (Input.GetAxis("Mouse ScrollWheel") > 0 && isGrounded)
         if (Input.GetButtonDown("Jump") && isGrounded && !ChatHandler.Instance.chatBox.isFocused)
+        {
+            SFXManager.Instance.PlaySound(audio, SFXManager.Sound.jump);
             Jump();
+        }
 
         knockbackTimer -= Time.deltaTime;
     }

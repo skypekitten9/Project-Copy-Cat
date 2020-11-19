@@ -62,5 +62,7 @@ public class PlayerManager : MonoBehaviour
         Debug.Log("Damage Player!" + playerHealth);
         playerHealth -= amount;
         healthRegenTimer = resetHealthRegenTimer;
+
+        gameObject.GetComponentInChildren<Camera>().GetComponent<CameraShake>().ShakePlayer();
     }
 }
