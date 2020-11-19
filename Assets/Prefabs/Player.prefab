@@ -198,7 +198,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca24ca530723fb649868c810bad3ce4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isKnockedBack: 0
+  isKnockedBack: 1
   speed: 7
   jumpSpeed: 10
 --- !u!136 &2746281143397562993
@@ -271,7 +271,7 @@ AudioSource:
   m_GameObject: {fileID: 2746281143397562987}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: ed94e86b7ff174e42a6cc769f2ed61b4, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -372,7 +372,6 @@ GameObject:
   - component: {fileID: 3967400736164798160}
   - component: {fileID: 2746281143998877140}
   - component: {fileID: 2746281143129569787}
-  - component: {fileID: 6171848199638555614}
   m_Layer: 9
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -508,19 +507,6 @@ MonoBehaviour:
   blendDistance: 0
   weight: 1
   sharedProfile: {fileID: 11400000, guid: e28c74a0df099804e81042cc907f42b3, type: 2}
---- !u!114 &6171848199638555614
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3967400736164798164}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7119f8a1c35a8dd438a748e03d5e1102, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shouldShake: 0
 --- !u!1 &3967400737202140306
 GameObject:
   m_ObjectHideFlags: 0
