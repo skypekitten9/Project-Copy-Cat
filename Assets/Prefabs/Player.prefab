@@ -198,6 +198,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca24ca530723fb649868c810bad3ce4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isKnockedBack: 1
   speed: 7
   jumpSpeed: 10
 --- !u!136 &2746281143397562993
@@ -270,7 +271,7 @@ AudioSource:
   m_GameObject: {fileID: 2746281143397562987}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: ed94e86b7ff174e42a6cc769f2ed61b4, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
