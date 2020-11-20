@@ -54,7 +54,7 @@ public class PlayerManager : MonoBehaviour
         else
             instance = this; 
 
-        DontDestroyOnLoad(this);
+        //DontDestroyOnLoad(this);
     }
 
     public void DamagePlayer(int amount)

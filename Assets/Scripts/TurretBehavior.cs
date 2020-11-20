@@ -197,8 +197,6 @@ public class TurretBehavior : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, 100))
         {
-            Debug.DrawLine(head.transform.position, hit.point);
-            Debug.Log("Hit! " + hit.transform.tag + " " + hit.transform.name);
             if (hit.transform.tag == "Player" || hit.transform.tag == "Hologram") return true;
         }
         return false;
