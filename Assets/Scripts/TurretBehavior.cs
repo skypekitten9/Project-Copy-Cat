@@ -90,7 +90,7 @@ public class TurretBehavior : MonoBehaviour
                 break;
         }
         //Debug.Log(state);
-        //Debug.Log(distanceToTarget.magnitude + " and " + patrolRange);
+        IsPlayerVisable();
     }
 
     Vector3 CalculateDistanceToPlayerFrom(Vector3 from)
@@ -191,10 +191,13 @@ public class TurretBehavior : MonoBehaviour
 
     bool IsPlayerVisable()
     {
-        Ray ray = new Ray(head.transform.position, CalculateDistanceToPlayerFrom(new Vector3(eye.transform.position.x, 0, eye.transform.position.z)));
+        Vector3 direction = CalculateDistanceToPlayerFrom(new Vector3(eye.transform.position.x, eye.transform.position.y - 1, eye.transform.position.z));
+        direction = new Vector3(direction.x, direction.y , direction.z);
+        Ray ray = new Ray(head.transform.position, direction);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, 100))
         {
+            Debug.DrawLine(head.transform.position, hit.point);
             Debug.Log("Hit! " + hit.transform.tag + " " + hit.transform.name);
             if (hit.transform.tag == "Player" || hit.transform.tag == "Hologram") return true;
         }
