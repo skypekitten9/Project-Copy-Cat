@@ -13,7 +13,9 @@ public class SFXManager : MonoBehaviour
         playerWalk,
         mineBlast,
         throwObject,
-        grabObject
+        grabObject,
+        jump,
+        land
     }
     
     private static SFXManager instance = null;
@@ -22,7 +24,7 @@ public class SFXManager : MonoBehaviour
     //Är nog bättre om det görs om till en array om vi ska spara ljuden på det här sättet.
     [SerializeField] private SoundAudioClip[] soundAudioClips;
 
-    public SoundAudioClip[] walkingSounds = new SoundAudioClip[4];
+    public SoundAudioClip[] walkingSounds = new SoundAudioClip[10];
 
     int stepNumber = 0;
 
