@@ -5,8 +5,7 @@ using UnityEngine;
 public class StoryTrigger1 : MonoBehaviour
 {
 
-    //[SerializeField] private string message; 
-    //[SerializeField] private custom messages and enum planned
+   [SerializeField] private Message message;
 
     bool first = true;
 
@@ -14,10 +13,18 @@ public class StoryTrigger1 : MonoBehaviour
     {
         if (other.tag == "Player" && first)
         {
+
+            string name = message.hasName ? ChatHandler.Instance.Username + " " : "";
+
             first = false;
-            ChatHandler.Instance.SendMessageToChat(ChatHandler.Instance.Username+ " has joined.\nP̶̢̮̠͇͎̑l̵͈̰͇͓͊̚͜͝ā̷̭ȳ̵̱̭e̵̺̪̒͠r̷̨̡͚̫̝͒ ̵̮̅̊̐͂̍2̴̘̪͐̈́̑ ̷̖̀̄̇̀ḩ̴̩̓͋̓͠͝ȃ̶͉̝̃s̵̥̉̀ ̶̢̡̺̬̰̈̇̀̊͘j̸̧͙̟͕̔̉̃̅͠ͅo̴͕͙͕̍̎̚ǐ̴̤̙̰̙̔ͅn̶͎͈͚̕ȩ̸̰̗̹̀̏̋̓d̵͉̬̑̄̉̏.̸̨͈̝̣̀͠", Message.MessageType.system);
+            ChatHandler.Instance.SendMessageToChat(name + message.text, message.messageType);
+            foreach (string s in message.additionalText)
+            {
+                ChatHandler.Instance.SendMessageToChat(s, message.messageType);
+            }
             Destroy(gameObject);
         }
 
     }
 }
+

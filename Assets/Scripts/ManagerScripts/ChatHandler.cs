@@ -123,6 +123,8 @@ public class ChatHandler : MonoBehaviour
 public class Message
 {
     public string text;
+    public string[] additionalText;
+    public bool hasName;
     public Text textObject;
     public MessageType messageType;
 
