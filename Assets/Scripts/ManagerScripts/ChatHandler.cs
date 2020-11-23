@@ -15,6 +15,7 @@ public class ChatHandler : MonoBehaviour
             Destroy(this.gameObject);
         else
             instance = this;
+
     }
 
     public string Username { get; private set; }
