@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 706097727139258657}
   - component: {fileID: 706097727139258685}
   m_Layer: 0
-  m_Name: SpawnStoryChat
+  m_Name: StoryTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 706097727139258656}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -17.95, y: -3.1538618, z: 1.862}
-  m_LocalScale: {x: 4.3183913, y: 2.0885, z: 2.0885}
+  m_LocalScale: {x: 4.3183913, y: 2.0885, z: 6.06939}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -108,3 +108,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 154467d9169768248b9519ef00b92e57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  message:
+    text: has joined.
+    additionalText:
+    - "P\u0336\u0311\u0322\u032E\u0320\u0347\u034El\u0335\u031A\u034A\u035D\u0348\u035C\u0330\u0347\u0353a\u0337\u0304\u032Dy\u0335\u0304\u0331\u032De\u0335\u0360\u0312\u033A\u032Ar\u0337\u0352\u035A\u0328\u032B\u0321\u031D
+      \u0335\u0305\u030A\u0310\u0342\u030D\u032E2\u0334\u0350\u0344\u0311\u0318\u032A
+      \u0337\u0300\u0304\u0307\u0340\u0316h\u0334\u0313\u034B\u0313\u0360\u035D\u0327\u0329a\u0336\u0311\u0303\u0349\u031Ds\u0335\u0309\u0340\u0325
+      \u0336\u0358\u0308\u0307\u0340\u030A\u0322\u0321\u033A\u032C\u0330j\u0338\u0360\u0314\u0309\u0303\u0305\u0345\u0359\u0327\u031F\u0355o\u0334\u031A\u030D\u030E\u0355\u0359\u0355i\u0334\u030C\u0314\u0324\u0319\u0345\u0330\u0319n\u0336\u0315\u034E\u0348\u035Ae\u0338\u0340\u030F\u030B\u0313\u0327\u0330\u0317\u0339d\u0335\u0311\u0304\u0309\u030F\u0349\u032C.\u0338\u0300\u0360\u0348\u0328\u031D\u0323"
+    hasName: 1
+    textObject: {fileID: 0}
+    messageType: 2
