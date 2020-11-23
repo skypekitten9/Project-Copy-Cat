@@ -56,26 +56,37 @@ public class ChatHandler : MonoBehaviour
             chatCanvas.GetComponent<CanvasGroup>().alpha = 1f;
         }
 
-        if (chatBox.text != "")
+        if (Input.GetKeyDown(KeyCode.Return) && chatBox.text == "")
         {
-            if (Input.GetKeyDown(KeyCode.Return))
-            {
-                chatTimer = resetChatTimer;
+            chatBox.enabled = true;
+            chatBox.ActivateInputField();
+        }
 
-                SendMessageToChat(Username + ": " + chatBox.text, Message.MessageType.playerMessage);
-                chatBox.text = "";
-                chatBox.DeactivateInputField();
+        if (chatBox.IsActive())
+        {
+            if (chatBox.text != "")
+            {
+                if (Input.GetKeyDown(KeyCode.Return))
+                {
+                    chatTimer = resetChatTimer;
+
+                    SendMessageToChat(Username + ": " + chatBox.text, Message.MessageType.playerMessage);
+                    chatBox.text = "";
+                    chatBox.DeactivateInputField();
+                    chatBox.enabled = false;
+                }
+            }
+            else
+            {
+                if (!chatBox.isFocused && Input.GetKeyDown(KeyCode.Return))
+                {
+                    chatTimer = resetChatTimer;
+                    chatBox.ActivateInputField();
+                    chatBox.enabled = true;
+                }
             }
         }
-        else
-        {
-            if (!chatBox.isFocused && Input.GetKeyDown(KeyCode.Return))
-            {
-                chatTimer = resetChatTimer;
 
-                chatBox.ActivateInputField();
-            }
-        }
 
     }
 
