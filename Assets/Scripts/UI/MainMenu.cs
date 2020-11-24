@@ -3,19 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
 public class MainMenu : MonoBehaviour
 {
-    public GameObject mainMenuUI;
-    public GameObject levelSelectUI;
-    public GameObject settingsUI;
-    private bool AtSettings;
-    private bool AtLevelSelect;
-    public GameObject camera;
+    [SerializeField]private GameObject startMenuUI;
+    [SerializeField]private GameObject preferncesUI;
+    [SerializeField] private GameObject loadingUI;
+    [SerializeField] private GameObject creditsUI;
+    [SerializeField] private GameObject startMenuButtons;
+    [SerializeField] private GameObject preferncesControls;
+    [SerializeField] private GameObject creditsReturnButton;
+    private bool AtPrefernces;
+    private bool AtCredits;
     Scene currentScene;
     // Start is called before the first frame update
     void Start()
     {
-        mainMenuUI.SetActive(true);
+        startMenuUI.SetActive(true);
+        preferncesUI.SetActive(false);
+        loadingUI.SetActive(false);
+        creditsUI.SetActive(false);
+        startMenuButtons.SetActive(true);
+        preferncesControls.SetActive(false);
+        creditsReturnButton.SetActive(false);
         currentScene = SceneManager.GetActiveScene();
     }
 
@@ -24,52 +34,57 @@ public class MainMenu : MonoBehaviour
     {
         
     }
-
-    public void GoToLevelSelect()
-    {
-        if (AtLevelSelect == false)
-        {
-            mainMenuUI.SetActive(false);
-            settingsUI.SetActive(false);
-            levelSelectUI.SetActive(true);
-            AtLevelSelect = true;
-            camera.transform.position = camera.transform.position + new Vector3(1000, 0, 0);
-        }
-        else if (AtLevelSelect == true)
-        {
-            mainMenuUI.SetActive(true);
-            settingsUI.SetActive(false);
-            levelSelectUI.SetActive(false);
-            AtLevelSelect = false;
-            camera.transform.position = camera.transform.position + new Vector3(-1000, 0, 0);
-        }
-    }
-
     public void GoToSettings()
     {
-        if(AtSettings == false)
+        if(AtPrefernces == false)
         {
-            mainMenuUI.SetActive(false);
-            settingsUI.SetActive(true);
-            levelSelectUI.SetActive(false);
-            AtSettings = true;
-            camera.transform.position = camera.transform.position + new Vector3(-1000, 0, 0);
+            startMenuUI.SetActive(false);
+            startMenuButtons.SetActive(false);
+            preferncesControls.SetActive(true);
+            preferncesUI.SetActive(true);
+            loadingUI.SetActive(false);
+            creditsUI.SetActive(false);
+            AtPrefernces = true;
         }
-        else if (AtSettings == true)
+        else if (AtPrefernces == true)
         {
-            mainMenuUI.SetActive(true);
-            settingsUI.SetActive(false);
-            levelSelectUI.SetActive(false);
-            AtSettings = false;
-            camera.transform.position = camera.transform.position + new Vector3(1000, 0, 0);
+            startMenuUI.SetActive(true);
+            startMenuButtons.SetActive(true);
+            preferncesControls.SetActive(false);
+            preferncesUI.SetActive(false);
+            loadingUI.SetActive(false);
+            creditsUI.SetActive(false);
+            AtPrefernces = false;
         }
     }
 
-    public void ChangeLevel(int buildIndex)
+    public void GoToCredits()
     {
-        GameManager.Instance.buildIndex = buildIndex;
-        Time.timeScale = 1f;
-        SceneManager.LoadScene(buildIndex);
+        if (AtCredits == false)
+        {
+            startMenuUI.SetActive(false);
+            startMenuButtons.SetActive(false);
+            creditsReturnButton.SetActive(true);
+            preferncesUI.SetActive(false);
+            loadingUI.SetActive(false);
+            creditsUI.SetActive(true);
+            AtCredits = true;
+        }
+        else if (AtCredits == true)
+        {
+            startMenuUI.SetActive(true);
+            startMenuButtons.SetActive(true);
+            creditsReturnButton.SetActive(false);
+            preferncesUI.SetActive(false);
+            loadingUI.SetActive(false);
+            creditsUI.SetActive(false);
+            AtCredits = false;
+        }
+    }
+
+    public void NewGame()
+    {
+        SceneManager.LoadScene(1);
     }
 
     public void QuitGame()
