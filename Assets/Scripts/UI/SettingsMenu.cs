@@ -22,4 +22,9 @@ public class SettingsMenu : MonoBehaviour
     {
         audioMixer.SetFloat("Volume", volume);
     }
+
+    public void SetSensitivity(float sensitivity)
+    {
+        PlayerCamera.mouseSensitivity = sensitivity;
+    }
 }

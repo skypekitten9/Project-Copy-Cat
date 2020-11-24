@@ -2,7 +2,7 @@
 
 public class PlayerCamera : MonoBehaviour
 {
-    [SerializeField] private float mouseSensitivity = 100f;
+    [SerializeField] public static float mouseSensitivity = 100f;
 
     private Transform playerBody;
 
