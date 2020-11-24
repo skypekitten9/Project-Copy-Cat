@@ -8,16 +8,11 @@ public class PauseMenu : MonoBehaviour
     public static bool GameIsPaused = false;
 
     public GameObject pauseMenuUI;
-    public GameObject settingsMenuUI;
-    public GameObject camera;
-    private bool AtSettings;
     // Start is called before the first frame update
     void Start()
     {
         GameIsPaused = false;
         pauseMenuUI.SetActive(false);
-        settingsMenuUI.SetActive(false);
-        camera.SetActive(false);
     }
 
     // Update is called once per frame
@@ -39,41 +34,22 @@ public class PauseMenu : MonoBehaviour
     void Pause()
     {
         pauseMenuUI.SetActive(true);
-        camera.SetActive(true);
-        Time.timeScale = 0f;
         GameIsPaused = true;
         Cursor.lockState = CursorLockMode.None;
+        Time.timeScale = 0;
     }
 
     public void Resume()
     {
         pauseMenuUI.SetActive(false);
-        camera.SetActive(false);
-        Time.timeScale = 1f;
         GameIsPaused = false;
         Cursor.lockState = CursorLockMode.Locked;
-    }
-
-    public void GoToSettings()
-    {
-        if (AtSettings == false)
-        {
-            pauseMenuUI.SetActive(false);
-            settingsMenuUI.SetActive(true);
-            AtSettings = true;
-        }
-        else if (AtSettings == true)
-        {
-            pauseMenuUI.SetActive(true);
-            settingsMenuUI.SetActive(false);
-            AtSettings = false;
-        }
+        Time.timeScale = 1;
     }
 
     public void MainMenu()
     {
         pauseMenuUI.SetActive(false);
-        camera.SetActive(false);
         GameIsPaused = false;
         SceneManager.LoadScene("MainMenu");
     }
