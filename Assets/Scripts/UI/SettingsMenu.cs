@@ -27,4 +27,9 @@ public class SettingsMenu : MonoBehaviour
     {
         PlayerCamera.mouseSensitivity = sensitivity;
     }
+    public void SetFullScreen(bool fullScreen)
+    {
+        Screen.fullScreen = fullScreen;
+    }
+
 }
