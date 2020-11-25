@@ -26,7 +26,7 @@ public class ChatHandler : MonoBehaviour
     public InputField chatBox;
     private Canvas chatCanvas;
 
-    public Color playerMessageColor, infoColor;
+    public Color playerMessageColor, infoColor, cursedColor;
 
     private float chatTimer;
     private float resetChatTimer;
@@ -86,12 +86,11 @@ public class ChatHandler : MonoBehaviour
                 }
             }
         }
-
-
     }
 
     public void SendMessageToChat(string text, Message.MessageType messageType)
     {
+
         if (messageList.Count >= maxMessages)
         {
             Destroy(messageList[0].textObject.gameObject);
@@ -109,6 +108,21 @@ public class ChatHandler : MonoBehaviour
         newMessage.textObject.color = MessageTypeColor(messageType);
 
         messageList.Add(newMessage);
+
+        if (newMessage.text == Username + ": /help")
+        {
+            SendMessageToChat("P̷͓̲̯̦̱̟͓̦̳͕̪̮̺̌̾̓͛ͅļ̵̫̩̭̲̪̤̳̬̺̘̻̬̈́́̽̽̀̆̒̊͠a̶̡̮̩͕̺̤͓͍̼͍͙̱͍̳͋̐͜͝y̸̬̱͇̯̝͍̑͂̈́̓͒̉̈́̀͒̽̏ę̴̨̦̱͇̘̻̫͔̘̻̗̥̪̈́̿̈́̈́̊̑̅r̵͙̟̘̣̤͗͌̓̓͂̿̈́͗͘̕͝͠͝ ̵̛̥̺͖̖̹̬̹̤̼̮̗̳̽̌̔͌͛̽́̅͜2̷̧͎̲̲̳̪̼̣͖͚̣̫͖̜̭́͑̉̒̒͒̾͗̇͆̽͛̎̀̕: T̸̢̛͉̹̜̜̙̱͈̰̯̅̒̉̔͆̚h̴̫͍̯̰̘̤̫͙͒̌̆̾è̴̙͇̮͖̙̥̀̀́ŗ̶̨͕̪̦͇̩͚̏̅̈́̒̌͑͝ę̴̥͙̩̗̱̘̣̓̿̅̀̒͊̀͠ ̵̣̣̺̯̂į̶̛̪͙̞͈̈́͒̾̓͐s̶̜̞̮̥̝͓̑̿͆̿ͅ ̷̜̍̑̇̍͊n̷͖̑̓͂͛̾̀̀͊̌̕ơ̶̛͎̲̪͔̞͇̟̯̹̗̈́͂ ̷̧̻͔̝͓̀ĥ̷͓̙͉̓̈́̀̑͘̕͠e̴̩̭͆̅̾l̶̛̩͓̻͎̍̽̂́͊p̵̡̘̩̮̀̈́̓̂̐̚͠.̸̨̹̬̦̓̍̎͋̈́͆͠", Message.MessageType.player2);
+        }
+
+        if (newMessage.text == Username + ": Who are you?")
+        {
+            SendMessageToChat("P̵̨̢͉̦̾͐͗̉̅̀͛̈́̀l̶̢̬͖͉̥͒̈́̑̀̅̔̽̒͘͜ͅå̴̡̛̟̫͉̬̰̥͈̟͋͐͛ͅy̴̼̟̯̙̎̄̽̕ȇ̷̹̞̝̋̈͊͊̆̉̇͝͠r̷̙͖̖͐̍͐2̷̧͎̳̫͇͈͍̱͇̌̄͋̅͐̅̌̕͘:̷̨͈̖͉̬̘̯͆͒́͗́̍͠ ̴̡̭̜̑́͜Ḯ̵͓̯͛͐̃͗̎̈́̈́̚͠'̵̢̩̮̝͗͋͑̓͘̕m̵̪̥̭̠̊ ̸̡̤̹̈̈́̉̌͌̋̂͒̄͘ȳ̶̨͈̯̱̮̦͉̝̊̒͛́ő̷͈͚͕͖͊ͅu̷̡̙̗͇͇̲͕̻͛͋̒͋̈̋̄̈̓r̷̜̳̭̩̫̹͔̠̩̀̂̂̅̊̀̽̒͝ ̵̛̲͂̀̈́̀̆͝p̴̮̫̣̒̈̍͛̚͝͝ạ̷͈̼̖̜͛͐̎̽̇̕ͅr̸̡̥͉͍̺̯͐̿͝t̴̼̞̱̼͎̫̞̎̓n̵͙̞̹̻̼̞͌̂̊̔́̅̚̚ͅe̶̮͓͕̘̲̥̪̳̬̿̋̅̇͌̌̑̓͌͝r̸̨̄͘.̸̤̈", Message.MessageType.player2);
+        }
+
+        if (newMessage.text == Username + ": Where are you?")
+        {
+            SendMessageToChat("P̵̰̝̓̃̊̆́̈́̄l̴̟͔̈́̃ą̷̼̦̰̰̺̹͕̬̾ẙ̴̳͙͍̰̹̙̜̚ẻ̶̛̯̰̩͖̪̄̓̋̄͊̒͂͠r̵̛͕̩̙̲̓̓͆͒̚2̶̡̢̛͈̠͉͔̺̙͖̜̑̔̕͘̕͝:̷̖̹͇͎̺̿̃̍̏̚ͅ ̵̛̞̹̹̼͍͈̜̊́̊̐̀̉͘͜Í̵͕̼̹'̴̛̠͚̪͙̭͎̯̅̐̊͆̍̽̋̈́m̴̗̱̺͕͈͚͚͌̆̋̉ͅ ̸̨̧͉̦̱̗͎͇͔͌̋ẅ̶̢̠́ͅa̷̫̼͊t̵̛͉̺͖̥̟̲́̑͆̾̓͆͐͝͠c̷̩̭̮̬͚̳͆͊͛̄̄̍̋̋́͜ͅh̵̢̥̱̫̪̎̐̅́į̴̤͔̩̬͖̜̲͈̦̈́̄̏͒͘͠n̸̨̥̦̆ͅg̶̞̮͍͖̹̈͋̊̓̄́ ̷̧̬̩̺̥̥͕̀̈́̇͊̌͌̆͑͋ͅͅy̶̡͓̞̳̋o̶̖̟̺̲̱̥̼̺̰͖̓̇͗̃ü̴͕̥̺̑̂̊͛́̍.̵̧̛͖̣̗͓̝̪͑̿̈", Message.MessageType.player2);
+        }
     }
 
     Color MessageTypeColor(Message.MessageType messageType)
@@ -122,6 +136,9 @@ public class ChatHandler : MonoBehaviour
                 break;
             case Message.MessageType.system:
                 color = infoColor;
+                break;
+            case Message.MessageType.player2:
+                color = cursedColor;
                 break;
         }
 
@@ -142,7 +159,8 @@ public class Message
     public enum MessageType
     {
         playerMessage = 1,
-        system = 2
+        system = 2,
+        player2
     }
 }
 
