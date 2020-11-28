@@ -10,16 +10,18 @@ public class Spawn : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        
         if(SceneManager.GetActiveScene().name != "LevelEditor")
         {
+            
             Instantiate(playerPrefab, transform.position, Quaternion.identity);
         }
         
     }
     void Start()
     {
-        
-        
+        PlayerPrefs.SetInt("Buildindex", SceneManager.GetActiveScene().buildIndex);
+
     }
 
     // Update is called once per frame

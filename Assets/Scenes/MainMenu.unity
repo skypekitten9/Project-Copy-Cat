@@ -321,17 +321,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!114 &791092747 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1995758983381172843, guid: 8391332b642bd2643b920322b3b5a7e2, type: 3}
-  m_PrefabInstance: {fileID: 1539337480}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &863045093
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -385,11 +374,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1325012869898262973, guid: cdb038816a03e5940a28c905f9038c3e, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.000030517578
+      value: -0.000045776367
       objectReference: {fileID: 0}
     - target: {fileID: 1325012869898262973, guid: cdb038816a03e5940a28c905f9038c3e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.000015258789
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2033917356192542653, guid: cdb038816a03e5940a28c905f9038c3e, type: 3}
       propertyPath: m_AnchorMin.x
@@ -529,10 +518,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1995758983381172843, guid: 8391332b642bd2643b920322b3b5a7e2, type: 3}
-      propertyPath: m_text
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 5066550935958273587, guid: 8391332b642bd2643b920322b3b5a7e2, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -589,10 +574,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: MainMenuCanvas
       objectReference: {fileID: 0}
-    - target: {fileID: 8556505194554079992, guid: 8391332b642bd2643b920322b3b5a7e2, type: 3}
-      propertyPath: fullscreenText
-      value: 
-      objectReference: {fileID: 791092747}
     - target: {fileID: 8556505194554079998, guid: 8391332b642bd2643b920322b3b5a7e2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

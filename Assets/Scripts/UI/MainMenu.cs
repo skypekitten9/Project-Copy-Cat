@@ -82,9 +82,15 @@ public class MainMenu : MonoBehaviour
         }
     }
 
+    public void Continue()
+    {
+        SceneManager.LoadScene(PlayerPrefs.GetInt("Buildindex"));
+    }
+
     public void NewGame()
     {
-        SceneManager.LoadScene(1);
+        PlayerPrefs.DeleteKey("Buildindex");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     public void QuitGame()

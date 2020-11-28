@@ -21,12 +21,7 @@ public class ChangeScene : MonoBehaviour
     {
         if (other.name == "Player(Clone)")
         {
-            if(GameManager.Instance.buildIndex == 0)
-            {
-                GameManager.Instance.buildIndex = SceneManager.GetActiveScene().buildIndex;
-            }
-            GameManager.Instance.buildIndex++;
-            SceneManager.LoadScene(GameManager.Instance.buildIndex);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
         }
     }
 }

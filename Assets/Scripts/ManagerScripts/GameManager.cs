@@ -10,9 +10,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject player;
     public GameObject Player { get { return player; } }
 
-    public int buildIndex = 1;
-
-
+    
     public void Awake()
     {
         if (instance != null && instance != this)
