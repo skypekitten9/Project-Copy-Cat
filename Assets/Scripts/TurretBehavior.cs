@@ -54,7 +54,7 @@ public class TurretBehavior : MonoBehaviour
         eyeRender = particleEye.GetComponent<ParticleSystemRenderer>();
         hitRender = particleHit.GetComponent<ParticleSystemRenderer>();
         defaultColor = eyeRender.material.GetColor("Color_D3EC0E17");
-        chargedColor = Color.red;
+        chargedColor = eyeRender.material.GetColor("Color_D3EC0E17");
         particleSysEye.Stop();
 
         particleHitSize = particleSysHit.startSize;
