@@ -90,7 +90,8 @@ public class ChatHandler : MonoBehaviour
 
     public void SendMessageToChat(string text, Message.MessageType messageType)
     {
-
+        chatBox.enabled = true;
+        chatTimer = resetChatTimer;
         if (messageList.Count >= maxMessages)
         {
             Destroy(messageList[0].textObject.gameObject);

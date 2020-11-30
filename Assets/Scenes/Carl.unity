@@ -176,11 +176,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1325012869898262973, guid: cdb038816a03e5940a28c905f9038c3e, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -557.43396
+      value: -0.000061035156
       objectReference: {fileID: 0}
     - target: {fileID: 1325012869898262973, guid: cdb038816a03e5940a28c905f9038c3e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -982.641
+      value: 0.000061035156
       objectReference: {fileID: 0}
     - target: {fileID: 1325012870277498535, guid: cdb038816a03e5940a28c905f9038c3e, type: 3}
       propertyPath: m_IsActive
@@ -576,6 +576,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1325012868736022520, guid: 5f8cd37d5d1a7d34b9c9d2029cdcb21f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1325012868840698427, guid: 5f8cd37d5d1a7d34b9c9d2029cdcb21f, type: 3}
       propertyPath: m_Name
       value: ChatManager

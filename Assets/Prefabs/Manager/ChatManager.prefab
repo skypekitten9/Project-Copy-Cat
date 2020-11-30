@@ -174,7 +174,8 @@ MonoBehaviour:
   textObject: {fileID: 8870991835333390821, guid: a2d37c3ad217ea441990fc67a2d84316, type: 3}
   chatBox: {fileID: 1325012869435815244}
   playerMessageColor: {r: 1, g: 1, b: 1, a: 1}
-  infoColor: {r: 0.18262726, g: 0.5726794, b: 0.6792453, a: 1}
+  infoColor: {r: 0.8679245, g: 0.7003414, b: 0.11053756, a: 1}
+  cursedColor: {r: 0.6698113, g: 0, b: 0, a: 1}
   messageList: []
 --- !u!1 &1325012868930321127
 GameObject:
@@ -925,7 +926,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1325012869629170013}
   m_HandleRect: {fileID: 1325012869629170012}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
