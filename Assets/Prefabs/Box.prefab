@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 5431315768702666563}
   - component: {fileID: 673753777857308739}
   - component: {fileID: 6898404044769439938}
+  - component: {fileID: 8713618171578994684}
   m_Layer: 0
   m_Name: Box
   m_TagString: Pickupable
@@ -162,6 +163,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isHolo: 0
+--- !u!65 &8713618171578994684
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2239727661880600050}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3, y: 3, z: 3}
+  m_Center: {x: -0.0028691292, y: 1.007474, z: 0.0016494393}
 --- !u!1 &2698558267732827575
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,6 +13,8 @@ public class PickUp : MonoBehaviour
 
     Rigidbody body;
 
+    private Quaternion startRotation;
+
     public bool canHold = true;
     public bool isHolding = false;
     public bool hasSavedVelocity = false;
@@ -32,6 +34,7 @@ public class PickUp : MonoBehaviour
         body = gameObject.GetComponent<Rigidbody>();
         holdState = HoldState.NOTHELD;
         tempParent = null;
+        startRotation = transform.rotation;
     }
 
     // Update is called once per frame
@@ -92,6 +95,7 @@ public class PickUp : MonoBehaviour
     {
         holdState = HoldState.HELD;
         body.useGravity = false;
+        transform.rotation = startRotation;
         //body.detectCollisions = true;
     }
 
@@ -128,6 +132,7 @@ public class PickUp : MonoBehaviour
     {
         if (IsHeld())
         {
+            Debug.LogError("Collided with something");
             SetToNotHeld();
         }
     }
