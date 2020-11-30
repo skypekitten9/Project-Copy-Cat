@@ -16,7 +16,7 @@ public class InjuryScreen : MonoBehaviour
 
     private void Start()
     {
-        playerStats = GameObject.Find("Player").GetComponent<PlayerManager>();
+        playerStats = GameObject.Find("Player(Clone)").GetComponent<PlayerManager>();
     }
 
     private void Update()
