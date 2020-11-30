@@ -52,7 +52,7 @@ public class PlayerMovement : MonoBehaviour
         //if (Input.GetAxis("Mouse ScrollWheel") > 0 && isGrounded)
         if (Input.GetButtonDown("Jump") && isGrounded && !ChatHandler.Instance.chatBox.isFocused)
         {
-            SFXManager.Instance.PlaySound(audio, SFXManager.Sound.jump);
+            SFXManager.Instance.PlaySound(audio, SFXManager.Sound.jump, 0.8f);
             Jump();
         }
 
@@ -63,7 +63,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (walkTimer <= 0 && Input.GetAxisRaw("Horizontal") != 0  && isGrounded|| walkTimer <= 0 && Input.GetAxisRaw("Vertical") != 0 && isGrounded)
         {
-            audio.PlayOneShot(SFXManager.Instance.GetRandomWalkingSound());
+            audio.PlayOneShot(SFXManager.Instance.GetRandomWalkingSound(), 0.2f);
 
             walkTimer = resetWalkTimer;
         }

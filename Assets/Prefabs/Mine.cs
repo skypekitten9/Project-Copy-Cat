@@ -31,7 +31,7 @@ public class Mine : MonoBehaviour
         if (other.tag == "Player")
         {
             vfx.Play();
-            SFXManager.Instance.PlaySound(audio, SFXManager.Sound.mineBlast);
+            SFXManager.Instance.PlaySound(audio, SFXManager.Sound.mineBlast, 0.85f);
             other.gameObject.GetComponent<PlayerMovement>().KnockBack(transform.position);
             PlayerManager.Instance.DamagePlayer(40);
             isTriggered = true;

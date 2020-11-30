@@ -124,6 +124,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1325012868930321120, guid: 5f8cd37d5d1a7d34b9c9d2029cdcb21f, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1325012869106173355, guid: 5f8cd37d5d1a7d34b9c9d2029cdcb21f, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -166,6 +170,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1325012870067524604, guid: 5f8cd37d5d1a7d34b9c9d2029cdcb21f, type: 3}
       propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1325012870171265810, guid: 5f8cd37d5d1a7d34b9c9d2029cdcb21f, type: 3}
+      propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -408,6 +416,14 @@ PrefabInstance:
       propertyPath: soundAudioClips.Array.data[8].audioClip
       value: 
       objectReference: {fileID: 8300000, guid: 9c8ec607df3c30643ad065f773bc2ba5, type: 3}
+    - target: {fileID: 4669912058620942726, guid: f144158c9b56ebc4482c7b291a6958da, type: 3}
+      propertyPath: walkingSounds.Array.data[0].audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: d9a4f468139b76942b97d52883649017, type: 3}
+    - target: {fileID: 4669912058620942726, guid: f144158c9b56ebc4482c7b291a6958da, type: 3}
+      propertyPath: walkingSounds.Array.data[1].audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 1dd476c5d89a98a4587b7b4c1f5eccd1, type: 3}
     - target: {fileID: 4669912058620942727, guid: f144158c9b56ebc4482c7b291a6958da, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

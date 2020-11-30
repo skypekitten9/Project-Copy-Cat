@@ -49,9 +49,9 @@ public class SFXManager : MonoBehaviour
         
     }
 
-    public void PlaySound(AudioSource source, Sound sound)
+    public void PlaySound(AudioSource source, Sound sound, float volume)
     {
-        source.PlayOneShot(GetSound(sound));
+        source.PlayOneShot(GetSound(sound), volume);
     }
 
     //Väldigt ful lösning, men det funkar. Se random delen ifall den ska implementeras istället.

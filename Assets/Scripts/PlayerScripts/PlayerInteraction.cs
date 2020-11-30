@@ -42,7 +42,7 @@ public class PlayerInteraction : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Mouse0) && isHolding)
         {
-            SFXManager.Instance.PlaySound(audio, SFXManager.Sound.throwObject);
+            SFXManager.Instance.PlaySound(audio, SFXManager.Sound.throwObject, 0.8f);
             hit.collider.gameObject.GetComponent<PickUp>().Throw();
             isHolding = false;
         }
@@ -88,7 +88,7 @@ public class PlayerInteraction : MonoBehaviour
                 {
                     if (!hit.collider.gameObject.GetComponent<PickUp>().IsHeld())
                     {
-                        SFXManager.Instance.PlaySound(audio, SFXManager.Sound.grabObject);
+                        SFXManager.Instance.PlaySound(audio, SFXManager.Sound.grabObject, 0.8f);
 
                         RecordPhase recordPhase = GameManager.Instance.GetComponent<RecordManager>().recordPhase;
                         if (recordPhase != RecordPhase.PlayingBack && recordPhase != RecordPhase.Rewinding)

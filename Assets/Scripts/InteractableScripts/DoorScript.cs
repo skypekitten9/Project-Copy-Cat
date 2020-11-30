@@ -86,7 +86,7 @@ public class DoorScript : MonoBehaviour
     void ToggleDoor(bool state)
     {
         animator.speed = 1;
-        SFXManager.Instance.PlaySound(audio, SFXManager.Sound.doorClose);
+        SFXManager.Instance.PlaySound(audio, SFXManager.Sound.doorClose, 0.85f);
         animator.SetBool("isOpened", state);
         collider.enabled = !state;
         isOpen = state;
