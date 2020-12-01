@@ -4941,14 +4941,14 @@ MonoBehaviour:
   eye: {fileID: 833836608335207119}
   particleEye: {fileID: 768192171}
   particleHit: {fileID: 8070251061053356172}
-  fireRange: 10
-  targetRange: 15
+  fireRange: 20
+  targetRange: 20
   patrolRange: 25
   patrolViewAngle: 80
-  targetViewAngle: 15
-  chargeTime: 0.5
-  patrolSpeed: 0.5
-  targetSpeed: 10
+  targetViewAngle: 25
+  chargeTime: 0.3
+  patrolSpeed: 0.7
+  targetSpeed: 12
 --- !u!65 &833836608223164058
 BoxCollider:
   m_ObjectHideFlags: 0
