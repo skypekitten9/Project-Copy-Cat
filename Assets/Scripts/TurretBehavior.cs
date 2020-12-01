@@ -25,6 +25,9 @@ public class TurretBehavior : MonoBehaviour
     private float timeCount, charge, particleHitSize, particleEyeSize, particleHitSpeed, particleEyeSpeed;
     Color defaultColor, chargedColor;
     string hitTag;
+    AudioSource audio;
+    bool isCharingSound;
+
 
     void Start()
     {
@@ -40,7 +43,8 @@ public class TurretBehavior : MonoBehaviour
         lockTarget = false;
         charge = 0;
         hitTag = "NO TAG";
-        
+        audio = gameObject.GetComponent<AudioSource>();
+        isCharingSound = false;
 
 
         lineRenderer = gameObject.GetComponent<LineRenderer>();
@@ -212,17 +216,28 @@ public class TurretBehavior : MonoBehaviour
 
     void Targeting()
     {
-        
         if (charge > 1) charge = 1;
         if (charge < 0) charge = 0;
         if (distanceToTarget.magnitude <= fireRange)
         {
+            if (!isCharingSound)
+            {
+                audio.Stop();
+                SFXManager.Instance.PlaySound(audio, SFXManager.Sound.turretCharge, 0.7f);
+                audio.loop = true;
+                isCharingSound = true;
+            }
             charge += Time.deltaTime/2f;
+            
             if (charge >= 1)
             {
                 if (!fireing)
                 {
                     fireing = true;
+                    audio.loop = false;
+                    audio.Stop();
+                    SFXManager.Instance.PlaySound(audio, SFXManager.Sound.turretFire, 1f);
+                    audio.loop = true;
                     StartCoroutine(Fire());
                 }
             }
@@ -231,6 +246,10 @@ public class TurretBehavior : MonoBehaviour
         {
             charge -= Time.deltaTime / 2f;
             fireing = false;
+            isCharingSound = false;
+            audio.loop = false;
+            audio.Stop();
+            SFXManager.Instance.PlaySound(audio, SFXManager.Sound.turretPowerDown, 0.7f);
         }
 
         if (Quaternion.Angle(head.transform.rotation, Quaternion.LookRotation(Quaternion.Euler(0, 90, 0) * new Vector3(distanceToTarget.x, 0, distanceToTarget.z))) < 2)

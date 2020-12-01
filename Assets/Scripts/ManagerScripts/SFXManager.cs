@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JetBrains.Annotations;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,7 +16,10 @@ public class SFXManager : MonoBehaviour
         throwObject,
         grabObject,
         jump,
-        land
+        land,
+        turretCharge,
+        turretFire,
+        turretPowerDown
     }
     
     private static SFXManager instance = null;
@@ -29,7 +33,7 @@ public class SFXManager : MonoBehaviour
     int stepNumber = 0;
 
     AudioSource audioSource;
-
+    
     private void Awake()
     {
         if (instance != null && instance != this)
