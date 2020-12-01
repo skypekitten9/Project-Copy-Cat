@@ -28,7 +28,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3409339833755934013}
-  - {fileID: 3409339833822543780}
   - {fileID: 1828784802834066222}
   - {fileID: 1325012870121964314}
   m_Father: {fileID: 3409339832995894902}
@@ -62,6 +61,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3409339832774023598}
+  - {fileID: 3409339833822543780}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -74,7 +74,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1325012868736022522, guid: 5f8cd37d5d1a7d34b9c9d2029cdcb21f, type: 3}
       propertyPath: m_Size
-      value: 0.99999994
+      value: 0.99999976
       objectReference: {fileID: 0}
     - target: {fileID: 1325012868840698427, guid: 5f8cd37d5d1a7d34b9c9d2029cdcb21f, type: 3}
       propertyPath: m_Name
@@ -110,7 +110,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1325012868840698437, guid: 5f8cd37d5d1a7d34b9c9d2029cdcb21f, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1325012868840698437, guid: 5f8cd37d5d1a7d34b9c9d2029cdcb21f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -374,7 +374,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4669912058620942726, guid: f144158c9b56ebc4482c7b291a6958da, type: 3}
       propertyPath: soundAudioClips.Array.size
-      value: 9
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 4669912058620942726, guid: f144158c9b56ebc4482c7b291a6958da, type: 3}
       propertyPath: soundAudioClips.Array.data[4].sound
@@ -424,6 +424,30 @@ PrefabInstance:
       propertyPath: walkingSounds.Array.data[1].audioClip
       value: 
       objectReference: {fileID: 8300000, guid: 1dd476c5d89a98a4587b7b4c1f5eccd1, type: 3}
+    - target: {fileID: 4669912058620942726, guid: f144158c9b56ebc4482c7b291a6958da, type: 3}
+      propertyPath: soundAudioClips.Array.data[9].sound
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4669912058620942726, guid: f144158c9b56ebc4482c7b291a6958da, type: 3}
+      propertyPath: soundAudioClips.Array.data[9].audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 53c01139a78fd704d95de4ba1020ef5d, type: 3}
+    - target: {fileID: 4669912058620942726, guid: f144158c9b56ebc4482c7b291a6958da, type: 3}
+      propertyPath: soundAudioClips.Array.data[10].sound
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 4669912058620942726, guid: f144158c9b56ebc4482c7b291a6958da, type: 3}
+      propertyPath: soundAudioClips.Array.data[10].audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 43d79a53fe62c554f8084813bfccbc90, type: 3}
+    - target: {fileID: 4669912058620942726, guid: f144158c9b56ebc4482c7b291a6958da, type: 3}
+      propertyPath: soundAudioClips.Array.data[11].sound
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4669912058620942726, guid: f144158c9b56ebc4482c7b291a6958da, type: 3}
+      propertyPath: soundAudioClips.Array.data[11].audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: d03e776344d0efa4c9247557c36e2e43, type: 3}
     - target: {fileID: 4669912058620942727, guid: f144158c9b56ebc4482c7b291a6958da, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -454,7 +478,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4669912058620942727, guid: f144158c9b56ebc4482c7b291a6958da, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4669912058620942727, guid: f144158c9b56ebc4482c7b291a6958da, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -480,7 +504,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 3409339832774023598}
+    m_TransformParent: {fileID: 3409339832995894902}
     m_Modifications:
     - target: {fileID: 8141489727255726756, guid: 8aa23f03f65e43344bb10e42a4685873, type: 3}
       propertyPath: m_Name
