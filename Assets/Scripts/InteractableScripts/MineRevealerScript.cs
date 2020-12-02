@@ -12,8 +12,17 @@ public class MineRevealerScript : MonoBehaviour
         camera.enabled = false;
     }
 
+    private void Update()
+    {
+        if (camera.enabled == false)
+        {
+            gameObject.GetComponentInChildren<TelescopeCamera>().isActive = false;
+        }
+    }
+
     public void ActivateTelescope(Camera disableCamera)
     {
+        gameObject.GetComponentInChildren<TelescopeCamera>().isActive = true;
         camera.enabled = true;
         disableCamera.enabled = false;
     }

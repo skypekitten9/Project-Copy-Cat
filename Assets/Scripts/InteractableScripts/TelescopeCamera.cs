@@ -10,21 +10,28 @@ public class TelescopeCamera : MonoBehaviour
 
     public float MouseY { get; set; } = 0;
 
+    public bool isActive;
+
     void Start()
     {
         body = transform.parent.gameObject.transform;
 
         Cursor.lockState = CursorLockMode.Locked;
+
+        isActive = false;
     }
 
     void Update()
     {
-        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-        MouseY += Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+        if (isActive)
+        {
+            float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
+            MouseY += Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
-        MouseY = Mathf.Clamp(MouseY, -90f, 90f);
-        transform.localRotation = Quaternion.Euler(-MouseY, 0f, 0f);
+            MouseY = Mathf.Clamp(MouseY, -90f, 90f);
+            transform.localRotation = Quaternion.Euler(-MouseY, 0f, 0f);
 
-        body.Rotate(Vector3.up * mouseX);
+            body.Rotate(Vector3.up * mouseX);
+        }
     }
 }
