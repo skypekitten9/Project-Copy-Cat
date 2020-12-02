@@ -886,6 +886,7 @@ MonoBehaviour:
   interactionMask:
     serializedVersion: 2
     m_Bits: 268492595
+  isLookingThroughTelescope: 0
 --- !u!82 &2746281143397562997
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1053,7 +1054,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 36631
+    m_Bits: 44823
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -1252,7 +1253,7 @@ Animator:
   m_GameObject: {fileID: 6631777264248877617}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: efb1fb9734d3ec94da7ad6353d9a8809, type: 2}
+  m_Controller: {fileID: 9100000, guid: d4924ba920feced4b83fa31270a8f08e, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
