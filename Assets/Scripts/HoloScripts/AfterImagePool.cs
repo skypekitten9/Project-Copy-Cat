@@ -52,6 +52,5 @@ class AfterImagePool : MonoBehaviour
         afterImagesPool[index].transform.rotation = GameManager.Instance.GetComponent<RecordManager>().HoloInstance.transform.rotation;
         afterImagesPool[index].GetComponent<AfterImage>().Enable();
         afterImagesPool[index].transform.position = GameManager.Instance.GetComponent<RecordManager>().HoloInstance.transform.position + new Vector3(0, 0, 0);
-
     }
 }
