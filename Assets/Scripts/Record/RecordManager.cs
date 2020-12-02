@@ -62,7 +62,7 @@ public class RecordManager : MonoBehaviour
 
     private void Update()
     {
-        if (alive)
+        if (alive && !GameObject.Find("Player(Clone)").GetComponent<PlayerInteraction>().isLookingThroughTelescope)
         {
             if (Input.GetKeyDown(KeyCode.Q))
             {

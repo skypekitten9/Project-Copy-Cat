@@ -23,7 +23,7 @@ public class PlayerInteraction : MonoBehaviour
     private float resetInteractTimer;
 
     private bool isHolding = false;
-    private bool isLookingThroughTelescope = false;
+    public bool isLookingThroughTelescope = false;
 
     void Start()
     {

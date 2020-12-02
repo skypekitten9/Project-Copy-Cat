@@ -39,7 +39,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (knockbackTimer <= 0 && !ChatHandler.Instance.chatBox.isFocused)
+        if (knockbackTimer <= 0 && !ChatHandler.Instance.chatBox.isFocused && !gameObject.GetComponent<PlayerInteraction>().isLookingThroughTelescope)
         {
             Move();
         }
@@ -50,7 +50,7 @@ public class PlayerMovement : MonoBehaviour
         walkTimer -= Time.deltaTime;
         isGrounded = Physics.Raycast(transform.position + new Vector3(0, 0.1f, 0), -Vector3.up, 0.2f);
         //if (Input.GetAxis("Mouse ScrollWheel") > 0 && isGrounded)
-        if (Input.GetButtonDown("Jump") && isGrounded && !ChatHandler.Instance.chatBox.isFocused)
+        if (Input.GetButtonDown("Jump") && isGrounded && !ChatHandler.Instance.chatBox.isFocused && !gameObject.GetComponent<PlayerInteraction>().isLookingThroughTelescope)
         {
             SFXManager.Instance.PlaySound(audio, SFXManager.Sound.jump, 0.8f);
             Jump();

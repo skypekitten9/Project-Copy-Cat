@@ -21,12 +21,13 @@ public class ChangeScene : MonoBehaviour
     {
         if (other.name == "Player(Clone)")
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
-            if(PlayerPrefs.GetInt("Buildindex") < SceneManager.GetActiveScene().buildIndex+1)
+            if (PlayerPrefs.GetInt("Buildindex") < SceneManager.GetActiveScene().buildIndex + 1)
             {
                 PlayerPrefs.DeleteKey("Buildindex");
                 SceneManager.LoadScene("MainMenu");
             }
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
+            
         }
     }
 }
