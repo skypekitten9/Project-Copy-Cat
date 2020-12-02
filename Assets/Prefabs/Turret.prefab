@@ -4942,9 +4942,9 @@ MonoBehaviour:
   eye: {fileID: 833836608335207119}
   particleEye: {fileID: 768192171}
   particleHit: {fileID: 8070251061053356172}
-  fireRange: 10
-  targetRange: 10
-  patrolRange: 25
+  fireRange: 20
+  targetRange: 20
+  patrolRange: 40
   patrolViewAngle: 80
   targetViewAngle: 15
   chargeTime: 0.5
