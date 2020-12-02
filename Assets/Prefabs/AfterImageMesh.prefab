@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4611849316313445619}
   - component: {fileID: 7554713438931357113}
   - component: {fileID: 6481244985080195373}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: default
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91,7 +91,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5219848673662371243}
   - component: {fileID: -8387979058956201230}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: AfterImageMesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
