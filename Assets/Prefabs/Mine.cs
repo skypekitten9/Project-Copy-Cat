@@ -36,5 +36,12 @@ public class Mine : MonoBehaviour
             PlayerManager.Instance.DamagePlayer(40);
             isTriggered = true;
         }
+        if (other.tag == "Pickupable")
+        {
+            vfx.Play();
+            SFXManager.Instance.PlaySound(audio, SFXManager.Sound.mineBlast, 0.85f);
+            //other.gameObject.GetComponent<PlayerMovement>().KnockBack(transform.position);
+            isTriggered = true;
+        }
     }
 }
