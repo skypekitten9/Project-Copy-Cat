@@ -12,6 +12,7 @@ class AfterImagePool : MonoBehaviour
     private GameObject[] afterImagesPool;
     [SerializeField] private Material afterImageMaterial;
     public Material AfterImageMaterial { get { return afterImageMaterial; } }
+    [SerializeField] private GameObject afterImageMesh;
 
 
     private void Start()
@@ -21,9 +22,8 @@ class AfterImagePool : MonoBehaviour
 
         for (int i = 0; i < afterImagesPool.Length; i++)
         {
-            afterImagesPool[i] = new GameObject($"AfterImage_{i}", typeof(MeshFilter), typeof(MeshRenderer), typeof(AfterImage));
+            afterImagesPool[i] = Instantiate(afterImageMesh);
             afterImagesPool[i].transform.parent = afterImagesParent;
-            afterImagesPool[i].GetComponent<MeshRenderer>().material = afterImageMaterial;
         }
 
         DontDestroyOnLoad(afterImagesParent);
@@ -49,9 +49,9 @@ class AfterImagePool : MonoBehaviour
 
     private void SpawnAfterImage(int index)
     {
-        GameManager.Instance.GetComponent<RecordManager>().HoloInstance.GetComponentInChildren<SkinnedMeshRenderer>().BakeMesh(afterImagesPool[index].GetComponent<MeshFilter>().mesh);
+        afterImagesPool[index].transform.rotation = GameManager.Instance.GetComponent<RecordManager>().HoloInstance.transform.rotation;
         afterImagesPool[index].GetComponent<AfterImage>().Enable();
-        afterImagesPool[index].transform.position = GameManager.Instance.GetComponent<RecordManager>().HoloInstance.transform.position + new Vector3(0, 1.0f, 0);
+        afterImagesPool[index].transform.position = GameManager.Instance.GetComponent<RecordManager>().HoloInstance.transform.position + new Vector3(0, 0, 0);
 
     }
 }

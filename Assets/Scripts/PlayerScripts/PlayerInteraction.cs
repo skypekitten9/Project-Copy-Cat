@@ -16,9 +16,14 @@ public class PlayerInteraction : MonoBehaviour
 
     AudioSource audio;
 
+    Camera tempCamera;
+
     private float rayRange;
+    private float interactTimer;
+    private float resetInteractTimer;
 
     private bool isHolding = false;
+    private bool isLookingThroughTelescope = false;
 
     void Start()
     {
@@ -27,10 +32,15 @@ public class PlayerInteraction : MonoBehaviour
         pickUpTransform = cameraTransform.Find("PickupPosition");
         ray = new Ray(cameraTransform.position, cameraTransform.forward);
         rayRange = 1.5f;
+
+        interactTimer = 0.25f;
+        resetInteractTimer = interactTimer;
     }
 
     void Update()
     {
+        interactTimer -= Time.deltaTime;
+
         ray.origin = cameraTransform.position;
         ray.direction = cameraTransform.forward;
 
@@ -38,7 +48,15 @@ public class PlayerInteraction : MonoBehaviour
         {
             Interact();
             PickUp();
+
+            if (isLookingThroughTelescope && interactTimer <= 0)
+            {
+                isLookingThroughTelescope = false;
+                gameObject.GetComponentInChildren<Camera>().enabled = true;
+                tempCamera.enabled = false;
+            }
         }
+
 
         if (Input.GetKeyDown(KeyCode.Mouse0) && isHolding)
         {
@@ -65,6 +83,13 @@ public class PlayerInteraction : MonoBehaviour
                     {
                         GameManager.Instance.GetComponent<RecordManager>().AddInteractionNode(hit.collider.gameObject);
                     }
+                }
+                else if (hit.collider.tag == "Telescope" && !isLookingThroughTelescope && GameManager.Instance.GetComponent<RecordManager>().recordPhase != RecordPhase.Recording)
+                {
+                    hit.collider.gameObject.GetComponent<MineRevealerScript>().ActivateTelescope(gameObject.GetComponentInChildren<Camera>());
+                    isLookingThroughTelescope = true;
+                    tempCamera = hit.collider.gameObject.GetComponentInChildren<Camera>();
+                    interactTimer = resetInteractTimer;
                 }
                 else
                 {

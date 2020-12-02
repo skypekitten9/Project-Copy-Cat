@@ -2110,7 +2110,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 2746281143397562987, guid: 4de34e5f395c11c498c2030bbd01ca1b, type: 3}
-  buildIndex: 0
 --- !u!114 &1625242734
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2154,3 +2153,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   afterImageMaterial: {fileID: 2100000, guid: fbd518f9ae5fa1d479ab304aa981d79a, type: 2}
+  afterImageMesh: {fileID: 4844589085102235409, guid: e78a9469b148e5d4886a37f8aeb2971b, type: 3}

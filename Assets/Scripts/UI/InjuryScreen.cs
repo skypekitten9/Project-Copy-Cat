@@ -21,10 +21,21 @@ public class InjuryScreen : MonoBehaviour
 
     private void Update()
     {
-        Color tempColour = image.color;
-        float opacity = 1 - (float)playerStats.playerHealth / 100;
-        tempColour.a = opacity;
-        image.color = tempColour;
+        if (playerStats != null)
+        {
+            Color tempColour = image.color;
+            float opacity = 1 - (float)playerStats.playerHealth / 100;
+            tempColour.a = opacity;
+            image.color = tempColour;
+        }
+        else
+        {
+            playerStats = GameObject.Find("Player(Clone)").GetComponent<PlayerManager>();
+            Color tempColour = image.color;
+            float opacity = 1 - (float)playerStats.playerHealth / 100;
+            tempColour.a = opacity;
+            image.color = tempColour;
+        }
     }
 
 }

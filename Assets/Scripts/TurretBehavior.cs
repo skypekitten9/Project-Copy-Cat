@@ -343,6 +343,8 @@ public class TurretBehavior : MonoBehaviour
 
     IEnumerator ToPatroling()
     {
+        audio.Stop();
+        SFXManager.Instance.PlaySound(audio, SFXManager.Sound.turretPowerDown, 0.75f);
         transitioningTo = false;
         yield return new WaitForSeconds(Time.deltaTime);
     }
