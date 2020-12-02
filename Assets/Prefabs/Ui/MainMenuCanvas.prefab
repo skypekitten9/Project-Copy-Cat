@@ -997,7 +997,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: PROJECT COPY CAT
+  m_text: DUPLEX
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 38a48880be0aa16448cdcad08c0da834, type: 2}
   m_sharedMaterial: {fileID: 5435788724223079719, guid: 38a48880be0aa16448cdcad08c0da834, type: 2}
@@ -1131,7 +1131,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: PROJECT COPY CAT
+  m_text: DUPLEX
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 38a48880be0aa16448cdcad08c0da834, type: 2}
   m_sharedMaterial: {fileID: 5435788724223079719, guid: 38a48880be0aa16448cdcad08c0da834, type: 2}
@@ -3624,7 +3624,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: PROJECT COPY CAT
+  m_text: DUPLEX
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 38a48880be0aa16448cdcad08c0da834, type: 2}
   m_sharedMaterial: {fileID: 5435788724223079719, guid: 38a48880be0aa16448cdcad08c0da834, type: 2}
@@ -4379,7 +4379,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: PROJECT COPY CAT
+  m_text: DUPLEX
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 38a48880be0aa16448cdcad08c0da834, type: 2}
   m_sharedMaterial: {fileID: 5435788724223079719, guid: 38a48880be0aa16448cdcad08c0da834, type: 2}
