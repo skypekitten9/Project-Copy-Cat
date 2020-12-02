@@ -28,13 +28,24 @@ public class Mine : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
+        if (!isTriggered)
         {
-            vfx.Play();
-            SFXManager.Instance.PlaySound(audio, SFXManager.Sound.mineBlast, 0.85f);
-            other.gameObject.GetComponent<PlayerMovement>().KnockBack(transform.position);
-            PlayerManager.Instance.DamagePlayer(40);
-            isTriggered = true;
+            if (other.tag == "Player")
+            {
+                vfx.Play();
+                SFXManager.Instance.PlaySound(audio, SFXManager.Sound.mineBlast, 0.85f);
+                other.gameObject.GetComponent<PlayerMovement>().KnockBack(transform.position);
+                PlayerManager.Instance.DamagePlayer(40);
+                isTriggered = true;
+            }
+
+            if (other.tag == "Pickupable" && other.gameObject.GetComponent<ObjectKnockback>() != null)
+            {
+                vfx.Play();
+                SFXManager.Instance.PlaySound(audio, SFXManager.Sound.mineBlast, 0.85f);
+                other.gameObject.GetComponent<ObjectKnockback>().Knockback(transform.position);
+                isTriggered = true;
+            }
         }
     }
 }
