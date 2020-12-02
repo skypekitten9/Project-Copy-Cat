@@ -123,7 +123,7 @@ public class RecordManager : MonoBehaviour
         syncBar.StopBar();
 
         recordPhase = RecordPhase.Rewinding;
-
+        SFXManager.Instance.PlaySound(HoloInstance.GetComponentInChildren<Camera>().GetComponent<AudioSource>(), SFXManager.Sound.rewindSound, 1f);
         holoRecorder.StopRecording();
         Array.ForEach(objectRecorders, element => element.StopRecording());
 
@@ -188,6 +188,7 @@ public class RecordManager : MonoBehaviour
 
         syncBar.Reset();
 
+        HoloInstance.GetComponentInChildren<Camera>().GetComponent<AudioSource>().Stop();
 
         float fadeValue = 1;
         while (fadeValue > 0)

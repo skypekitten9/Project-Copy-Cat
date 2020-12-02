@@ -19,7 +19,8 @@ public class SFXManager : MonoBehaviour
         land,
         turretCharge,
         turretFire,
-        turretPowerDown
+        turretPowerDown,
+        rewindSound
     }
     
     private static SFXManager instance = null;
