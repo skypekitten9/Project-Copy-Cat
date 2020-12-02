@@ -2,8 +2,8 @@
 
 class AfterImagePool : MonoBehaviour
 {
-    public float AfterImageFadeTime { get; } = 2000.0f;    //ms
-    private float afterImageSpawnRate = 10.0f;    // times per second
+    public float AfterImageFadeTime { get; } = 600.0f;    //ms
+    private float afterImageSpawnRate = 20.0f;    // times per second
 
     private float afterImagesTimer = 0;
     private int afterImagesIndex = 0;
