@@ -10,6 +10,7 @@ public class AfterImage : MonoBehaviour
     {
         fadeTime = GameManager.Instance.GetComponent<AfterImagePool>().AfterImageFadeTime;
         material = GetComponentInChildren<MeshRenderer>().material;
+        GetComponentInChildren<MeshRenderer>().enabled = false;
     }
 
     public void Enable()
@@ -19,6 +20,8 @@ public class AfterImage : MonoBehaviour
 
     private IEnumerator Fade()
     {
+        GetComponentInChildren<MeshRenderer>().enabled = true;
+
         float fps = 30.0f;
         float frameTime = 1.0f / fps;
 
@@ -28,5 +31,7 @@ public class AfterImage : MonoBehaviour
             yield return new WaitForSeconds(frameTime);
         }
         material.SetFloat("Vector1_DCDBC5A6", 0);
+
+        GetComponentInChildren<MeshRenderer>().enabled = false;
     }
 }
