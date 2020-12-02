@@ -84,7 +84,7 @@ public class PlayerInteraction : MonoBehaviour
                         GameManager.Instance.GetComponent<RecordManager>().AddInteractionNode(hit.collider.gameObject);
                     }
                 }
-                else if (hit.collider.tag == "Telescope" && !isLookingThroughTelescope)
+                else if (hit.collider.tag == "Telescope" && !isLookingThroughTelescope && GameManager.Instance.GetComponent<RecordManager>().recordPhase != RecordPhase.Recording)
                 {
                     hit.collider.gameObject.GetComponent<MineRevealerScript>().ActivateTelescope(gameObject.GetComponentInChildren<Camera>());
                     isLookingThroughTelescope = true;
