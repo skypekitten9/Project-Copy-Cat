@@ -74,7 +74,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1325012868736022522, guid: 5f8cd37d5d1a7d34b9c9d2029cdcb21f, type: 3}
       propertyPath: m_Size
-      value: 0.99999976
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1325012868840698427, guid: 5f8cd37d5d1a7d34b9c9d2029cdcb21f, type: 3}
       propertyPath: m_Name
@@ -130,7 +130,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1325012869106173355, guid: 5f8cd37d5d1a7d34b9c9d2029cdcb21f, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1325012869629170012, guid: 5f8cd37d5d1a7d34b9c9d2029cdcb21f, type: 3}
       propertyPath: m_AnchorMax.x
