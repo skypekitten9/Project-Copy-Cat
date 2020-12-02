@@ -9,8 +9,7 @@ public class AfterImage : MonoBehaviour
     private void Start()
     {
         fadeTime = GameManager.Instance.GetComponent<AfterImagePool>().AfterImageFadeTime;
-        GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-        material = GetComponent<MeshRenderer>().material;
+        material = GetComponentInChildren<MeshRenderer>().material;
     }
 
     public void Enable()
