@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
@@ -6,6 +7,8 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     //public LayerMask groundMask;
+
+    private bool noclip = false;
 
     private Rigidbody rb;
     private AudioSource audio;
@@ -39,29 +42,44 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (knockbackTimer <= 0 && !ChatHandler.Instance.chatBox.isFocused && !gameObject.GetComponent<PlayerInteraction>().isLookingThroughNewCamera)
+        if (noclip == false)
         {
-            Move();
+            if (knockbackTimer <= 0 && !ChatHandler.Instance.chatBox.isFocused && !gameObject.GetComponent<PlayerInteraction>().isLookingThroughNewCamera)
+            {
+                Move();
+            }
+        }
+        else
+        {
+            MoveNoclip();
         }
     }
 
     private void Update()
     {
-        walkTimer -= Time.deltaTime;
-        isGrounded = Physics.Raycast(transform.position + new Vector3(0, 0.1f, 0), -Vector3.up, 0.2f);
-        //if (Input.GetAxis("Mouse ScrollWheel") > 0 && isGrounded)
-        if (Input.GetButtonDown("Jump") && isGrounded && !ChatHandler.Instance.chatBox.isFocused && !gameObject.GetComponent<PlayerInteraction>().isLookingThroughNewCamera)
-        {
-            SFXManager.Instance.PlaySound(audio, SFXManager.Sound.jump, 0.8f);
-            Jump();
-        }
+#if DEVELOPMENT_BUILD || UNITY_EDITOR
+        if (Input.GetKeyDown(KeyCode.N))
+            ChangeControls(!noclip);
+#endif
 
-        knockbackTimer -= Time.deltaTime;
+        if (noclip == false)
+        {
+            walkTimer -= Time.deltaTime;
+            isGrounded = Physics.Raycast(transform.position + new Vector3(0, 0.1f, 0), -Vector3.up, 0.2f);
+            //if (Input.GetAxis("Mouse ScrollWheel") > 0 && isGrounded)
+            if (Input.GetButtonDown("Jump") && isGrounded && !ChatHandler.Instance.chatBox.isFocused && !gameObject.GetComponent<PlayerInteraction>().isLookingThroughNewCamera)
+            {
+                SFXManager.Instance.PlaySound(audio, SFXManager.Sound.jump, 0.8f);
+                Jump();
+            }
+
+            knockbackTimer -= Time.deltaTime;
+        }
     }
 
     private void Move()
     {
-        if (walkTimer <= 0 && Input.GetAxisRaw("Horizontal") != 0  && isGrounded|| walkTimer <= 0 && Input.GetAxisRaw("Vertical") != 0 && isGrounded)
+        if (walkTimer <= 0 && Input.GetAxisRaw("Horizontal") != 0 && isGrounded || walkTimer <= 0 && Input.GetAxisRaw("Vertical") != 0 && isGrounded)
         {
             audio.PlayOneShot(SFXManager.Instance.GetRandomWalkingSound(), 0.2f);
 
@@ -77,6 +95,29 @@ public class PlayerMovement : MonoBehaviour
         rb.velocity = new Vector3(velocity.x, rb.velocity.y, velocity.z);
 
     }
+
+    private void MoveNoclip()
+    {
+        Debug.Log("move noclip");
+        float x = Input.GetAxisRaw("Horizontal");
+        float z = Input.GetAxisRaw("Vertical");
+
+        velocity = (transform.right * x + GetComponentInChildren<Camera>().transform.forward * z).normalized * speed * 2;
+
+        rb.velocity = new Vector3(velocity.x, velocity.y, velocity.z);
+    }
+
+
+
+
+    private void ChangeControls(bool noclip)
+    {
+        rb.velocity = Vector3.zero;
+        Array.ForEach(GetComponents<Collider>(), c => c.enabled = !noclip);
+        rb.useGravity = !noclip;
+        this.noclip = noclip;
+    }
+
 
     void Jump()
     {
