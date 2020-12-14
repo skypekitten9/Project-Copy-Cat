@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Levels/Gustavslevel.unity
     guid: 1085d3e3041d10d44953ec133984a234
+  - enabled: 1
+    path: Assets/Scenes/Levels/WatchTheFloor.unity
+    guid: 13bd154e1cf57e04c8a33d06c317b56b
   m_configObjects: {}
