@@ -7,13 +7,16 @@ public class ButtonScript : MonoBehaviour
     private Ray ray;
     Animator animator;
     AudioSource audio;
+    public GameObject boundBox;
     [SerializeField] public int id;
     public int Id { set { id = value; } }
+    public bool resetsBoxes;
 
     void Start()
     {
         animator = gameObject.GetComponentInChildren<Animator>();
         audio = gameObject.GetComponent<AudioSource>();
+        resetsBoxes = false;
     }
 
     void Update()
@@ -32,6 +35,14 @@ public class ButtonScript : MonoBehaviour
             TestLevelManager.Instance.UpdateChannels();
             StartCoroutine(RevertSignal());
         }
+    }
+
+    public void ResetBoundBox()
+    {
+        boundBox.GetComponent<ObjectReset>().ResetToOriginalPosition();
+        animator.SetTrigger("pressed");
+        SFXManager.Instance.PlaySound(audio, SFXManager.Sound.buttonClick, 0.85f);
+        if (GameObject.Find("Game Manager").GetComponent<RecordManager>().recordPhase == RecordPhase.Recording) GameObject.Find("SyncBar").GetComponent<SyncBar>().SpawnInteraction();
     }
 
     IEnumerator RevertSignal()

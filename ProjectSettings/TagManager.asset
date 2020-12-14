@@ -12,6 +12,7 @@ TagManager:
   - IgnorePlatform
   - Hologram
   - Telescope
+  - CameraPanel
   layers:
   - Default
   - TransparentFX
