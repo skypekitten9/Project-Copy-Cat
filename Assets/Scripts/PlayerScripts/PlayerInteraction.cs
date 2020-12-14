@@ -23,7 +23,7 @@ public class PlayerInteraction : MonoBehaviour
     private float resetInteractTimer;
 
     private bool isHolding = false;
-    public bool isLookingThroughTelescope = false;
+    public bool isLookingThroughNewCamera = false;
 
     void Start()
     {
@@ -49,9 +49,9 @@ public class PlayerInteraction : MonoBehaviour
             Interact();
             PickUp();
 
-            if (isLookingThroughTelescope && interactTimer <= 0)
+            if (isLookingThroughNewCamera && interactTimer <= 0)
             {
-                isLookingThroughTelescope = false;
+                isLookingThroughNewCamera = false;
                 gameObject.GetComponentInChildren<Camera>().enabled = true;
                 tempCamera.enabled = false;
             }
@@ -76,7 +76,15 @@ public class PlayerInteraction : MonoBehaviour
 
                 if (hit.collider.tag == "Interactable")
                 {
-                    if (hit.collider.gameObject.GetComponent<ButtonScript>() != null) hit.collider.gameObject.GetComponent<ButtonScript>().SignalChannel();
+                    if (hit.collider.gameObject.GetComponent<ButtonScript>() != null)
+                    {
+                        hit.collider.gameObject.GetComponent<ButtonScript>().SignalChannel();
+                        
+                        if (hit.collider.gameObject.GetComponent<ButtonScript>().boundBox != null)
+                        {
+                            hit.collider.gameObject.GetComponent<ButtonScript>().ResetBoundBox();
+                        }
+                    }
                     if (hit.collider.gameObject.GetComponent<LeverScript>() != null) hit.collider.gameObject.GetComponent<LeverScript>().SignalChannel();
 
                     if (GameManager.Instance.GetComponent<RecordManager>().recordPhase == RecordPhase.Recording)
@@ -84,12 +92,20 @@ public class PlayerInteraction : MonoBehaviour
                         GameManager.Instance.GetComponent<RecordManager>().AddInteractionNode(hit.collider.gameObject);
                     }
                 }
-                else if (hit.collider.tag == "Telescope" && !isLookingThroughTelescope && GameManager.Instance.GetComponent<RecordManager>().recordPhase != RecordPhase.Recording)
+                else if (hit.collider.tag == "Telescope" && !isLookingThroughNewCamera && GameManager.Instance.GetComponent<RecordManager>().recordPhase != RecordPhase.Recording)
                 {
                     hit.collider.gameObject.GetComponent<MineRevealerScript>().ActivateTelescope(gameObject.GetComponentInChildren<Camera>());
-                    isLookingThroughTelescope = true;
+                    isLookingThroughNewCamera = true;
                     tempCamera = hit.collider.gameObject.GetComponentInChildren<Camera>();
                     interactTimer = resetInteractTimer;
+                }
+                else if (hit.collider.tag == "CameraPanel" && !isLookingThroughNewCamera && GameManager.Instance.GetComponent<RecordManager>().recordPhase != RecordPhase.Recording)
+                {
+                    hit.collider.gameObject.GetComponent<SecurityCameraActivation>().ActivateCamera(gameObject.GetComponentInChildren<Camera>());
+                    isLookingThroughNewCamera = true;
+                    tempCamera = hit.collider.gameObject.GetComponentInChildren<Camera>();
+                    interactTimer = resetInteractTimer;
+                    UnityEngine.Debug.LogWarning("Ping!");
                 }
                 else
                 {

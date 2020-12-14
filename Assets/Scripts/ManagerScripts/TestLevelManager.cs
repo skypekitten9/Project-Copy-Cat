@@ -40,7 +40,7 @@ public class TestLevelManager : MonoBehaviour
 
         DontDestroyOnLoad(this);
 
-        interactablesArray = new bool[30];
+        interactablesArray = new bool[50];
         doorList = new List<GameObject>();
         leverList = new List<GameObject>();
 
