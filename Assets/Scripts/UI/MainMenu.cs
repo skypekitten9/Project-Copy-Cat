@@ -8,12 +8,15 @@ public class MainMenu : MonoBehaviour
 {
     [SerializeField]private GameObject startMenuUI;
     [SerializeField]private GameObject preferncesUI;
+    [SerializeField] private GameObject levelSelectUI;
     [SerializeField] private GameObject loadingUI;
     [SerializeField] private GameObject creditsUI;
     [SerializeField] private GameObject startMenuButtons;
     [SerializeField] private GameObject preferncesControls;
+    [SerializeField] private GameObject levelSelectButtons;
     [SerializeField] private GameObject creditsReturnButton;
     private bool AtPrefernces;
+    private bool AtLevelSelect;
     private bool AtCredits;
     Scene currentScene;
     // Start is called before the first frame update
@@ -21,10 +24,12 @@ public class MainMenu : MonoBehaviour
     {
         startMenuUI.SetActive(true);
         preferncesUI.SetActive(false);
+        levelSelectUI.SetActive(false);
         loadingUI.SetActive(false);
         creditsUI.SetActive(false);
         startMenuButtons.SetActive(true);
         preferncesControls.SetActive(false);
+        levelSelectButtons.SetActive(false);
         creditsReturnButton.SetActive(false);
         currentScene = SceneManager.GetActiveScene();
     }
@@ -42,8 +47,6 @@ public class MainMenu : MonoBehaviour
             startMenuButtons.SetActive(false);
             preferncesControls.SetActive(true);
             preferncesUI.SetActive(true);
-            loadingUI.SetActive(false);
-            creditsUI.SetActive(false);
             AtPrefernces = true;
         }
         else if (AtPrefernces == true)
@@ -52,11 +55,34 @@ public class MainMenu : MonoBehaviour
             startMenuButtons.SetActive(true);
             preferncesControls.SetActive(false);
             preferncesUI.SetActive(false);
-            loadingUI.SetActive(false);
-            creditsUI.SetActive(false);
             AtPrefernces = false;
         }
     }
+
+    public void GoToLevelSelect()
+    {
+        if (AtLevelSelect == false)
+        {
+            startMenuUI.SetActive(false);
+            startMenuButtons.SetActive(false);
+            levelSelectUI.SetActive(true);
+            levelSelectButtons.SetActive(true);
+            AtLevelSelect = true;
+        }
+        else if (AtLevelSelect == true)
+        {
+            startMenuUI.SetActive(true);
+            startMenuButtons.SetActive(true);
+            levelSelectUI.SetActive(false);
+            levelSelectButtons.SetActive(false);
+            AtLevelSelect = false;
+        }
+    }
+    public void SelectLevel(int levelIndex)
+    {
+        SceneManager.LoadScene(levelIndex);
+    }
+
 
     public void GoToCredits()
     {
@@ -65,8 +91,6 @@ public class MainMenu : MonoBehaviour
             startMenuUI.SetActive(false);
             startMenuButtons.SetActive(false);
             creditsReturnButton.SetActive(true);
-            preferncesUI.SetActive(false);
-            loadingUI.SetActive(false);
             creditsUI.SetActive(true);
             AtCredits = true;
         }
@@ -75,8 +99,6 @@ public class MainMenu : MonoBehaviour
             startMenuUI.SetActive(true);
             startMenuButtons.SetActive(true);
             creditsReturnButton.SetActive(false);
-            preferncesUI.SetActive(false);
-            loadingUI.SetActive(false);
             creditsUI.SetActive(false);
             AtCredits = false;
         }
