@@ -6,8 +6,6 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    //public LayerMask groundMask;
-
     private bool noclip = false;
 
     private Rigidbody rb;
@@ -65,7 +63,12 @@ public class PlayerMovement : MonoBehaviour
         if (noclip == false)
         {
             walkTimer -= Time.deltaTime;
-            isGrounded = Physics.Raycast(transform.position + new Vector3(0, 0.1f, 0), -Vector3.up, 0.2f);
+
+            Ray ray = new Ray(transform.position + new Vector3(0, 0.5f, 0), -Vector3.up);
+
+            isGrounded = Physics.SphereCast(ray, 0.3f, 0.6f);
+
+
             //if (Input.GetAxis("Mouse ScrollWheel") > 0 && isGrounded)
             if (Input.GetButtonDown("Jump") && isGrounded && !ChatHandler.Instance.chatBox.isFocused && !gameObject.GetComponent<PlayerInteraction>().isLookingThroughNewCamera)
             {

@@ -15010,7 +15010,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bcfe6f048cdb8a4c90b9e9f0e3b11c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boundBox: {fileID: 0}
   id: 2
+  resetsBoxes: 0
 --- !u!136 &308683418
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -88425,7 +88427,7 @@ MonoBehaviour:
   interactionMask:
     serializedVersion: 2
     m_Bits: 268492595
-  isLookingThroughTelescope: 0
+  isLookingThroughNewCamera: 0
 --- !u!54 &1783487945
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -88482,6 +88484,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca24ca530723fb649868c810bad3ce4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
   isKnockedBack: 1
   speed: 7
   jumpSpeed: 10
