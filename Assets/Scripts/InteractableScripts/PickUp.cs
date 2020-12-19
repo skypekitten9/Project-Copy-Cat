@@ -50,6 +50,14 @@ public class PickUp : MonoBehaviour
             GetComponent<Rigidbody>().isKinematic = false;
         }
 
+        if (GameManager.Instance.GetComponent<RecordManager>().recordPhase == RecordPhase.None)
+        {
+            if (GameManager.Instance.GetComponent<RecordManager>().recordPhase == RecordPhase.Recording)
+            {
+                SetToNotHeld();
+            }
+        }
+
         if (GameManager.Instance.GetComponent<RecordManager>().recordPhase == RecordPhase.Rewinding && !hasSavedVelocity)
         {
             lastRealVelocity = body.velocity;
@@ -58,10 +66,13 @@ public class PickUp : MonoBehaviour
 
         if (GameManager.Instance.GetComponent<RecordManager>().recordPhase == RecordPhase.StoppingPlayback && isHolding)
         {
-            body.velocity = lastRealVelocity;
-            isHolding = false;
-            hasSavedVelocity = false;
-            lastRealVelocity = Vector3.zero;
+            if (tempParent == GameManager.Instance.GetComponent<RecordManager>().HoloInstance)
+            {
+                body.velocity = lastRealVelocity;
+                isHolding = false;
+                hasSavedVelocity = false;
+                lastRealVelocity = Vector3.zero;
+            }
         }
 
         switch (holdState)
