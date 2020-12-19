@@ -132,11 +132,20 @@ public class PlayerInteraction : MonoBehaviour
                         SFXManager.Instance.PlaySound(audio, SFXManager.Sound.grabObject, 0.8f);
 
                         RecordPhase recordPhase = GameManager.Instance.GetComponent<RecordManager>().recordPhase;
-                        if (recordPhase != RecordPhase.PlayingBack && recordPhase != RecordPhase.Rewinding)
+                        if (recordPhase != RecordPhase.Rewinding)
                         {
                             hit.collider.gameObject.GetComponent<PickUp>().tempParent = pickUpTransform.gameObject;
                             hit.collider.gameObject.GetComponent<PickUp>().SetToHeld();
                             isHolding = true;
+                        }
+                        else if (GameManager.Instance.GetComponent<RecordManager>().recordPhase == RecordPhase.PlayingBack)
+                        {
+                            if (!hit.collider.gameObject.GetComponent<PickUp>().IsHeld())
+                            {
+                                hit.collider.gameObject.GetComponent<PickUp>().tempParent = pickUpTransform.gameObject;
+                                hit.collider.gameObject.GetComponent<PickUp>().SetToHeld();
+                                isHolding = true;
+                            }
                         }
 
                         if (GameManager.Instance.GetComponent<RecordManager>().recordPhase == RecordPhase.Recording)
