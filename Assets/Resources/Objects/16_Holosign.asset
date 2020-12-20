@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 957c7f606cbc0934ca22c6c92e69fd52, type: 3}
-  m_Name: 16_H_Mine
+  m_Name: 16_Holosign
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: 7d1e51aff4fda7e408e6f9ea14457b23, type: 3}
-  prefab: {fileID: 1538974503738515996, guid: 43c49004d82df9a47a9d91a4a04edcdd, type: 3}
-  canPlaceOnGround: 0
-  canPlaceOnCeiling: 1
-  canPlaceOnWall: 1
+  icon: {fileID: 21300000, guid: 54d29806f35778b428c2e3db1b9f0917, type: 3}
+  prefab: {fileID: 7794582625057223038, guid: efdfdb47c289c294a8219f9e09f0e8db, type: 3}
+  canPlaceOnGround: 1
+  canPlaceOnCeiling: 0
+  canPlaceOnWall: 0
   canBeRotated: 1
   canBeDeleted: 1
