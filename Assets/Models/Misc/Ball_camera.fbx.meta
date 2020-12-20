@@ -3,7 +3,12 @@ guid: 155fa527ffae9314ea03cb827c1f29e8
 ModelImporter:
   serializedVersion: 20101
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Ball_camera_Light
+    second: {fileID: 2100000, guid: 71918c472351fe348a33fb03bed4ebd2, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
