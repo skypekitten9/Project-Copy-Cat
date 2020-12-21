@@ -26,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Levels/VictorLevel.unity
     guid: a14adf7fe4ca3194aa747d3e64beec9e
+  - enabled: 1
+    path: Assets/Scenes/Levels/patricklevel.unity
+    guid: ba46d288f961f8c459304d5b76e3461e
   m_configObjects: {}
