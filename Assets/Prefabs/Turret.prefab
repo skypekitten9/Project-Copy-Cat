@@ -4950,6 +4950,9 @@ MonoBehaviour:
   chargeTime: 0.5
   patrolSpeed: 0.5
   targetSpeed: 10
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 268500791
 --- !u!65 &833836608223164058
 BoxCollider:
   m_ObjectHideFlags: 0

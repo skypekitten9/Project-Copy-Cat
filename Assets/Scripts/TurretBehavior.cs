@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 using System.Threading;
 using UnityEngine;
 
-enum TurretState {Disabled, Patroling, Targeting, Busy}
+enum TurretState { Disabled, Patroling, Targeting, Busy }
 
 public class TurretBehavior : MonoBehaviour
 {
@@ -27,6 +27,8 @@ public class TurretBehavior : MonoBehaviour
     string hitTag;
     AudioSource audio;
     bool isCharingSound;
+
+    [SerializeField] private LayerMask layerMask;
 
 
     void Start()
@@ -65,6 +67,8 @@ public class TurretBehavior : MonoBehaviour
         particleEyeSize = particleSysEye.startSize;
         particleHitSpeed = particleSysHit.startSpeed;
         particleEyeSpeed = particleSysEye.startSpeed;
+
+        //layerMask = CreateLayermask(false, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15);
     }
 
     // Update is called once per frame
@@ -75,7 +79,7 @@ public class TurretBehavior : MonoBehaviour
         timeCount = timeCount + Time.deltaTime;
         distanceToTarget = CalculateDistanceToPlayerFrom(head.transform.position);
         HandleLaserEffects();
-        
+
 
         switch (state)
         {
@@ -112,12 +116,12 @@ public class TurretBehavior : MonoBehaviour
         Ray ray = new Ray(head.transform.position, eye.transform.forward);
         RaycastHit hit;
         Vector3 endPos = eye.transform.position + (100 * eye.transform.forward);
-        if(Physics.Raycast(ray, out hit, 100))
+        if (Physics.Raycast(ray: ray, hitInfo: out hit, layerMask: layerMask, maxDistance: 100))
         {
             endPos = hit.point;
             hitTag = hit.transform.tag;
         }
-        
+
         lineRenderer.SetPosition(0, eye.transform.position);
         lineRenderer.SetPosition(1, endPos);
         particleSysHit.transform.position = endPos;
@@ -128,10 +132,10 @@ public class TurretBehavior : MonoBehaviour
         lineRenderer.startWidth = 0.02f + charge / 10;
         lineRenderer.endWidth = 0.02f + charge / 10;
         particleSysHit.startSize = particleHitSize + charge / 30;
-        particleSysHit.startSpeed = particleHitSpeed + charge/2;
-        if(charge > 0)
+        particleSysHit.startSpeed = particleHitSpeed + charge / 2;
+        if (charge > 0)
         {
-            if(!particleSysEye.isPlaying)
+            if (!particleSysEye.isPlaying)
             {
                 particleSysEye.Play();
             }
@@ -140,7 +144,7 @@ public class TurretBehavior : MonoBehaviour
         {
             particleSysEye.Stop();
         }
-        if (charge>=1)
+        if (charge >= 1)
         {
             ColorLaser(chargedColor);
             //particleSysEye.startSpeed = particleEyeSpeed + charge;
@@ -164,7 +168,7 @@ public class TurretBehavior : MonoBehaviour
     #region Updates
     void Disabled()
     {
-        if(distanceToTarget.magnitude <= patrolRange)
+        if (distanceToTarget.magnitude <= patrolRange)
         {
             StartCoroutine(Transition(state, TurretState.Patroling));
         }
@@ -172,18 +176,18 @@ public class TurretBehavior : MonoBehaviour
 
     void Patroling()
     {
-        if(patrolRight)
+        if (patrolRight)
         {
             head.transform.rotation = Quaternion.Lerp(head.transform.rotation, patrolRightRotation, Time.deltaTime * patrolSpeed);
-            if (Quaternion.Angle(head.transform.rotation, patrolRightRotation) < 10) patrolRight = false; 
+            if (Quaternion.Angle(head.transform.rotation, patrolRightRotation) < 10) patrolRight = false;
         }
         else
         {
             head.transform.rotation = Quaternion.Lerp(head.transform.rotation, patrolLeftRotation, Time.deltaTime * patrolSpeed);
             if (Quaternion.Angle(head.transform.rotation, patrolLeftRotation) < 10) patrolRight = true;
         }
-        
-        if(distanceToTarget.magnitude <= targetRange && Quaternion.Angle(head.transform.rotation, Quaternion.LookRotation(Quaternion.Euler(0, 90, 0) * new Vector3(distanceToTarget.x, 0, distanceToTarget.z))) < targetViewAngle && IsPlayerVisable())
+
+        if (distanceToTarget.magnitude <= targetRange && Quaternion.Angle(head.transform.rotation, Quaternion.LookRotation(Quaternion.Euler(0, 90, 0) * new Vector3(distanceToTarget.x, 0, distanceToTarget.z))) < targetViewAngle && IsPlayerVisable())
         {
             StartCoroutine(Transition(state, TurretState.Targeting));
         }
@@ -196,7 +200,7 @@ public class TurretBehavior : MonoBehaviour
     bool IsPlayerVisable()
     {
         Vector3 direction = CalculateDistanceToPlayerFrom(new Vector3(eye.transform.position.x, eye.transform.position.y - 1, eye.transform.position.z));
-        direction = new Vector3(direction.x, direction.y , direction.z);
+        direction = new Vector3(direction.x, direction.y, direction.z);
         Ray ray = new Ray(head.transform.position, direction);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, 100))
@@ -227,8 +231,8 @@ public class TurretBehavior : MonoBehaviour
                 audio.loop = true;
                 isCharingSound = true;
             }
-            charge += Time.deltaTime/2f;
-            
+            charge += Time.deltaTime / 2f;
+
             if (charge >= 1)
             {
                 if (!fireing)
@@ -256,7 +260,7 @@ public class TurretBehavior : MonoBehaviour
         {
             lockTarget = true;
         }
-        if(lockTarget)
+        if (lockTarget)
         {
             if (distanceToTarget.magnitude < 99)
             {
@@ -278,13 +282,13 @@ public class TurretBehavior : MonoBehaviour
     IEnumerator Fire()
     {
         Debug.Log("Fireing!");
-        
+
         while (fireing)
         {
-            if(hitTag == "Player") PlayerManager.Instance.DamagePlayer(10);
+            if (hitTag == "Player") PlayerManager.Instance.DamagePlayer(10);
             yield return new WaitForSeconds(0.1f);
         }
-        
+
     }
     #endregion
 
@@ -393,4 +397,15 @@ public class TurretBehavior : MonoBehaviour
     #endregion
     #endregion
 
+
+
+    public static int CreateLayermask(bool exclude, params int[] layers)
+    {
+        int v = 0;
+        foreach (var L in layers)
+            v |= 1 << L;
+        if (exclude)
+            v = ~v;
+        return v;
+    }
 }
