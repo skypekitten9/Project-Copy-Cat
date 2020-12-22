@@ -67,8 +67,6 @@ public class TurretBehavior : MonoBehaviour
         particleEyeSize = particleSysEye.startSize;
         particleHitSpeed = particleSysHit.startSpeed;
         particleEyeSpeed = particleSysEye.startSpeed;
-
-        //layerMask = CreateLayermask(false, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15);
     }
 
     // Update is called once per frame
@@ -397,15 +395,4 @@ public class TurretBehavior : MonoBehaviour
     #endregion
     #endregion
 
-
-
-    public static int CreateLayermask(bool exclude, params int[] layers)
-    {
-        int v = 0;
-        foreach (var L in layers)
-            v |= 1 << L;
-        if (exclude)
-            v = ~v;
-        return v;
-    }
 }
