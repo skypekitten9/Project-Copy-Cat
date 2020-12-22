@@ -4,7 +4,8 @@ public class DoorScript : MonoBehaviour
 {
     Animator animator;
     BoxCollider collider;
-    public bool toggle;
+    public bool toggle, threshold;
+    public int thresholdSize;
 
     [SerializeField] private int[] ids;
     public int[] Ids { get { return ids; } set { ids = value; } }
@@ -48,14 +49,25 @@ public class DoorScript : MonoBehaviour
     public void ListenToChannel()
     {
         bool changeState = false;
+        int thresholdCount = 0;
         for (int i = 0; i < ids.Length; i++)
         {
             if (TestLevelManager.Instance.interactablesArray[ids[i]] == false)
             {
                 changeState = false;
-                break;
+                if(!threshold) break;
             }
+            else thresholdCount++;
             changeState = true;
+        }
+
+        if(threshold && thresholdCount >= thresholdSize)
+        {
+            changeState = true;
+        }
+        else
+        {
+            changeState = false;
         }
 
         if (timer > 0)
@@ -86,7 +98,7 @@ public class DoorScript : MonoBehaviour
     void ToggleDoor(bool state)
     {
         animator.speed = 1;
-        SFXManager.Instance.PlaySound(audio, SFXManager.Sound.doorClose, 0.85f);
+        if(isOpen != state) SFXManager.Instance.PlaySound(audio, SFXManager.Sound.doorClose, 0.85f);
         animator.SetBool("isOpened", state);
         collider.enabled = !state;
         isOpen = state;
