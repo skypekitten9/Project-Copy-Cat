@@ -65,7 +65,7 @@ public class DoorScript : MonoBehaviour
         {
             changeState = true;
         }
-        else
+        else if(threshold)
         {
             changeState = false;
         }

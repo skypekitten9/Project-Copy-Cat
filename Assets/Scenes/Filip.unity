@@ -296,7 +296,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2647480841649793774, guid: 44035f07def4bc94eb2226f237d877a6, type: 3}
       propertyPath: ids.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2647480841649793774, guid: 44035f07def4bc94eb2226f237d877a6, type: 3}
       propertyPath: dynamicDoor
@@ -316,7 +316,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2647480841649793774, guid: 44035f07def4bc94eb2226f237d877a6, type: 3}
       propertyPath: threshold
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2647480841649793774, guid: 44035f07def4bc94eb2226f237d877a6, type: 3}
       propertyPath: thresholdSize
