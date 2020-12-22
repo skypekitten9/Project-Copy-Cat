@@ -43,8 +43,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 4, z: 6}
-  m_Center: {x: 0, y: 2, z: 0}
+  m_Size: {x: 2, y: 4.0164266, z: 6}
+  m_Center: {x: 0, y: 1.9917867, z: 0}
 --- !u!114 &902046221
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69,6 +69,7 @@ GameObject:
   - component: {fileID: 2647480841649793774}
   - component: {fileID: 2647480841649793775}
   - component: {fileID: 2647480841649793768}
+  - component: {fileID: 3375790}
   m_Layer: 0
   m_Name: Door_Wide
   m_TagString: Door
@@ -105,6 +106,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toggle: 0
+  threshold: 0
+  thresholdSize: 0
   ids: 
 --- !u!82 &2647480841649793775
 AudioSource:
@@ -215,6 +218,21 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.76, y: 3.15, z: 3.85}
   m_Center: {x: 0, y: 1.6, z: 0}
+--- !u!111 &3375790
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2647480841649793770}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations: []
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!95 &2647480840727977510
 Animator:
   serializedVersion: 3

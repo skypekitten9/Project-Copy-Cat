@@ -1,18 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!65 &3073300806930522589
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5361060197424786789}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.020000005, y: 0.0065281177, z: 0.015379395}
-  m_Center: {x: 0, y: 0, z: 0.0076897005}
 --- !u!1 &5091079726637499871
 GameObject:
   m_ObjectHideFlags: 0
@@ -56,8 +43,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 0.34, z: 0.66}
-  m_Center: {x: 0, y: 1.38, z: 0}
+  m_Size: {x: 2, y: 0.390136, z: 0.66}
+  m_Center: {x: 0, y: 0.18926394, z: 0}
 --- !u!114 &5091079726637499865
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94,7 +81,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5091079727880321247}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.201, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4696585311081019359}
@@ -103,6 +90,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &3073300806930522589
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5361060197424786789}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.020000005, y: 0.0065281177, z: 0.015379395}
+  m_Center: {x: 0, y: 0, z: 0.0076897005}
 --- !u!1 &8384257456883378192
 GameObject:
   m_ObjectHideFlags: 0
@@ -208,7 +208,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c26521cfbc8c0fa47adecd9fa592f68b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -1.2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c26521cfbc8c0fa47adecd9fa592f68b, type: 3}
       propertyPath: m_LocalPosition.z
