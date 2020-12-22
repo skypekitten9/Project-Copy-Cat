@@ -43,22 +43,30 @@ public class PowerCableGrid : MonoBehaviour
                 Vector3 cableRight = cable.Key.transform.right;
                 Vector3 cableForward = cable.Key.transform.forward;
 
-                if ((cable2.Value == cable.Value - cableForward && cableUp == cable2.Key.transform.up) || (cable2.Value == cable.Value && cableForward == cable2.Key.transform.up))   //-f
+                if ((cable2.Value == cable.Value - cableForward && cableUp == cable2.Key.transform.up) || 
+                    (cable2.Value == cable.Value && cableForward == cable2.Key.transform.up) || 
+                    (cable2.Value == cable.Value - cableForward - cableUp && cableForward == -cable2.Key.transform.up))   //-f
                 {
                     meshIndex += 8;
                     continue;
                 }
-                if ((cable2.Value == cable.Value + cableRight && cableUp == cable2.Key.transform.up) || (cable2.Value == cable.Value && -cableRight == cable2.Key.transform.up))   //r
+                if ((cable2.Value == cable.Value + cableRight && cableUp == cable2.Key.transform.up) || 
+                    (cable2.Value == cable.Value && -cableRight == cable2.Key.transform.up) || 
+                    (cable2.Value == cable.Value + cableRight - cableUp && -cableRight == -cable2.Key.transform.up))   //r
                 {
                     meshIndex += 4;
                     continue;
                 }
-                if ((cable2.Value == cable.Value + cableForward && cableUp == cable2.Key.transform.up) || (cable2.Value == cable.Value && -cableForward == cable2.Key.transform.up))  //f
+                if ((cable2.Value == cable.Value + cableForward && cableUp == cable2.Key.transform.up) || 
+                    (cable2.Value == cable.Value && -cableForward == cable2.Key.transform.up) || 
+                    (cable2.Value == cable.Value + cableForward - cableUp && -cableForward == -cable2.Key.transform.up))  //f
                 {
                     meshIndex += 2;
                     continue;
                 }
-                if ((cable2.Value == cable.Value - cableRight && cableUp == cable2.Key.transform.up) || (cable2.Value == cable.Value && cableRight == cable2.Key.transform.up))   //-r
+                if ((cable2.Value == cable.Value - cableRight && cableUp == cable2.Key.transform.up) || 
+                    (cable2.Value == cable.Value && cableRight == cable2.Key.transform.up) ||
+                    (cable2.Value == cable.Value - cableRight - cableUp && cableRight == -cable2.Key.transform.up))   //-r
                 {
                     meshIndex += 1;
                     continue;
