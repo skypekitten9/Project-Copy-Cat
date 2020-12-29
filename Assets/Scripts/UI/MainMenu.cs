@@ -32,6 +32,7 @@ public class MainMenu : MonoBehaviour
         levelSelectButtons.SetActive(false);
         creditsReturnButton.SetActive(false);
         currentScene = SceneManager.GetActiveScene();
+        Cursor.lockState = CursorLockMode.None;
     }
 
     // Update is called once per frame
