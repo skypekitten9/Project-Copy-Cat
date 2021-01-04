@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 957c7f606cbc0934ca22c6c92e69fd52, type: 3}
-  m_Name: 21_Lamp_Wall
+  m_Name: 21_Lamp_Fixed
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: 6870917f72a35164e8051489c44b7fc9, type: 3}
-  prefab: {fileID: 5091079727880321247, guid: 4a4b786fbcca2c44bb89e04d317bb987, type: 3}
-  canPlaceOnGround: 0
-  canPlaceOnCeiling: 0
+  icon: {fileID: 21300000, guid: 1ff05a4fea54cfa4eb419364dc8d0cdb, type: 3}
+  prefab: {fileID: 8386714558840381981, guid: a7c5a345839f32845b422505a49f680f, type: 3}
+  canPlaceOnGround: 1
+  canPlaceOnCeiling: 1
   canPlaceOnWall: 1
   canBeRotated: 1
   canBeDeleted: 1
