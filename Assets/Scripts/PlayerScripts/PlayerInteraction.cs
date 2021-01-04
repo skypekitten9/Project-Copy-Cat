@@ -22,6 +22,7 @@ public class PlayerInteraction : MonoBehaviour
     private float interactTimer;
     private float resetInteractTimer;
 
+    private bool antiPropSurfing = false;
     private bool isHolding = false;
     public bool isLookingThroughNewCamera = false;
 
@@ -125,7 +126,7 @@ public class PlayerInteraction : MonoBehaviour
         {
             if (hit.distance < rayRange)
             {
-                if (hit.collider.tag == "Pickupable")
+                if (hit.collider.tag == "Pickupable" && !antiPropSurfing && gameObject.transform.position.y - rayRange < hit.collider.gameObject.transform.position.y)
                 {
                     if (!hit.collider.gameObject.GetComponent<PickUp>().IsHeld())
                     {
@@ -173,6 +174,18 @@ public class PlayerInteraction : MonoBehaviour
     public void RecordInteractNode()
     {
 
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Pickupable")
+        {
+            antiPropSurfing = true;
+        }
+        else
+        {
+            antiPropSurfing = false;
+        }      
     }
 
 }

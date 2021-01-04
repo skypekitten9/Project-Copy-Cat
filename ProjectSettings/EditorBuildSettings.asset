@@ -18,15 +18,15 @@ EditorBuildSettings:
     path: Assets/Scenes/Levels/Gustavslevel.unity
     guid: 1085d3e3041d10d44953ec133984a234
   - enabled: 1
+    path: Assets/Scenes/Levels/VictorLevel.unity
+    guid: a14adf7fe4ca3194aa747d3e64beec9e
+  - enabled: 1
     path: Assets/Scenes/Levels/Level_F.unity
     guid: 72f196e38cdcdea46814c2c5e2c269f2
   - enabled: 1
     path: Assets/Scenes/Levels/WatchTheFloor.unity
     guid: 13bd154e1cf57e04c8a33d06c317b56b
   - enabled: 1
-    path: Assets/Scenes/Levels/VictorLevel.unity
-    guid: a14adf7fe4ca3194aa747d3e64beec9e
-  - enabled: 1
-    path: Assets/Scenes/Levels/patricklevel.unity
-    guid: ba46d288f961f8c459304d5b76e3461e
+    path: Assets/Scenes/Levels/patricklevel2.unity
+    guid: 8a2f4b0908079b64984bb726d2474e66
   m_configObjects: {}
