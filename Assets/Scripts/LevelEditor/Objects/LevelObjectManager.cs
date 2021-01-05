@@ -153,6 +153,8 @@ public class LevelObjectManager : MonoBehaviour
             if (levelObject.GetComponent<PowerCable>())
                 GetComponent<PowerCableGrid>().SetCable(levelObject);
         }
+
+        LevelEditor.Instance.GetComponent<PropertiesTab>().UpdateProperties(LevelEditor.Instance.selectedLevelObject);
     }
 
     private void PlaceLevelObject(bool destroy = false)

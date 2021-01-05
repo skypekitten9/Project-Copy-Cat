@@ -30,6 +30,8 @@ public class LevelObject_Selectable : Selectable
         boundingBox.transform.parent = this.transform;
 
         LevelEditor.Instance.selectedLevelObject = this;
+
+        LevelEditor.Instance.GetComponent<PropertiesTab>().UpdateProperties(this);
     }
 
     public override void Deselect()
@@ -38,6 +40,8 @@ public class LevelObject_Selectable : Selectable
 
         LevelEditor.Instance.selectedLevelObject = null;
         Destroy(this.transform.GetChild(this.transform.childCount - 1).gameObject);
+
+        LevelEditor.Instance.GetComponent<PropertiesTab>().UpdateProperties(null);
     }
 }
 
