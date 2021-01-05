@@ -59,7 +59,7 @@ public class PlayerInteraction : MonoBehaviour
         }
 
 
-        if (Input.GetKeyDown(KeyCode.Mouse0) && isHolding)
+        if (Input.GetKeyDown(KeyCode.Mouse0) && isHolding && !hit.collider.gameObject.GetComponent<PickUp>().isColliding)
         {
             SFXManager.Instance.PlaySound(audio, SFXManager.Sound.throwObject, 0.8f);
             hit.collider.gameObject.GetComponent<PickUp>().Throw();
