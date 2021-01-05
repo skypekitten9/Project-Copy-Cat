@@ -64,16 +64,6 @@ public class PickUp : MonoBehaviour
             hasSavedVelocity = true;
         }
 
-        if (GameManager.Instance.GetComponent<RecordManager>().recordPhase == RecordPhase.StoppingPlayback && isHolding)
-        {
-            if (tempParent != GameManager.Instance.GetComponent<RecordManager>().HoloInstance)
-            {
-                body.velocity = lastRealVelocity;
-                isHolding = false;
-                hasSavedVelocity = false;
-                lastRealVelocity = Vector3.zero;
-            }
-        }
 
         switch (holdState)
         {
