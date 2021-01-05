@@ -55,13 +55,13 @@ public class PickUp : MonoBehaviour
             GetComponent<Rigidbody>().isKinematic = false;
         }
 
-        if (GameManager.Instance.GetComponent<RecordManager>().recordPhase == RecordPhase.None)
-        {
-            if (GameManager.Instance.GetComponent<RecordManager>().recordPhase == RecordPhase.Recording)
-            {
-                SetToNotHeld();
-            }
-        }
+        //if (GameManager.Instance.GetComponent<RecordManager>().recordPhase == RecordPhase.None)
+        //{
+        //    if (GameManager.Instance.GetComponent<RecordManager>().recordPhase == RecordPhase.Recording)
+        //    {
+        //        SetToNotHeld();
+        //    }
+        //}
 
         if (GameManager.Instance.GetComponent<RecordManager>().recordPhase == RecordPhase.Rewinding && !hasSavedVelocity)
         {

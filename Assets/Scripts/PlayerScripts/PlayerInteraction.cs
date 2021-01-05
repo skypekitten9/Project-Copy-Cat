@@ -211,16 +211,15 @@ public class PlayerInteraction : MonoBehaviour
         if (collision.gameObject.tag == "Pickupable")
         {
             antiPropSurfing = true;
+            if (collision.gameObject.GetComponent<PickUp>().isColliding)
+            {
+                collision.gameObject.GetComponent<PickUp>().SetToNotHeld();
+            }
         }
         else
         {
             antiPropSurfing = false;
         }      
-
-        if (collision.gameObject.GetComponent<PickUp>().isColliding)
-        {
-            collision.gameObject.GetComponent<PickUp>().SetToNotHeld();
-        }
     }
 
 }
