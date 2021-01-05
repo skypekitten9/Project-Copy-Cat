@@ -105,7 +105,7 @@ public class PickUp : MonoBehaviour
         holdState = HoldState.HELD;
         body.useGravity = false;
         transform.rotation = startRotation;
-        //body.detectCollisions = true;
+        body.detectCollisions = true;
     }
 
     public void SetToNotHeld()
@@ -155,15 +155,15 @@ public class PickUp : MonoBehaviour
             {
                 Debug.Log("Collided with something");
 
-                if (Mathf.Abs(Vector3.Distance(tempParent.gameObject.transform.position, collision.GetContact(0).point)) >= gameObject.GetComponent<BoxCollider>().size.x)
+                if (Mathf.Abs(Vector3.Distance(tempParent.gameObject.transform.position, collision.GetContact(0).point)) >= gameObject.GetComponent<BoxCollider>().size.x * 2)
                 {
                     SetToNotHeld();
                 }
 
-                if (Mathf.Abs(Vector3.Distance(tempParent.gameObject.transform.position, gameObject.transform.position)) >= gameObject.GetComponent<BoxCollider>().size.x)
-                {
-                    SetToNotHeld();
-                }
+                //if (Mathf.Abs(Vector3.Distance(tempParent.gameObject.transform.position, gameObject.transform.position)) >= gameObject.GetComponent<BoxCollider>().size.x * 2)
+                //{
+                //    SetToNotHeld();
+                //}
             }
         }
     }

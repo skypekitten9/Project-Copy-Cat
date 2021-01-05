@@ -259,7 +259,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.00012207031, y: 0.00012207031}
+  m_AnchoredPosition: {x: -0.00024414062, y: 0.00024414062}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1371754940
@@ -1213,9 +1213,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 0}
   pickUpTransform: {fileID: 0}
+  lineRenderer: {fileID: 0}
   interactionMask:
     serializedVersion: 2
     m_Bits: 268492595
+  pickupMask:
+    serializedVersion: 2
+    m_Bits: 268500791
   isLookingThroughNewCamera: 0
 --- !u!82 &2746281143397562997
 AudioSource:
@@ -1515,7 +1519,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 44311
+    m_Bits: 109847
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
