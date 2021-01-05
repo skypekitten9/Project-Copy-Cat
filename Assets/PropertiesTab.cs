@@ -14,7 +14,7 @@ public class PropertiesTab : MonoBehaviour
     {
         AddEvent(position);
         AddEvent(rotation);
-        AddEvent(scale);
+        //AddEvent(scale);
 
         UpdateProperties(null);
     }
@@ -27,13 +27,13 @@ public class PropertiesTab : MonoBehaviour
 
             SetProperty(position, objectRoot.position.x, objectRoot.position.y, objectRoot.position.z);
             SetProperty(rotation, objectRoot.rotation.eulerAngles.x, objectRoot.rotation.eulerAngles.y, objectRoot.rotation.eulerAngles.z);
-            SetProperty(scale, objectRoot.localScale.x, objectRoot.localScale.y, objectRoot.localScale.z);
+            //SetProperty(scale, objectRoot.localScale.x, objectRoot.localScale.y, objectRoot.localScale.z);
         }
         else
         {
             SetPropertyNull(position);
             SetPropertyNull(rotation);
-            SetPropertyNull(scale);
+            //SetPropertyNull(scale);
         }
     }
 
@@ -72,7 +72,7 @@ public class PropertiesTab : MonoBehaviour
         {
             Transform objectRoot = LevelEditor.Instance.selectedLevelObject.transform.parent;
 
-            if (property == position || property == rotation || property == scale)
+            if (property == position || property == rotation /*|| property == scale*/)
             {
                 float x, y, z;
                 if (float.TryParse(property.transform.GetChild(0).GetComponent<InputField>().text, out x) &&
@@ -88,10 +88,10 @@ public class PropertiesTab : MonoBehaviour
                     {
                         objectRoot.transform.rotation = Quaternion.Euler(x, y, z);
                     }
-                    else if (property == scale)
-                    {
-                        objectRoot.transform.localScale = new Vector3(x, y, z);
-                    }
+                    //else if (property == scale)
+                    //{
+                    //    objectRoot.transform.localScale = new Vector3(x, y, z);
+                    //}
 
                 }
             }

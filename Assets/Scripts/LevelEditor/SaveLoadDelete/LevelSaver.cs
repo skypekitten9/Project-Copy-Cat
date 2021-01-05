@@ -107,6 +107,7 @@ public class LevelSaver : MonoBehaviour
             data.levelObjectData[i].levelObjectId = levelObjectId;
             data.levelObjectData[i].position = levelObject.transform.position;
             data.levelObjectData[i].rotation = levelObject.transform.localEulerAngles;
+            //data.levelObjectData[i].scale = levelObject.transform.localScale;
 
             data.connectionsData[i] = new ConnectionData();
             data.connectionsData[i].channels = levelObjectConnector.Connections.ElementAt(i).Value.ToArray();

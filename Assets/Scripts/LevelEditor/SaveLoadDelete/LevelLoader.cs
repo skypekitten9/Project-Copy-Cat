@@ -41,6 +41,11 @@ public class LevelLoader : MonoBehaviour
             LevelObject levelObject = IdToObject(data.levelObjectData[i].levelObjectId);
 
             GameObject instance = Instantiate(levelObject.Prefab, data.levelObjectData[i].position, Quaternion.Euler(data.levelObjectData[i].rotation), parent);
+            //try
+            //{
+            //    instance.transform.localScale = data.levelObjectData[i].scale;
+            //}
+            //catch (Exception) { }
             instance.GetComponentInChildren<LevelObject_Selectable>().LevelObject = levelObject;
 
             GetComponent<LevelObjectConnector>().Connections.Add(instance, data.connectionsData[i].channels.ToList());
