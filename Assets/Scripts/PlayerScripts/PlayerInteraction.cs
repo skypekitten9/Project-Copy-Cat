@@ -10,15 +10,21 @@ public class PlayerInteraction : MonoBehaviour
     public Transform cameraTransform;
     public Transform pickUpTransform;
 
+    public LineRenderer lineRenderer;
+
+    private Ray pickupRay;
     private Ray ray;
     public RaycastHit hit;
+    public RaycastHit pickupHit;
     [SerializeField] LayerMask interactionMask;
+    [SerializeField] LayerMask pickupMask;
 
     AudioSource audio;
 
     Camera tempCamera;
 
     private float rayRange;
+    private float pickupRayRange;
     private float interactTimer;
     private float resetInteractTimer;
 
@@ -32,10 +38,20 @@ public class PlayerInteraction : MonoBehaviour
         cameraTransform = gameObject.GetComponentInChildren<Camera>().transform;
         pickUpTransform = cameraTransform.Find("PickupPosition");
         ray = new Ray(cameraTransform.position, cameraTransform.forward);
+        pickupRay = new Ray(cameraTransform.position, cameraTransform.forward);
         rayRange = 1.5f;
+        pickupRayRange = 2.5f;
 
         interactTimer = 0.25f;
         resetInteractTimer = interactTimer;
+
+        //lineRenderer = gameObject.GetComponent<LineRenderer>();
+        //lineRenderer.useWorldSpace = true;
+        //lineRenderer.SetPosition(0, cameraTransform.transform.position);
+        //lineRenderer.startWidth = 0.2f;
+        //lineRenderer.endWidth = 0.2f;
+        //lineRenderer.enabled = true;
+        //lineRenderer.material.SetColor("Color_D3EC0E17", Color.red);
     }
 
     void Update()
@@ -43,7 +59,21 @@ public class PlayerInteraction : MonoBehaviour
         interactTimer -= Time.deltaTime;
 
         ray.origin = cameraTransform.position;
+        pickupRay.origin = cameraTransform.position;
         ray.direction = cameraTransform.forward;
+        pickupRay.direction = cameraTransform.forward;
+
+        Vector3 endPos = cameraTransform.transform.position + (pickupRayRange * cameraTransform.transform.forward);
+        pickUpTransform.position = endPos;
+
+        if (Physics.Raycast(ray: pickupRay, hitInfo: out pickupHit, layerMask: pickupMask, maxDistance: pickupRayRange))
+        {
+            endPos = pickupHit.point;
+        }
+
+        //lineRenderer.SetPosition(0, cameraTransform.transform.position);
+        //lineRenderer.SetPosition(1, endPos);
+
 
         if (Input.GetKeyDown(KeyCode.E))
         {
@@ -59,7 +89,7 @@ public class PlayerInteraction : MonoBehaviour
         }
 
 
-        if (Input.GetKeyDown(KeyCode.Mouse0) && isHolding)
+        if (Input.GetKeyDown(KeyCode.Mouse0) && isHolding && !hit.collider.gameObject.GetComponent<PickUp>().isColliding)
         {
             SFXManager.Instance.PlaySound(audio, SFXManager.Sound.throwObject, 0.8f);
             hit.collider.gameObject.GetComponent<PickUp>().Throw();
@@ -186,6 +216,11 @@ public class PlayerInteraction : MonoBehaviour
         {
             antiPropSurfing = false;
         }      
+
+        if (collision.gameObject.GetComponent<PickUp>().isColliding)
+        {
+            collision.gameObject.GetComponent<PickUp>().SetToNotHeld();
+        }
     }
 
 }

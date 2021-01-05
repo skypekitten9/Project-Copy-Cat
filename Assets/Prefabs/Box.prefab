@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 8713618171578994684}
   - component: {fileID: 4476527810418340925}
   - component: {fileID: 6718214615277206472}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Box
   m_TagString: Pickupable
   m_Icon: {fileID: 0}
@@ -133,6 +133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94ccfbbc085fba44c90a9e6ccedd0351, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isColliding: 0
   canHold: 1
   isHolding: 0
   hasSavedVelocity: 0
@@ -202,6 +203,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 770e6e74677b2264e89fbf6f0d820e26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: 0
 --- !u!1 &2698558267732827575
 GameObject:
   m_ObjectHideFlags: 0
@@ -213,7 +215,7 @@ GameObject:
   - component: {fileID: 838531642101844188}
   - component: {fileID: 2072910927065955300}
   - component: {fileID: 1231460748644670529}
-  m_Layer: 30
+  m_Layer: 16
   m_Name: SelectionCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}

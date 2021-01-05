@@ -7,6 +7,8 @@ public class PickUp : MonoBehaviour
 {
     float throwForce = 800f;
     float distance;
+    float collisionTimer;
+    float collisionTimerReset;
 
     Vector3 objectPosition;
     Vector3 lastRealVelocity;
@@ -15,6 +17,7 @@ public class PickUp : MonoBehaviour
 
     private Quaternion startRotation;
 
+    public bool isColliding = false;
     public bool canHold = true;
     public bool isHolding = false;
     public bool hasSavedVelocity = false;
@@ -35,6 +38,8 @@ public class PickUp : MonoBehaviour
         holdState = HoldState.NOTHELD;
         tempParent = null;
         startRotation = transform.rotation;
+        collisionTimer = 0.5f;
+        collisionTimerReset = collisionTimer;
     }
 
     // Update is called once per frame
@@ -88,8 +93,10 @@ public class PickUp : MonoBehaviour
                 body.velocity = Vector3.zero;
                 body.angularVelocity = Vector3.zero;
 
-                transform.SetParent(tempParent.transform);
-                transform.position = tempParent.transform.position;
+                if (!isColliding)
+                {
+                    transform.position = tempParent.transform.position;
+                }
 
                 if (tempParent == null)
                 {
@@ -102,10 +109,11 @@ public class PickUp : MonoBehaviour
 
     public void SetToHeld()
     {
+        transform.SetParent(tempParent.transform);
         holdState = HoldState.HELD;
         body.useGravity = false;
         transform.rotation = startRotation;
-        //body.detectCollisions = true;
+        body.detectCollisions = true;
     }
 
     public void SetToNotHeld()
@@ -136,13 +144,45 @@ public class PickUp : MonoBehaviour
     }
 
 
-    //Stub to be för att lösa kollision med väggar när man bär runt objekt.
+    //Kollar ifall en kollision sker, så att boxens position slutar uppdatera efter sin parent.
     private void OnCollisionEnter(Collision collision)
     {
-        if (IsHeld())
+        if (collision.gameObject.tag != "player")
         {
-            Debug.LogError("Collided with something");
-            SetToNotHeld();
+            isColliding = true;
+            collisionTimer = collisionTimerReset;
+        }
+    }
+
+    //Kontrollerar hur långt bort från kontaktpunkten som spelaren har flyttat sin "pickupPoint". Överskrider distansen storleken på kuben tappar man den. Funkar generellt OK.
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.tag != "Player")
+        {
+            if (IsHeld())
+            {
+                Debug.Log("Collided with something");
+
+                if (Mathf.Abs(Vector3.Distance(tempParent.gameObject.transform.position, collision.GetContact(0).point)) >= gameObject.GetComponent<BoxCollider>().size.x * 2)
+                {
+                    SetToNotHeld();
+                }
+
+                //if (Mathf.Abs(Vector3.Distance(tempParent.gameObject.transform.position, gameObject.transform.position)) >= gameObject.GetComponent<BoxCollider>().size.x * 2)
+                //{
+                //    SetToNotHeld();
+                //}
+            }
+        }
+    }
+
+    //Ser till så att boxen fortsätter uppdatera sin position efter sin parent.
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.tag != "player")
+        {
+            isColliding = false;
+            collisionTimer = collisionTimerReset;
         }
     }
 
