@@ -435,7 +435,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4026588983
+    m_Bits: 4026654519
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -755,10 +755,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 0}
   pickUpTransform: {fileID: 0}
+  lineRenderer: {fileID: 0}
   interactionMask:
     serializedVersion: 2
     m_Bits: 268492595
-  isLookingThroughTelescope: 0
+  pickupMask:
+    serializedVersion: 2
+    m_Bits: 268500791
+  isLookingThroughNewCamera: 0
 --- !u!111 &5295932007794218267
 Animation:
   m_ObjectHideFlags: 0
