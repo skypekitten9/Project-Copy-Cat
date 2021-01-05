@@ -66,7 +66,7 @@ public class PickUp : MonoBehaviour
 
         if (GameManager.Instance.GetComponent<RecordManager>().recordPhase == RecordPhase.StoppingPlayback && isHolding)
         {
-            if (tempParent == GameManager.Instance.GetComponent<RecordManager>().HoloInstance)
+            if (tempParent != GameManager.Instance.GetComponent<RecordManager>().HoloInstance)
             {
                 body.velocity = lastRealVelocity;
                 isHolding = false;
@@ -148,5 +148,13 @@ public class PickUp : MonoBehaviour
         }
     }
 
+
+    private void OnDestroy()
+    {
+        if (isHolding)
+        {
+            SetToNotHeld();
+        }
+    }
 
 }

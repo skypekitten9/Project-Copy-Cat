@@ -17,13 +17,17 @@ public class RecordTransformHierarchy : MonoBehaviour
 
     private Transform[] transforms;
 
+    private RecordManager recordManager;
 
 
     public void StartRecording()
     {
+        recordManager = GameManager.Instance.GetComponent<RecordManager>();
+
         snapshots = new List<RecordData>();
         transforms = GetComponentsInChildren<Transform>();
         recording = true;
+
     }
 
     private void FixedUpdate()
@@ -62,7 +66,7 @@ public class RecordTransformHierarchy : MonoBehaviour
                 transforms[t].position = snapshots[i].Positions[t];
                 transforms[t].rotation = snapshots[i].Rotations[t];
             }
-            yield return new WaitForSeconds(Time.fixedDeltaTime / GameManager.Instance.GetComponent<RecordManager>().RewindSpeed);
+            yield return new WaitForSeconds(1 / recordManager.RewindSpeed);
         }
 
         StartCoroutine(Playback());
@@ -71,7 +75,7 @@ public class RecordTransformHierarchy : MonoBehaviour
     private IEnumerator Playback()
     {
         if (isHolo)
-            GameManager.Instance.GetComponent<RecordManager>().StartPlayback();
+           recordManager.StartPlayback();
 
         int i = -1;
         while (++i < snapshots.Count)
@@ -81,12 +85,16 @@ public class RecordTransformHierarchy : MonoBehaviour
                 transforms[t].position = snapshots[i].Positions[t];
                 transforms[t].rotation = snapshots[i].Rotations[t];
             }
+
+            if (recordManager.recordPhase != RecordPhase.PlayingBack)
+                break;
+
             yield return new WaitForFixedUpdate();
         }
 
 
         if (isHolo)
-            StartCoroutine(GameManager.Instance.GetComponent<RecordManager>().StopPlayback());
+            StartCoroutine(recordManager.StopPlayback());
 
         this.transform.parent = null;   //parent;
     }

@@ -10,8 +10,8 @@ public enum ControlStates { Player, Holo, Dead }
 
 public class RecordManager : MonoBehaviour
 {
-    public int RecordTime { get; } = 5000;    //ms
-    public float RewindSpeed { get; } = 4.0f;  //multiplier (x times faster than normal speed)
+    public int RecordTime { get; } = 6000;    //ms
+    public float RewindSpeed { get; } = 200.0f;  //multiplier
 
 
     public RecordPhase recordPhase { get; set; } = RecordPhase.None;
@@ -75,6 +75,10 @@ public class RecordManager : MonoBehaviour
                     case RecordPhase.Recording:
                         StopRecording();
                         break;
+
+                    case RecordPhase.PlayingBack:
+                        StartCoroutine(StopPlayback());
+                        break;
                 }
             }
         }
@@ -126,10 +130,8 @@ public class RecordManager : MonoBehaviour
         SFXManager.Instance.PlaySound(HoloInstance.GetComponentInChildren<Camera>().GetComponent<AudioSource>(), SFXManager.Sound.rewindSound, 1f);
         holoRecorder.StopRecording();
         Array.ForEach(objectRecorders, element => element.StopRecording());
-
-
     }
-
+    
     public void StartPlayback()
     {
         syncBar.Replay();
@@ -193,7 +195,7 @@ public class RecordManager : MonoBehaviour
         float fadeValue = 1;
         while (fadeValue > 0)
         {
-            fadeValue -= Time.deltaTime;
+            fadeValue -= 0.08f;
             HoloInstance.GetComponentInChildren<SkinnedMeshRenderer>().material.SetFloat("Vector1_DCDBC5A6", fadeValue);
             yield return new WaitForFixedUpdate();
         }
