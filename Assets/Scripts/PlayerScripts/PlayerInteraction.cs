@@ -16,6 +16,9 @@ public class PlayerInteraction : MonoBehaviour
     private Ray ray;
     public RaycastHit hit;
     public RaycastHit pickupHit;
+
+    public GameObject interactedBox = null;
+
     [SerializeField] LayerMask interactionMask;
     [SerializeField] LayerMask pickupMask;
 
@@ -29,7 +32,7 @@ public class PlayerInteraction : MonoBehaviour
     private float resetInteractTimer;
 
     private bool antiPropSurfing = false;
-    private bool isHolding = false;
+    public bool isHolding = false;
     public bool isLookingThroughNewCamera = false;
 
     void Start()
@@ -167,6 +170,7 @@ public class PlayerInteraction : MonoBehaviour
                         {
                             hit.collider.gameObject.GetComponent<PickUp>().tempParent = pickUpTransform.gameObject;
                             hit.collider.gameObject.GetComponent<PickUp>().SetToHeld();
+                            interactedBox = hit.collider.gameObject;
                             isHolding = true;
                         }
                         else if (GameManager.Instance.GetComponent<RecordManager>().recordPhase == RecordPhase.PlayingBack)
@@ -175,6 +179,7 @@ public class PlayerInteraction : MonoBehaviour
                             {
                                 hit.collider.gameObject.GetComponent<PickUp>().tempParent = pickUpTransform.gameObject;
                                 hit.collider.gameObject.GetComponent<PickUp>().SetToHeld();
+                                interactedBox = hit.collider.gameObject;
                                 isHolding = true;
                             }
                         }
@@ -187,6 +192,7 @@ public class PlayerInteraction : MonoBehaviour
                     else
                     {
                         hit.collider.gameObject.GetComponent<PickUp>().SetToNotHeld();
+                        isHolding = false;
                     }
                 }
                 else
