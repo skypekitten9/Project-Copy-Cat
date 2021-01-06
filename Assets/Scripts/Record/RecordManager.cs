@@ -69,7 +69,12 @@ public class RecordManager : MonoBehaviour
                 switch (recordPhase)
                 {
                     case RecordPhase.None:
-                        GameObject.Find("Player(Clone)").GetComponent<PlayerInteraction>().hit.collider.gameObject.GetComponent<PickUp>().SetToNotHeld();
+                        if (GameObject.Find("Player(Clone)").GetComponent<PlayerInteraction>().isHolding)
+                        {
+                            GameObject.Find("Player(Clone)").GetComponent<PlayerInteraction>().hit.collider.gameObject.GetComponent<PickUp>().SetToNotHeld();
+                            GameObject.Find("Player(Clone)").GetComponent<PlayerInteraction>().isHolding = false;
+                        }
+
                         StartCoroutine(StartRecording());
                         break;
 
