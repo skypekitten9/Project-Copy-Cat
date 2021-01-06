@@ -9,6 +9,31 @@ public class LevelData
     public int[] powerCableData;
 }
 
+[System.Serializable]
+public class AdditionalLevelData
+{
+    public Vector3[] levelObjectScale;
+    public TurretData[] turretData;
+}
+
+[System.Serializable]
+public class TurretData
+{
+    public TurretData(TurretBehavior t)
+    {
+        fireRange = t.fireRange;
+        targetRange = t.targetRange;
+        patrolRange = t.patrolRange;
+        patrolViewAngle = t.patrolViewAngle;
+        targetViewAngle = t.targetViewAngle;
+        chargeTime = t.chargeTime;
+        patrolSpeed = t.patrolSpeed;
+        targetSpeed = t.targetSpeed;
+    }
+    public float fireRange, targetRange, patrolRange, patrolViewAngle, targetViewAngle, chargeTime, patrolSpeed, targetSpeed;
+}
+
+
 
 [System.Serializable]
 public class TileData

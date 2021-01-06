@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 2303419457597482311}
   - component: {fileID: 1208712546}
   - component: {fileID: 1480348209}
+  - component: {fileID: 184402473}
   m_Layer: 31
   m_Name: LevelEditorManager
   m_TagString: Untagged
@@ -192,3 +193,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deletePrompt: {fileID: 0}
+--- !u!114 &184402473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2303419457597482318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9348c58dcbf796947b3fc20ba41d38b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: {fileID: 0}
+  rotation: {fileID: 0}
+  scale: {fileID: 0}
+  fireRange: {fileID: 0}
+  targetRange: {fileID: 0}
+  patrolRange: {fileID: 0}
+  patrolViewAngle: {fileID: 0}
+  targetViewAngle: {fileID: 0}
+  chargeTime: {fileID: 0}
+  patrolSpeed: {fileID: 0}
+  targetSpeed: {fileID: 0}

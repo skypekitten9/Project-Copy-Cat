@@ -9,6 +9,8 @@ using UnityEngine.SceneManagement;
 public class LevelSaver : MonoBehaviour
 {
     private static LevelData data;
+    private static AdditionalLevelData data2;
+
 
     private LevelObjectConnector levelObjectConnector;
 
@@ -58,6 +60,7 @@ public class LevelSaver : MonoBehaviour
     private void SetData()
     {
         data = new LevelData();
+        data2 = new AdditionalLevelData();
 
         List<TileData> tileData_temp = new List<TileData>();
 
@@ -82,7 +85,8 @@ public class LevelSaver : MonoBehaviour
 
         data.levelObjectData = new LevelObjectData[levelObjectConnector.Connections.Count];
         data.connectionsData = new ConnectionData[levelObjectConnector.Connections.Count];
-
+        data2.levelObjectScale = new Vector3[levelObjectConnector.Connections.Count];
+        data2.turretData = new TurretData[levelObjectConnector.Connections.Count];
 
         LevelObject[] levelObjectResources = Resources.LoadAll<LevelObject>("Objects");
 
@@ -107,7 +111,15 @@ public class LevelSaver : MonoBehaviour
             data.levelObjectData[i].levelObjectId = levelObjectId;
             data.levelObjectData[i].position = levelObject.transform.position;
             data.levelObjectData[i].rotation = levelObject.transform.localEulerAngles;
-            //data.levelObjectData[i].scale = levelObject.transform.localScale;
+
+            data2.levelObjectScale[i] = levelObject.transform.localScale;
+
+
+            if (levelObject.GetComponent<TurretBehavior>() != null)
+            {
+                TurretBehavior t = levelObject.GetComponent<TurretBehavior>();
+                data2.turretData[i] = new TurretData(t);
+            }
 
             data.connectionsData[i] = new ConnectionData();
             data.connectionsData[i].channels = levelObjectConnector.Connections.ElementAt(i).Value.ToArray();
@@ -123,20 +135,24 @@ public class LevelSaver : MonoBehaviour
     private string SaveJSON(string fileName, bool overwrite = false)
     {
         string levelData = JsonUtility.ToJson(data);
+        string levelData2 = JsonUtility.ToJson(data2);
 
         string path = Application.dataPath + $"/Resources/LevelData/{fileName}.json";
+        string path2 = Application.dataPath + $"/Resources/LevelData/{fileName}_.json";
 
         if (overwrite == false)
         {
             int counter = 0;
             while (System.IO.File.Exists(path))
             {
+                path2 = Application.dataPath + $"/Resources/LevelData/{fileName}({counter})_.json";
                 path = Application.dataPath + $"/Resources/LevelData/{fileName}({counter}).json";
                 ++counter;
             }
         }
 
         System.IO.File.WriteAllText(path, levelData);
+        System.IO.File.WriteAllText(path2, levelData2);
 
         Debug.Log($"Saving Level to: \"{path}\"");
 

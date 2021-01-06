@@ -18,7 +18,11 @@ public class LevelDataLinker : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        string fileName2 = levelDataFile.FullName.Substring(0, levelDataFile.FullName.Length - 5) + "_.json";
+
+        string json2 = File.Exists(fileName2) ? File.ReadAllText(fileName2) : "";
+
         LevelEditor.Instance.GetComponent<EditorUI>().CloseAllMenus();
-        LevelEditor.Instance.GetComponent<LevelLoader>().LoadLevel(File.ReadAllText(levelDataFile.FullName), GetComponentInChildren<TextMeshProUGUI>().text);
+        LevelEditor.Instance.GetComponent<LevelLoader>().LoadLevel(File.ReadAllText(levelDataFile.FullName), json2, GetComponentInChildren<TextMeshProUGUI>().text);
     }
 }

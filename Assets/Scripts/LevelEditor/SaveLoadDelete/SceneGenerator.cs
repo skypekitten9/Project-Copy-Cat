@@ -29,8 +29,13 @@ public class SceneGenerator : MonoBehaviour
         DirectoryInfo levelsDir = new System.IO.DirectoryInfo(Application.dataPath + $"/Resources/LevelData");
         DirectoryInfo scenesDir = new System.IO.DirectoryInfo(Application.dataPath + $"/Scenes/Levels");
 
-        string jsonData = File.ReadAllText(levelDataFile.FullName);
-        LevelData data = JsonUtility.FromJson<LevelData>(jsonData);
+        string json = File.ReadAllText(levelDataFile.FullName);
+
+        string fileName2 = levelDataFile.FullName.Substring(0, levelDataFile.FullName.Length - 5) + "_.json";
+        string json2 = File.Exists(fileName2) ? File.ReadAllText(fileName2) : "";
+
+        LevelData data = JsonUtility.FromJson<LevelData>(json);
+        AdditionalLevelData data2 = json2 == "" ? null : JsonUtility.FromJson<AdditionalLevelData>(json2);
 
         #region Create Scene
 
@@ -38,7 +43,7 @@ public class SceneGenerator : MonoBehaviour
         scene.name = $"{Path.GetFileNameWithoutExtension(levelDataFile.FullName)}";
         #endregion
 
-        PopulateScene(data);
+        PopulateScene(data, data2);
 
         Optimize();
 
@@ -53,16 +58,37 @@ public class SceneGenerator : MonoBehaviour
     }
 
 
-    private void PopulateScene(LevelData data)
+    private void PopulateScene(LevelData data, AdditionalLevelData data2)
     {
         Instantiate(masterPrefabs);
 
         Transform levelObjectsParent = new GameObject("LevelObjects").transform;
         List<GameObject> levelObjects = new List<GameObject>();
         int cableCounter = 0;
-        foreach (var lod in data.levelObjectData)
+
+        for (int i = 0; i < data.levelObjectData.Length; i++)
         {
-            GameObject instance = Instantiate(LevelLoader.IdToObject(lod.levelObjectId).Prefab, lod.position, Quaternion.Euler(lod.rotation), levelObjectsParent);
+
+            GameObject instance = Instantiate(LevelLoader.IdToObject(data.levelObjectData[i].levelObjectId).Prefab, data.levelObjectData[i].position, Quaternion.Euler(data.levelObjectData[i].rotation), levelObjectsParent);
+
+            if (data2 != null)
+            {
+                instance.transform.localScale = data2.levelObjectScale[i];
+
+                if (instance.GetComponent<TurretBehavior>() != null)
+                {
+                    TurretBehavior t = instance.GetComponent<TurretBehavior>();
+                    t.fireRange = data2.turretData[i].fireRange;
+                    t.targetRange = data2.turretData[i].targetRange;
+                    t.patrolRange = data2.turretData[i].patrolRange;
+                    t.patrolViewAngle = data2.turretData[i].patrolViewAngle;
+                    t.targetViewAngle = data2.turretData[i].targetViewAngle;
+                    t.chargeTime = data2.turretData[i].chargeTime;
+                    t.patrolSpeed = data2.turretData[i].patrolSpeed;
+                    t.targetSpeed = data2.turretData[i].targetSpeed;
+                }
+            }
+
             levelObjects.Add(instance);
 
             if (instance.GetComponent<PowerCable>())

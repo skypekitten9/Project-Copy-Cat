@@ -84,7 +84,7 @@ public class LevelEditor : MonoBehaviour
     private void CreateStartLevel()
     {
         string jsonData = File.ReadAllText(Application.dataPath + "/Scripts/LevelEditor/StartRoom.json");
-        GetComponent<LevelLoader>().LoadLevel(jsonData);
+        GetComponent<LevelLoader>().LoadLevel(jsonData, "");
     }
 
     public Tile_Selectable PlaceTile(int x, int y, int z, TileDirection i)

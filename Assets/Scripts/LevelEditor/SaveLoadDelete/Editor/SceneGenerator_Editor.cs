@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEditor;
@@ -19,10 +20,17 @@ public class SceneGenerator_Editor : Editor
         SceneGenerator sceneGenerator = (SceneGenerator)target;
 
 
-        FileInfo[] levelData = new System.IO.DirectoryInfo(Application.dataPath + $"/Resources/LevelData").GetFiles("*.json");
+        DirectoryInfo dir = new System.IO.DirectoryInfo(Application.dataPath + $"/Resources/LevelData");
+        List<FileInfo> levelData = new List<FileInfo>(dir.GetFiles("*.json"));
+        for (int i = 0; i < levelData.Count; i++)
+        {
+            if (levelData[i].Name[levelData[i].Name.Length - 6] == '_')
+            {
+                levelData.RemoveAt(i);
+            }
+        }
 
-
-        string[] options = levelData.Select(x => Path.GetFileNameWithoutExtension(x.FullName)).ToArray();
+        string[] options = levelData.Select(l => l.Name).ToArray();
 
         selected = EditorGUILayout.Popup("Level", selected, options);
 

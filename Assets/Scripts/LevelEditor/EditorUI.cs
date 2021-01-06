@@ -201,7 +201,14 @@ public class EditorUI : MonoBehaviour
     private void FillLevelsList()
     {
         DirectoryInfo dir = new System.IO.DirectoryInfo(Application.dataPath + $"/Resources/LevelData");
-        FileInfo[] levelData = dir.GetFiles("*.json");
+        List<FileInfo> levelData = new List<FileInfo>(dir.GetFiles("*.json"));
+        for (int i = 0; i < levelData.Count; i++)
+        {
+            if (levelData[i].Name[levelData[i].Name.Length - 6] == '_')
+            {
+                levelData.RemoveAt(i);
+            }
+        }
 
         Transform content = levelsPanel.GetComponentInChildren<GridLayoutGroup>().transform;
 
