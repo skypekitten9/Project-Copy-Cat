@@ -17,6 +17,7 @@ public class PickUp : MonoBehaviour
 
     private Quaternion startRotation;
 
+    public bool hasHadHoloInteraction = false;
     public bool isColliding = false;
     public bool canHold = true;
     public bool isHolding = false;
@@ -55,14 +56,6 @@ public class PickUp : MonoBehaviour
             GetComponent<Rigidbody>().isKinematic = false;
         }
 
-        //if (GameManager.Instance.GetComponent<RecordManager>().recordPhase == RecordPhase.None)
-        //{
-        //    if (GameManager.Instance.GetComponent<RecordManager>().recordPhase == RecordPhase.Recording)
-        //    {
-        //        SetToNotHeld();
-        //    }
-        //}
-
         if (GameManager.Instance.GetComponent<RecordManager>().recordPhase == RecordPhase.Rewinding && !hasSavedVelocity)
         {
             lastRealVelocity = body.velocity;
@@ -75,6 +68,11 @@ public class PickUp : MonoBehaviour
             isHolding = false;
             hasSavedVelocity = false;
             lastRealVelocity = Vector3.zero;
+        }
+
+        if (GameManager.Instance.GetComponent<RecordManager>().recordPhase == RecordPhase.None)
+        {
+            hasHadHoloInteraction = false;
         }
 
 
@@ -114,6 +112,11 @@ public class PickUp : MonoBehaviour
         body.useGravity = false;
         transform.rotation = startRotation;
         body.detectCollisions = true;
+
+        if (tempParent.name == "Hologram(Clone)")
+        {
+            hasHadHoloInteraction = true;
+        }
     }
 
     public void SetToNotHeld()
@@ -152,6 +155,11 @@ public class PickUp : MonoBehaviour
             isColliding = true;
             collisionTimer = collisionTimerReset;
         }
+        
+        //if (collision.gameObject.name == "Hologram(Clone)" && GameManager.Instance.GetComponent<RecordManager>().recordPhase == RecordPhase.Recording)
+        //{
+        //    hasHadHoloInteraction = true;
+        //}
     }
 
     //Kontrollerar hur långt bort från kontaktpunkten som spelaren har flyttat sin "pickupPoint". Överskrider distansen storleken på kuben tappar man den. Funkar generellt OK.
