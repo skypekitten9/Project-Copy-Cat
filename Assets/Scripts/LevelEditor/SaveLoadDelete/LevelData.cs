@@ -14,6 +14,7 @@ public class AdditionalLevelData
 {
     public Vector3[] levelObjectScale;
     public TurretData[] turretData;
+    public StoryTriggerData[] storyTriggerData;
 }
 
 [System.Serializable]
@@ -31,6 +32,20 @@ public class TurretData
         targetSpeed = t.targetSpeed;
     }
     public float fireRange, targetRange, patrolRange, patrolViewAngle, targetViewAngle, chargeTime, patrolSpeed, targetSpeed;
+}
+
+[System.Serializable]
+public class StoryTriggerData
+{
+    public StoryTriggerData(StoryTrigger1 s)
+    {
+        rows = s.message.rows;
+        hasName = s.message.hasName;
+        messageType = (int)s.message.messageType;
+    }
+    public string[] rows;
+    public bool hasName;
+    public int messageType;
 }
 
 

@@ -87,6 +87,13 @@ public class SceneGenerator : MonoBehaviour
                     t.patrolSpeed = data2.turretData[i].patrolSpeed;
                     t.targetSpeed = data2.turretData[i].targetSpeed;
                 }
+                if (instance.GetComponent<StoryTrigger1>() != null)
+                {
+                    StoryTrigger1 s = instance.GetComponent<StoryTrigger1>();
+                    s.message.rows = data2.storyTriggerData[i].rows;
+                    s.message.hasName = data2.storyTriggerData[i].hasName;
+                    s.message.messageType = (Message.MessageType)data2.storyTriggerData[i].messageType;
+                }
             }
 
             levelObjects.Add(instance);

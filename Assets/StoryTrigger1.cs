@@ -5,7 +5,7 @@ using UnityEngine;
 public class StoryTrigger1 : MonoBehaviour
 {
 
-   [SerializeField] private Message message;
+   public Message message;
 
     bool first = true;
 
@@ -13,14 +13,14 @@ public class StoryTrigger1 : MonoBehaviour
     {
         if (other.tag == "Player" && first)
         {
-
             string name = message.hasName ? ChatHandler.Instance.Username + " " : "";
 
             first = false;
-            ChatHandler.Instance.SendMessageToChat(name + message.text, message.messageType);
-            foreach (string s in message.additionalText)
+
+            ChatHandler.Instance.SendMessageToChat(name + message.rows[0], message.messageType);
+            for (int i = 1; i < message.rows.Length; i++)
             {
-                ChatHandler.Instance.SendMessageToChat(s, message.messageType);
+                ChatHandler.Instance.SendMessageToChat(message.rows[i], message.messageType);
             }
             Destroy(gameObject);
         }

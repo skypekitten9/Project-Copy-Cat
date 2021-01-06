@@ -216,3 +216,6 @@ MonoBehaviour:
   chargeTime: {fileID: 0}
   patrolSpeed: {fileID: 0}
   targetSpeed: {fileID: 0}
+  message: {fileID: 0}
+  hasName: {fileID: 0}
+  messageType: {fileID: 0}
