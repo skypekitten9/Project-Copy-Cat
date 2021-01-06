@@ -78,10 +78,30 @@ public class RecordTransformHierarchy : MonoBehaviour
            recordManager.StartPlayback();
 
         int i = -1;
+        bool hasHadHoloInteraction = false;
+
+        for (int j = 0; j < snapshots.Count; j++)
+        {
+            for (int k = 0; k < transforms.Length; k++)
+            {
+                if (transforms[k].position != snapshots[j].Positions[k])
+                {
+                    hasHadHoloInteraction = true;
+                }
+            }
+        }
+
         while (++i < snapshots.Count)
         {
             for (int t = 0; t < transforms.Length; t++)
             {
+                if (gameObject.tag == "Pickupable")
+                {
+                    if (!hasHadHoloInteraction)
+                    {
+                        yield break;
+                    }
+                }
                 transforms[t].position = snapshots[i].Positions[t];
                 transforms[t].rotation = snapshots[i].Rotations[t];
             }
