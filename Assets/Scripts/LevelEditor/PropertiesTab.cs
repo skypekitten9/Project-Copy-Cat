@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Text;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,22 +20,29 @@ public class PropertiesTab : MonoBehaviour
     [SerializeField] private GameObject patrolSpeed;
     [SerializeField] private GameObject targetSpeed;
 
+    [SerializeField] private GameObject message;
+    [SerializeField] private GameObject hasName;
+    [SerializeField] private GameObject messageType;
+
 
 
     private void Start()
     {
-        AddEvent(position);
-        AddEvent(rotation);
-        AddEvent(scale);
+        AddInputFieldEvent(position);
+        AddInputFieldEvent(rotation);
+        AddInputFieldEvent(scale);
 
-        AddEvent(fireRange);
-        AddEvent(targetRange);
-        AddEvent(patrolRange);
-        AddEvent(patrolViewAngle);
-        AddEvent(targetViewAngle);
-        AddEvent(chargeTime);
-        AddEvent(patrolSpeed);
-        AddEvent(targetSpeed);
+        AddInputFieldEvent(fireRange);
+        AddInputFieldEvent(targetRange);
+        AddInputFieldEvent(patrolRange);
+        AddInputFieldEvent(patrolViewAngle);
+        AddInputFieldEvent(targetViewAngle);
+        AddInputFieldEvent(chargeTime);
+        AddInputFieldEvent(patrolSpeed);
+        AddInputFieldEvent(targetSpeed);
+
+        AddStoryTriggerEvents();
+
 
         UpdateProperties(null);
     }
@@ -48,7 +57,7 @@ public class PropertiesTab : MonoBehaviour
             SetProperty(rotation, objectRoot.rotation.eulerAngles.x, objectRoot.rotation.eulerAngles.y, objectRoot.rotation.eulerAngles.z);
             SetProperty(scale, objectRoot.localScale.x, objectRoot.localScale.y, objectRoot.localScale.z);
 
-            if (objectRoot.GetComponent<TurretBehavior>())
+            if (objectRoot.GetComponent<TurretBehavior>() != null)
             {
                 TurretBehavior t = objectRoot.GetComponent<TurretBehavior>();
                 SetProperty(fireRange, t.fireRange);
@@ -59,6 +68,26 @@ public class PropertiesTab : MonoBehaviour
                 SetProperty(chargeTime, t.chargeTime);
                 SetProperty(patrolSpeed, t.patrolSpeed);
                 SetProperty(targetSpeed, t.targetSpeed);
+            }
+
+            if (objectRoot.GetComponent<StoryTrigger1>() != null)
+            {
+                StoryTrigger1 s = objectRoot.GetComponent<StoryTrigger1>();
+                StringBuilder sb = new StringBuilder();
+
+                foreach (string row in s.message.rows)
+                {
+                    sb.Append(row + "\n");
+                }
+                if (sb.Length > 0)
+                    sb.Remove(sb.Length - 1, 1);
+
+                message.transform.GetComponentInChildren<InputField>().text = sb.ToString();
+                message.transform.GetComponentInChildren<InputField>().interactable = true;
+                hasName.transform.GetComponentInChildren<Toggle>().isOn = s.message.hasName;
+                hasName.transform.GetComponentInChildren<Toggle>().interactable = true;
+                messageType.transform.GetComponentInChildren<TMP_Dropdown>().value = (int)s.message.messageType;
+                messageType.transform.GetComponentInChildren<TMP_Dropdown>().interactable = true;
             }
         }
         else
@@ -75,6 +104,10 @@ public class PropertiesTab : MonoBehaviour
             SetPropertyNull(chargeTime);
             SetPropertyNull(patrolSpeed);
             SetPropertyNull(targetSpeed);
+
+            SetPropertyNull(message);
+            hasName.GetComponentInChildren<Toggle>().interactable = false;
+            messageType.GetComponentInChildren<TMP_Dropdown>().interactable = false;
         }
     }
 
@@ -98,13 +131,19 @@ public class PropertiesTab : MonoBehaviour
         }
     }
 
-    private void AddEvent(GameObject property)
+    private void AddInputFieldEvent(GameObject property)
     {
         for (int c = 0; c < property.transform.childCount; c++)
         {
             InputField field = property.transform.GetChild(c).GetComponent<InputField>();
             field.onEndEdit.AddListener(delegate { OnValueChanged(property); });
         }
+    }
+    private void AddStoryTriggerEvents()
+    {
+        message.transform.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate { OnValueChanged(message); });
+        hasName.transform.GetComponentInChildren<Toggle>().onValueChanged.AddListener(delegate { OnValueChanged(hasName); });
+        messageType.transform.GetComponentInChildren<TMP_Dropdown>().onValueChanged.AddListener(delegate { OnValueChanged(messageType); });
     }
 
     private void OnValueChanged(GameObject property)
@@ -177,6 +216,27 @@ public class PropertiesTab : MonoBehaviour
                             t.targetSpeed = x;
                         }
                     }
+                }
+            }
+            else if (property == message)
+            {
+                if (objectRoot.GetComponentInChildren<StoryTrigger1>() != null)
+                {
+                    objectRoot.GetComponentInChildren<StoryTrigger1>().message.rows = property.GetComponentInChildren<InputField>().text.Split('\n');
+                }
+            }
+            else if (property == hasName)
+            {
+                if (objectRoot.GetComponentInChildren<StoryTrigger1>() != null)
+                {
+                    objectRoot.GetComponentInChildren<StoryTrigger1>().message.hasName = property.GetComponentInChildren<Toggle>().isOn;
+                }
+            }
+            else if (property == messageType)
+            {
+                if (objectRoot.GetComponentInChildren<StoryTrigger1>() != null)
+                {
+                    objectRoot.GetComponentInChildren<StoryTrigger1>().message.messageType = (Message.MessageType)property.GetComponentInChildren<TMP_Dropdown>().value;
                 }
             }
         }

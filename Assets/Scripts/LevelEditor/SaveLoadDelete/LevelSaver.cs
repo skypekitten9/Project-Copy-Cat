@@ -87,6 +87,7 @@ public class LevelSaver : MonoBehaviour
         data.connectionsData = new ConnectionData[levelObjectConnector.Connections.Count];
         data2.levelObjectScale = new Vector3[levelObjectConnector.Connections.Count];
         data2.turretData = new TurretData[levelObjectConnector.Connections.Count];
+        data2.storyTriggerData = new StoryTriggerData[levelObjectConnector.Connections.Count];
 
         LevelObject[] levelObjectResources = Resources.LoadAll<LevelObject>("Objects");
 
@@ -120,8 +121,13 @@ public class LevelSaver : MonoBehaviour
                 TurretBehavior t = levelObject.GetComponent<TurretBehavior>();
                 data2.turretData[i] = new TurretData(t);
             }
+            if (levelObject.GetComponent<StoryTrigger1>() != null)
+            {
+                StoryTrigger1 s = levelObject.GetComponent<StoryTrigger1>();
+                data2.storyTriggerData[i] = new StoryTriggerData(s);
+            }
 
-            data.connectionsData[i] = new ConnectionData();
+                data.connectionsData[i] = new ConnectionData();
             data.connectionsData[i].channels = levelObjectConnector.Connections.ElementAt(i).Value.ToArray();
 
             if (levelObject.GetComponent<PowerCable>())

@@ -63,6 +63,15 @@ public class LevelLoader : MonoBehaviour
                 t.targetSpeed = data2.turretData[i].targetSpeed;
             }
             catch (Exception) { }
+            try
+            {
+                StoryTrigger1 s = instance.GetComponent<StoryTrigger1>();
+                s.message.rows = data2.storyTriggerData[i].rows;
+                s.message.hasName = data2.storyTriggerData[i].hasName;
+                s.message.messageType = (Message.MessageType)data2.storyTriggerData[i].messageType;
+            }
+            catch (Exception) { }
+
 
             instance.GetComponentInChildren<LevelObject_Selectable>().LevelObject = levelObject;
 

@@ -42,7 +42,7 @@ TagManager:
   - 
   - 
   - 
-  - ' '
+  - LevelEditorVisible
   - LevelEditorRotation
   - LevelEditorObjects
   - LevelEditorTiles

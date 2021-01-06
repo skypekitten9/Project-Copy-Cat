@@ -70,7 +70,7 @@ public class ChatHandler : MonoBehaviour
                 {
                     chatTimer = resetChatTimer;
 
-                    SendMessageToChat(Username + ": " + chatBox.text, Message.MessageType.playerMessage);
+                    SendMessageToChat(Username + ": " + chatBox.text, Message.MessageType.PlayerMessage);
                     chatBox.text = "";
                     chatBox.DeactivateInputField();
                     chatBox.enabled = false;
@@ -98,31 +98,31 @@ public class ChatHandler : MonoBehaviour
             messageList.Remove(messageList[0]);
         }
         Message newMessage = new Message();
-
-        newMessage.text = text;
+        newMessage.rows = new string[1];
+        newMessage.rows[0] = text;
 
         GameObject newText = Instantiate(textObject, chatPanel.transform);
 
         newMessage.textObject = newText.GetComponent<Text>();
 
-        newMessage.textObject.text = newMessage.text;
+        newMessage.textObject.text = newMessage.rows[0];
         newMessage.textObject.color = MessageTypeColor(messageType);
 
         messageList.Add(newMessage);
 
-        if (newMessage.text == Username + ": /help")
+        if (newMessage.rows[0] == Username + ": /help")
         {
-            SendMessageToChat("P̷͓̲̯̦̱̟͓̦̳͕̪̮̺̌̾̓͛ͅļ̵̫̩̭̲̪̤̳̬̺̘̻̬̈́́̽̽̀̆̒̊͠a̶̡̮̩͕̺̤͓͍̼͍͙̱͍̳͋̐͜͝y̸̬̱͇̯̝͍̑͂̈́̓͒̉̈́̀͒̽̏ę̴̨̦̱͇̘̻̫͔̘̻̗̥̪̈́̿̈́̈́̊̑̅r̵͙̟̘̣̤͗͌̓̓͂̿̈́͗͘̕͝͠͝ ̵̛̥̺͖̖̹̬̹̤̼̮̗̳̽̌̔͌͛̽́̅͜2̷̧͎̲̲̳̪̼̣͖͚̣̫͖̜̭́͑̉̒̒͒̾͗̇͆̽͛̎̀̕: T̸̢̛͉̹̜̜̙̱͈̰̯̅̒̉̔͆̚h̴̫͍̯̰̘̤̫͙͒̌̆̾è̴̙͇̮͖̙̥̀̀́ŗ̶̨͕̪̦͇̩͚̏̅̈́̒̌͑͝ę̴̥͙̩̗̱̘̣̓̿̅̀̒͊̀͠ ̵̣̣̺̯̂į̶̛̪͙̞͈̈́͒̾̓͐s̶̜̞̮̥̝͓̑̿͆̿ͅ ̷̜̍̑̇̍͊n̷͖̑̓͂͛̾̀̀͊̌̕ơ̶̛͎̲̪͔̞͇̟̯̹̗̈́͂ ̷̧̻͔̝͓̀ĥ̷͓̙͉̓̈́̀̑͘̕͠e̴̩̭͆̅̾l̶̛̩͓̻͎̍̽̂́͊p̵̡̘̩̮̀̈́̓̂̐̚͠.̸̨̹̬̦̓̍̎͋̈́͆͠", Message.MessageType.player2);
+            SendMessageToChat("P̷͓̲̯̦̱̟͓̦̳͕̪̮̺̌̾̓͛ͅļ̵̫̩̭̲̪̤̳̬̺̘̻̬̈́́̽̽̀̆̒̊͠a̶̡̮̩͕̺̤͓͍̼͍͙̱͍̳͋̐͜͝y̸̬̱͇̯̝͍̑͂̈́̓͒̉̈́̀͒̽̏ę̴̨̦̱͇̘̻̫͔̘̻̗̥̪̈́̿̈́̈́̊̑̅r̵͙̟̘̣̤͗͌̓̓͂̿̈́͗͘̕͝͠͝ ̵̛̥̺͖̖̹̬̹̤̼̮̗̳̽̌̔͌͛̽́̅͜2̷̧͎̲̲̳̪̼̣͖͚̣̫͖̜̭́͑̉̒̒͒̾͗̇͆̽͛̎̀̕: T̸̢̛͉̹̜̜̙̱͈̰̯̅̒̉̔͆̚h̴̫͍̯̰̘̤̫͙͒̌̆̾è̴̙͇̮͖̙̥̀̀́ŗ̶̨͕̪̦͇̩͚̏̅̈́̒̌͑͝ę̴̥͙̩̗̱̘̣̓̿̅̀̒͊̀͠ ̵̣̣̺̯̂į̶̛̪͙̞͈̈́͒̾̓͐s̶̜̞̮̥̝͓̑̿͆̿ͅ ̷̜̍̑̇̍͊n̷͖̑̓͂͛̾̀̀͊̌̕ơ̶̛͎̲̪͔̞͇̟̯̹̗̈́͂ ̷̧̻͔̝͓̀ĥ̷͓̙͉̓̈́̀̑͘̕͠e̴̩̭͆̅̾l̶̛̩͓̻͎̍̽̂́͊p̵̡̘̩̮̀̈́̓̂̐̚͠.̸̨̹̬̦̓̍̎͋̈́͆͠", Message.MessageType.Player2);
         }
 
-        if (newMessage.text == Username + ": Who are you?")
+        if (newMessage.rows[0] == Username + ": Who are you?")
         {
-            SendMessageToChat("P̵̨̢͉̦̾͐͗̉̅̀͛̈́̀l̶̢̬͖͉̥͒̈́̑̀̅̔̽̒͘͜ͅå̴̡̛̟̫͉̬̰̥͈̟͋͐͛ͅy̴̼̟̯̙̎̄̽̕ȇ̷̹̞̝̋̈͊͊̆̉̇͝͠r̷̙͖̖͐̍͐2̷̧͎̳̫͇͈͍̱͇̌̄͋̅͐̅̌̕͘:̷̨͈̖͉̬̘̯͆͒́͗́̍͠ ̴̡̭̜̑́͜Ḯ̵͓̯͛͐̃͗̎̈́̈́̚͠'̵̢̩̮̝͗͋͑̓͘̕m̵̪̥̭̠̊ ̸̡̤̹̈̈́̉̌͌̋̂͒̄͘ȳ̶̨͈̯̱̮̦͉̝̊̒͛́ő̷͈͚͕͖͊ͅu̷̡̙̗͇͇̲͕̻͛͋̒͋̈̋̄̈̓r̷̜̳̭̩̫̹͔̠̩̀̂̂̅̊̀̽̒͝ ̵̛̲͂̀̈́̀̆͝p̴̮̫̣̒̈̍͛̚͝͝ạ̷͈̼̖̜͛͐̎̽̇̕ͅr̸̡̥͉͍̺̯͐̿͝t̴̼̞̱̼͎̫̞̎̓n̵͙̞̹̻̼̞͌̂̊̔́̅̚̚ͅe̶̮͓͕̘̲̥̪̳̬̿̋̅̇͌̌̑̓͌͝r̸̨̄͘.̸̤̈", Message.MessageType.player2);
+            SendMessageToChat("P̵̨̢͉̦̾͐͗̉̅̀͛̈́̀l̶̢̬͖͉̥͒̈́̑̀̅̔̽̒͘͜ͅå̴̡̛̟̫͉̬̰̥͈̟͋͐͛ͅy̴̼̟̯̙̎̄̽̕ȇ̷̹̞̝̋̈͊͊̆̉̇͝͠r̷̙͖̖͐̍͐2̷̧͎̳̫͇͈͍̱͇̌̄͋̅͐̅̌̕͘:̷̨͈̖͉̬̘̯͆͒́͗́̍͠ ̴̡̭̜̑́͜Ḯ̵͓̯͛͐̃͗̎̈́̈́̚͠'̵̢̩̮̝͗͋͑̓͘̕m̵̪̥̭̠̊ ̸̡̤̹̈̈́̉̌͌̋̂͒̄͘ȳ̶̨͈̯̱̮̦͉̝̊̒͛́ő̷͈͚͕͖͊ͅu̷̡̙̗͇͇̲͕̻͛͋̒͋̈̋̄̈̓r̷̜̳̭̩̫̹͔̠̩̀̂̂̅̊̀̽̒͝ ̵̛̲͂̀̈́̀̆͝p̴̮̫̣̒̈̍͛̚͝͝ạ̷͈̼̖̜͛͐̎̽̇̕ͅr̸̡̥͉͍̺̯͐̿͝t̴̼̞̱̼͎̫̞̎̓n̵͙̞̹̻̼̞͌̂̊̔́̅̚̚ͅe̶̮͓͕̘̲̥̪̳̬̿̋̅̇͌̌̑̓͌͝r̸̨̄͘.̸̤̈", Message.MessageType.Player2);
         }
 
-        if (newMessage.text == Username + ": Where are you?")
+        if (newMessage.rows[0] == Username + ": Where are you?")
         {
-            SendMessageToChat("P̵̰̝̓̃̊̆́̈́̄l̴̟͔̈́̃ą̷̼̦̰̰̺̹͕̬̾ẙ̴̳͙͍̰̹̙̜̚ẻ̶̛̯̰̩͖̪̄̓̋̄͊̒͂͠r̵̛͕̩̙̲̓̓͆͒̚2̶̡̢̛͈̠͉͔̺̙͖̜̑̔̕͘̕͝:̷̖̹͇͎̺̿̃̍̏̚ͅ ̵̛̞̹̹̼͍͈̜̊́̊̐̀̉͘͜Í̵͕̼̹'̴̛̠͚̪͙̭͎̯̅̐̊͆̍̽̋̈́m̴̗̱̺͕͈͚͚͌̆̋̉ͅ ̸̨̧͉̦̱̗͎͇͔͌̋ẅ̶̢̠́ͅa̷̫̼͊t̵̛͉̺͖̥̟̲́̑͆̾̓͆͐͝͠c̷̩̭̮̬͚̳͆͊͛̄̄̍̋̋́͜ͅh̵̢̥̱̫̪̎̐̅́į̴̤͔̩̬͖̜̲͈̦̈́̄̏͒͘͠n̸̨̥̦̆ͅg̶̞̮͍͖̹̈͋̊̓̄́ ̷̧̬̩̺̥̥͕̀̈́̇͊̌͌̆͑͋ͅͅy̶̡͓̞̳̋o̶̖̟̺̲̱̥̼̺̰͖̓̇͗̃ü̴͕̥̺̑̂̊͛́̍.̵̧̛͖̣̗͓̝̪͑̿̈", Message.MessageType.player2);
+            SendMessageToChat("P̵̰̝̓̃̊̆́̈́̄l̴̟͔̈́̃ą̷̼̦̰̰̺̹͕̬̾ẙ̴̳͙͍̰̹̙̜̚ẻ̶̛̯̰̩͖̪̄̓̋̄͊̒͂͠r̵̛͕̩̙̲̓̓͆͒̚2̶̡̢̛͈̠͉͔̺̙͖̜̑̔̕͘̕͝:̷̖̹͇͎̺̿̃̍̏̚ͅ ̵̛̞̹̹̼͍͈̜̊́̊̐̀̉͘͜Í̵͕̼̹'̴̛̠͚̪͙̭͎̯̅̐̊͆̍̽̋̈́m̴̗̱̺͕͈͚͚͌̆̋̉ͅ ̸̨̧͉̦̱̗͎͇͔͌̋ẅ̶̢̠́ͅa̷̫̼͊t̵̛͉̺͖̥̟̲́̑͆̾̓͆͐͝͠c̷̩̭̮̬͚̳͆͊͛̄̄̍̋̋́͜ͅh̵̢̥̱̫̪̎̐̅́į̴̤͔̩̬͖̜̲͈̦̈́̄̏͒͘͠n̸̨̥̦̆ͅg̶̞̮͍͖̹̈͋̊̓̄́ ̷̧̬̩̺̥̥͕̀̈́̇͊̌͌̆͑͋ͅͅy̶̡͓̞̳̋o̶̖̟̺̲̱̥̼̺̰͖̓̇͗̃ü̴͕̥̺̑̂̊͛́̍.̵̧̛͖̣̗͓̝̪͑̿̈", Message.MessageType.Player2);
         }
     }
 
@@ -132,13 +132,13 @@ public class ChatHandler : MonoBehaviour
 
         switch (messageType)
         {
-            case Message.MessageType.playerMessage:
+            case Message.MessageType.PlayerMessage:
                 color = playerMessageColor;
                 break;
-            case Message.MessageType.system:
+            case Message.MessageType.System:
                 color = infoColor;
                 break;
-            case Message.MessageType.player2:
+            case Message.MessageType.Player2:
                 color = cursedColor;
                 break;
         }
@@ -151,17 +151,16 @@ public class ChatHandler : MonoBehaviour
 [System.Serializable]
 public class Message
 {
-    public string text;
-    public string[] additionalText;
+    public string[] rows;
     public bool hasName;
-    public Text textObject;
     public MessageType messageType;
+    [HideInInspector] public Text textObject;
 
     public enum MessageType
     {
-        playerMessage = 1,
-        system = 2,
-        player2
+        PlayerMessage = 0,
+        System = 1,
+        Player2 = 2,
     }
 }
 
