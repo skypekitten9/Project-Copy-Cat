@@ -19,12 +19,15 @@ public class ObjectReset : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (transform.position.y <= -37)
+        {
+            ResetToOriginalPosition();
+        }
     }
 
     public void ResetToOriginalPosition()
     {
-        gameObject.transform.position = originalPos;
+        gameObject.transform.position = originalPos + new Vector3(0, 1, 0);
         body.velocity = new Vector3(0, 0, 0);
     }
 }
