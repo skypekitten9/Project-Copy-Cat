@@ -23097,7 +23097,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 252519049}
   m_HandleRect: {fileID: 252519048}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -47334,12 +47334,14 @@ MonoBehaviour:
   cameraTransform: {fileID: 0}
   pickUpTransform: {fileID: 0}
   lineRenderer: {fileID: 0}
+  interactedBox: {fileID: 0}
   interactionMask:
     serializedVersion: 2
     m_Bits: 268492595
   pickupMask:
     serializedVersion: 2
     m_Bits: 268500791
+  isHolding: 0
   isLookingThroughNewCamera: 0
 --- !u!54 &1517171172
 Rigidbody:
