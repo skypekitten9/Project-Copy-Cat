@@ -24,6 +24,7 @@ public class PickUp : MonoBehaviour
     public bool hasSavedVelocity = false;
 
     float currentSpeed = 0f;
+    float topSpeed = 10f;
     float currentDist;
     float minSpeed = 0f, maxSpeed = 300f;
     float maxDistance = 2f;
@@ -126,21 +127,15 @@ public class PickUp : MonoBehaviour
                 currentDist = Vector3.Distance(tempParent.transform.position, body.position);
                 currentSpeed = Mathf.SmoothStep(minSpeed, maxSpeed, currentDist * maxDistance);
                 currentSpeed *= Time.fixedDeltaTime;
-                currentSpeed *= currentDist * maxDistance;
+                currentSpeed *= currentDist * maxDistance * 3;
                 direction = tempParent.transform.position - body.position;
                 body.velocity = direction.normalized * currentSpeed;
-
-                //lookRot = Quaternion.LookRotation(tempParent.transform.position - body.position);
-                //lookRot = Quaternion.Slerp(tempParent.transform.rotation, lookRot, rotationSpeed * Time.deltaTime);
-                //body.MoveRotation(lookRot);
-
                 break;
         }
     }
 
     public void SetToHeld()
     {
-        transform.SetParent(tempParent.transform);
         holdState = HoldState.HELD;
         transform.rotation = startRotation;
         body.detectCollisions = true;
