@@ -161,7 +161,7 @@ public class SceneGenerator : MonoBehaviour
         RenderSettings.subtractiveShadowColor = new Color(100, 100, 100);
         RenderSettings.skybox = null;
         RenderSettings.ambientMode = UnityEngine.Rendering.AmbientMode.Flat;
-        RenderSettings.ambientLight = new Color(188, 188, 188);
+        RenderSettings.ambientLight = new Color(0, 0, 0);
 #endif
     }
 }
