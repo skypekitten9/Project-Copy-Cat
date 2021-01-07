@@ -50,6 +50,19 @@ public class CameraOrientation : MonoBehaviour
         {
             Zoom();
         }
+
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            if (LevelEditor.Instance.selectedLevelObject != null)
+            {
+                transform.position = LevelEditor.Instance.selectedLevelObject.transform.position;
+            }
+            else if (LevelEditor.Instance.selectedTiles.Count > 0)
+            {
+                transform.position = LevelEditor.Instance.selectedTiles[0].transform.position;
+            }
+        }
     }
 
 
