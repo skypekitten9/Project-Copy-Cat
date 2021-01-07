@@ -429,7 +429,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 90
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -756,12 +756,14 @@ MonoBehaviour:
   cameraTransform: {fileID: 0}
   pickUpTransform: {fileID: 0}
   lineRenderer: {fileID: 0}
+  interactedBox: {fileID: 0}
   interactionMask:
     serializedVersion: 2
     m_Bits: 268492595
   pickupMask:
     serializedVersion: 2
     m_Bits: 268500791
+  isHolding: 0
   isLookingThroughNewCamera: 0
 --- !u!111 &5295932007794218267
 Animation:
