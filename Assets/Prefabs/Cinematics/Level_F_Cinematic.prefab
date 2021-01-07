@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4858466176407935586}
   m_Layer: 23
-  m_Name: CinematicPath
+  m_Name: Level_F_Cinematic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -91,7 +91,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 100
+  field of view: 90
   orthographic: 0
   orthographic size: 5
   m_Depth: 99

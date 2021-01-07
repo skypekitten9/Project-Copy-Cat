@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class Follower : MonoBehaviour
 {
+    public static bool Following { get; private set; } = false;
+
     private PathCreator path;
     private float speed = 7.0f;
 
@@ -11,6 +13,7 @@ public class Follower : MonoBehaviour
 
     private void Awake()
     {
+        Following = true;
         path = transform.parent.GetComponentInChildren<PathCreator>();
     }
 
@@ -18,6 +21,7 @@ public class Follower : MonoBehaviour
     {
         if (t >= path.path.length)
         {
+            Following = false;
             Destroy(this.gameObject);
         }
 

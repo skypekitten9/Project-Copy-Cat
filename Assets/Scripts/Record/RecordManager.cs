@@ -62,6 +62,9 @@ public class RecordManager : MonoBehaviour
 
     private void Update()
     {
+        if (Follower.Following)
+            return;
+
         if (alive && !GameObject.Find("Player(Clone)").GetComponent<PlayerInteraction>().isLookingThroughNewCamera)
         {
             if (Input.GetKeyDown(KeyCode.Q))

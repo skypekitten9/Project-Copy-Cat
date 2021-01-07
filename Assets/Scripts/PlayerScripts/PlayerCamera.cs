@@ -17,6 +17,9 @@ public class PlayerCamera : MonoBehaviour
 
     void Update()
     {
+        if (Follower.Following)
+            return;
+
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
         MouseY += Input.GetAxis("Mouse Y") * mouseSensitivity;
 

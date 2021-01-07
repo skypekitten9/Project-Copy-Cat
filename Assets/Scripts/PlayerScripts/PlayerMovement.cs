@@ -40,6 +40,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (Follower.Following)
+            return;
+
         if (noclip == false)
         {
             if (knockbackTimer <= 0 && !ChatHandler.Instance.chatBox.isFocused && !gameObject.GetComponent<PlayerInteraction>().isLookingThroughNewCamera)
@@ -55,6 +58,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        if (Follower.Following)
+            return;
+
 #if DEVELOPMENT_BUILD || UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.N))
             ChangeControls(!noclip);
