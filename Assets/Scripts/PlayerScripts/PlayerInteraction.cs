@@ -42,19 +42,11 @@ public class PlayerInteraction : MonoBehaviour
         pickUpTransform = cameraTransform.Find("PickupPosition");
         ray = new Ray(cameraTransform.position, cameraTransform.forward);
         pickupRay = new Ray(cameraTransform.position, cameraTransform.forward);
-        rayRange = 1.5f;
+        rayRange = 2f;
         pickupRayRange = 2.5f;
 
         interactTimer = 0.25f;
         resetInteractTimer = interactTimer;
-
-        //lineRenderer = gameObject.GetComponent<LineRenderer>();
-        //lineRenderer.useWorldSpace = true;
-        //lineRenderer.SetPosition(0, cameraTransform.transform.position);
-        //lineRenderer.startWidth = 0.2f;
-        //lineRenderer.endWidth = 0.2f;
-        //lineRenderer.enabled = true;
-        //lineRenderer.material.SetColor("Color_D3EC0E17", Color.red);
     }
 
     void Update()
@@ -74,10 +66,6 @@ public class PlayerInteraction : MonoBehaviour
             endPos = pickupHit.point;
         }
 
-        //lineRenderer.SetPosition(0, cameraTransform.transform.position);
-        //lineRenderer.SetPosition(1, endPos);
-
-
         if (Input.GetKeyDown(KeyCode.E))
         {
             Interact();
@@ -92,7 +80,7 @@ public class PlayerInteraction : MonoBehaviour
         }
 
 
-        if (Input.GetKeyDown(KeyCode.Mouse0) && isHolding && !hit.collider.gameObject.GetComponent<PickUp>().isColliding)
+        if (Input.GetKeyDown(KeyCode.Mouse0) && hit.collider.gameObject.GetComponent<PickUp>().IsHeld())
         {
             SFXManager.Instance.PlaySound(audio, SFXManager.Sound.throwObject, 0.8f);
             hit.collider.gameObject.GetComponent<PickUp>().Throw();
@@ -182,11 +170,6 @@ public class PlayerInteraction : MonoBehaviour
                                 interactedBox = hit.collider.gameObject;
                                 isHolding = true;
                             }
-                        }
-
-                        if (GameManager.Instance.GetComponent<RecordManager>().recordPhase == RecordPhase.Recording)
-                        {
-                            //GameManager.Instance.GetComponent<RecordManager>().AddPickupNode(hit.collider.gameObject);
                         }
                     }
                     else
