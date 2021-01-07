@@ -10,10 +10,10 @@ Material:
   m_Name: TurretLaser
   m_Shader: {fileID: -6465566751694194690, guid: 43d080ee5eb0ef44897304b072f5ffd0, type: 3}
   m_ShaderKeywords: _COLORADDSUBDIFF_ON
-  m_LightmapFlags: 4
+  m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 3000
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
@@ -71,7 +71,7 @@ Material:
     - Vector1_78D12C9E: 100
     - Vector1_7F31A8C2: 0.85
     - Vector1_8BF35693: 20
-    - Vector1_A8E6A815: 0.35
+    - Vector1_A8E6A815: 0.6
     - Vector1_E6DA4024: 10
     - _AlphaClip: 0
     - _Blend: 0
@@ -112,7 +112,7 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - Color_D3EC0E17: {r: 0, g: 17.54223, b: 0.7347544, a: 1}
+    - Color_D3EC0E17: {r: 1.694743, g: 0, b: 0.016424159, a: 1}
     - Vector2_A0F5FBB9: {r: -20, g: 0, b: 0, a: 0}
     - _BaseColor: {r: 0.030526895, g: 0.13119942, b: 0.9245283, a: 1}
     - _BaseColorAddSubDiff: {r: 1, g: 0, b: 0, a: 0}

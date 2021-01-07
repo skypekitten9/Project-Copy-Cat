@@ -52,8 +52,8 @@ public class TurretBehavior : MonoBehaviour
         lineRenderer = gameObject.GetComponent<LineRenderer>();
         lineRenderer.useWorldSpace = true;
         lineRenderer.SetPosition(0, eye.transform.position);
-        lineRenderer.startWidth = 0.02f;
-        lineRenderer.endWidth = 0.02f;
+        lineRenderer.startWidth = 0.04f;
+        lineRenderer.endWidth = 0.04f;
         lineRenderer.enabled = true;
         particleSysEye = particleEye.GetComponent<ParticleSystem>();
         particleSysHit = particleHit.GetComponent<ParticleSystem>();
@@ -127,8 +127,8 @@ public class TurretBehavior : MonoBehaviour
 
     void HandleLaserEffects()
     {
-        lineRenderer.startWidth = 0.02f + charge / 10;
-        lineRenderer.endWidth = 0.02f + charge / 10;
+        lineRenderer.startWidth = 0.04f + charge / 10;
+        lineRenderer.endWidth = 0.04f + charge / 10;
         particleSysHit.startSize = particleHitSize + charge / 30;
         particleSysHit.startSpeed = particleHitSpeed + charge / 2;
         if (charge > 0)
