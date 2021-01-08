@@ -98,10 +98,15 @@ public class PlayerInteraction : MonoBehaviour
 
                 if (hit.collider.tag == "Interactable")
                 {
+                    if (GameManager.Instance.GetComponent<RecordManager>().recordPhase == RecordPhase.Recording && gameObject.tag == "Player")
+                    {
+                        return;
+                    }
+
                     if (hit.collider.gameObject.GetComponent<ButtonScript>() != null)
                     {
                         hit.collider.gameObject.GetComponent<ButtonScript>().SignalChannel();
-                        
+
                         if (hit.collider.gameObject.GetComponent<ButtonScript>().boundBox != null)
                         {
                             hit.collider.gameObject.GetComponent<ButtonScript>().ResetBoundBox();
@@ -143,6 +148,13 @@ public class PlayerInteraction : MonoBehaviour
 
     public void PickUp()
     {
+        if (isHolding)
+        {
+            interactedBox.GetComponent<PickUp>().SetToNotHeld();
+            isHolding = false;
+            interactedBox = null;
+            return;
+        }
         if (Physics.Raycast(ray, out hit, interactionMask))
         {
             if (hit.distance < rayRange)
@@ -176,11 +188,6 @@ public class PlayerInteraction : MonoBehaviour
                             }
                         }
                     }
-                    else
-                    {
-                        hit.collider.gameObject.GetComponent<PickUp>().SetToNotHeld();
-                        isHolding = false;
-                    }
                 }
                 else
                 {
@@ -212,7 +219,7 @@ public class PlayerInteraction : MonoBehaviour
         else
         {
             antiPropSurfing = false;
-        }      
+        }
     }
 
 }
