@@ -9,6 +9,8 @@ public class PickUp : MonoBehaviour
     float distance;
     float collisionTimer;
     float collisionTimerReset;
+    float throwDelayTimer = 0.25f;
+    float resetThrowDelayTimer;
 
     Vector3 objectPosition;
     Vector3 lastRealVelocity;
@@ -50,11 +52,13 @@ public class PickUp : MonoBehaviour
         startRotation = transform.rotation;
         collisionTimer = 0.5f;
         collisionTimerReset = collisionTimer;
+        resetThrowDelayTimer = throwDelayTimer;
     }
 
     // Update is called once per frame
     void Update()
     {
+        body.velocity = Vector3.ClampMagnitude(body.velocity, 25);
         if (GameManager.Instance == null)
         {
             GetComponent<Rigidbody>().isKinematic = true;
@@ -109,8 +113,10 @@ public class PickUp : MonoBehaviour
                 {
                     SetToNotHeld();
                 }
-                break;
 
+                throwDelayTimer -= Time.deltaTime;
+
+                break;
         }
     }
 
@@ -136,8 +142,10 @@ public class PickUp : MonoBehaviour
 
     public void SetToHeld()
     {
+        currentSpeed = 0;
+        currentDist = 0;
+        body.velocity = new Vector3(0, 0, 0);
         holdState = HoldState.HELD;
-        transform.rotation = startRotation;
         body.detectCollisions = true;
         body.constraints = RigidbodyConstraints.FreezeRotation;
         body.useGravity = false;
@@ -150,18 +158,27 @@ public class PickUp : MonoBehaviour
 
     public void SetToNotHeld()
     {
+        currentSpeed = 0;
+        currentDist = 0;
+        body.velocity = new Vector3(0, 0, 0);
         transform.SetParent(null);
         isHolding = false;
         holdState = HoldState.NOTHELD;
         body.constraints = RigidbodyConstraints.None;
         body.useGravity = true;
         currentDist = 0;
+        Debug.LogWarning(body.velocity);
     }
 
     public void Throw()
     {
-        body.AddForce(tempParent.transform.forward * throwForce);
-        SetToNotHeld();
+        if (throwDelayTimer <= 0)
+        {
+            body.velocity = new Vector3(0, 0, 0);
+            body.AddForce(tempParent.transform.forward * throwForce);
+            throwDelayTimer = resetThrowDelayTimer;
+            SetToNotHeld();
+        }
     }
 
     public bool IsHeld()

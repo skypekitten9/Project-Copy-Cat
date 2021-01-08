@@ -151,8 +151,6 @@ public class PlayerInteraction : MonoBehaviour
                 {
                     if (!hit.collider.gameObject.GetComponent<PickUp>().IsHeld())
                     {
-                        SFXManager.Instance.PlaySound(audio, SFXManager.Sound.grabObject, 0.8f);
-
                         RecordPhase recordPhase = GameManager.Instance.GetComponent<RecordManager>().recordPhase;
                         if (recordPhase != RecordPhase.Rewinding)
                         {
@@ -160,6 +158,7 @@ public class PlayerInteraction : MonoBehaviour
                             hit.collider.gameObject.GetComponent<PickUp>().SetToHeld();
                             interactedBox = hit.collider.gameObject;
                             isHolding = true;
+                            SFXManager.Instance.PlaySound(audio, SFXManager.Sound.grabObject, 0.8f);
                         }
                         else if (GameManager.Instance.GetComponent<RecordManager>().recordPhase == RecordPhase.PlayingBack)
                         {
@@ -169,6 +168,7 @@ public class PlayerInteraction : MonoBehaviour
                                 hit.collider.gameObject.GetComponent<PickUp>().SetToHeld();
                                 interactedBox = hit.collider.gameObject;
                                 isHolding = true;
+                                SFXManager.Instance.PlaySound(audio, SFXManager.Sound.grabObject, 0.8f);
                             }
                         }
                     }
