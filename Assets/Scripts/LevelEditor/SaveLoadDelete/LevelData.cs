@@ -15,6 +15,7 @@ public class AdditionalLevelData
     public Vector3[] levelObjectScale;
     public TurretData[] turretData;
     public StoryTriggerData[] storyTriggerData;
+    public string[] wallScribbleText;
 }
 
 [System.Serializable]

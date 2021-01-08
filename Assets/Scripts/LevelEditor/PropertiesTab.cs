@@ -24,6 +24,7 @@ public class PropertiesTab : MonoBehaviour
     [SerializeField] private GameObject hasName;
     [SerializeField] private GameObject messageType;
 
+    [SerializeField] private GameObject wallScribbleText;
 
 
     private void Start()
@@ -42,6 +43,8 @@ public class PropertiesTab : MonoBehaviour
         AddInputFieldEvent(targetSpeed);
 
         AddStoryTriggerEvents();
+
+        AddInputFieldEvent(wallScribbleText);
 
 
         UpdateProperties(null);
@@ -89,6 +92,12 @@ public class PropertiesTab : MonoBehaviour
                 messageType.transform.GetComponentInChildren<TMP_Dropdown>().value = (int)s.message.messageType;
                 messageType.transform.GetComponentInChildren<TMP_Dropdown>().interactable = true;
             }
+
+            if (objectRoot.GetChild(0).GetComponent<TMPro.TMP_Text>() != null)
+            {
+                TMPro.TMP_Text t = objectRoot.GetChild(0).GetComponent<TMPro.TMP_Text>();
+                SetProperty(wallScribbleText, t.text);
+            }
         }
         else
         {
@@ -108,6 +117,8 @@ public class PropertiesTab : MonoBehaviour
             SetPropertyNull(message);
             hasName.GetComponentInChildren<Toggle>().interactable = false;
             messageType.GetComponentInChildren<TMP_Dropdown>().interactable = false;
+
+            SetPropertyNull(wallScribbleText);
         }
     }
 
@@ -237,6 +248,13 @@ public class PropertiesTab : MonoBehaviour
                 if (objectRoot.GetComponentInChildren<StoryTrigger1>() != null)
                 {
                     objectRoot.GetComponentInChildren<StoryTrigger1>().message.messageType = (Message.MessageType)property.GetComponentInChildren<TMP_Dropdown>().value;
+                }
+            }
+            else if (property == wallScribbleText)
+            {
+                if (objectRoot.GetChild(0).GetComponent<TMPro.TMP_Text>() != null)
+                {
+                    objectRoot.GetChild(0).GetComponent<TMPro.TMP_Text>().text = property.GetComponentInChildren<InputField>().text;
                 }
             }
         }

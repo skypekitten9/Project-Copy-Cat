@@ -94,6 +94,11 @@ public class SceneGenerator : MonoBehaviour
                     s.message.hasName = data2.storyTriggerData[i].hasName;
                     s.message.messageType = (Message.MessageType)data2.storyTriggerData[i].messageType;
                 }
+                if (instance.transform.GetChild(0).GetComponent<TMPro.TMP_Text>() != null)
+                {
+                    TMPro.TMP_Text t = instance.transform.GetChild(0).GetComponent<TMPro.TMP_Text>();
+                    t.text = data2.wallScribbleText[i];
+                }
             }
 
             levelObjects.Add(instance);
