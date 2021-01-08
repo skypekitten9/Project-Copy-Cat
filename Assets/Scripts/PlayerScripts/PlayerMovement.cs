@@ -107,7 +107,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void MoveNoclip()
     {
-        Debug.Log("move noclip");
+        //Debug.Log("move noclip");
         float x = Input.GetAxisRaw("Horizontal");
         float z = Input.GetAxisRaw("Vertical");
 
