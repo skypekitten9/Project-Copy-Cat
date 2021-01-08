@@ -152,6 +152,10 @@ public class PlayerInteraction : MonoBehaviour
                     if (!hit.collider.gameObject.GetComponent<PickUp>().IsHeld())
                     {
                         RecordPhase recordPhase = GameManager.Instance.GetComponent<RecordManager>().recordPhase;
+                        if (GameManager.Instance.GetComponent<RecordManager>().recordPhase == RecordPhase.Recording && gameObject.tag == "Player")
+                        {
+                            return;
+                        }
                         if (recordPhase != RecordPhase.Rewinding)
                         {
                             hit.collider.gameObject.GetComponent<PickUp>().tempParent = pickUpTransform.gameObject;
