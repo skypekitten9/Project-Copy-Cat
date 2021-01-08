@@ -71,7 +71,12 @@ public class LevelLoader : MonoBehaviour
                 s.message.messageType = (Message.MessageType)data2.storyTriggerData[i].messageType;
             }
             catch (Exception) { }
-
+            try
+            {
+                TMPro.TMP_Text t = instance.transform.GetChild(0).GetComponent<TMPro.TMP_Text>();
+                t.text = data2.wallScribbleText[i];
+            }
+            catch (Exception) { }
 
             instance.GetComponentInChildren<LevelObject_Selectable>().LevelObject = levelObject;
 

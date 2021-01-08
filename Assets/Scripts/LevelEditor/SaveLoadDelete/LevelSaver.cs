@@ -5,6 +5,8 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using TMPro;
 
 public class LevelSaver : MonoBehaviour
 {
@@ -88,6 +90,7 @@ public class LevelSaver : MonoBehaviour
         data2.levelObjectScale = new Vector3[levelObjectConnector.Connections.Count];
         data2.turretData = new TurretData[levelObjectConnector.Connections.Count];
         data2.storyTriggerData = new StoryTriggerData[levelObjectConnector.Connections.Count];
+        data2.wallScribbleText = new string[levelObjectConnector.Connections.Count];
 
         LevelObject[] levelObjectResources = Resources.LoadAll<LevelObject>("Objects");
 
@@ -126,8 +129,12 @@ public class LevelSaver : MonoBehaviour
                 StoryTrigger1 s = levelObject.GetComponent<StoryTrigger1>();
                 data2.storyTriggerData[i] = new StoryTriggerData(s);
             }
+            if (levelObject.transform.GetChild(0).GetComponent<TMP_Text>() != null)
+            {
+                data2.wallScribbleText[i] = levelObject.transform.GetChild(0).GetComponent<TMP_Text>().text;
+            }
 
-                data.connectionsData[i] = new ConnectionData();
+            data.connectionsData[i] = new ConnectionData();
             data.connectionsData[i].channels = levelObjectConnector.Connections.ElementAt(i).Value.ToArray();
 
             if (levelObject.GetComponent<PowerCable>())
