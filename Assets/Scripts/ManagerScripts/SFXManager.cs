@@ -22,7 +22,7 @@ public class SFXManager : MonoBehaviour
         turretPowerDown,
         rewindSound
     }
-    
+
     private static SFXManager instance = null;
     public static SFXManager Instance { get { return instance; } }
 
@@ -34,7 +34,7 @@ public class SFXManager : MonoBehaviour
     int stepNumber = 0;
 
     AudioSource audioSource;
-    
+
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -51,12 +51,15 @@ public class SFXManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void PlaySound(AudioSource source, Sound sound, float volume)
     {
-        source.PlayOneShot(GetSound(sound), volume);
+        if (!PauseMenu.GameIsPaused)
+        {
+            source.PlayOneShot(GetSound(sound), volume);
+        }
     }
 
     //Väldigt ful lösning, men det funkar. Se random delen ifall den ska implementeras istället.
@@ -77,8 +80,8 @@ public class SFXManager : MonoBehaviour
 
     private AudioClip GetSound(Sound sound)
     {
-        foreach(SoundAudioClip soundAudioClip in soundAudioClips)
-            if(soundAudioClip.sound == sound)
+        foreach (SoundAudioClip soundAudioClip in soundAudioClips)
+            if (soundAudioClip.sound == sound)
             {
                 return soundAudioClip.audioClip;
             }
