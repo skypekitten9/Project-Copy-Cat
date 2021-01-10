@@ -65,16 +65,16 @@ public class Follower : MonoBehaviour
     }
 
 
-    float startStopDist = 7.0f;
+    float startStopDist = 10.0f;
     private float GetSpeed()
     {
         if (t < startStopDist)
         {
-            return t / startStopDist * (speed - 1) + 1;
+            return Mathf.Abs(Mathf.Pow(t / startStopDist, 3)) * (speed - 1) + 1;
         }
         else if (t >= path.path.length - startStopDist)
         {
-            return (path.path.length - t) / startStopDist * (speed - 1) + 1;
+            return Mathf.Abs(Mathf.Pow((path.path.length - t) / startStopDist, 3)) * (speed - 1) + 1;
         }
         else
         {
