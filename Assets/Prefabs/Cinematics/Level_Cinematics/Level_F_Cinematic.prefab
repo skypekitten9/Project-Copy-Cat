@@ -152,6 +152,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f35fa9ac1ecebc3488c844101f0fc37c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 7
+  reversedPath: 0
+  reversedCamera: 1
 --- !u!114 &4858466177148839123
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -6,7 +6,9 @@ public class Follower : MonoBehaviour
     public static bool Following { get; private set; } = false;
 
     private PathCreator path;
-    private float speed = 7.0f;
+    [SerializeField] private float speed = 7.0f;
+    [SerializeField] private bool reversedPath = false;
+    [SerializeField] private bool reversedCamera = false;
 
     private float t = 0;
 
@@ -15,20 +17,41 @@ public class Follower : MonoBehaviour
     {
         Following = true;
         path = transform.parent.GetComponentInChildren<PathCreator>();
+
+        if (reversedPath)
+        {
+            t = path.path.length;
+        }
     }
 
     private void Update()
     {
-        if (t >= path.path.length)
+        if ((!reversedPath && t >= path.path.length) || (reversedPath && t <= 0))
         {
             Following = false;
             Destroy(this.gameObject);
         }
 
-        t += GetSpeed() * Time.deltaTime;
+        if (reversedPath)
+        {
+            t -= GetSpeed() * Time.deltaTime;
+        }
+        else
+        {
+            t += GetSpeed() * Time.deltaTime;
+        }
+
         transform.position = path.path.GetPointAtDistance(t, EndOfPathInstruction.Stop);
         Vector3 v = path.path.GetRotationAtDistance(t, EndOfPathInstruction.Stop).eulerAngles;
-        transform.rotation = Quaternion.Euler(0, v.y, 0);
+
+        if (!reversedCamera)
+        {
+            transform.rotation = Quaternion.Euler(0, v.y, 0);
+        }
+        else
+        {
+            transform.rotation = Quaternion.Euler(0, v.y + 180, 0);
+        }
     }
 
 
