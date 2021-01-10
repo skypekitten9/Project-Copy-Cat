@@ -75,3 +75,6 @@ crashlytics-build.properties
 
 # Project Settings
 !/ProjectSettings
+
+# Lighting Settings
+Assets/Settings/New Lighting Settings.lighting

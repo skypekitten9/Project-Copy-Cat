@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class Follower : MonoBehaviour
 {
+    public static bool showCinematic = true;
+
     public static bool Following { get; private set; } = false;
 
     private PathCreator path;
@@ -15,6 +17,14 @@ public class Follower : MonoBehaviour
 
     private void Awake()
     {
+        if (!showCinematic)
+        {
+            Following = false;
+            Destroy(transform.parent.gameObject);
+            return;
+        }
+        showCinematic = false;
+
         Following = true;
         path = transform.parent.GetComponentInChildren<PathCreator>();
 
@@ -29,7 +39,7 @@ public class Follower : MonoBehaviour
         if ((!reversedPath && t >= path.path.length) || (reversedPath && t <= 0))
         {
             Following = false;
-            Destroy(this.gameObject);
+            Destroy(transform.parent.gameObject);
         }
 
         if (reversedPath)

@@ -6,8 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    [SerializeField]private GameObject startMenuUI;
-    [SerializeField]private GameObject preferncesUI;
+    [SerializeField] private GameObject startMenuUI;
+    [SerializeField] private GameObject preferncesUI;
     [SerializeField] private GameObject levelSelectUI;
     [SerializeField] private GameObject loadingUI;
     [SerializeField] private GameObject creditsUI;
@@ -33,16 +33,18 @@ public class MainMenu : MonoBehaviour
         creditsReturnButton.SetActive(false);
         currentScene = SceneManager.GetActiveScene();
         Cursor.lockState = CursorLockMode.None;
+
+        Follower.showCinematic = true;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        
+
     }
     public void GoToSettings()
     {
-        if(AtPrefernces == false)
+        if (AtPrefernces == false)
         {
             startMenuUI.SetActive(false);
             startMenuButtons.SetActive(false);
