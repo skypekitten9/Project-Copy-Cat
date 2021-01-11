@@ -104,7 +104,7 @@ public class PickUp : MonoBehaviour
 
             case HoldState.HELD:
 
-                if (currentDist > maxDistance * 0.75f)
+                if (currentDist > maxDistance * 1.5f)
                 {
                     SetToNotHeld();
                 }
@@ -172,7 +172,7 @@ public class PickUp : MonoBehaviour
 
     public void Throw()
     {
-        if (throwDelayTimer <= 0)
+        if (throwDelayTimer <= 0 && currentDist <= maxDistance * 0.5f)
         {
             body.velocity = new Vector3(0, 0, 0);
             body.AddForce(tempParent.transform.forward * throwForce);
