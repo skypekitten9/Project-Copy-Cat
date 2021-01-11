@@ -104,7 +104,7 @@ public class PickUp : MonoBehaviour
 
             case HoldState.HELD:
 
-                if (currentDist > maxDistance * 0.5f)
+                if (currentDist > maxDistance * 0.75f)
                 {
                     SetToNotHeld();
                 }

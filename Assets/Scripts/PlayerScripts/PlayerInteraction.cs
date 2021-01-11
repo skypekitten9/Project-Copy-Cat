@@ -159,7 +159,7 @@ public class PlayerInteraction : MonoBehaviour
         {
             if (hit.distance < rayRange)
             {
-                if (hit.collider.tag == "Pickupable" && !antiPropSurfing && gameObject.transform.position.y - rayRange < hit.collider.gameObject.transform.position.y)
+                if (hit.collider.tag == "Pickupable")
                 {
                     if (!hit.collider.gameObject.GetComponent<PickUp>().IsHeld())
                     {
@@ -191,12 +191,14 @@ public class PlayerInteraction : MonoBehaviour
                 }
                 else
                 {
+                    isHolding = false;
                     return;
                 }
             }
         }
         else
         {
+            isHolding = false;
             return;
         }
     }
