@@ -19,6 +19,8 @@ public class RecordTransformHierarchy : MonoBehaviour
 
     private RecordManager recordManager;
 
+    int counter = 0;
+
 
     public void StartRecording()
     {
@@ -37,10 +39,14 @@ public class RecordTransformHierarchy : MonoBehaviour
             parent = transform.parent;
             transform.parent = null;
             transform.parent = parent;
+            counter = ++counter % 2;
 
             /*Take snapshot*/
-            Transform[] transforms = GetComponentsInChildren<Transform>();
-            snapshots.Add(new RecordData(Array.ConvertAll(transforms, t => t.position), Array.ConvertAll(transforms, t => t.rotation)));
+            if (counter == 0)
+            {
+                Transform[] transforms = GetComponentsInChildren<Transform>();
+                snapshots.Add(new RecordData(Array.ConvertAll(transforms, t => t.position), Array.ConvertAll(transforms, t => t.rotation)));
+            }
         }
     }
 
@@ -66,7 +72,7 @@ public class RecordTransformHierarchy : MonoBehaviour
                 transforms[t].position = snapshots[i].Positions[t];
                 transforms[t].rotation = snapshots[i].Rotations[t];
             }
-            yield return new WaitForSeconds(1 / recordManager.RewindSpeed);
+            yield return new WaitForSeconds(recordManager.RewindDelay / Time.deltaTime);
         }
 
         StartCoroutine(Playback());
@@ -109,6 +115,7 @@ public class RecordTransformHierarchy : MonoBehaviour
             if (recordManager.recordPhase != RecordPhase.PlayingBack)
                 break;
 
+            yield return new WaitForFixedUpdate();
             yield return new WaitForFixedUpdate();
         }
 
