@@ -89,6 +89,7 @@ public class PickUp : MonoBehaviour
         {
             body.velocity = lastRealVelocity;
             isThrown = false;
+            hasSavedVelocity = false;
         }
 
         if (GameManager.Instance.GetComponent<RecordManager>().recordPhase == RecordPhase.None)
