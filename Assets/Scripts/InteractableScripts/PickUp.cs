@@ -24,6 +24,7 @@ public class PickUp : MonoBehaviour
     public bool canHold = true;
     public bool isHolding = false;
     public bool hasSavedVelocity = false;
+    private bool isThrown = false;
 
     float currentSpeed = 0f;
     float topSpeed = 10f;
@@ -59,6 +60,7 @@ public class PickUp : MonoBehaviour
     void Update()
     {
         body.velocity = Vector3.ClampMagnitude(body.velocity, 25);
+
         if (GameManager.Instance == null)
         {
             GetComponent<Rigidbody>().isKinematic = true;
@@ -83,9 +85,10 @@ public class PickUp : MonoBehaviour
             lastRealVelocity = Vector3.zero;
         }
 
-        if (GameManager.Instance.GetComponent<RecordManager>().recordPhase == RecordPhase.StoppingPlayback && !isHolding)
+        if (GameManager.Instance.GetComponent<RecordManager>().recordPhase == RecordPhase.StoppingPlayback && !isHolding && isThrown)
         {
             body.velocity = lastRealVelocity;
+            isThrown = false;
         }
 
         if (GameManager.Instance.GetComponent<RecordManager>().recordPhase == RecordPhase.None)
@@ -125,7 +128,7 @@ public class PickUp : MonoBehaviour
         switch (holdState)
         {
             case HoldState.NOTHELD:
-                
+
 
                 break;
 
@@ -142,6 +145,7 @@ public class PickUp : MonoBehaviour
 
     public void SetToHeld()
     {
+        isThrown = false;
         currentSpeed = 0;
         currentDist = 0;
         body.velocity = new Vector3(0, 0, 0);
@@ -160,7 +164,10 @@ public class PickUp : MonoBehaviour
     {
         currentSpeed = 0;
         currentDist = 0;
-        body.velocity = new Vector3(0, 0, 0);
+        if (!isThrown)
+        {
+            body.velocity = new Vector3(0, 0, 0);
+        }
         transform.SetParent(null);
         isHolding = false;
         holdState = HoldState.NOTHELD;
@@ -174,10 +181,10 @@ public class PickUp : MonoBehaviour
     {
         if (throwDelayTimer <= 0 && currentDist <= maxDistance * 0.5f)
         {
-            body.velocity = new Vector3(0, 0, 0);
-            body.AddForce(tempParent.transform.forward * throwForce);
+            isThrown = true;
             throwDelayTimer = resetThrowDelayTimer;
             SetToNotHeld();
+            body.AddForce(tempParent.transform.forward * throwForce);
         }
     }
 
