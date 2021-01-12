@@ -8,17 +8,19 @@ public class ChangeScene : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        first = true;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
 
-    }
-
+    bool first = true;
     private void OnTriggerEnter(Collider other)
     {
+        if (!first)
+        {
+            return;
+        }
+        first = false;
+
         if (other.name == "Player(Clone)")
         {
             if (PlayerPrefs.GetInt("Buildindex") < SceneManager.GetActiveScene().buildIndex + 1)
@@ -26,8 +28,15 @@ public class ChangeScene : MonoBehaviour
                 PlayerPrefs.DeleteKey("Buildindex");
                 SceneManager.LoadScene("MainMenu");
             }
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
-            
+
+            try
+            {
+                Destroy(FindObjectOfType<Follower>().transform.parent.gameObject);
+            }
+            catch { }
+
+            Follower.showCinematic = true;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }
 }
