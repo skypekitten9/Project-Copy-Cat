@@ -27,9 +27,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Levels/Level_F.unity
     guid: 72f196e38cdcdea46814c2c5e2c269f2
   - enabled: 1
-    path: Assets/Scenes/Levels/WatchTheFloor.unity
-    guid: 13bd154e1cf57e04c8a33d06c317b56b
-  - enabled: 1
     path: Assets/Scenes/Levels/CMLatest.unity
     guid: 43623d33b16f95d419e5c43f986089d0
+  - enabled: 1
+    path: Assets/Scenes/Levels/LevelPRebuild(0).unity
+    guid: 9b627fec63ae0c54ab230d3f9d70e75f
+  - enabled: 1
+    path: Assets/Scenes/Levels/WatchTheFloor.unity
+    guid: 13bd154e1cf57e04c8a33d06c317b56b
   m_configObjects: {}
