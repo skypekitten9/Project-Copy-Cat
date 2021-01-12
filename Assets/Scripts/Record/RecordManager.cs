@@ -11,7 +11,7 @@ public enum ControlStates { Player, Holo, Dead }
 public class RecordManager : MonoBehaviour
 {
     public int RecordTime { get; } = 6000;    //ms
-    public float RewindDelay { get; } = 0.00000001f;  //multiplier
+    public float RewindSpeed { get; } = 10000.0f;  //multiplier
 
 
     public RecordPhase recordPhase { get; set; } = RecordPhase.None;
@@ -140,7 +140,7 @@ public class RecordManager : MonoBehaviour
         holoRecorder.StopRecording();
         Array.ForEach(objectRecorders, element => element.StopRecording());
     }
-    
+
     public void StartPlayback()
     {
         syncBar.Replay();
