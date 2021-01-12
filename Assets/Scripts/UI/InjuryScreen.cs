@@ -30,11 +30,15 @@ public class InjuryScreen : MonoBehaviour
         }
         else
         {
-            playerStats = GameObject.Find("Player(Clone)").GetComponent<PlayerManager>();
-            Color tempColour = image.color;
-            float opacity = 1 - (float)playerStats.playerHealth / 100;
-            tempColour.a = opacity;
-            image.color = tempColour;
+            try
+            {
+                playerStats = GameObject.Find("Player(Clone)").GetComponent<PlayerManager>();
+                Color tempColour = image.color;
+                float opacity = 1 - (float)playerStats.playerHealth / 100;
+                tempColour.a = opacity;
+                image.color = tempColour;
+            }
+            catch { }
         }
     }
 

@@ -96,6 +96,15 @@ public class PickUp : MonoBehaviour
             hasHadHoloInteraction = false;
         }
 
+        if ((GameManager.Instance.GetComponent<RecordManager>().recordPhase == RecordPhase.Rewinding || GameManager.Instance.GetComponent<RecordManager>().recordPhase == RecordPhase.PlayingBack))
+        {
+            body.useGravity = false;
+        }
+        else
+        {
+            body.useGravity = true;
+        }
+
 
         switch (holdState)
         {

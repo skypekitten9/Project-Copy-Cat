@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 
 
@@ -19,7 +20,8 @@ public class RecordTransformHierarchy : MonoBehaviour
 
     private RecordManager recordManager;
 
-    int counter = 0;
+
+    int tickRate = 30000;
 
 
     public void StartRecording()
@@ -30,26 +32,24 @@ public class RecordTransformHierarchy : MonoBehaviour
         transforms = GetComponentsInChildren<Transform>();
         recording = true;
 
+        StartCoroutine(Tick());
     }
 
-    private void FixedUpdate()
+
+    private IEnumerator Tick()
     {
-        if (recording == true)
+        while (recording == true)
         {
+            yield return new WaitForSeconds(1.0f / (tickRate * Time.deltaTime));
             parent = transform.parent;
             transform.parent = null;
             transform.parent = parent;
-            counter = ++counter % 2;
 
             /*Take snapshot*/
-            if (counter == 0)
-            {
-                Transform[] transforms = GetComponentsInChildren<Transform>();
-                snapshots.Add(new RecordData(Array.ConvertAll(transforms, t => t.position), Array.ConvertAll(transforms, t => t.rotation)));
-            }
+            Transform[] transforms = GetComponentsInChildren<Transform>();
+            snapshots.Add(new RecordData(Array.ConvertAll(transforms, t => t.position), Array.ConvertAll(transforms, t => t.rotation)));
         }
     }
-
 
     public void StopRecording()
     {
@@ -72,7 +72,7 @@ public class RecordTransformHierarchy : MonoBehaviour
                 transforms[t].position = snapshots[i].Positions[t];
                 transforms[t].rotation = snapshots[i].Rotations[t];
             }
-            yield return new WaitForSeconds(recordManager.RewindDelay / Time.deltaTime);
+            yield return new WaitForSeconds(1.0f / (tickRate * Time.deltaTime * recordManager.RewindSpeed));
         }
 
         StartCoroutine(Playback());
@@ -81,7 +81,7 @@ public class RecordTransformHierarchy : MonoBehaviour
     private IEnumerator Playback()
     {
         if (isHolo)
-           recordManager.StartPlayback();
+            recordManager.StartPlayback();
 
         int i = -1;
         bool hasHadHoloInteraction = false;
@@ -115,10 +115,8 @@ public class RecordTransformHierarchy : MonoBehaviour
             if (recordManager.recordPhase != RecordPhase.PlayingBack)
                 break;
 
-            yield return new WaitForFixedUpdate();
-            yield return new WaitForFixedUpdate();
+            yield return new WaitForSeconds(1.0f / (tickRate * Time.deltaTime));
         }
-
 
         if (isHolo)
             StartCoroutine(recordManager.StopPlayback());

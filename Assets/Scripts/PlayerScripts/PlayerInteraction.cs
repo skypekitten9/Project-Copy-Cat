@@ -80,12 +80,16 @@ public class PlayerInteraction : MonoBehaviour
         }
 
 
-        if (Input.GetKeyDown(KeyCode.Mouse0) && hit.collider.gameObject.GetComponent<PickUp>().IsHeld())
+        try
         {
-            SFXManager.Instance.PlaySound(audio, SFXManager.Sound.throwObject, 0.8f);
-            hit.collider.gameObject.GetComponent<PickUp>().Throw();
-            isHolding = false;
+            if (Input.GetKeyDown(KeyCode.Mouse0) && hit.collider.gameObject.GetComponent<PickUp>().IsHeld())
+            {
+                SFXManager.Instance.PlaySound(audio, SFXManager.Sound.throwObject, 0.8f);
+                hit.collider.gameObject.GetComponent<PickUp>().Throw();
+                isHolding = false;
+            }
         }
+        catch { }
     }
 
     public void Interact()
