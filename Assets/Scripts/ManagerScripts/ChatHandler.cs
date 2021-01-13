@@ -124,6 +124,21 @@ public class ChatHandler : MonoBehaviour
         {
             SendMessageToChat("P̵̰̝̓̃̊̆́̈́̄l̴̟͔̈́̃ą̷̼̦̰̰̺̹͕̬̾ẙ̴̳͙͍̰̹̙̜̚ẻ̶̛̯̰̩͖̪̄̓̋̄͊̒͂͠r̵̛͕̩̙̲̓̓͆͒̚2̶̡̢̛͈̠͉͔̺̙͖̜̑̔̕͘̕͝:̷̖̹͇͎̺̿̃̍̏̚ͅ ̵̛̞̹̹̼͍͈̜̊́̊̐̀̉͘͜Í̵͕̼̹'̴̛̠͚̪͙̭͎̯̅̐̊͆̍̽̋̈́m̴̗̱̺͕͈͚͚͌̆̋̉ͅ ̸̨̧͉̦̱̗͎͇͔͌̋ẅ̶̢̠́ͅa̷̫̼͊t̵̛͉̺͖̥̟̲́̑͆̾̓͆͐͝͠c̷̩̭̮̬͚̳͆͊͛̄̄̍̋̋́͜ͅh̵̢̥̱̫̪̎̐̅́į̴̤͔̩̬͖̜̲͈̦̈́̄̏͒͘͠n̸̨̥̦̆ͅg̶̞̮͍͖̹̈͋̊̓̄́ ̷̧̬̩̺̥̥͕̀̈́̇͊̌͌̆͑͋ͅͅy̶̡͓̞̳̋o̶̖̟̺̲̱̥̼̺̰͖̓̇͗̃ü̴͕̥̺̑̂̊͛́̍.̵̧̛͖̣̗͓̝̪͑̿̈", Message.MessageType.Player2);
         }
+
+        if (newMessage.rows[0] == Username + ": /noclip")
+        {
+            PlayerManager.Instance.GetComponent<PlayerMovement>().ChangeControls(!PlayerManager.Instance.GetComponent<PlayerMovement>().noclip);
+        }
+
+        if (newMessage.rows[0] == Username + ": /skip")
+        {
+            try
+            {
+                Destroy(FindObjectOfType<Follower>().transform.parent.gameObject);
+                Follower.Following = false;
+            }
+            catch { }
+        }
     }
 
     Color MessageTypeColor(Message.MessageType messageType)

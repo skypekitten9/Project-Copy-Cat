@@ -5,7 +5,7 @@ public class Follower : MonoBehaviour
 {
     public static bool showCinematic = true;
 
-    public static bool Following { get; private set; } = false;
+    public static bool Following { get; set; } = false;
 
     private PathCreator path;
     [SerializeField] private float speed = 7.0f;

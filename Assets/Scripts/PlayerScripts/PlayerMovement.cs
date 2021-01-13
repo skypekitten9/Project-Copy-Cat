@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private bool noclip = false;
+    public bool noclip = false;
 
     private Rigidbody rb;
     private AudioSource audio;
@@ -119,7 +119,7 @@ public class PlayerMovement : MonoBehaviour
 
 
 
-    private void ChangeControls(bool noclip)
+    public void ChangeControls(bool noclip)
     {
         rb.velocity = Vector3.zero;
         Array.ForEach(GetComponents<Collider>(), c => c.enabled = !noclip);
