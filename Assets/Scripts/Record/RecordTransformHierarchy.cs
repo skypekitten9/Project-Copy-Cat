@@ -21,7 +21,7 @@ public class RecordTransformHierarchy : MonoBehaviour
     private RecordManager recordManager;
 
 
-    int tickRate = 30000;
+    int tickRate = 60;
 
 
     public void StartRecording()
@@ -40,7 +40,7 @@ public class RecordTransformHierarchy : MonoBehaviour
     {
         while (recording == true)
         {
-            yield return new WaitForSeconds(1.0f / (tickRate * Time.deltaTime));
+            yield return new WaitForSeconds(1.0f / tickRate);
             parent = transform.parent;
             transform.parent = null;
             transform.parent = parent;
@@ -72,7 +72,7 @@ public class RecordTransformHierarchy : MonoBehaviour
                 transforms[t].position = snapshots[i].Positions[t];
                 transforms[t].rotation = snapshots[i].Rotations[t];
             }
-            yield return new WaitForSeconds(1.0f / (tickRate * Time.deltaTime * recordManager.RewindSpeed));
+            yield return new WaitForSeconds(1.0f / (tickRate * recordManager.RewindSpeed));
         }
 
         StartCoroutine(Playback());
@@ -115,7 +115,7 @@ public class RecordTransformHierarchy : MonoBehaviour
             if (recordManager.recordPhase != RecordPhase.PlayingBack)
                 break;
 
-            yield return new WaitForSeconds(1.0f / (tickRate * Time.deltaTime));
+            yield return new WaitForSeconds(1.0f / tickRate);
         }
 
         if (isHolo)
